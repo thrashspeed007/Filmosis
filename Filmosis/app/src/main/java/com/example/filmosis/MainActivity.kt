@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
 import com.example.filmosis.config.DatosConexion
-import com.example.filmosis.data.ApiInterface
+import com.example.filmosis.data.FilmosisApiInterface
 import com.example.filmosis.data.UsuarioItem
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -20,9 +20,9 @@ class MainActivity : AppCompatActivity() {
     private fun getUsuarios() {
         val retrofitBuilder = Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(DatosConexion.BASE_URL)
+            .baseUrl(DatosConexion.FILMOSIS_BASE_URL)
             .build()
-            .create(ApiInterface::class.java)
+            .create(FilmosisApiInterface::class.java)
 
         val retrofitData = retrofitBuilder.getUsuarios()
         val textView : TextView = findViewById(R.id.textView)
@@ -32,19 +32,15 @@ class MainActivity : AppCompatActivity() {
                 call: retrofit2.Call<List<UsuarioItem>?>,
                 response: retrofit2.Response<List<UsuarioItem>?>
             ) {
-                if (response.isSuccessful) {
-                    val responseBody = response.body()
+                val responseBody = response.body()
 
-                    if (responseBody != null) {
-                        val sb = java.lang.StringBuilder()
-                        for (usuario in responseBody) {
-                            sb.append(usuario.username + ": " + usuario.nombre + " " + usuario.apellidos + "\n")
-                        }
-
-                        textView.text = sb.toString()
-                    } else {
-                        android.util.Log.d("MainActivity", "Response body is null.")
+                if (responseBody != null) {
+                    val sb = java.lang.StringBuilder()
+                    for (usuario in responseBody) {
+                        sb.append(usuario.username + ": " + usuario.nombre + " " + usuario.apellidos + "\n")
                     }
+
+                    textView.text = sb.toString()
                 } else {
                     android.util.Log.d("MainActivity", "Response unsuccessful: ${response.code()}")
                 }
