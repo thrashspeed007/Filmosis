@@ -38,11 +38,10 @@ class MainActivity : AppCompatActivity() {
                     if (responseBody != null) {
                         val sb = java.lang.StringBuilder()
                         for (usuario in responseBody) {
-                            sb.append(usuario.username + ": " + usuario.nombre + "\n")
+                            sb.append(usuario.username + ": " + usuario.nombre + " " + usuario.apellidos + "\n")
                         }
 
                         textView.text = sb.toString()
-
                     } else {
                         android.util.Log.d("MainActivity", "Response body is null.")
                     }
