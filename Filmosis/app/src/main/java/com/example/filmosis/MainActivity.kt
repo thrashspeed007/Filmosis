@@ -2,6 +2,7 @@ package com.example.filmosis
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.TextView
 import com.example.filmosis.config.DatosConexion
 import com.example.filmosis.data.ApiInterface
 import com.example.filmosis.data.UsuarioItem
@@ -24,6 +25,7 @@ class MainActivity : AppCompatActivity() {
             .create(ApiInterface::class.java)
 
         val retrofitData = retrofitBuilder.getUsuarios()
+        val textView : TextView = findViewById(R.id.textView)
 
         retrofitData.enqueue(object : retrofit2.Callback<List<UsuarioItem>?> {
             override fun onResponse(
@@ -39,7 +41,7 @@ class MainActivity : AppCompatActivity() {
                             sb.append(usuario.username + ": " + usuario.nombre + "\n")
                         }
 
-                        // Imprimir resultado... (sb)
+                        textView.text = sb.toString()
 
                     } else {
                         android.util.Log.d("MainActivity", "Response body is null.")
