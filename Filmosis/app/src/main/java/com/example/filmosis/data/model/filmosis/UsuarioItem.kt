@@ -1,4 +1,4 @@
-package com.example.filmosis.data
+package com.example.filmosis.data.model.filmosis
 
 data class UsuarioItem(
     val username: String,

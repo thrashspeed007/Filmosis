@@ -5,26 +5,54 @@ import android.os.Bundle
 import android.widget.TextView
 import com.example.filmosis.config.DatosConexion
 import com.example.filmosis.data.FilmosisApiInterface
+import com.example.filmosis.data.FilmosisRetrofitServie
 import com.example.filmosis.data.TmdbApiInterface
-import com.example.filmosis.data.UsuarioItem
+import com.example.filmosis.data.TmdbRetrofitService
+import com.example.filmosis.data.model.filmosis.UsuarioItem
+import com.example.filmosis.data.model.tmdb.RemoteResult
+import retrofit2.Call
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
+import java.lang.StringBuilder
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var textView: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        getUsuarios()
+        textView = findViewById(R.id.textView)
+
+//        getUsuarios()
+
+        listPopularMovies()
     }
 
     private fun listPopularMovies() {
-        val retrofitBuilder = Retrofit.Builder()
-            .baseUrl(DatosConexion.TMDB_BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(TmdbApiInterface::class.java)
+        val service = TmdbRetrofitService.makeRetrofitService()
+        val call = service.listPopularMovies(DatosConexion.API_KEY, DatosConexion.REGION)
+
+        call.enqueue(object : retrofit2.Callback<RemoteResult> {
+            override fun onFailure(call: Call<RemoteResult>, t: Throwable) {
+                android.util.Log.d("MainActivity", "onFailure: " + t.message )
+            }
+
+            override fun onResponse(call: Call<RemoteResult>, response: Response<RemoteResult>) {
+                val movies = response.body()?.results
+                var s = ""
+
+                if (movies != null) {
+                    for (movie in movies) {
+                        s += movie.title + ": " + movie.vote_average + "\n"
+                    }
+                }
+
+                textView.text = s
+            }
+        })
     }
 
     private fun getUsuarios() {
