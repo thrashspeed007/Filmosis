@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
 
         textView = findViewById(R.id.textView)
 
-//        getUsuarios()
+        getUsuarios()
 
         listPopularMovies()
     }
@@ -56,36 +56,30 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getUsuarios() {
-        val retrofitBuilder = Retrofit.Builder()
-            .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(DatosConexion.FILMOSIS_BASE_URL)
-            .build()
-            .create(FilmosisApiInterface::class.java)
+        val service = FilmosisRetrofitServie.makeRetrofitService()
+        val call = service.getUsuarios()
 
-        val retrofitData = retrofitBuilder.getUsuarios()
-        val textView : TextView = findViewById(R.id.textView)
+        call.enqueue(object : retrofit2.Callback<List<UsuarioItem>>{
+            override fun onFailure(call: Call<List<UsuarioItem>>, t: Throwable) {
+                android.util.Log.d("MainActivity", "onFailure: " + t.message )
+            }
 
-        retrofitData.enqueue(object : retrofit2.Callback<List<UsuarioItem>?> {
             override fun onResponse(
-                call: retrofit2.Call<List<UsuarioItem>?>,
-                response: retrofit2.Response<List<UsuarioItem>?>
+                call: Call<List<UsuarioItem>>,
+                response: Response<List<UsuarioItem>>
             ) {
                 val responseBody = response.body()
 
+                val sb = StringBuilder()
                 if (responseBody != null) {
-                    val sb = java.lang.StringBuilder()
                     for (usuario in responseBody) {
                         sb.append(usuario.username + ": " + usuario.nombre + " " + usuario.apellidos + "\n")
                     }
-
-                    textView.text = sb.toString()
                 } else {
-                    android.util.Log.d("MainActivity", "Response unsuccessful: ${response.code()}")
+                    android.util.Log.d("MainActivity", "onFailure: responseBody is null" )
                 }
-            }
 
-            override fun onFailure(call: retrofit2.Call<List<UsuarioItem>?>, t: Throwable) {
-                android.util.Log.d("MainActivity", "onFailure: " + t.message )
+                textView.text = sb.toString()
             }
         })
     }
