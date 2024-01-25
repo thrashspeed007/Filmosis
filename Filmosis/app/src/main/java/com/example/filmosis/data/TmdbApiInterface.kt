@@ -9,7 +9,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface TmdbApiInterface {
-    @GET("discover/movie?sort_by=popularity.desc")
+    @GET("discover/movie?sort_by=popularity.desc&language=es-ES")
     fun listPopularMovies(
         @Query("api_key") apiKey: String,
         @Query("region") region: String
