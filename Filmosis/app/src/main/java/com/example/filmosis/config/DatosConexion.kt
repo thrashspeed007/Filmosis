@@ -7,6 +7,6 @@ class DatosConexion {
         const val TMDB_BASE_URL = "https://api.themoviedb.org/3/"
 
         const val API_KEY = "3c11ed932b4a0231970e8e2f40509898"
-        const val REGION = "US"
+        const val REGION = "ES"
     }
 }
