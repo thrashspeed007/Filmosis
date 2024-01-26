@@ -4,16 +4,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
 import com.example.filmosis.config.DatosConexion
-import com.example.filmosis.data.FilmosisApiInterface
-import com.example.filmosis.data.FilmosisRetrofitServie
-import com.example.filmosis.data.TmdbApiInterface
-import com.example.filmosis.data.TmdbRetrofitService
+import com.example.filmosis.network.RetrofitService
 import com.example.filmosis.data.model.filmosis.UsuarioItem
 import com.example.filmosis.data.model.tmdb.RemoteResult
 import retrofit2.Call
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import java.lang.StringBuilder
 
 class MainActivity : AppCompatActivity() {
@@ -26,14 +21,13 @@ class MainActivity : AppCompatActivity() {
 
         textView = findViewById(R.id.textView)
 
-        getUsuarios()
+//        getUsuarios()
 
         listPopularMovies()
     }
 
     private fun listPopularMovies() {
-        val service = TmdbRetrofitService.makeRetrofitService()
-        val call = service.listPopularMovies(DatosConexion.API_KEY, DatosConexion.REGION)
+        val call = RetrofitService.tmdbApi.listPopularMovies(DatosConexion.API_KEY, DatosConexion.REGION)
 
         call.enqueue(object : retrofit2.Callback<RemoteResult> {
             override fun onFailure(call: Call<RemoteResult>, t: Throwable) {
@@ -56,8 +50,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getUsuarios() {
-        val service = FilmosisRetrofitServie.makeRetrofitService()
-        val call = service.getUsuarios()
+        val call = RetrofitService.filmosisApi.getUsuarios()
 
         call.enqueue(object : retrofit2.Callback<List<UsuarioItem>>{
             override fun onFailure(call: Call<List<UsuarioItem>>, t: Throwable) {

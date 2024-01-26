@@ -1,4 +1,4 @@
-package com.example.filmosis.data
+package com.example.filmosis.network.interfaces
 
 import com.example.filmosis.config.DatosConexion
 import com.example.filmosis.data.model.tmdb.RemoteResult
@@ -16,11 +16,3 @@ interface TmdbApiInterface {
     ): Call<RemoteResult>
 }
 
-object TmdbRetrofitService {
-    fun makeRetrofitService(): TmdbApiInterface {
-        return Retrofit.Builder()
-            .baseUrl(DatosConexion.TMDB_BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build().create(TmdbApiInterface::class.java)
-    }
-}

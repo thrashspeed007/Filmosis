@@ -1,4 +1,4 @@
-package com.example.filmosis.data
+package com.example.filmosis.network.interfaces
 
 import com.example.filmosis.config.DatosConexion
 import com.example.filmosis.data.model.filmosis.Usuario
@@ -12,14 +12,4 @@ interface FilmosisApiInterface {
 
     @GET("obtenerUsuarios.php")
     fun getUsuarios(): Call<List<UsuarioItem>>
-}
-
-object FilmosisRetrofitServie {
-    fun makeRetrofitService(): FilmosisApiInterface {
-        return Retrofit.Builder()
-            .baseUrl(DatosConexion.FILMOSIS_BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(FilmosisApiInterface::class.java)
-    }
 }
