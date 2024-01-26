@@ -1,10 +1,7 @@
 package com.example.filmosis.network.interfaces
 
-import com.example.filmosis.config.DatosConexion
 import com.example.filmosis.data.model.tmdb.RemoteResult
 import retrofit2.Call
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 
