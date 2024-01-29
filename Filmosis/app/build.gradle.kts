@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -49,4 +50,14 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     // Gson
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    // Firebase BoM
+    implementation(platform("com.google.firebase:firebase-bom:32.7.1"))
+
+    // Firebase analytics
+    implementation("com.google.firebase:firebase-analytics")
+
+    // Add the dependencies for any other desired Firebase products
+    // https://firebase.google.com/docs/android/setup#available-libraries
+
 }
