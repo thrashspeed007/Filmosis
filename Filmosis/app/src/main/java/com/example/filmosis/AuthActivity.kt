@@ -2,23 +2,29 @@ package com.example.filmosis
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import javax.inject.Provider
 
 class AuthActivity : AppCompatActivity() {
-    private val GOOGLE_SIGN_IN = 100
+
+    private val startForResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                val data: Intent? = result.data
+                handleGoogleSignInResult(data)
+            }
+        }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_auth)
@@ -86,7 +92,7 @@ class AuthActivity : AppCompatActivity() {
 
             val googleClient = GoogleSignIn.getClient(this, googleConf)
             googleClient.signOut()
-            startActivityForResult(googleClient.signInIntent, GOOGLE_SIGN_IN)
+            startForResult.launch(googleClient.signInIntent)
         }
     }
 
@@ -108,10 +114,8 @@ class AuthActivity : AppCompatActivity() {
         startActivity(homeIntent)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == GOOGLE_SIGN_IN) {
+    private fun handleGoogleSignInResult(data: Intent?) {
+        if (data != null) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
 
             try {
