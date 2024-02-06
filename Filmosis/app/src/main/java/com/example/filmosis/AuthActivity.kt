@@ -3,6 +3,8 @@ package com.example.filmosis
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -18,6 +20,8 @@ import com.google.firebase.auth.GoogleAuthProvider
 
 class AuthActivity : AppCompatActivity() {
 
+    private var loadingDialog: AlertDialog? = null
+
     private val startForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK) {
@@ -25,6 +29,7 @@ class AuthActivity : AppCompatActivity() {
                 handleGoogleSignInResult(data)
             }
         }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_auth)
@@ -86,6 +91,8 @@ class AuthActivity : AppCompatActivity() {
         }
 
         googleSignInButton.setOnClickListener {
+            showLoadingDialog()
+
             // Configuración
 
             val googleConf = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build()
@@ -103,6 +110,22 @@ class AuthActivity : AppCompatActivity() {
         builder.setPositiveButton("Aceptar", null)
         val dialog: AlertDialog = builder.create()
         dialog.show()
+    }
+
+    private fun showLoadingDialog() {
+        val inflater = layoutInflater
+        val view = inflater.inflate(R.layout.loading_dialog, null)
+
+        loadingDialog = AlertDialog.Builder(this)
+            .setView(view)
+            .setCancelable(false)
+            .create()
+
+        loadingDialog?.show()
+    }
+
+    private fun hideLoadingDialog() {
+        loadingDialog?.dismiss()
     }
 
     private fun showHome(email: String, provider: ProviderType) {
@@ -125,6 +148,8 @@ class AuthActivity : AppCompatActivity() {
                     val credential = GoogleAuthProvider.getCredential(account.idToken, null)
 
                     FirebaseAuth.getInstance().signInWithCredential(credential).addOnCompleteListener {
+                        hideLoadingDialog()
+
                         if (it.isSuccessful) {
                             showHome(account.email ?: "", ProviderType.GOOGLE)
                         } else {
