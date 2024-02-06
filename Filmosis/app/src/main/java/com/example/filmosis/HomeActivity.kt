@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.widget.Toolbar
 import com.google.firebase.auth.FirebaseAuth
 
 enum class ProviderType {
@@ -31,6 +32,11 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun setup(email: String, provider: String) {
+
+        // Toolbar
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+
         val emailTextView: TextView = findViewById(R.id.emailTextView)
         val providerTextView: TextView = findViewById(R.id.providerTextView)
         val logOutButton: Button = findViewById(R.id.logOutButton)

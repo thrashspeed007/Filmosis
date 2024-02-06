@@ -2,5 +2,9 @@
     <string name="app_name">Filmosis</string>
     <string name="prefs_file">com.example.filmosis.PREFERENCE_FILE_KEY</string>
     <string name="default_web_client_id" translatable="false">383558741656-j89oaq4etmfpkg6s4pocgt12rl4s3bgn.apps.googleusercontent.com</string>
+    <string name="page_home">Inicio</string>
+    <string name="page_explore">Explorar</string>
+    <string name="page_user">Usuario</string>
+    <string name="page_social">Social</string>
 
 </resources>
