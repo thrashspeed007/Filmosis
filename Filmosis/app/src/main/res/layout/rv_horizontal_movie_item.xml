@@ -6,8 +6,8 @@
 
     <ImageView
         android:id="@+id/moviePosterImageView"
-        android:layout_width="280dp"
-        android:layout_height="420dp"
+        android:layout_width="320dp"
+        android:layout_height="480dp"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -17,10 +17,9 @@
         android:id="@+id/movieTitleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:backgroundTint="#000000"
-        android:textColor="#000000"
-        android:textSize="20sp"
+        android:layout_marginTop="12dp"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/moviePosterImageView" />
