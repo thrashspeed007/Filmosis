@@ -3,6 +3,7 @@ package com.example.filmosis
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
@@ -10,6 +11,9 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SnapHelper
 import com.example.filmosis.data.access.tmdb.MoviesAccess
 import com.example.filmosis.data.model.tmdb.Result
+import java.lang.Math.round
+import java.text.DecimalFormat
+import kotlin.math.roundToInt
 
 class MainActivity : AppCompatActivity() {
     private val moviesAccess = MoviesAccess()
@@ -42,7 +46,12 @@ class MainActivity : AppCompatActivity() {
                 moviesList.add(movie)
             }
 
-            moviesAdapter = MoviesAdapter(moviesList)
+            moviesAdapter = MoviesAdapter(moviesList,
+                object : MovieClickListener {
+                    override fun onMovieClick(movie: Result) {
+                        Toast.makeText(this@MainActivity, "Puntuación media: ${(movie.vote_average)}", Toast.LENGTH_SHORT).show()
+                    }
+                })
             rv.adapter = moviesAdapter
         }
     }
