@@ -5,22 +5,32 @@ import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SnapHelper
 import com.example.filmosis.data.access.tmdb.MoviesAccess
 import com.example.filmosis.data.model.tmdb.Result
+import com.example.filmosis.fragments.ExploreFragment
+import com.example.filmosis.fragments.HomeFragment
+import com.example.filmosis.fragments.SocialFragment
+import com.example.filmosis.fragments.UserFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import org.checkerframework.common.subtyping.qual.Bottom
 import java.lang.Math.round
 import java.text.DecimalFormat
 import kotlin.math.roundToInt
 
 class MainActivity : AppCompatActivity() {
-    private val moviesAccess = MoviesAccess()
+    private lateinit var fragmentHome : HomeFragment
+    private lateinit var fragmentExplore : ExploreFragment
+    private lateinit var fragmentSocial : SocialFragment
+    private lateinit var fragmentUser : UserFragment
 
-    private lateinit var rv: RecyclerView
-    private lateinit var moviesList: ArrayList<Result>
-    private lateinit var moviesAdapter: MoviesAdapter
+    private lateinit var bottomNavigationView : BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,29 +40,34 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setup() {
-        rv = findViewById(R.id.moviesRecyclerView)
-        rv.setHasFixedSize(true)
-        rv.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
-        val snapHelper: SnapHelper = LinearSnapHelper()
-        snapHelper.attachToRecyclerView(rv)
-        moviesList = ArrayList()
+        bottomNavigationView = findViewById(R.id.bottomNavigationView)
 
-        addMoviesToList()
+        fragmentHome = HomeFragment()
+        fragmentExplore = ExploreFragment()
+        fragmentSocial = SocialFragment()
+        fragmentUser = UserFragment()
+
+        replaceFragment(fragmentHome)
+
+        bottomNavigationView.setOnItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.page_home -> replaceFragment(fragmentHome)
+                R.id.page_explore -> replaceFragment(fragmentExplore)
+                R.id.page_social -> replaceFragment(fragmentSocial)
+                R.id.page_user -> replaceFragment(fragmentUser)
+            }
+            true
+        }
     }
 
-    private fun addMoviesToList() {
-        moviesAccess.listPopularMovies { result ->
-            result.forEach { movie ->
-                moviesList.add(movie)
-            }
+    private fun replaceFragment(fragment: Fragment) {
+        val fragmentManager: FragmentManager = supportFragmentManager
+        val transaction: FragmentTransaction = fragmentManager.beginTransaction()
 
-            moviesAdapter = MoviesAdapter(moviesList,
-                object : MovieClickListener {
-                    override fun onMovieClick(movie: Result) {
-                        Toast.makeText(this@MainActivity, "Puntuación media: ${(movie.vote_average)}", Toast.LENGTH_SHORT).show()
-                    }
-                })
-            rv.adapter = moviesAdapter
-        }
+        transaction.replace(R.id.fragmentContainerView, fragment)
+
+        transaction.addToBackStack(null)
+
+        transaction.commit()
     }
 }

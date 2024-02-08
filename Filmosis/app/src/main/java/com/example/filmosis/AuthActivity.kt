@@ -3,8 +3,6 @@ package com.example.filmosis
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -12,6 +10,7 @@ import android.widget.LinearLayout
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.example.filmosis.fragments.ProviderType
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
@@ -35,8 +34,8 @@ class AuthActivity : AppCompatActivity() {
         setContentView(R.layout.activity_auth)
 
         // Setup
-        setup()
         session()
+        setup()
     }
 
     override fun onStart() {
@@ -51,7 +50,7 @@ class AuthActivity : AppCompatActivity() {
 
         if (email != null && provider != null) {
             findViewById<LinearLayout>(R.id.authLayout).visibility = View.INVISIBLE
-            showHome(email, ProviderType.valueOf(provider))
+            showMain()
         }
     }
 
@@ -66,7 +65,8 @@ class AuthActivity : AppCompatActivity() {
             if (emailEditText.text.isNotEmpty() && passwordEditText.text.isNotEmpty()) {
                 FirebaseAuth.getInstance().createUserWithEmailAndPassword(emailEditText.text.toString(), passwordEditText.text.toString()).addOnCompleteListener {
                     if (it.isSuccessful) {
-                        showHome(it.result?.user?.email ?: "", ProviderType.BASIC)
+                        guardarDatos(it.result?.user?.email ?: "", ProviderType.BASIC.toString())
+                        showMain()
                     } else {
                         showAlert(it.exception.toString())
                     }
@@ -80,7 +80,8 @@ class AuthActivity : AppCompatActivity() {
             if (emailEditText.text.isNotEmpty() && passwordEditText.text.isNotEmpty()) {
                 FirebaseAuth.getInstance().signInWithEmailAndPassword(emailEditText.text.toString(), passwordEditText.text.toString()).addOnCompleteListener {
                     if (it.isSuccessful) {
-                        showHome(it.result?.user?.email ?: "", ProviderType.BASIC)
+                        guardarDatos(it.result?.user?.email ?: "", ProviderType.BASIC.toString())
+                        showMain()
                     } else {
                         showAlert(it.exception?.message.toString())
                     }
@@ -128,11 +129,8 @@ class AuthActivity : AppCompatActivity() {
         loadingDialog?.dismiss()
     }
 
-    private fun showHome(email: String, provider: ProviderType) {
-        val homeIntent = Intent(this, HomeActivity::class.java).apply {
-            putExtra("email", email)
-            putExtra("provider", provider.name)
-        }
+    private fun showMain() {
+        val homeIntent = Intent(this, MainActivity::class.java)
 
         startActivity(homeIntent)
     }
@@ -151,7 +149,8 @@ class AuthActivity : AppCompatActivity() {
                         hideLoadingDialog()
 
                         if (it.isSuccessful) {
-                            showHome(account.email ?: "", ProviderType.GOOGLE)
+                            guardarDatos(account.email ?: "", ProviderType.GOOGLE.toString())
+                            showMain()
                         } else {
                             showAlert(it.exception?.message.toString())
                         }
@@ -161,5 +160,13 @@ class AuthActivity : AppCompatActivity() {
                 showAlert(e.message.toString())
             }
         }
+    }
+
+    private fun guardarDatos(email: String, provider: String) {
+        // Guardado de datos
+        val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
+        prefs.putString("email", email)
+        prefs.putString("provider", provider)
+        prefs.apply()
     }
 }
