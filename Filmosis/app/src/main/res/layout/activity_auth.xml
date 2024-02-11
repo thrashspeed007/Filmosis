@@ -22,6 +22,14 @@
         app:layout_constraintVertical_bias="1.0">
 
         <EditText
+            android:id="@+id/nombreUsu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Nombre de usuario"
+            android:inputType="text"/>
+
+        <EditText
             android:id="@+id/emailEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
