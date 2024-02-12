@@ -92,19 +92,19 @@ class AuthActivity : AppCompatActivity() {
                         passwordEditText.text.toString()
                     ).addOnCompleteListener { task ->
                         if (task.isSuccessful) {// Anadimos a la base de datos si to'do sale bien
-                            val currentUser = auth.currentUser
-                            currentUser?.let { user ->
-                                val userData = hashMapOf(
+                            val currentUser = auth.currentUser//obtenemos al usuario actual
+                            currentUser?.let { user ->// si el usuario actual no es nuulo ejecutamos el codigo que hay dentro
+                                val userData = hashMapOf(//creamos un map donde guardamos los datos del usuario
                                     "name" to nombreEditText.text.toString(),
                                     "email" to emailEditText.text.toString(),
                                     //no guardamos contrasena en la base de datos ya que habria que crear metodo para cifrarla(si eso lo hacemos mas adelante) metodo creado abajo
                                 )
-                                firestore.collection("users").document(user.uid)
-                                    .set(userData)
-                                    .addOnSuccessListener {
+                                firestore.collection("users").document(user.uid)//accedemos a la  collecion "users" y creamos un nuevo documento con el id del usauario
+                                    .set(userData)//Establecemos la informacion del usuario
+                                    .addOnSuccessListener {//este codigo se ejecutara si se ha guardado bien en nuestra base de datos Firesotre
                                         showMain(user.toString())
                                     }
-                                    .addOnFailureListener { e ->
+                                    .addOnFailureListener { e ->//en caso de que no haya sido exitosa saldra un mensaje de error
                                         showAlert(e.message.toString())
                                     }
                             }
@@ -122,30 +122,49 @@ class AuthActivity : AppCompatActivity() {
 
         logInButton.setOnClickListener {
             if (emailEditText.text.isNotEmpty() && passwordEditText.text.isNotEmpty() && nombreEditText.text.isNotEmpty()) {
-                FirebaseAuth.getInstance().signInWithEmailAndPassword(emailEditText.text.toString(), passwordEditText.text.toString()).addOnCompleteListener { task ->
-                    if (task.isSuccessful) { // Anadimos a la base de datos si to'do sale bien
-                        val currentUser = FirebaseAuth.getInstance().currentUser
-                        currentUser?.let { user ->
-                            val userData = hashMapOf(
-                                "name" to nombreEditText.text.toString(),
-                                "email" to emailEditText.text.toString(),
-                            )
-                            firestore.collection("users").document(user.uid)
-                                .set(userData)
-                                .addOnSuccessListener {
-                                    showMain(user.toString())
+                val email = emailEditText.text.toString()
+                val userName = nombreEditText.text.toString()
+                //Consultamos a nuestra base de datos si existe algun usuario con el nombre y email introducido
+
+                val userReferencia = firestore.collection("users")//cogemos la tabla de users
+                userReferencia.whereEqualTo("email", email)//comparamos si existe el email
+                    .whereEqualTo("name", userName)//comparamos si existe el nombre de ususario
+                    .get().addOnSuccessListener { documents ->//Si si existen que ejecute el resto de codigo
+                        if(!documents.isEmpty){
+                            // si ha encontrado un usuario con emai y nombre de usuario correspondiente que siga
+                            FirebaseAuth.getInstance().signInWithEmailAndPassword(emailEditText.text.toString(), passwordEditText.text.toString()).addOnCompleteListener { task ->
+                                if (task.isSuccessful) { // Anadimos a la base de datos si to'do sale bien
+                                    val currentUser = FirebaseAuth.getInstance().currentUser
+                                    currentUser?.let { user ->
+                                        val userData = hashMapOf(
+                                            "name" to nombreEditText.text.toString(),
+                                            "email" to emailEditText.text.toString(),
+                                        )
+                                        firestore.collection("users").document(user.uid)
+                                            .set(userData)
+                                            .addOnSuccessListener {
+                                                showMain(user.toString())
+                                            }
+                                            .addOnFailureListener { e ->
+                                                showAlert(e.message.toString())
+                                            }
+                                    }
+                                } else {
+                                    showAlert(task.exception?.message.toString())
                                 }
-                                .addOnFailureListener { e ->
-                                    showAlert(e.message.toString())
-                                }
+                            }
+                        } else {
+                            showAlert("No se encontró ningún usuario con el correo electrónico y el nombre de usuario proporcionados.")
                         }
-                    } else {
-                        showAlert(task.exception?.message.toString())
                     }
-                }
+                    .addOnFailureListener { exception -> //en caso que haya dado error
+                        showAlert("Error al verificar las credenciales: ${exception.message}")
+                    }
+
             } else {
                 showAlert("Rellena todos los campos por favor")
             }
+
         }
 
 
