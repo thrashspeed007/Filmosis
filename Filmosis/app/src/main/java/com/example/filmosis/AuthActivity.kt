@@ -3,6 +3,7 @@ package com.example.filmosis
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -15,16 +16,9 @@ import com.example.filmosis.fragments.ProviderType
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.Task
-import com.google.firebase.Firebase
 import com.google.firebase.FirebaseApp
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import java.util.Objects
 import com.google.firebase.firestore.FirebaseFirestore
 
 class AuthActivity : AppCompatActivity() {
@@ -33,25 +27,22 @@ class AuthActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
 
-
-
-    private val startForResult =
+    private val startGoogleSignInActivityForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK) {
-                val data: Intent? = result.data
-                handleGoogleSignInResult(data)
+                val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+                try {
+                    val account = task.getResult(ApiException::class.java)
+                    firebaseAuthWithGoogle(account.idToken)
+                } catch (e: ApiException) {
+                    showAlert("Error al procesar el inicio de sesión con Google.")
+                }
             }
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_auth)
-
-        FirebaseApp.initializeApp(this)
-
-
-        auth = FirebaseAuth.getInstance()
-        firestore = FirebaseFirestore.getInstance()
 
         // Setup
         session()
@@ -62,8 +53,6 @@ class AuthActivity : AppCompatActivity() {
         super.onStart()
         findViewById<LinearLayout>(R.id.authLayout).visibility = View.VISIBLE
     }
-
-
 
     private fun session() {
         val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)
@@ -77,6 +66,11 @@ class AuthActivity : AppCompatActivity() {
     }
 
     private fun setup() {
+        FirebaseApp.initializeApp(this)
+
+        auth = FirebaseAuth.getInstance()
+        firestore = FirebaseFirestore.getInstance()
+
         val nombreEditText: EditText = findViewById(R.id.nombreUsu)
         val emailEditText: EditText = findViewById(R.id.emailEditText)
         val passwordEditText: EditText = findViewById(R.id.passwordEditText)
@@ -92,21 +86,13 @@ class AuthActivity : AppCompatActivity() {
                         passwordEditText.text.toString()
                     ).addOnCompleteListener { task ->
                         if (task.isSuccessful) {// Anadimos a la base de datos si to'do sale bien
-                            val currentUser = auth.currentUser//obtenemos al usuario actual
-                            currentUser?.let { user ->// si el usuario actual no es nuulo ejecutamos el codigo que hay dentro
-                                val userData = hashMapOf(//creamos un map donde guardamos los datos del usuario
-                                    "name" to nombreEditText.text.toString(),
-                                    "email" to emailEditText.text.toString(),
-                                    //no guardamos contrasena en la base de datos ya que habria que crear metodo para cifrarla(si eso lo hacemos mas adelante) metodo creado abajo
-                                )
-                                firestore.collection("users").document(user.uid)//accedemos a la  collecion "users" y creamos un nuevo documento con el id del usauario
-                                    .set(userData)//Establecemos la informacion del usuario
-                                    .addOnSuccessListener {//este codigo se ejecutara si se ha guardado bien en nuestra base de datos Firesotre
-                                        showMain(user.toString())
-                                    }
-                                    .addOnFailureListener { e ->//en caso de que no haya sido exitosa saldra un mensaje de error
-                                        showAlert(e.message.toString())
-                                    }
+                            saveUserInFirestore(nombreEditText.text.toString(), emailEditText.text.toString()) { success ->
+                                if (success) {
+                                    guardarDatos(auth.currentUser?.email ?: "", ProviderType.BASIC.toString(), auth.currentUser?.displayName ?: "")
+                                    showMain(auth.currentUser.toString())
+                                } else {
+                                    showAlert("Error al guardar el usuario en la base de datos")
+                                }
                             }
                         } else {
                             showAlert(task.exception.toString())
@@ -116,7 +102,7 @@ class AuthActivity : AppCompatActivity() {
                     Toast.makeText(this@AuthActivity, "La contraseña debe tener al menos 6 caracteres", Toast.LENGTH_SHORT).show()
                 }
             } else {
-                showAlert("El nombre de usuario ya está en uso. Por favor, elige otro.")
+                showAlert("Rellena todos los campos porfavor.")
             }
         }
 
@@ -133,24 +119,17 @@ class AuthActivity : AppCompatActivity() {
                         if(!documents.isEmpty){
                             // si ha encontrado un usuario con emai y nombre de usuario correspondiente que siga
                             FirebaseAuth.getInstance().signInWithEmailAndPassword(emailEditText.text.toString(), passwordEditText.text.toString()).addOnCompleteListener { task ->
-                                if (task.isSuccessful) { // Anadimos a la base de datos si to'do sale bien
-                                    val currentUser = FirebaseAuth.getInstance().currentUser
-                                    currentUser?.let { user ->
-                                        val userData = hashMapOf(
-                                            "name" to nombreEditText.text.toString(),
-                                            "email" to emailEditText.text.toString(),
-                                        )
-                                        firestore.collection("users").document(user.uid)
-                                            .set(userData)
-                                            .addOnSuccessListener {
-                                                showMain(user.toString())
-                                            }
-                                            .addOnFailureListener { e ->
-                                                showAlert(e.message.toString())
-                                            }
+                                if (task.isSuccessful) {// Anadimos a la base de datos si to'do sale bien
+                                    saveUserInFirestore(nombreEditText.text.toString(), emailEditText.text.toString()) { success ->
+                                        if (success) {
+                                            guardarDatos(auth.currentUser?.email ?: "", ProviderType.BASIC.toString(), auth.currentUser?.displayName ?: "")
+                                            showMain(auth.currentUser.toString())
+                                        } else {
+                                            showAlert("Error al guardar el usuario en la base de datos")
+                                        }
                                     }
                                 } else {
-                                    showAlert(task.exception?.message.toString())
+                                    showAlert(task.exception.toString())
                                 }
                             }
                         } else {
@@ -164,20 +143,20 @@ class AuthActivity : AppCompatActivity() {
             } else {
                 showAlert("Rellena todos los campos por favor")
             }
-
         }
 
-
         googleSignInButton.setOnClickListener {
-            showLoadingDialog()
+//            showLoadingDialog()
 
             // Configuración
 
             val googleConf = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build()
 
             val googleClient = GoogleSignIn.getClient(this, googleConf)
+
             googleClient.signOut()
-            startForResult.launch(googleClient.signInIntent)
+
+            startGoogleSignInActivityForResult.launch(googleClient.signInIntent)
         }
     }
 
@@ -206,6 +185,7 @@ class AuthActivity : AppCompatActivity() {
         loadingDialog?.dismiss()
     }
 
+    // Este extra no se usa , hay que quitarlo?? en el fragmento de home se coge directamente el nombre de usuario de la db, no del extra que le pasamos aqui
     private fun showMain(userName: String) {
         //Intent creado para ir al MainActivity
         val homeIntent = Intent(this, MainActivity::class.java)
@@ -215,32 +195,44 @@ class AuthActivity : AppCompatActivity() {
         startActivity(homeIntent)
     }
 
-    private fun handleGoogleSignInResult(data: Intent?) {
-
-
-        if (data != null) {
-            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-
-            try {
-                val account = task.getResult(ApiException::class.java)
-
-                if (account != null) {
-                    val credential = GoogleAuthProvider.getCredential(account.idToken, null)
-
-                    FirebaseAuth.getInstance().signInWithCredential(credential).addOnCompleteListener {
-                        hideLoadingDialog()
-
-                        if (it.isSuccessful) {
-                            guardarDatos(account.email ?: "", ProviderType.GOOGLE.toString(), account.displayName ?:"")
-                            showMain("")
+    private fun firebaseAuthWithGoogle(idToken: String?) {
+        val credential = GoogleAuthProvider.getCredential(idToken, null)
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    saveUserInFirestore(auth.currentUser?.displayName.toString(), auth.currentUser?.email.toString()) { success ->
+                        if (success) {
+                            guardarDatos(auth.currentUser?.email ?: "", ProviderType.GOOGLE.toString(), auth.currentUser?.displayName ?: "")
+                            showMain(auth.currentUser.toString())
                         } else {
-                            showAlert(it.exception?.message.toString())
+                            showAlert("Error al guardar el usuario en la base de datos")
                         }
                     }
+                } else {
+                    showAlert(task.exception.toString())
                 }
-            } catch (e: ApiException) {
-                showAlert(e.message.toString())
             }
+    }
+
+    // Guardar contraseña también cuando se cifre...
+    private fun saveUserInFirestore(name: String, email: String, callback: (Boolean) -> Unit) {
+        val currentUser = auth.currentUser
+        currentUser?.let { user ->// si el usuario actual no es nuulo ejecutamos el codigo que hay dentro
+            val userData = hashMapOf(//creamos un map donde guardamos los datos del usuario
+                "name" to name,
+                "email" to email,
+                //no guardamos contrasena en la base de datos ya que habria que crear metodo para cifrarla(si eso lo hacemos mas adelante) metodo creado abajo
+            )
+
+            firestore.collection("users").document(user.uid)//accedemos a la  collecion "users" y creamos un nuevo documento con el id del usauario
+                .set(userData)//Establecemos la informacion del usuario
+                .addOnSuccessListener {//este codigo se ejecutara si se ha guardado bien en nuestra base de datos Firesotre
+                    callback(true)
+                }
+                .addOnFailureListener { e ->//en caso de que no haya sido exitosa saldra un mensaje de error
+                    showAlert(e.message.toString())
+                    callback(false)
+                }
         }
     }
 
@@ -261,8 +253,5 @@ class AuthActivity : AppCompatActivity() {
 //        val encodedHash = digest.digest(password.toByteArray(StandardCharsets.UTF_8))
 //        return Base64.getEncoder().encodeToString(encodedHash)
 //    }
-
-
-
 
 }

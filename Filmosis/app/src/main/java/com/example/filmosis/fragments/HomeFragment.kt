@@ -44,8 +44,5 @@ class HomeFragment : Fragment() {
             val userName = document.getString("name")//cogemos el nombre pasandole el campo de nuestra tabla
             saludoUsuTextView.text = "Hi, $userName"// Establecemos el texto de saludo con el nombre de usuario
         }
-
-
-
     }
 }
