@@ -68,10 +68,9 @@ dependencies {
     // Firebase Authentication with Play Services
     implementation("com.google.android.gms:play-services-auth:20.7.0")
 
+    // Firebase Firestore
+    implementation("com.google.firebase:firebase-firestore-ktx")
+
     // Add the dependencies for any other desired Firebase products
     // https://firebase.google.com/docs/android/setup#available-libraries
-
-    implementation("com.google.firebase:firebase-database-ktx")
-
-
 }
