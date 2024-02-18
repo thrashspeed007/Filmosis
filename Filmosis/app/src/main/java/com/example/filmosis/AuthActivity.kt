@@ -12,7 +12,10 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.filmosis.fragments.ProviderType
+import com.example.filmosis.init.FirebaseInitializer
+import com.example.filmosis.utilities.FirestoreUtilities
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
@@ -23,9 +26,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class AuthActivity : AppCompatActivity() {
 
+    private val firestore: FirebaseFirestore = FirebaseInitializer.firestoreInstance
+    private val auth: FirebaseAuth = FirebaseInitializer.authInstance
     private var loadingDialog: AlertDialog? = null
-    private lateinit var auth: FirebaseAuth
-    private lateinit var firestore: FirebaseFirestore
 
     private val startGoogleSignInActivityForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -51,7 +54,7 @@ class AuthActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        findViewById<LinearLayout>(R.id.authLayout).visibility = View.VISIBLE
+        findViewById<ConstraintLayout>(R.id.mainLayout).visibility = View.VISIBLE
     }
 
     private fun session() {
@@ -60,89 +63,24 @@ class AuthActivity : AppCompatActivity() {
         val provider = prefs.getString("provider", null)
 
         if (email != null && provider != null) {
-            findViewById<LinearLayout>(R.id.authLayout).visibility = View.INVISIBLE
-            showMain("")
+            findViewById<ConstraintLayout>(R.id.mainLayout).visibility = View.INVISIBLE
+            showMain()
         }
     }
 
     private fun setup() {
         FirebaseApp.initializeApp(this)
 
-        auth = FirebaseAuth.getInstance()
-        firestore = FirebaseFirestore.getInstance()
-
-        val nombreEditText: EditText = findViewById(R.id.nombreUsu)
-        val emailEditText: EditText = findViewById(R.id.emailEditText)
-        val passwordEditText: EditText = findViewById(R.id.passwordEditText)
         val signUpButton: Button = findViewById(R.id.signUpButton)
         val logInButton: Button = findViewById(R.id.logInButton)
         val googleSignInButton: Button = findViewById(R.id.googleSignInButton)
 
         signUpButton.setOnClickListener {
-            if (emailEditText.text.isNotEmpty() && passwordEditText.text.isNotEmpty() && nombreEditText.text.isNotEmpty()) {
-                if (passwordEditText.text.toString().length > 6) {
-                    auth.createUserWithEmailAndPassword(
-                        emailEditText.text.toString(),
-                        passwordEditText.text.toString()
-                    ).addOnCompleteListener { task ->
-                        if (task.isSuccessful) {// Anadimos a la base de datos si to'do sale bien
-                            saveUserInFirestore(nombreEditText.text.toString(), emailEditText.text.toString()) { success ->
-                                if (success) {
-                                    guardarDatos(auth.currentUser?.email ?: "", ProviderType.BASIC.toString(), auth.currentUser?.displayName ?: "")
-                                    showMain(auth.currentUser.toString())
-                                } else {
-                                    showAlert("Error al guardar el usuario en la base de datos")
-                                }
-                            }
-                        } else {
-                            showAlert(task.exception.toString())
-                        }
-                    }
-                } else {
-                    Toast.makeText(this@AuthActivity, "La contraseña debe tener al menos 6 caracteres", Toast.LENGTH_SHORT).show()
-                }
-            } else {
-                showAlert("Rellena todos los campos porfavor.")
-            }
+            startActivity(Intent(this, SignUpActivity::class.java))
         }
 
         logInButton.setOnClickListener {
-            if (emailEditText.text.isNotEmpty() && passwordEditText.text.isNotEmpty() && nombreEditText.text.isNotEmpty()) {
-                val email = emailEditText.text.toString()
-                val userName = nombreEditText.text.toString()
-                //Consultamos a nuestra base de datos si existe algun usuario con el nombre y email introducido
-
-                val userReferencia = firestore.collection("users")//cogemos la tabla de users
-                userReferencia.whereEqualTo("email", email)//comparamos si existe el email
-                    .whereEqualTo("name", userName)//comparamos si existe el nombre de ususario
-                    .get().addOnSuccessListener { documents ->//Si si existen que ejecute el resto de codigo
-                        if(!documents.isEmpty){
-                            // si ha encontrado un usuario con emai y nombre de usuario correspondiente que siga
-                            FirebaseAuth.getInstance().signInWithEmailAndPassword(emailEditText.text.toString(), passwordEditText.text.toString()).addOnCompleteListener { task ->
-                                if (task.isSuccessful) {// Anadimos a la base de datos si to'do sale bien
-                                    saveUserInFirestore(nombreEditText.text.toString(), emailEditText.text.toString()) { success ->
-                                        if (success) {
-                                            guardarDatos(auth.currentUser?.email ?: "", ProviderType.BASIC.toString(), auth.currentUser?.displayName ?: "")
-                                            showMain(auth.currentUser.toString())
-                                        } else {
-                                            showAlert("Error al guardar el usuario en la base de datos")
-                                        }
-                                    }
-                                } else {
-                                    showAlert(task.exception.toString())
-                                }
-                            }
-                        } else {
-                            showAlert("No se encontró ningún usuario con el correo electrónico y el nombre de usuario proporcionados.")
-                        }
-                    }
-                    .addOnFailureListener { exception -> //en caso que haya dado error
-                        showAlert("Error al verificar las credenciales: ${exception.message}")
-                    }
-
-            } else {
-                showAlert("Rellena todos los campos por favor")
-            }
+            startActivity(Intent(this, LogInActivity::class.java))
         }
 
         googleSignInButton.setOnClickListener {
@@ -185,12 +123,9 @@ class AuthActivity : AppCompatActivity() {
         loadingDialog?.dismiss()
     }
 
-    // Este extra no se usa , hay que quitarlo?? en el fragmento de home se coge directamente el nombre de usuario de la db, no del extra que le pasamos aqui
-    private fun showMain(userName: String) {
+    private fun showMain() {
         //Intent creado para ir al MainActivity
         val homeIntent = Intent(this, MainActivity::class.java)
-        //Pasamos nombre de usuario
-        homeIntent.putExtra("userName", userName)
 
         startActivity(homeIntent)
     }
@@ -200,10 +135,10 @@ class AuthActivity : AppCompatActivity() {
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    saveUserInFirestore(auth.currentUser?.displayName.toString(), auth.currentUser?.email.toString()) { success ->
+                    FirestoreUtilities.saveUserInFirestore(firestore, auth, auth.currentUser?.displayName.toString(), auth.currentUser?.email.toString()) { success ->
                         if (success) {
                             guardarDatos(auth.currentUser?.email ?: "", ProviderType.GOOGLE.toString(), auth.currentUser?.displayName ?: "")
-                            showMain(auth.currentUser.toString())
+                            showMain()
                         } else {
                             showAlert("Error al guardar el usuario en la base de datos")
                         }
@@ -214,35 +149,12 @@ class AuthActivity : AppCompatActivity() {
             }
     }
 
-    // Guardar contraseña también cuando se cifre...
-    private fun saveUserInFirestore(name: String, email: String, callback: (Boolean) -> Unit) {
-        val currentUser = auth.currentUser
-        currentUser?.let { user ->// si el usuario actual no es nuulo ejecutamos el codigo que hay dentro
-            val userData = hashMapOf(//creamos un map donde guardamos los datos del usuario
-                "name" to name,
-                "email" to email,
-                //no guardamos contrasena en la base de datos ya que habria que crear metodo para cifrarla(si eso lo hacemos mas adelante) metodo creado abajo
-            )
-
-            firestore.collection("users").document(user.uid)//accedemos a la  collecion "users" y creamos un nuevo documento con el id del usauario
-                .set(userData)//Establecemos la informacion del usuario
-                .addOnSuccessListener {//este codigo se ejecutara si se ha guardado bien en nuestra base de datos Firesotre
-                    callback(true)
-                }
-                .addOnFailureListener { e ->//en caso de que no haya sido exitosa saldra un mensaje de error
-                    showAlert(e.message.toString())
-                    callback(false)
-                }
-        }
-    }
-
-
-    private fun guardarDatos(email: String, provider: String,userName : String) {
+    private fun guardarDatos(email: String, provider: String, username : String) {
         // Guardado de datos
         val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
         prefs.putString("email", email)
         prefs.putString("provider", provider)
-        prefs.putString("userName", userName)
+        prefs.putString("username", username)
         prefs.apply()
     }
 
