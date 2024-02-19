@@ -2,11 +2,11 @@ package com.example.filmosis
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import com.example.filmosis.fragments.ProviderType
 import com.example.filmosis.init.FirebaseInitializer
 import com.google.firebase.auth.FirebaseAuth
@@ -28,6 +28,7 @@ class LogInActivity : AppCompatActivity() {
         val usernameEditText: EditText = findViewById(R.id.signUp_emailEditText)
         val passwordEditText: EditText = findViewById(R.id.signUp_passwordEditText)
         val logInBtn: Button = findViewById(R.id.logInButton)
+        val returnButton: Button = findViewById(R.id.logIn_returnButton)
 
         logInBtn.setOnClickListener {
             if (usernameEditText.text.isNotEmpty() && passwordEditText.text.isNotEmpty()) {
@@ -76,6 +77,10 @@ class LogInActivity : AppCompatActivity() {
                 showAlert("Rellena todos los campos por favor")
             }
         }
+
+        returnButton.setOnClickListener {
+            returnToAuthScreen()
+        }
     }
 
     private fun showAlert(error: String) {
@@ -99,6 +104,12 @@ class LogInActivity : AppCompatActivity() {
     private fun showMain() {
         //Intent creado para ir al MainActivity
         val homeIntent = Intent(this, MainActivity::class.java)
+        homeIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         startActivity(homeIntent)
+    }
+
+    private fun returnToAuthScreen() {
+        startActivity(Intent(this, AuthActivity::class.java))
+        finish()
     }
 }

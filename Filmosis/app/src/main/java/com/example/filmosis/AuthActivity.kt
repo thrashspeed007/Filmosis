@@ -3,12 +3,8 @@ package com.example.filmosis
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -126,7 +122,7 @@ class AuthActivity : AppCompatActivity() {
     private fun showMain() {
         //Intent creado para ir al MainActivity
         val homeIntent = Intent(this, MainActivity::class.java)
-
+        homeIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         startActivity(homeIntent)
     }
 
