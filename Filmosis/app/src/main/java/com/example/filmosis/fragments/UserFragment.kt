@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.example.filmosis.AuthActivity
 import com.example.filmosis.R
@@ -47,16 +48,25 @@ class UserFragment : Fragment() {
         providerTextView.text = provider
 
         logOutButton.setOnClickListener {
-            // Borrado de datos
-            val prefs =
-                requireActivity().getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)
-                    .edit()
-            prefs.clear()
-            prefs.apply()
+            AlertDialog.Builder(requireContext())
+                .setTitle("Cerrar sesión")
+                .setMessage("¿Estás seguro de que deseas cerrar sesión?")
+                .setPositiveButton("Sí") { _, _ ->
+                    // Borrado de datos
+                    val prefs =
+                        requireActivity().getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)
+                            .edit()
+                    prefs.clear()
+                    prefs.apply()
 
-            FirebaseAuth.getInstance().signOut()
+                    FirebaseAuth.getInstance().signOut()
 
-            showAuthActivity()
+                    showAuthActivity()
+                }
+                .setNegativeButton("Cancelar") { dialog, _ ->
+                    dialog.dismiss() // Cierra el diálogo sin hacer nada
+                }
+                .show()
         }
     }
 

@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.Filmosis" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-         <item name="colorPrimary">@color/lightPrimary</item>
+        <item name="colorPrimary">@color/lightPrimary</item>
         <item name="colorPrimaryDark">@color/darkPrimary</item>
         <item name="toolbarStyle">@style/Widget.MaterialComponents.Toolbar.PrimarySurface</item>
     </style>
