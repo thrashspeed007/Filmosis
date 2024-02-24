@@ -2,18 +2,197 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.HomeFragment">
 
-    <TextView
-        android:id="@+id/saludoUsu"
-        android:layout_width="0dp"
-        android:layout_height="25dp"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.022" />
+        app:layout_constraintVertical_bias="0.022">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/saludoUsu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"/>
+            <TextView
+                android:textColor="@color/white"
+                android:id="@+id/bienvenida"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/bienvenido"
+                android:textSize="26dp"/>
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/homeToolbar"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/Toolbar" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvPelisPopu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/recomendaciones"
+                android:textColor="@color/white"
+                android:textSize="26sp"
+                android:visibility="visible" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+
+                    android:text="@string/ver_mas"
+                    android:textColor="@color/lightPrimary"
+                    android:paddingLeft="112dp"/>
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="16sp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_rigth_arrow" />
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/movieRecomendedRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:reverseLayout="true" />
+<!--            -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tvPelisProx"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pel_prox"
+                    android:textColor="@color/white"
+                    android:textSize="26sp"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+
+                    android:text="@string/ver_mas"
+                    android:textColor="@color/lightPrimary"
+                    android:paddingLeft="157dp"/>
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="16sp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_rigth_arrow" />
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/moviesSoonRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:reverseLayout="true" />
+
+            <!--            -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tvPelisPopus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pel_culas_populares"
+                    android:textColor="@color/white"
+                    android:textSize="26sp"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+
+                    android:text="@string/ver_mas"
+                    android:textColor="@color/lightPrimary"
+                    android:paddingLeft="100dp"/>
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="16sp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_rigth_arrow" />
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/moviesRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:reverseLayout="true" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tvServicios"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/servicios"
+                    android:textColor="@color/white"
+                    android:textSize="26sp"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+
+                    android:text="@string/ver_mas"
+                    android:textColor="@color/lightPrimary"
+                    android:paddingLeft="220dp"/>
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="16sp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_rigth_arrow" />
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
