@@ -10,11 +10,7 @@ import com.bumptech.glide.Glide
 import com.example.filmosis.config.DatosConexion
 import com.example.filmosis.data.model.tmdb.Result
 
-interface MovieClickListener {
-    fun onMovieClick(movie: Result)
-}
-
-class MoviesAdapter(private val movies: List<Result>, private val movieClickListener: MovieClickListener) : RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
+class MoviesAdapter(private val movies: List<Result>, private val onMovieClick: (Result) -> Unit) : RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
     class MoviesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val movieImageView : ImageView = itemView.findViewById(R.id.moviePosterImageView)
         val movieTitle : TextView = itemView.findViewById(R.id.movieTitleTextView)
@@ -34,6 +30,6 @@ class MoviesAdapter(private val movies: List<Result>, private val movieClickList
         val imageUrl = DatosConexion.TMDB_IMAGE_BASE_URL + movie.poster_path
         Glide.with(holder.movieImageView.context).load(imageUrl).into(holder.movieImageView)
         holder.movieTitle.text = movie.title
-        holder.itemView.setOnClickListener {movieClickListener.onMovieClick(movie)}
+        holder.itemView.setOnClickListener {onMovieClick.invoke(movie)}
     }
 }

@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SnapHelper
-import com.example.filmosis.MovieClickListener
 import com.example.filmosis.MoviesAdapter
 import com.example.filmosis.R
 import com.example.filmosis.data.access.tmdb.MoviesAccess
@@ -52,12 +51,9 @@ class ExploreFragment : Fragment() {
                 moviesList.add(movie)
             }
 
-            moviesAdapter = MoviesAdapter(moviesList,
-                object : MovieClickListener {
-                    override fun onMovieClick(movie: Result) {
-                        Toast.makeText(requireContext(), "Puntuación media: ${(movie.vote_average)}", Toast.LENGTH_SHORT).show()
-                    }
-                })
+            moviesAdapter = MoviesAdapter(moviesList) { movieClicked ->
+                Toast.makeText(requireContext(), "Puntuación media: ${(movieClicked.vote_average)}", Toast.LENGTH_SHORT).show()
+            }
             rv.adapter = moviesAdapter
         }
     }
