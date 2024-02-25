@@ -26,4 +26,22 @@ class MoviesAccess {
             }
         })
     }
+
+    fun listPopularMoviesWithGenres(genres: List<Int>, callback: (List<Result>) -> Unit) {
+        val call = RetrofitService.tmdbApi.listPopularMoviesWithGenres(DatosConexion.API_KEY, DatosConexion.REGION, genres.joinToString(separator = "||"))
+
+        call.enqueue(object : retrofit2.Callback<RemoteResult> {
+            override fun onFailure(call: Call<RemoteResult>, t: Throwable) {
+                android.util.Log.d("MainActivity", "onFailure: " + t.message )
+            }
+
+            override fun onResponse(call: Call<RemoteResult>, response: Response<RemoteResult>) {
+                val movies = response.body()?.results
+
+                if (movies != null) {
+                    callback.invoke(movies)
+                }
+            }
+        })
+    }
 }
