@@ -5,12 +5,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.filmosis.R
+import com.example.filmosis.fragments.GenreSelectedFragment
 import com.example.filmosis.utilities.app.ResourcesMapping
 
-class GenresAdapter(private val genres: List<Pair<Int, String>>) : RecyclerView.Adapter<GenresAdapter.ViewHolder>() {
+class GenresCardViewsAdapter(private val genres: List<Pair<Int, String>>) : RecyclerView.Adapter<GenresCardViewsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.genre_cardview_template, parent, false)
@@ -22,7 +23,12 @@ class GenresAdapter(private val genres: List<Pair<Int, String>>) : RecyclerView.
         val genreName = genres[position].second
         holder.bind(genreId, genreName)
         holder.itemView.setOnClickListener {
-            Toast.makeText(holder.itemView.context, "id: $genreId, genero: $genreName", Toast.LENGTH_SHORT).show()
+            val context = holder.itemView.context
+            val fragmentManager = (context as AppCompatActivity).supportFragmentManager
+            fragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainerView, GenreSelectedFragment.newInstance(genreId, genreName))
+                .addToBackStack(null)
+                .commit()
         }
     }
 
