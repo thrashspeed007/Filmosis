@@ -7,7 +7,7 @@
     <string name="page_user">Perfil</string>
     <string name="page_social">Social</string>
 
-<!--    Explore fragment -->
+    <!--    Explore fragment -->
     <string name="genresContainerTitle">Géneros</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>

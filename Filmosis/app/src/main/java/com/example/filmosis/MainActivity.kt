@@ -53,8 +53,6 @@ class MainActivity : AppCompatActivity() {
 
         transaction.replace(R.id.fragmentContainerView, fragment)
 
-        transaction.addToBackStack(null)
-
         transaction.commit()
     }
 }

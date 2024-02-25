@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.filmosis.fragments.ProviderType
 import com.example.filmosis.init.FirebaseInitializer
-import com.example.filmosis.utilities.FirestoreUtilities
+import com.example.filmosis.utilities.firebase.FirestoreUtilities
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException

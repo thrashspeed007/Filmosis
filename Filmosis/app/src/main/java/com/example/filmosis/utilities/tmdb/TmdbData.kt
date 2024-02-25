@@ -1,9 +1,10 @@
 package com.example.filmosis.utilities.tmdb
 
-object tmdbData {
+object TmdbData {
     // Datos recogidos de la API de TMDB para usarlos sin tener que realizar la query
 
     // Actualizado: 25 Febrero 2024
+    // genre/movie/list?language=es'
     val movieGenresIds: List<Pair<Int, String>> = mapOf(
         28 to "Acción",
         12 to "Aventura",
@@ -24,5 +25,5 @@ object tmdbData {
         53 to "Suspense",
         10752 to "Bélica",
         37 to "Western"
-    ).toList()
+    ).toList().sortedBy { it.second }
 }

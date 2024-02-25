@@ -1,4 +1,4 @@
-package com.example.filmosis.utilities
+package com.example.filmosis.utilities.firebase
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore

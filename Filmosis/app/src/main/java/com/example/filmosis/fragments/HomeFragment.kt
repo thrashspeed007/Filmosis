@@ -1,7 +1,6 @@
 package com.example.filmosis.fragments
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.TextView
 import android.widget.Toast
@@ -13,7 +12,7 @@ import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SnapHelper
 
-import com.example.filmosis.MoviesAdapter
+import com.example.filmosis.adapters.MoviesAdapter
 import com.example.filmosis.R
 import com.example.filmosis.data.access.tmdb.MoviesAccess
 import com.example.filmosis.data.model.tmdb.Result
