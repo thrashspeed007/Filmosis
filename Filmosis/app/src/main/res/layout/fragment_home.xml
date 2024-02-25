@@ -63,11 +63,14 @@
                     android:paddingLeft="112dp"/>
 
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="16sp"
+                <ImageButton
+                    android:id="@+id/buttonShowAllRecomendaciones"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:src="@drawable/ic_rigth_arrow" />
+                    android:src="@drawable/ic_rigth_arrow"
+                    android:contentDescription="@string/ver_todo"
+                    style="@style/TransparentBackground"/>
 
             </LinearLayout>
 
@@ -102,11 +105,14 @@
                     android:paddingLeft="157dp"/>
 
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="16sp"
+                <ImageButton
+                    android:id="@+id/buttonShowAllProximamente"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:src="@drawable/ic_rigth_arrow" />
+                    android:src="@drawable/ic_rigth_arrow"
+                    style="@style/TransparentBackground"
+                    android:contentDescription="TODO" />
 
             </LinearLayout>
 
@@ -138,14 +144,17 @@
 
                     android:text="@string/ver_mas"
                     android:textColor="@color/lightPrimary"
-                    android:paddingLeft="100dp"/>
+                    android:paddingStart="100dp"/>
 
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="16sp"
+                <ImageButton
+                    android:id="@+id/buttonShowAll2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:src="@drawable/ic_rigth_arrow" />
+                    android:src="@drawable/ic_rigth_arrow"
+                    style="@style/TransparentBackground"
+                    android:contentDescription="TODO" />
 
             </LinearLayout>
 
@@ -177,17 +186,30 @@
 
                     android:text="@string/ver_mas"
                     android:textColor="@color/lightPrimary"
-                    android:paddingLeft="220dp"/>
+                    android:paddingStart="220dp"/>
 
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="16sp"
+                <ImageButton
+                    android:id="@+id/buttonShowAllPopulares"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:src="@drawable/ic_rigth_arrow" />
+                    android:src="@drawable/ic_rigth_arrow"
+                    style="@style/TransparentBackground"
+                    android:contentDescription="TODO" />
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/serviciosRecyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"/>
+            </LinearLayout>
 
 
         </LinearLayout>
