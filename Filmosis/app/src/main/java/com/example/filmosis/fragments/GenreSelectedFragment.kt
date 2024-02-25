@@ -5,11 +5,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.filmosis.R
+import com.example.filmosis.adapters.CarouselMoviesAdapter
+import com.example.filmosis.data.access.tmdb.MoviesAccess
+import com.example.filmosis.data.model.tmdb.Result
+import com.jackandphantom.carouselrecyclerview.CarouselLayoutManager
+import com.jackandphantom.carouselrecyclerview.CarouselRecyclerview
 
 class GenreSelectedFragment : Fragment() {
+
+    private val moviesAccess = MoviesAccess()
+
+    private var moviesListPopulares: ArrayList<Result> = ArrayList()
+
+    private lateinit var popularMoviesRv: CarouselRecyclerview
 
     companion object {
         private const val ARG_GENRE_ID = "genreId"
@@ -30,7 +43,7 @@ class GenreSelectedFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return super.onCreateView(inflater, container, savedInstanceState)
+        return inflater.inflate(R.layout.fragment_genre_selected, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -44,8 +57,22 @@ class GenreSelectedFragment : Fragment() {
 
         view.findViewById<TextView>(R.id.genreSelected_genreTitleTextView).text = genreName
 
-        val popularMoviesRv = view.findViewById<RecyclerView>(R.id.genreSelected_popularMoviesRecyclerView)
+        popularMoviesRv = view.findViewById(R.id.genreSelected_popularMoviesRecyclerView)
+        addPopularMoviesWithGenreToRv(listOf(genreId))
+    }
 
+    private fun addPopularMoviesWithGenreToRv(genres: List<Int>) {
+        moviesAccess.listPopularMoviesWithGenres(genres) { result ->
+            result.forEach { movie ->
+                moviesListPopulares.add(movie)
+            }
+
+            val moviesAdapter = CarouselMoviesAdapter(moviesListPopulares) { movieClicked ->
+                Toast.makeText(requireContext(), "Puntuación media: ${(movieClicked.vote_average)}", Toast.LENGTH_SHORT).show()
+            }
+
+            popularMoviesRv.adapter = moviesAdapter
+        }
 
     }
 }

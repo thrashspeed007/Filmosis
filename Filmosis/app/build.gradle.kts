@@ -53,6 +53,10 @@ dependencies {
     // Gson
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
 
+    // CarouselRecyclerView
+    // https://github.com/sparrow007/CarouselRecyclerview
+    implementation ("com.github.sparrow007:carouselrecyclerview:1.2.6")
+
     // Glide
     implementation ("com.github.bumptech.glide:glide:4.16.0")
 
@@ -66,7 +70,7 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
 
     // Firebase Authentication with Play Services
-    implementation("com.google.android.gms:play-services-auth:20.7.0")
+    implementation("com.google.android.gms:play-services-auth:21.0.0")
 
     // Firebase Firestore
     implementation("com.google.firebase:firebase-firestore-ktx")
