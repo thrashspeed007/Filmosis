@@ -17,6 +17,8 @@ import com.example.filmosis.MoviesAdapter
 import com.example.filmosis.R
 import com.example.filmosis.data.access.tmdb.MoviesAccess
 import com.example.filmosis.data.model.tmdb.Result
+import com.example.filmosis.fragments.Adapter.Servicio
+import com.example.filmosis.fragments.Adapter.ServicioAdapter
 
 class HomeFragment : Fragment() {
     private val moviesAccess = MoviesAccess()
@@ -74,12 +76,28 @@ class HomeFragment : Fragment() {
         snapHelper2.attachToRecyclerView(rvUpcoming)
         addMoviesUpComingToList()
 
+        //RecyclerView para las pelis recomendadas :)
         rvRecommend = view.findViewById(R.id.movieRecomendedRecyclerView)
         rvRecommend.setHasFixedSize(true)
         rvRecommend.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
         val snapHelper3: SnapHelper = LinearSnapHelper()
         snapHelper3.attachToRecyclerView(rvRecommend)
         addMoviesRecommendedToList()
+
+        //servicios
+        val recyclerView: RecyclerView = view.findViewById(R.id.serviciosRecyclerview)
+        recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+
+        val servicios = listOf(
+            Servicio(R.drawable.ic_netflix, "Netflix"),
+            Servicio(R.drawable.ic_movistar, "Movistar Plus"),
+            Servicio(R.drawable.ic_amazon_prime, "Amazon Prime"),
+            Servicio(R.drawable.ic_hbomax, "HBO max")
+
+        )
+
+        val adapter = ServicioAdapter(requireContext(), servicios)
+        recyclerView.adapter = adapter
 
 
 
