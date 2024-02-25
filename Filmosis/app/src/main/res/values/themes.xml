@@ -7,5 +7,10 @@
         <item name="toolbarStyle">@color/Toolbar</item>
     </style>
 
+    <style name="TransparentBackground">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+
     <style name="Theme.Filmosis" parent="Base.Theme.Filmosis" />
 </resources>
