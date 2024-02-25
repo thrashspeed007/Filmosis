@@ -4,7 +4,7 @@
         <!-- Customize your light theme here. -->
         <item name="colorPrimary">@color/lightPrimary</item>
         <item name="colorPrimaryDark">@color/darkPrimary</item>
-        <item name="toolbarStyle">@style/Widget.MaterialComponents.Toolbar.PrimarySurface</item>
+        <item name="toolbarStyle">@color/Toolbar</item>
     </style>
 
     <style name="Theme.Filmosis" parent="Base.Theme.Filmosis" />

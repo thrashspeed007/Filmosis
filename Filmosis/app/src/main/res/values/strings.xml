@@ -10,4 +10,15 @@
 <!--    Explore fragment -->
     <string name="genresContainerTitle">Géneros</string>
 
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="bienvenido">Bienvenido de vuelta</string>
+    <string name="search_action">Buscar</string>
+    <string name="Notificacion">Notificación</string>
+    <string name="pel_culas_populares">Películas populares</string>
+    <string name="ver_mas">Ver todo</string>
+    <string name="pel_prox">Próximamente</string>
+    <string name="Actualmente">Actualmente</string>
+    <string name="servicios">Servicios</string>
+    <string name="recomendaciones">Recomendaciones</string>
+
 </resources>

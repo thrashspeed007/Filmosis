@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
+    <color name="background">#000000</color>
+    <color name="black">#000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="lightPrimary">#FF9800</color>
     <color name="darkPrimary">#A36101</color>
+    <color name="Toolbar">#1C1C1C</color>
+
 </resources>
