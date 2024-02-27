@@ -1,4 +1,4 @@
-package com.example.filmosis.fragments.Adapter
+package com.example.filmosis.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.filmosis.R
+import com.example.filmosis.dataclass.Servicio
 
 class ServicioAdapter(private val context: Context, private val servicios: List<Servicio>) :
     RecyclerView.Adapter<ServicioAdapter.ServicioViewHolder>() {

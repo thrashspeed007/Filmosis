@@ -5,6 +5,7 @@
     android:background="@color/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/homeFragment"
     tools:context=".fragments.HomeFragment">
 
     <ScrollView
@@ -148,7 +149,7 @@
 
 
                 <ImageButton
-                    android:id="@+id/buttonShowAll2"
+                    android:id="@+id/buttonShowAllPopulares"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -189,7 +190,7 @@
                     android:paddingStart="220dp"/>
 
                 <ImageButton
-                    android:id="@+id/buttonShowAllPopulares"
+                    android:id="@+id/buttonShowAllServices"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

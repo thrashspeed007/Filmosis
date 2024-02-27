@@ -2,6 +2,8 @@ package com.example.filmosis.fragments
 import android.content.Context
 import android.os.Bundle
 import android.view.*
+import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -12,12 +14,12 @@ import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SnapHelper
 
-import com.example.filmosis.adapters.MoviesAdapter
 import com.example.filmosis.R
+import com.example.filmosis.adapters.MoviesAdapter
 import com.example.filmosis.data.access.tmdb.MoviesAccess
 import com.example.filmosis.data.model.tmdb.Result
-import com.example.filmosis.fragments.Adapter.Servicio
-import com.example.filmosis.fragments.Adapter.ServicioAdapter
+import com.example.filmosis.dataclass.Servicio
+import com.example.filmosis.adapters.ServicioAdapter
 
 class HomeFragment : Fragment() {
     private val moviesAccess = MoviesAccess()
@@ -97,6 +99,18 @@ class HomeFragment : Fragment() {
 
         val adapter = ServicioAdapter(requireContext(), servicios)
         recyclerView.adapter = adapter
+
+        //navegar
+        val button : ImageButton = view.findViewById(R.id.buttonShowAllPopulares)
+        button.setOnClickListener {
+            val fragmentManager = requireActivity().supportFragmentManager
+            val transaction = fragmentManager.beginTransaction()
+            val nuevoFragmento = VerTodoFragment()
+            transaction.replace(R.id.homeFragment, nuevoFragmento)
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
+
 
 
 
