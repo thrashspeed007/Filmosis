@@ -1,10 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="background">#000000</color>
     <color name="black">#000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="lightPrimary">#FF9800</color>
+
+<!--    Light theme colors -->
+    <color name="light_primary">#FF9800</color>
+    <color name="light_onPrimary">@color/white</color>
+    <color name="light_secondary">#058BD3</color>
+    <color name="light_onSecondary">@color/white</color>
+    <color name="light_error">#B3261E</color>
+    <color name="light_onError">@color/white</color>
+    <color name="light_background">@color/white</color>
+    <color name="light_onBackground">@color/black</color>
+    <color name="light_outline">@color/black</color>
+<!--    Dark theme colors -->
+    <color name="dark_primary">#FF9800</color>
+    <color name="dark_onPrimary">@color/white</color>
+    <color name="dark_secondary">#080078</color>
+
+<!--    Estos colores deberían quitarse...-->
     <color name="darkPrimary">#A36101</color>
     <color name="Toolbar">#1C1C1C</color>
+    <color name="background">#000000</color>
 
 </resources>

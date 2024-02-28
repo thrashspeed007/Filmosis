@@ -2,7 +2,17 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.Filmosis" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <item name="colorPrimary">@color/lightPrimary</item>
+        <item name="colorPrimary">@color/light_primary</item>
+        <item name="colorOnPrimary">@color/light_onPrimary</item>
+        <item name="colorSecondary">@color/light_secondary</item>
+        <item name="colorOnSecondary">@color/light_onSecondary</item>
+        <item name="colorError">@color/light_error</item>
+        <item name="colorOnError">@color/light_onError</item>
+        <item name="android:colorBackground">@color/light_background</item>
+        <item name="colorOnBackground">@color/light_onBackground</item>
+        <item name="colorOutline">@color/light_outline</item>
+
+<!--        Estos colores deberian quitarse una vez terminar el tema...-->
         <item name="colorPrimaryDark">@color/darkPrimary</item>
         <item name="toolbarStyle">@color/Toolbar</item>
     </style>
@@ -10,7 +20,6 @@
     <style name="TransparentBackground">
         <item name="android:background">@android:color/transparent</item>
     </style>
-
 
     <style name="Theme.Filmosis" parent="Base.Theme.Filmosis" />
 </resources>

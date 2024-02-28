@@ -60,7 +60,7 @@
                     android:layout_gravity="center"
 
                     android:text="@string/ver_mas"
-                    android:textColor="@color/lightPrimary"
+                    android:textColor="@color/light_primary"
                     android:paddingLeft="112dp"/>
 
 
@@ -102,7 +102,7 @@
                     android:layout_gravity="center"
 
                     android:text="@string/ver_mas"
-                    android:textColor="@color/lightPrimary"
+                    android:textColor="@color/light_primary"
                     android:paddingLeft="157dp"/>
 
 
@@ -144,7 +144,7 @@
                     android:layout_gravity="center"
 
                     android:text="@string/ver_mas"
-                    android:textColor="@color/lightPrimary"
+                    android:textColor="@color/light_primary"
                     android:paddingStart="100dp"/>
 
 
@@ -186,7 +186,7 @@
                     android:layout_gravity="center"
 
                     android:text="@string/ver_mas"
-                    android:textColor="@color/lightPrimary"
+                    android:textColor="@color/light_primary"
                     android:paddingStart="220dp"/>
 
                 <ImageButton
