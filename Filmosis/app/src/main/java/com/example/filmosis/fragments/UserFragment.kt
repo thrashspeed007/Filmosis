@@ -8,11 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.example.filmosis.AuthActivity
 import com.example.filmosis.ChangePasswordActivity
 import com.example.filmosis.R
+import com.example.filmosis.init.FirebaseInitializer
 import com.google.firebase.auth.FirebaseAuth
 
 enum class ProviderType {
@@ -21,7 +23,6 @@ enum class ProviderType {
 }
 
 class UserFragment : Fragment() {
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,18 +38,21 @@ class UserFragment : Fragment() {
         val prefs = requireActivity().getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)
         val email = prefs.getString("email", null)
         val provider = prefs.getString("provider", null)
-        setup(view, email ?: "", provider ?: "")
+        val username = prefs.getString("username",null)
+        setup(view, email ?: "", provider ?: "",username?:"")
     }
 
-    private fun setup(view: View, email: String, provider: String) {
+    private fun setup(view: View, email: String, provider: String,username : String) {
         val emailTextView: TextView = view.findViewById(R.id.emailTextView)
         val providerTextView: TextView = view.findViewById(R.id.providerTextView)
+        val userTextView : TextView = view.findViewById(R.id.userTextView)
         val logOutButton: Button = view.findViewById(R.id.logOutButton)
         val changePassButton : Button = view.findViewById(R.id.changePassButton)
-
+        val resetPassButon : Button = view.findViewById(R.id.resetPassButton)
 
         emailTextView.text = email
         providerTextView.text = provider
+        userTextView.text = username
 
         logOutButton.setOnClickListener {
             AlertDialog.Builder(requireContext())
@@ -75,6 +79,29 @@ class UserFragment : Fragment() {
         changePassButton.setOnClickListener {
             val intent = Intent(requireContext(), ChangePasswordActivity::class.java)
             startActivity(intent)
+        }
+
+        resetPassButon.setOnClickListener {
+            val user = FirebaseInitializer.authInstance.currentUser
+
+            val email = user?.email
+            var confirmedEmail : String = ""
+            if (email != null) {
+                if (email.isNotEmpty()) {
+                    confirmedEmail = email.toString()
+                }
+            }
+
+            FirebaseInitializer.authInstance.sendPasswordResetEmail(confirmedEmail).addOnCompleteListener{
+                    task ->
+                if (task.isSuccessful) {
+                    Toast.makeText(requireContext(),"Revisa tu correo electrónico (${confirmedEmail})",
+                        Toast.LENGTH_SHORT).show()
+                }else {
+                    Toast.makeText(requireContext(),"Error ${task.exception?.message}",
+                        Toast.LENGTH_LONG).show()
+                }
+            }
         }
     }
 

@@ -10,8 +10,8 @@ import com.google.firebase.auth.FirebaseAuth
 
 
 class ChangePasswordActivity : AppCompatActivity() {
-    private lateinit var btnChangePass : Button;
-    private lateinit var btnCancel : Button;
+    private lateinit var btnChangePass : Button
+    private lateinit var btnCancel : Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_change_password)
@@ -44,18 +44,6 @@ class ChangePasswordActivity : AppCompatActivity() {
                     Toast.makeText(this@ChangePasswordActivity,"Error ${task.exception?.message}",Toast.LENGTH_LONG).show()
                 }
             }
-//            val newPassword = "NuevaContraseña123"
-//
-//            user?.updatePassword(newPassword)
-//                ?.addOnCompleteListener { task ->
-//                    if (task.isSuccessful) {
-//                        Toast.makeText(applicationContext, "Contraseña cambiada correctamente", Toast.LENGTH_SHORT).show()
-//                        finish()
-//                    } else {
-//                        Log.d("Cambio contra",task.exception?.message ?: "")
-//                        Toast.makeText(applicationContext, "Error al cambiar la contraseña: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
-//                    }
-//                }
         }
     }
 }
