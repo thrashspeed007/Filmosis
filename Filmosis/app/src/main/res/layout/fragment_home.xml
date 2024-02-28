@@ -45,33 +45,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/tvPelisPopu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/recomendaciones"
-                android:textColor="@color/white"
-                android:textSize="26sp"
-                android:visibility="visible" />
-
                 <TextView
+                    android:id="@+id/tvPelisPopu"
                     android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/recomendaciones"
+                    android:textColor="@color/white"
+                    android:textSize="26sp"
+                    android:visibility="visible" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/buttonShowAllRecomendaciones"
+                    style="@style/TransparentBackground"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
 
                     android:text="@string/ver_mas"
-                    android:textColor="@color/light_primary"
-                    android:paddingLeft="112dp"/>
-
-
-                <ImageButton
-                    android:id="@+id/buttonShowAllRecomendaciones"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_rigth_arrow"
-                    android:contentDescription="@string/ver_todo"
-                    style="@style/TransparentBackground"/>
+                    android:textColor="@color/lightPrimary"
+                    app:icon="@drawable/ic_rigth_arrow"
+                    app:iconGravity="textEnd"
+                    app:iconTint="@color/lightPrimary"
+                    app:iconSize="15dp"
+                    android:textSize="10sp"
+                    android:textAlignment="textEnd"/>
 
             </LinearLayout>
 
@@ -96,24 +93,39 @@
                     android:textSize="26sp"
                     android:visibility="visible" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-
-                    android:text="@string/ver_mas"
-                    android:textColor="@color/light_primary"
-                    android:paddingLeft="157dp"/>
-
-
-                <ImageButton
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/buttonShowAllProximamente"
+                    style="@style/TransparentBackground"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_rigth_arrow"
-                    style="@style/TransparentBackground"
-                    android:contentDescription="TODO" />
+                    android:layout_gravity="end"
+                    android:text="@string/ver_mas"
+                    android:textColor="@color/lightPrimary"
+                    app:icon="@drawable/ic_rigth_arrow"
+                    app:iconGravity="textEnd"
+                    app:iconTint="@color/lightPrimary"
+                    app:iconSize="15dp"
+                    android:textSize="10sp"
+                    android:textAlignment="textEnd"/>
+
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_gravity="center"-->
+
+<!--                    android:text="@string/ver_mas"-->
+<!--                    android:textColor="@color/lightPrimary"-->
+<!--                    android:paddingLeft="157dp"/>-->
+
+
+<!--                <ImageButton-->
+<!--                    android:id="@+id/buttonShowAllProximamente"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:src="@drawable/ic_rigth_arrow"-->
+<!--                    style="@style/TransparentBackground"-->
+<!--                    android:contentDescription="TODO" />-->
 
             </LinearLayout>
 
@@ -138,14 +150,20 @@
                     android:textSize="26sp"
                     android:visibility="visible" />
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/buttonShowAllPopulares"
+                    style="@style/TransparentBackground"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-
+                    android:layout_gravity="end"
                     android:text="@string/ver_mas"
-                    android:textColor="@color/light_primary"
-                    android:paddingStart="100dp"/>
+                    android:textColor="@color/lightPrimary"
+                    app:icon="@drawable/ic_rigth_arrow"
+                    app:iconGravity="textEnd"
+                    app:iconTint="@color/lightPrimary"
+                    app:iconSize="15dp"
+                    android:textSize="10sp"
+                    android:textAlignment="textEnd"/>
 
 
                 <ImageButton
@@ -186,7 +204,7 @@
                     android:layout_gravity="center"
 
                     android:text="@string/ver_mas"
-                    android:textColor="@color/light_primary"
+                    android:textColor="@color/lightPrimary"
                     android:paddingStart="220dp"/>
 
                 <ImageButton

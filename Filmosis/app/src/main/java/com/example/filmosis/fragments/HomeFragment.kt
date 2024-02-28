@@ -20,6 +20,7 @@ import com.example.filmosis.data.access.tmdb.MoviesAccess
 import com.example.filmosis.data.model.tmdb.Result
 import com.example.filmosis.dataclass.Servicio
 import com.example.filmosis.adapters.ServicioAdapter
+import com.google.android.material.button.MaterialButton
 
 class HomeFragment : Fragment() {
     private val moviesAccess = MoviesAccess()
@@ -101,7 +102,7 @@ class HomeFragment : Fragment() {
         recyclerView.adapter = adapter
 
         //navegar
-        val buttonPopu : ImageButton = view.findViewById(R.id.buttonShowAllPopulares)
+        val buttonPopu : MaterialButton = view.findViewById(R.id.buttonShowAllPopulares)
         buttonPopu.setOnClickListener {
             val fragmentManager = requireActivity().supportFragmentManager
             val transaction = fragmentManager.beginTransaction()
@@ -111,7 +112,7 @@ class HomeFragment : Fragment() {
             transaction.commit()
         }
 
-        val buttonRecom : ImageButton = view.findViewById(R.id.buttonShowAllRecomendaciones)
+        val buttonRecom : MaterialButton = view.findViewById(R.id.buttonShowAllRecomendaciones)
         buttonRecom.setOnClickListener {
             val fragmentManager = requireActivity().supportFragmentManager
             val transaction = fragmentManager.beginTransaction()
@@ -121,7 +122,7 @@ class HomeFragment : Fragment() {
             transaction.commit()
         }
 
-        val button : ImageButton = view.findViewById(R.id.buttonShowAllProximamente)
+        val button : MaterialButton = view.findViewById(R.id.buttonShowAllProximamente)
         button.setOnClickListener {
             val fragmentManager = requireActivity().supportFragmentManager
             val transaction = fragmentManager.beginTransaction()
@@ -142,7 +143,7 @@ class HomeFragment : Fragment() {
             }
 
             moviesAdapter = MoviesAdapter(moviesListPopulares) { movieClicked ->
-                Toast.makeText(requireContext(), "Puntuación media: ${(movieClicked.vote_average)}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Puntuación media: ${(movieClicked.video)}", Toast.LENGTH_SHORT).show()
             }
             rvPopular.adapter = moviesAdapter
         }
