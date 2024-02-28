@@ -22,8 +22,8 @@
             android:id="@+id/explore_exploreTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="?attr/colorOnBackground"
             android:text="@string/genresContainerTitle"
-            android:textColor="@color/black"
             android:textSize="24sp" />
 
         <androidx.recyclerview.widget.RecyclerView

@@ -1,7 +1,15 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.Filmosis" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-<!--         <item name="colorPrimary">@color/darkPrimary</item> -->
+        <item name="colorPrimary">@color/dark_primary</item>
+        <item name="colorOnPrimary">@color/dark_onPrimary</item>
+        <item name="colorSecondary">@color/dark_secondary</item>
+        <item name="colorOnSecondary">@color/dark_onSecondary</item>
+        <item name="colorError">@color/dark_error</item>
+        <item name="colorOnError">@color/dark_onError</item>
+        <item name="android:colorBackground">@color/dark_background</item>
+        <item name="colorOnBackground">@color/dark_onBackground</item>
+        <item name="colorSurface">@color/dark_surface</item>
+        <item name="colorOutline">@color/dark_outline</item>
     </style>
 </resources>

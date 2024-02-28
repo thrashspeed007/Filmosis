@@ -12,11 +12,20 @@
     <color name="light_onError">@color/white</color>
     <color name="light_background">@color/white</color>
     <color name="light_onBackground">@color/black</color>
+    <color name="light_surface">@color/white</color>
     <color name="light_outline">@color/black</color>
+
 <!--    Dark theme colors -->
     <color name="dark_primary">#FF9800</color>
     <color name="dark_onPrimary">@color/white</color>
     <color name="dark_secondary">#080078</color>
+    <color name="dark_onSecondary">@color/white</color>
+    <color name="dark_error">#B3261E</color>
+    <color name="dark_onError">@color/white</color>
+    <color name="dark_background">@color/black</color>
+    <color name="dark_onBackground">@color/white</color>
+    <color name="dark_surface">@color/black</color>
+    <color name="dark_outline">@color/white</color>
 
 <!--    Estos colores deberían quitarse...-->
     <color name="darkPrimary">#A36101</color>

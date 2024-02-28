@@ -10,6 +10,7 @@
         <item name="colorOnError">@color/light_onError</item>
         <item name="android:colorBackground">@color/light_background</item>
         <item name="colorOnBackground">@color/light_onBackground</item>
+        <item name="colorSurface">@color/light_surface</item>
         <item name="colorOutline">@color/light_outline</item>
 
 <!--        Estos colores deberian quitarse una vez terminar el tema...-->
