@@ -6,15 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.filmosis.R
 import com.example.filmosis.adapters.CarouselMoviesAdapter
 import com.example.filmosis.data.access.tmdb.MoviesAccess
 import com.example.filmosis.data.model.tmdb.Result
-import com.jackandphantom.carouselrecyclerview.CarouselLayoutManager
-import com.jackandphantom.carouselrecyclerview.CarouselRecyclerview
 
 class GenreSelectedFragment : Fragment() {
 
@@ -22,7 +19,7 @@ class GenreSelectedFragment : Fragment() {
 
     private var moviesListPopulares: ArrayList<Result> = ArrayList()
 
-    private lateinit var popularMoviesRv: CarouselRecyclerview
+    private lateinit var popularMoviesRv: RecyclerView
 
     companion object {
         private const val ARG_GENRE_ID = "genreId"
