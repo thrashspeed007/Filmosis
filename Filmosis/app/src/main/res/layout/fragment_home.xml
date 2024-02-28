@@ -62,10 +62,10 @@
                     android:layout_gravity="center"
 
                     android:text="@string/ver_mas"
-                    android:textColor="@color/lightPrimary"
+                    android:textColor="@color/light_primary"
                     app:icon="@drawable/ic_rigth_arrow"
                     app:iconGravity="textEnd"
-                    app:iconTint="@color/lightPrimary"
+                    app:iconTint="@color/light_primary"
                     app:iconSize="15dp"
                     android:textSize="10sp"
                     android:textAlignment="textEnd"/>
@@ -100,32 +100,15 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:text="@string/ver_mas"
-                    android:textColor="@color/lightPrimary"
+                    android:textColor="@color/light_primary"
                     app:icon="@drawable/ic_rigth_arrow"
                     app:iconGravity="textEnd"
-                    app:iconTint="@color/lightPrimary"
+                    app:iconTint="@color/light_primary"
                     app:iconSize="15dp"
                     android:textSize="10sp"
                     android:textAlignment="textEnd"/>
 
-<!--                <TextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_gravity="center"-->
 
-<!--                    android:text="@string/ver_mas"-->
-<!--                    android:textColor="@color/lightPrimary"-->
-<!--                    android:paddingLeft="157dp"/>-->
-
-
-<!--                <ImageButton-->
-<!--                    android:id="@+id/buttonShowAllProximamente"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_gravity="center"-->
-<!--                    android:src="@drawable/ic_rigth_arrow"-->
-<!--                    style="@style/TransparentBackground"-->
-<!--                    android:contentDescription="TODO" />-->
 
             </LinearLayout>
 
@@ -157,23 +140,14 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:text="@string/ver_mas"
-                    android:textColor="@color/lightPrimary"
+                    android:textColor="@color/light_primary"
                     app:icon="@drawable/ic_rigth_arrow"
                     app:iconGravity="textEnd"
-                    app:iconTint="@color/lightPrimary"
+                    app:iconTint="@color/light_primary"
                     app:iconSize="15dp"
                     android:textSize="10sp"
                     android:textAlignment="textEnd"/>
 
-
-                <ImageButton
-                    android:id="@+id/buttonShowAllPopulares"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_rigth_arrow"
-                    style="@style/TransparentBackground"
-                    android:contentDescription="TODO" />
 
             </LinearLayout>
 
@@ -204,7 +178,7 @@
                     android:layout_gravity="center"
 
                     android:text="@string/ver_mas"
-                    android:textColor="@color/lightPrimary"
+                    android:textColor="@color/light_primary"
                     android:paddingStart="220dp"/>
 
                 <ImageButton
