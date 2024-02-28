@@ -59,8 +59,7 @@
                     style="@style/TransparentBackground"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-
+                    android:layout_gravity="end"
                     android:text="@string/ver_mas"
                     android:textColor="@color/light_primary"
                     app:icon="@drawable/ic_rigth_arrow"
