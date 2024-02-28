@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Nombre del Servicio"
-            android:textColor="@color/lightPrimary"
+            android:textColor="@color/light_primary"
             android:textSize="16sp"
             android:textStyle="bold" />
 
