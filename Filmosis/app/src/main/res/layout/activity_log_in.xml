@@ -21,30 +21,37 @@
             android:id="@+id/signUp_emailEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="?attr/colorOnBackground"
             android:ems="10"
             android:hint="Nombre de usuario"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            android:textColor="?attr/colorOnBackground"
+            android:textCursorDrawable="@null" />
 
         <EditText
             android:id="@+id/signUp_passwordEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="?attr/colorOnBackground"
             android:ems="10"
             android:hint="Contraseña"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:textColor="?attr/colorOnBackground"
+            android:textCursorDrawable="@null" />
 
         <Button
             android:id="@+id/logInButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Iniciar sesión" />
+            android:text="INICIAR SESIÓN" />
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right"
-            android:text="¿Olvidaste tu contraseña?" />
+            android:text="¿Olvidaste tu contraseña?"
+            android:textColor="?attr/colorOnBackground" />
     </LinearLayout>
 
     <Button
@@ -53,11 +60,14 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:backgroundTint="@android:color/transparent"
+        android:backgroundTint="?attr/colorSurface"
         android:drawableLeft="@drawable/ic_arrow_back_24"
-        android:text="Volver"
-        android:textColor="@color/black"
+        android:drawableTint="?attr/colorOnBackground"
+        android:text="VOLVER"
+        android:textColor="?attr/colorOnBackground"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="?attr/colorOnBackground"
+        app:strokeWidth="2dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

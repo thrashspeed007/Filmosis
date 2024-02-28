@@ -66,13 +66,15 @@
                 android:id="@+id/emailLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Email: " />
+                android:text="Email: "
+                android:textColor="?attr/colorOnBackground" />
 
             <TextView
                 android:id="@+id/emailTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="4dp" />
+                android:layout_marginVertical="4dp"
+                android:textColor="?attr/colorOnBackground" />
 
         </LinearLayout>
 
@@ -93,13 +95,15 @@
                 android:id="@+id/userLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Usuario: " />
+                android:text="Usuario: "
+                android:textColor="?attr/colorOnBackground" />
 
             <TextView
                 android:id="@+id/userTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="4dp" />
+                android:layout_marginVertical="4dp"
+                android:textColor="?attr/colorOnBackground" />
 
         </LinearLayout>
 
@@ -107,13 +111,15 @@
             android:id="@+id/providerLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Provider: " />
+            android:text="Provider: "
+            android:textColor="?attr/colorOnBackground" />
 
         <TextView
             android:id="@+id/providerTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="4dp" />
+            android:layout_marginVertical="4dp"
+            android:textColor="?attr/colorOnBackground" />
 
         <Button
             android:id="@+id/logOutButton"

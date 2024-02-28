@@ -29,7 +29,7 @@
         android:visibility="invisible"
         android:text="Película"
         android:textAlignment="center"
-        android:textColor="@color/black"
+        android:textColor="?attr/colorOnBackground"
         android:textSize="20sp" />
 
 </LinearLayout>

@@ -21,24 +21,26 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <TextView
                 android:id="@+id/saludoUsu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"/>
+                android:textColor="?attr/colorOnBackground" />
+
             <TextView
-                android:textColor="@color/white"
                 android:id="@+id/bienvenida"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/bienvenido"
-                android:textSize="26dp"/>
+                android:textColor="?attr/colorOnBackground"
+                android:textSize="26dp" />
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/homeToolbar"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@color/Toolbar" />
+                android:background="?attr/colorSurface" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -87,7 +89,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/pel_prox"
-                    android:textColor="@color/white"
+                    android:textColor="?attr/colorOnBackground"
                     android:textSize="26sp"
                     android:visibility="visible" />
 
@@ -126,7 +128,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/pel_culas_populares"
-                    android:textColor="@color/white"
+                    android:textColor="?attr/colorOnBackground"
                     android:textSize="26sp"
                     android:visibility="visible" />
 
@@ -165,7 +167,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/servicios"
-                    android:textColor="@color/white"
+                    android:textColor="?attr/colorOnBackground"
                     android:textSize="26sp"
                     android:visibility="visible" />
 

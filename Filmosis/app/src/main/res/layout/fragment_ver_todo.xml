@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/fragment_container_verTodo"
-    android:background="?attr/colorOnBackground"
     tools:context=".fragments.VerTodoFragment">
 
     <ScrollView
@@ -36,7 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Peliculas populares"
-                 />
+                android:textColor="?attr/colorOnBackground" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewVerTodo"
@@ -50,7 +49,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Peliculas recomendadas"
-                android:textColor="@color/white" />
+                android:textColor="?attr/colorOnBackground" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewVerTodoRecomendados"
@@ -64,7 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Proximamente"
-                android:textColor="@color/white" />
+                android:textColor="?attr/colorOnBackground" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewVerTodoProximamente"
