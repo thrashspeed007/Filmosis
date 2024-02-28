@@ -101,7 +101,27 @@ class HomeFragment : Fragment() {
         recyclerView.adapter = adapter
 
         //navegar
-        val button : ImageButton = view.findViewById(R.id.buttonShowAllPopulares)
+        val buttonPopu : ImageButton = view.findViewById(R.id.buttonShowAllPopulares)
+        buttonPopu.setOnClickListener {
+            val fragmentManager = requireActivity().supportFragmentManager
+            val transaction = fragmentManager.beginTransaction()
+            val nuevoFragmento = VerTodoFragment()
+            transaction.replace(R.id.homeFragment, nuevoFragmento)
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
+
+        val buttonRecom : ImageButton = view.findViewById(R.id.buttonShowAllRecomendaciones)
+        buttonRecom.setOnClickListener {
+            val fragmentManager = requireActivity().supportFragmentManager
+            val transaction = fragmentManager.beginTransaction()
+            val nuevoFragmento = VerTodoFragment()
+            transaction.replace(R.id.homeFragment, nuevoFragmento)
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
+
+        val button : ImageButton = view.findViewById(R.id.buttonShowAllProximamente)
         button.setOnClickListener {
             val fragmentManager = requireActivity().supportFragmentManager
             val transaction = fragmentManager.beginTransaction()
@@ -159,6 +179,7 @@ class HomeFragment : Fragment() {
     }
 
 
+    @Deprecated("Deprecated in Java")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.app_bar_search -> {
@@ -170,15 +191,18 @@ class HomeFragment : Fragment() {
                 Toast.makeText(requireContext(), "Notificacion", Toast.LENGTH_SHORT).show()
                 true
             }
-            else -> super.onOptionsItemSelected(item)
+            else -> false
         }
     }
 
 
+    @Deprecated("Deprecated in Java", ReplaceWith(
+        "inflater.inflate(R.menu.options_menu, menu)",
+        "com.example.filmosis.R"
+    )
+    )
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.options_menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-
-
     }
+
 }
