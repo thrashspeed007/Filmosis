@@ -2,7 +2,6 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/homeFragment"
@@ -50,7 +49,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/recomendaciones"
-                    android:textColor="@color/white"
+                    android:textColor="?attr/colorOnBackground"
                     android:textSize="26sp"
                     android:visibility="visible" />
 
@@ -61,10 +60,10 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:text="@string/ver_mas"
-                    android:textColor="@color/light_primary"
+                    android:textColor="?attr/colorPrimary"
                     app:icon="@drawable/ic_rigth_arrow"
                     app:iconGravity="textEnd"
-                    app:iconTint="@color/light_primary"
+                    app:iconTint="?attr/colorPrimary"
                     app:iconSize="15dp"
                     android:textSize="10sp"
                     android:textAlignment="textEnd"/>
@@ -99,10 +98,10 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:text="@string/ver_mas"
-                    android:textColor="@color/light_primary"
+                    android:textColor="?attr/colorPrimary"
                     app:icon="@drawable/ic_rigth_arrow"
                     app:iconGravity="textEnd"
-                    app:iconTint="@color/light_primary"
+                    app:iconTint="?attr/colorPrimary"
                     app:iconSize="15dp"
                     android:textSize="10sp"
                     android:textAlignment="textEnd"/>
@@ -118,7 +117,6 @@
                 android:orientation="horizontal"
                 app:reverseLayout="true" />
 
-            <!--            -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -139,10 +137,10 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:text="@string/ver_mas"
-                    android:textColor="@color/light_primary"
+                    android:textColor="?attr/colorPrimary"
                     app:icon="@drawable/ic_rigth_arrow"
                     app:iconGravity="textEnd"
-                    app:iconTint="@color/light_primary"
+                    app:iconTint="?attr/colorPrimary"
                     app:iconSize="15dp"
                     android:textSize="10sp"
                     android:textAlignment="textEnd"/>
@@ -171,23 +169,22 @@
                     android:textSize="26sp"
                     android:visibility="visible" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
 
-                    android:text="@string/ver_mas"
-                    android:textColor="@color/light_primary"
-                    android:paddingStart="220dp"/>
-
-                <ImageButton
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/buttonShowAllServices"
+                    style="@style/TransparentBackground"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_rigth_arrow"
-                    style="@style/TransparentBackground"
-                    android:contentDescription="TODO" />
+                    android:layout_gravity="end"
+                    android:text="@string/ver_mas"
+                    android:textColor="?attr/colorPrimary"
+                    app:icon="@drawable/ic_rigth_arrow"
+                    app:iconGravity="textEnd"
+                    app:iconTint="?attr/colorPrimary"
+                    app:iconSize="15dp"
+                    android:textSize="10sp"
+                    android:textAlignment="textEnd"/>
+
 
             </LinearLayout>
 

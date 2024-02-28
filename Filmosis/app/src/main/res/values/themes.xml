@@ -22,5 +22,16 @@
         <item name="android:background">@android:color/transparent</item>
     </style>
 
+    <style name="mascara">
+        <item name="cornerSizeTopRight">75dp</item>
+        <item name="cornerFamilyTopRight">rounded</item>
+        <item name="cornerSizeTopLeft">75dp</item>
+        <item name="cornerFamilyTopLeft">rounded</item>
+        <item name="cornerSizeBottomLeft">75dp</item>
+        <item name="cornerFamilyBottomLeft">rounded</item>
+        <item name="cornerSizeBottomRight">75dp</item>
+        <item name="cornerFamilyBottomRight">rounded</item>
+    </style>
+
     <style name="Theme.Filmosis" parent="Base.Theme.Filmosis" />
 </resources>

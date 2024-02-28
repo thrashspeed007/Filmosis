@@ -57,6 +57,10 @@ dependencies {
     // https://github.com/sparrow007/CarouselRecyclerview
     implementation ("com.github.sparrow007:carouselrecyclerview:1.2.6")
 
+    //CircleImage
+    //https://github.com/hdodenhof/CircleImageView
+    implementation("de.hdodenhof:circleimageview:3.1.0")
+
     // Glide
     implementation ("com.github.bumptech.glide:glide:4.16.0")
 
@@ -74,6 +78,7 @@ dependencies {
 
     // Firebase Firestore
     implementation("com.google.firebase:firebase-firestore-ktx")
+
 
     // Add the dependencies for any other desired Firebase products
     // https://firebase.google.com/docs/android/setup#available-libraries

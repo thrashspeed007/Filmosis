@@ -4,11 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
     android:id="@+id/fragment_container_verTodo"
+    android:background="?attr/colorOnBackground"
     tools:context=".fragments.VerTodoFragment">
 
     <ScrollView
+        android:id="@+id/scrollViewVerTodo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -31,13 +32,42 @@
                 android:src="@drawable/baseline_arrow_back_24" />
 
             <TextView
+                android:id="@+id/tvPopulares"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Peliculas populares"
-                android:textColor="@color/white" />
+                 />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewVerTodo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="3" />
+
+            <TextView
+                android:id="@+id/tvRecomendados"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Peliculas recomendadas"
+                android:textColor="@color/white" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewVerTodoRecomendados"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="3" />
+
+            <TextView
+                android:id="@+id/tvProximamente"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Proximamente"
+                android:textColor="@color/white" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewVerTodoProximamente"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"

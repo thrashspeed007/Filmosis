@@ -4,6 +4,37 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
+    <!-- ImageView con la imagen logoFilmosisPremium -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/logoImageView"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:src="@drawable/logofilmosispremium"
+            android:scaleType="centerCrop"
+            android:contentDescription="Foto de perfil" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_edit_24"
+            android:layout_marginStart="8dp"
+            android:contentDescription="Editar" />
+
+    </LinearLayout>
+
+
+
+
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="409dp"
@@ -16,23 +47,67 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/emailLabel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Email:" />
+        <!-- Resto del contenido de tu layout -->
 
-        <TextView
-            android:id="@+id/emailTextView"
+        <LinearLayout
+            android:id="@+id/emailLabelLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="4dp" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_email_24"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/emailLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Email: " />
+
+            <TextView
+                android:id="@+id/emailTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="4dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/userLabelLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_account_circle_24"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/userLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Usuario: " />
+
+            <TextView
+                android:id="@+id/userTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="4dp" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/providerLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Provider:" />
+            android:text="Provider: " />
 
         <TextView
             android:id="@+id/providerTextView"
@@ -45,17 +120,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="8dp"
-            android:backgroundTint="@color/darkPrimary"
-            android:text="Cerrar sesión" />
+            android:backgroundTint="?attr/colorPrimary"
+            android:textColor="?attr/colorSurface"
+            android:text="Cerrar sesión"
+            android:drawableLeft="@drawable/baseline_logout_24"/>
 
         <Button
             android:id="@+id/changePassButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="8dp"
-            android:backgroundTint="@color/darkPrimary"
+            android:textColor="?attr/colorSurface"
+            android:backgroundTint="?attr/colorPrimary"
+            android:drawableLeft="@drawable/baseline_mail_lock_24"
             android:text="Cambiar contraseña" />
-    </LinearLayout>
 
+        <Button
+            android:id="@+id/resetPassButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="8dp"
+            android:backgroundTint="?attr/colorPrimary"
+            android:textColor="?attr/colorSurface"
+            android:text="Resetear contraseña"
+            android:drawableLeft="@drawable/baseline_lock_reset_24"/>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
