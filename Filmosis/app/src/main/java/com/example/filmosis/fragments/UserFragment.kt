@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.example.filmosis.AuthActivity
+import com.example.filmosis.ChangePasswordActivity
 import com.example.filmosis.R
 import com.google.firebase.auth.FirebaseAuth
 
@@ -43,6 +44,8 @@ class UserFragment : Fragment() {
         val emailTextView: TextView = view.findViewById(R.id.emailTextView)
         val providerTextView: TextView = view.findViewById(R.id.providerTextView)
         val logOutButton: Button = view.findViewById(R.id.logOutButton)
+        val changePassButton : Button = view.findViewById(R.id.changePassButton)
+
 
         emailTextView.text = email
         providerTextView.text = provider
@@ -67,6 +70,11 @@ class UserFragment : Fragment() {
                     dialog.dismiss() // Cierra el diálogo sin hacer nada
                 }
                 .show()
+        }
+
+        changePassButton.setOnClickListener {
+            val intent = Intent(requireContext(), ChangePasswordActivity::class.java)
+            startActivity(intent)
         }
     }
 

@@ -47,6 +47,14 @@
             android:layout_marginVertical="8dp"
             android:backgroundTint="@color/darkPrimary"
             android:text="Cerrar sesión" />
+
+        <Button
+            android:id="@+id/changePassButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="8dp"
+            android:backgroundTint="@color/darkPrimary"
+            android:text="Cambiar contraseña" />
     </LinearLayout>
 
 
