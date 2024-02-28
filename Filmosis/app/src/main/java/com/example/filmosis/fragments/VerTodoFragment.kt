@@ -1,21 +1,19 @@
 package com.example.filmosis.fragments
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ScrollView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.filmosis.R
 import com.example.filmosis.adapters.GridRecyclerViewAdapter
 import com.example.filmosis.data.access.tmdb.MoviesAccess
 import com.example.filmosis.data.model.tmdb.Result
-import com.example.filmosis.dataclass.Pelicula
 import com.google.android.material.button.MaterialButton
 
 class VerTodoFragment : Fragment(), GridRecyclerViewAdapter.OnItemClickListener {
@@ -72,10 +70,14 @@ class VerTodoFragment : Fragment(), GridRecyclerViewAdapter.OnItemClickListener 
             parentFragmentManager.popBackStack()
         }
 
-
-        //inflamos la vista
-        //populares
-//        val buttonVerTodoPopulares: MaterialButton = view.findViewById(R.id.buttonShowAllPopulares)
+//        val fragmentB: HomeFragment? =
+//            requireFragmentManager().findFragmentByTag("homeFragment") as HomeFragment?
+//
+//
+//
+//        //inflamos la vista
+//        //populares
+//        val buttonVerTodoPopulares: MaterialButton = fragmentB?.view.findViewById(R.id.buttonShowAllPopulares)
 //        buttonVerTodoPopulares.setOnClickListener {
 //            scrollToSection(R.id.tvPopulares)
 //        }
