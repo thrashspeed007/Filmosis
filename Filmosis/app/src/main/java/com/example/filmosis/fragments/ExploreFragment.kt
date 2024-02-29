@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,7 +33,26 @@ class ExploreFragment : Fragment() {
     }
 
     private fun setup() {
+        val searchView: SearchView = rootView.findViewById(R.id.explore_searchView)
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                if (query.isNotEmpty()) {
+                    performSearch(query)
+                    return true
+                }
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                return false
+            }
+        })
         initGenreCardViews()
+    }
+
+    private fun performSearch(query: String) {
+        // TODO
+        // LLAMAR A FRAGMENTO DE MOVIESLIST CON LA QUERY COMO ARGUMENTO EN MAPA...
     }
 
     private fun initGenreCardViews() {

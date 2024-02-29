@@ -36,5 +36,12 @@ interface TmdbApiInterface {
         @Query("with_genres") genres: String
     ): Call<RemoteResult>
 
+    @GET("search/movie?language=es-ES")
+    fun searchMovie(
+        @Query("api_key") apiKey: String,
+        @Query("region") region: String,
+        @Query("query") query: String
+    ): Call<RemoteResult>
+
 }
 

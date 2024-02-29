@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+    <!-- Dark application theme. -->
     <style name="Base.Theme.Filmosis" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">@color/dark_primary</item>
         <item name="colorOnPrimary">@color/dark_onPrimary</item>
@@ -10,6 +10,10 @@
         <item name="android:colorBackground">@color/dark_background</item>
         <item name="colorOnBackground">@color/dark_onBackground</item>
         <item name="colorSurface">@color/dark_surface</item>
+        <item name="colorSurfaceVariant">@color/dark_surfaceVariant</item>
+        <item name="colorOnSurface">@color/dark_onSurface</item>
+        <item name="colorOnSurfaceVariant">@color/dark_onSurfaceVariant</item>
         <item name="colorOutline">@color/dark_outline</item>
+        <item name="colorAccent">@color/dark_accent</item>
     </style>
 </resources>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="8dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="?attr/colorSurfaceVariant">
+
+        <!-- Movie Poster -->
+        <ImageView
+            android:id="@+id/itemMovieSearched_imagePoster"
+            android:layout_width="80dp"
+            android:layout_height="120dp"
+            android:layout_alignParentStart="true"
+            android:contentDescription=""
+            android:scaleType="centerCrop"
+            android:src="@drawable/logofilmosispremium" />
+
+        <!-- Movie Details -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/itemMovieSearched_imagePoster"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <!-- Movie Name -->
+            <TextView
+                android:id="@+id/itemMovieSearched_movieName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Movie Name"
+                android:textColor="?attr/colorOnSurface"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <!-- Movie Genre -->
+            <TextView
+                android:id="@+id/itemMovieSearched_movieGenres"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Action, Adventure"
+                android:textColor="?attr/colorOnSurface"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/itemMovieSearched_imagePoster"
+            android:layout_toEndOf="@id/itemMovieSearched_imagePoster"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <!-- Movie Average Vote -->
+            <TextView
+                android:id="@+id/itemMovieSearched_textAverageVote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Average Vote: 8.5"
+                android:textColor="?attr/colorOnSurfaceVariant"
+                android:textSize="14sp" />
+
+            <!-- Movie Release Date -->
+            <TextView
+                android:id="@+id/itemMovieSearched_textReleaseDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Release Date: January 1, 2023"
+                android:textColor="?attr/colorOnSurfaceVariant"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+    </RelativeLayout>
+</com.google.android.material.card.MaterialCardView>

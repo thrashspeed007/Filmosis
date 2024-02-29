@@ -11,7 +11,11 @@
         <item name="android:colorBackground">@color/light_background</item>
         <item name="colorOnBackground">@color/light_onBackground</item>
         <item name="colorSurface">@color/light_surface</item>
+        <item name="colorSurfaceVariant">@color/light_surfaceVariant</item>
+        <item name="colorOnSurface">@color/light_onSurface</item>
+        <item name="colorOnSurfaceVariant">@color/light_onSurfaceVariant</item>
         <item name="colorOutline">@color/light_outline</item>
+        <item name="colorAccent">@color/light_accent</item>
 
 <!--        Estos colores deberian quitarse una vez terminar el tema...-->
         <item name="colorPrimaryDark">@color/darkPrimary</item>

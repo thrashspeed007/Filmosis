@@ -1,5 +1,6 @@
 package com.example.filmosis.data.access.tmdb
 
+import android.util.Log
 import com.example.filmosis.config.DatosConexion
 import com.example.filmosis.data.model.tmdb.RemoteResult
 import com.example.filmosis.data.model.tmdb.Result
@@ -16,7 +17,7 @@ class MoviesAccess {
 
         call.enqueue(object : retrofit2.Callback<RemoteResult> {
             override fun onFailure(call: Call<RemoteResult>, t: Throwable) {
-                android.util.Log.d("MainActivity", "onFailure: " + t.message )
+                Log.d("MoviesAccess", "listPopularMovies onFailure: " + t.message )
             }
 
             override fun onResponse(call: Call<RemoteResult>, response: Response<RemoteResult>) {
@@ -34,7 +35,7 @@ class MoviesAccess {
 
         call.enqueue(object : retrofit2.Callback<RemoteResult> {
             override fun onFailure(call: Call<RemoteResult>, t: Throwable) {
-                android.util.Log.d("MainActivity", "onFailure: " + t.message )
+                Log.d("MoviesAccess", "listPopularMoviesWithGenres onFailure: " + t.message )
             }
 
             override fun onResponse(call: Call<RemoteResult>, response: Response<RemoteResult>) {
@@ -52,7 +53,7 @@ class MoviesAccess {
         val call = RetrofitService.tmdbApi.listUpcomingMovies(DatosConexion.API_KEY, DatosConexion.REGION,currentDate )
         call.enqueue(object : retrofit2.Callback<RemoteResult> {
             override fun onFailure(call: Call<RemoteResult>, t: Throwable) {
-                android.util.Log.d("MainActivity", "onFailure: " + t.message )
+                Log.d("MoviesAccess", "listUpcomingMovies onFailure: " + t.message )
             }
 
             override fun onResponse(call: Call<RemoteResult>, response: Response<RemoteResult>) {
@@ -70,7 +71,7 @@ class MoviesAccess {
 
         call.enqueue(object : retrofit2.Callback<RemoteResult> {
             override fun onFailure(call: Call<RemoteResult>, t: Throwable) {
-                android.util.Log.d("MainActivity", "onFailure: " + t.message )
+                Log.d("MoviesAccess", "listRecommendedMovies onFailure: " + t.message )
             }
 
             override fun onResponse(call: Call<RemoteResult>, response: Response<RemoteResult>) {
@@ -83,7 +84,23 @@ class MoviesAccess {
         })
     }
 
+    fun searchMovie(query: String, callback: (List<Result>) -> Unit) {
+        val call = RetrofitService.tmdbApi.searchMovie(DatosConexion.API_KEY, DatosConexion.REGION, query)
 
+        call.enqueue(object : retrofit2.Callback<RemoteResult> {
+            override fun onFailure(call: Call<RemoteResult>, t: Throwable) {
+                Log.d("MoviesAccess", "searchMovie onFailure: " + t.message)
+            }
+
+            override fun onResponse(call: Call<RemoteResult>, response: Response<RemoteResult>) {
+                val movies = response.body()?.results
+
+                if (movies != null) {
+                    callback.invoke(movies)
+                }
+            }
+        })
+    }
 
     //Lo necesito para hacer la consulta a la bd
     private fun getCurrentDate(): String {
@@ -91,10 +108,4 @@ class MoviesAccess {
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
         return currentDate.format(formatter)
     }
-
-
-
-
-
-
 }
