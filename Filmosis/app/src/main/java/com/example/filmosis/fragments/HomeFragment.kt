@@ -6,6 +6,7 @@ import android.view.*
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ScrollView
+import android.widget.SearchView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -59,14 +60,22 @@ class HomeFragment : Fragment() {
         val prefs = requireActivity().getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)
         val username = prefs.getString("username", null)
 
+        val searchView: SearchView = view.findViewById(R.id.home_searchView)
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                if (query.isNotEmpty()) {
+                    performSearch(query)
+                    return true
+                }
+                return false
+            }
 
+            override fun onQueryTextChange(newText: String): Boolean {
+                return false
+            }
+        })
 
         saludoUsuTextView.text = "Hi, $username"
-
-        val toolbar: Toolbar = view.findViewById(R.id.homeToolbar)
-        // Establecer la barra de herramientas como la barra de soporte de la actividad
-        (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
-
 
         //RecyclerView para las peliculas populares
         rvPopular = view.findViewById(R.id.moviesRecyclerView)
@@ -144,6 +153,15 @@ class HomeFragment : Fragment() {
 
 
     }
+
+    private fun performSearch(query: String) {
+        val fragmentManager = requireActivity().supportFragmentManager
+        fragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainerView, MoviesSearchedFragment.newInstance(query))
+            .addToBackStack(null)
+            .commit()
+    }
+
     private fun scrollToSection(sectionId: Int) {
         val sectionView = view?.findViewById<View>(sectionId)
         sectionView?.let { view ->

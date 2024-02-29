@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.filmosis.R
 import com.example.filmosis.adapters.ListedMoviesAdapter
@@ -60,16 +61,14 @@ class MoviesSearchedFragment : Fragment() {
             result.forEach { movie ->
                 moviesList.add(movie)
             }
-        }
 
-        val moviesAdapter = ListedMoviesAdapter(moviesList) { movieClicked ->
-            // TODO
-            // LLEVAR A PANTALLA DE ACTIVIDAD DE PELICULAS
-            Toast.makeText(requireContext(), "xd", Toast.LENGTH_SHORT).show()
-        }
+            val moviesAdapter = ListedMoviesAdapter(moviesList) { movieClicked ->
+                // TODO
+                // LLEVAR A PANTALLA DE ACTIVIDAD DE PELICULAS
+            }
 
-        rv.adapter = moviesAdapter
+            rv.adapter = moviesAdapter
+            rv.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+        }
     }
-
-
 }
