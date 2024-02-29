@@ -2,15 +2,12 @@ package com.example.filmosis.fragments
 
 
 
+import android.content.Intent
 import android.os.Bundle
-import android.os.Debug
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
-import android.widget.ScrollView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -19,7 +16,6 @@ import com.example.filmosis.R
 import com.example.filmosis.adapters.GridRecyclerViewAdapter
 import com.example.filmosis.data.access.tmdb.MoviesAccess
 import com.example.filmosis.data.model.tmdb.Result
-import com.google.android.material.button.MaterialButton
 
 
 class VerTodoFragment : Fragment(), GridRecyclerViewAdapter.OnItemClickListener {
@@ -126,7 +122,20 @@ class VerTodoFragment : Fragment(), GridRecyclerViewAdapter.OnItemClickListener 
 ////        sView.post(Runnable { sView.scrollTo(sViewX, sViewY) })
 //    }
     override fun onItemClick(movie: Result) {
-        // Aquí puedes manejar el clic en la película
-        Toast.makeText(requireContext(), "hOLA", Toast.LENGTH_SHORT).show()
+        val movieId = movie.id
+        val bundle = Bundle().apply {
+            putInt("movieId", movieId)
+        }
+
+        //Me llevo la inforamcion para luego recuperarlo en el onCreateView del fragment peliculaseleccionada
+        val nuevoFragmento = PeliculaSeleccionadaFragment().apply {
+            arguments = bundle
+        }
+
+        val fragmentManager = requireActivity().supportFragmentManager
+        val transaction = fragmentManager.beginTransaction()
+        transaction.replace(R.id.fragment_container_verTodo, nuevoFragmento)
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
 }

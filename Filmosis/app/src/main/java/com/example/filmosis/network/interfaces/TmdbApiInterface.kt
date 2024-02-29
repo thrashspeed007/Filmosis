@@ -1,6 +1,7 @@
 package com.example.filmosis.network.interfaces
 
 import com.example.filmosis.data.model.tmdb.RemoteResult
+import com.example.filmosis.dataclass.MovieDetailsResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -42,6 +43,13 @@ interface TmdbApiInterface {
         @Query("region") region: String,
         @Query("query") query: String
     ): Call<RemoteResult>
+
+    @GET("movie/{movie_id}")
+    fun getMovieDetails(
+        @Path("movie_id") movieId: Int,
+        @Query("api_key") apiKey: String,
+        @Query("append_to_response") appendToResponse: String = "videos"
+    ): Call<MovieDetailsResponse>
 
 }
 

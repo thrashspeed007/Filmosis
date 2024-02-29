@@ -4,8 +4,10 @@ import android.util.Log
 import com.example.filmosis.config.DatosConexion
 import com.example.filmosis.data.model.tmdb.RemoteResult
 import com.example.filmosis.data.model.tmdb.Result
+import com.example.filmosis.dataclass.MovieDetailsResponse
 import com.example.filmosis.network.RetrofitService
 import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Response
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -97,6 +99,28 @@ class MoviesAccess {
 
                 if (movies != null) {
                     callback.invoke(movies)
+                }
+            }
+        })
+    }
+
+    //Para conseguir el link del video
+    fun getMovieDetails(movieId: Int, callback: (String?) -> Unit) {
+        val call = RetrofitService.tmdbApi.getMovieDetails(movieId, DatosConexion.API_KEY, "videos")
+
+        call.enqueue(object : Callback<MovieDetailsResponse> {
+            override fun onFailure(call: Call<MovieDetailsResponse>, t: Throwable) {
+                Log.d("MoviesAccess", "getMovieDetails onFailure: " + t.message)
+                callback.invoke(null)
+            }
+
+            override fun onResponse(call: Call<MovieDetailsResponse>, response: Response<MovieDetailsResponse>) {
+                val videoKey = response.body()?.videos?.results?.firstOrNull()?.key
+                if (videoKey != null) {
+                    val videoUrl = "https://www.youtube.com/watch?v=$videoKey"
+                    callback.invoke(videoUrl)
+                } else {
+                    callback.invoke(null)
                 }
             }
         })

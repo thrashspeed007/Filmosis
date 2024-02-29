@@ -37,6 +37,9 @@ class HomeFragment : Fragment() {
     private var moviesListPopulares: ArrayList<Result> = ArrayList()
     private var moviesListSoon: ArrayList<Result> = ArrayList()
     private var recommendedMovies: ArrayList<Result> = ArrayList()
+//    private lateinit var tvRecom: TextView
+//    private lateinit var tvProx: TextView
+//    private lateinit var tvPopu: TextView
 
 
     private lateinit var moviesAdapter: MoviesAdapter
@@ -223,8 +226,5 @@ class HomeFragment : Fragment() {
             rvRecommend.adapter = moviesAdapter
         }
     }
-
-
-
 
 }
