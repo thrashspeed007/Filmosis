@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -47,12 +48,16 @@ class ExploreFragment : Fragment() {
                 return false
             }
         })
+
         initGenreCardViews()
     }
 
     private fun performSearch(query: String) {
-        // TODO
-        // LLAMAR A FRAGMENTO DE MOVIESLIST CON LA QUERY COMO ARGUMENTO EN MAPA...
+        val fragmentManager = requireActivity().supportFragmentManager
+        fragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainerView, MoviesSearchedFragment.newInstance(query))
+            .addToBackStack(null)
+            .commit()
     }
 
     private fun initGenreCardViews() {
