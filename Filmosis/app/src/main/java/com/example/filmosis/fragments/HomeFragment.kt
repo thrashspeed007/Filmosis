@@ -30,6 +30,9 @@ class HomeFragment : Fragment() {
     private lateinit var rvPopular: RecyclerView
     private lateinit var rvUpcoming: RecyclerView
     private lateinit var rvRecommend: RecyclerView
+//    private lateinit var tvRecom:TextView
+//    private lateinit var tvProx:TextView
+//    private lateinit var tvPopu:TextView
 
 
     private var moviesListPopulares: ArrayList<Result> = ArrayList()
@@ -41,6 +44,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var scrollView: ScrollView
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -50,6 +54,7 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         setup(view)
     }
 
@@ -58,6 +63,10 @@ class HomeFragment : Fragment() {
 
         val prefs = requireActivity().getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)
         val username = prefs.getString("username", null)
+
+
+//        scrollView.findViewById<ScrollView>(R.id.scrollViewVerTodo)
+
 
 
 
@@ -110,52 +119,49 @@ class HomeFragment : Fragment() {
         //navegar
         val buttonPopu : MaterialButton = view.findViewById(R.id.buttonShowAllPopulares)
         buttonPopu.setOnClickListener {
-            scrollToSection(R.id.tvPopulares)
+
             val fragmentManager = requireActivity().supportFragmentManager
             val transaction = fragmentManager.beginTransaction()
             val nuevoFragmento = VerTodoFragment()
             transaction.replace(R.id.homeFragment, nuevoFragmento)
             transaction.addToBackStack(null)
             transaction.commit()
+//            scrollToSection(tvPopu)
+
         }
 
         val buttonRecom : MaterialButton = view.findViewById(R.id.buttonShowAllRecomendaciones)
         buttonRecom.setOnClickListener {
-            scrollToSection(R.id.tvRecomendados)
             val fragmentManager = requireActivity().supportFragmentManager
             val transaction = fragmentManager.beginTransaction()
             val nuevoFragmento = VerTodoFragment()
             transaction.replace(R.id.homeFragment, nuevoFragmento)
             transaction.addToBackStack(null)
             transaction.commit()
+//            scrollToSection(tvRecom)
+
+
         }
 
         val button : MaterialButton = view.findViewById(R.id.buttonShowAllProximamente)
         button.setOnClickListener {
-            scrollToSection(R.id.tvProximamente)
             val fragmentManager = requireActivity().supportFragmentManager
             val transaction = fragmentManager.beginTransaction()
             val nuevoFragmento = VerTodoFragment()
             transaction.replace(R.id.homeFragment, nuevoFragmento)
             transaction.addToBackStack(null)
             transaction.commit()
+//            scrollToSection(tvProx)
+
+
         }
-
-
-
     }
-    private fun scrollToSection(sectionId: Int) {
-        val sectionView = view?.findViewById<View>(sectionId)
-        sectionView?.let { view ->
-            scrollView.post {
-                Log.d("DEBUG", "Entro??????")
-                scrollView.smoothScrollTo(0, view.top)
-            }
+    private fun scrollToSection(textView:TextView) {
+        scrollView.post {
+            scrollView.smoothScrollTo(0, textView.top)
         }
-//        scrollView.post(Runnable {scrollView.scrollTo(0,view.scrollY)  })
-//
-//        sView.post(Runnable { sView.scrollTo(sViewX, sViewY) })
     }
+
     private fun addMoviesToList() {
         moviesAccess.listPopularMovies { result ->
             result.forEach { movie ->
@@ -198,8 +204,5 @@ class HomeFragment : Fragment() {
             rvRecommend.adapter = moviesAdapter
         }
     }
-
-
-
 
 }
