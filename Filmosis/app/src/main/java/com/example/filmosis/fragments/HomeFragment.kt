@@ -6,6 +6,7 @@ import android.view.*
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ScrollView
+import android.widget.SearchView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -30,9 +31,7 @@ class HomeFragment : Fragment() {
     private lateinit var rvPopular: RecyclerView
     private lateinit var rvUpcoming: RecyclerView
     private lateinit var rvRecommend: RecyclerView
-//    private lateinit var tvRecom:TextView
-//    private lateinit var tvProx:TextView
-//    private lateinit var tvPopu:TextView
+
 
 
     private var moviesListPopulares: ArrayList<Result> = ArrayList()
@@ -64,11 +63,26 @@ class HomeFragment : Fragment() {
         val prefs = requireActivity().getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)
         val username = prefs.getString("username", null)
 
+        val searchView: SearchView = view.findViewById(R.id.home_searchView)
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                if (query.isNotEmpty()) {
+                    performSearch(query)
+                    return true
+                }
+                return false
+            }
+
+
 
 //        scrollView.findViewById<ScrollView>(R.id.scrollViewVerTodo)
 
 
 
+            override fun onQueryTextChange(newText: String): Boolean {
+                return false
+            }
+        })
 
         saludoUsuTextView.text = "Hi, $username"
 
@@ -156,6 +170,16 @@ class HomeFragment : Fragment() {
 
         }
     }
+
+    private fun performSearch(query: String) {
+        val fragmentManager = requireActivity().supportFragmentManager
+        fragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainerView, MoviesSearchedFragment.newInstance(query))
+            .addToBackStack(null)
+            .commit()
+    }
+
+
     private fun scrollToSection(textView:TextView) {
         scrollView.post {
             scrollView.smoothScrollTo(0, textView.top)
@@ -204,5 +228,8 @@ class HomeFragment : Fragment() {
             rvRecommend.adapter = moviesAdapter
         }
     }
+
+
+
 
 }

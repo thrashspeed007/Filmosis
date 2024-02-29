@@ -33,13 +33,25 @@ class ListedMoviesAdapter(private val movies: List<Result>, private val onMovieC
     override fun onBindViewHolder(holder: MovieRowViewHolder, position: Int) {
         val movie = movies[position]
         val imageUrl = DatosConexion.TMDB_IMAGE_BASE_URL + movie.poster_path
-
-        Glide.with(holder.movieImageView.context).load(imageUrl).into(holder.movieImageView)
         holder.movieName.text = movie.title
 
-        holder.movieGenres.text = movie.genre_ids.mapNotNull { id ->
-            TmdbData.movieGenresIds.find { it.first == id }?.second
-        }.joinToString { ", " }
+        if (!movie.poster_path.isNullOrEmpty()) {
+            Glide.with(holder.movieImageView.context).load(imageUrl).into(holder.movieImageView)
+        } else {
+            holder.movieImageView.setImageResource(R.drawable.logofilmosispremium)
+        }
+
+        var genresString: ArrayList<String> = ArrayList()
+        for (id in movie.genre_ids) {
+            for (genrePair in TmdbData.movieGenresIds) {
+                if (genrePair.first == id) {
+                    genresString.add(genrePair.second)
+                    break
+                }
+            }
+        }
+
+        holder.movieGenres.text = genresString.joinToString(", ")
 
         holder.movieDate.text = movie.release_date
         holder.movieVoteAverage.text = movie.vote_average.toString()
