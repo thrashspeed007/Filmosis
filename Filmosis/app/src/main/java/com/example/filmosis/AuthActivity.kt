@@ -131,7 +131,7 @@ class AuthActivity : AppCompatActivity() {
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    FirestoreUtilities.saveUserInFirestore(firestore, auth, auth.currentUser?.displayName.toString(), auth.currentUser?.email.toString()) { success ->
+                    FirestoreUtilities.saveUserInFirestore(firestore, auth, auth.currentUser?.displayName.toString(), auth.currentUser?.email.toString(), auth.currentUser?.displayName.toString(), "") { success ->
                         if (success) {
                             guardarDatos(auth.currentUser?.email ?: "", ProviderType.GOOGLE.toString(), auth.currentUser?.displayName ?: "")
                             showMain()

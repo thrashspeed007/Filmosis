@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.filmosis.fragments.ProviderType
@@ -29,6 +30,7 @@ class LogInActivity : AppCompatActivity() {
         val passwordEditText: EditText = findViewById(R.id.signUp_passwordEditText)
         val logInBtn: Button = findViewById(R.id.logInButton)
         val returnButton: Button = findViewById(R.id.logIn_returnButton)
+        val forgotPass: TextView = findViewById(R.id.logIn_forgotTextView)
 
         logInBtn.setOnClickListener {
             if (usernameEditText.text.isNotEmpty() && passwordEditText.text.isNotEmpty()) {
@@ -80,6 +82,11 @@ class LogInActivity : AppCompatActivity() {
 
         returnButton.setOnClickListener {
             returnToAuthScreen()
+        }
+
+        forgotPass.setOnClickListener {
+            val forgotIntent = Intent(this, ChangePasswordOnLogInActivity::class.java)
+            startActivity(forgotIntent)
         }
     }
 
