@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.Calendar
+import java.util.Locale
 
 class SignUpActivity : AppCompatActivity() {
 
@@ -107,6 +108,8 @@ class SignUpActivity : AppCompatActivity() {
                 month,
                 dayOfMonth
             )
+
+
             datePickerDialog.show()
         }
 
