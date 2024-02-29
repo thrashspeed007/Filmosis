@@ -86,11 +86,6 @@ class HomeFragment : Fragment() {
 
         saludoUsuTextView.text = "Hi, $username"
 
-        val toolbar: Toolbar = view.findViewById(R.id.homeToolbar)
-        // Establecer la barra de herramientas como la barra de soporte de la actividad
-        (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
-
-
         //RecyclerView para las peliculas populares
         rvPopular = view.findViewById(R.id.moviesRecyclerView)
         rvPopular.setHasFixedSize(true)
