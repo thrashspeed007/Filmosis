@@ -1,7 +1,10 @@
 package com.example.filmosis.fragments
 
 import android.os.Bundle
+import android.view.ContextMenu
 import android.view.LayoutInflater
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -51,6 +54,8 @@ class MoviesSearchedFragment : Fragment() {
         val query = arguments?.getString(ARG_QUERY)
 
         rv = view.findViewById(R.id.moviesSearched_recyclerView)
+        rv.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+
         if (query != null) {
             addSearchedMoviesToRv(query)
         }
@@ -62,13 +67,21 @@ class MoviesSearchedFragment : Fragment() {
                 moviesList.add(movie)
             }
 
-            val moviesAdapter = ListedMoviesAdapter(moviesList) { movieClicked ->
-                // TODO
-                // LLEVAR A PANTALLA DE ACTIVIDAD DE PELICULAS
-            }
+            if (moviesList.isEmpty()) {
+                Toast.makeText(requireContext(), "No hay resultados", Toast.LENGTH_LONG).show()
+                finishFragment()
+            } else {
+                val moviesAdapter = ListedMoviesAdapter(moviesList) { movieClicked ->
+                    // TODO
+                    // LLEVAR A PANTALLA DE ACTIVIDAD DE PELICULAS
+                }
 
-            rv.adapter = moviesAdapter
-            rv.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+                rv.adapter = moviesAdapter
+            }
         }
+    }
+
+    private fun finishFragment() {
+        activity?.supportFragmentManager?.popBackStack()
     }
 }

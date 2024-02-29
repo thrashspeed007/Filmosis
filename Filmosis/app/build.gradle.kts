@@ -61,7 +61,7 @@ dependencies {
 
     // Dokka
     // https://github.com/Kotlin/dokka
-    implementation ("org.jetbrains.dokka:android-documentation-plugin:1.9.10")
+    dokkaPlugin("org.jetbrains.dokka:android-documentation-plugin:1.9.10")
 
     // Glide
     implementation ("com.github.bumptech.glide:glide:4.16.0")

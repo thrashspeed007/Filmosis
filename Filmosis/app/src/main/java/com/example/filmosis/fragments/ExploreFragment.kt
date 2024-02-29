@@ -1,11 +1,12 @@
 package com.example.filmosis.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
-import androidx.appcompat.app.AppCompatActivity
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,6 +15,7 @@ import com.example.filmosis.R
 import com.example.filmosis.adapters.GenresCardViewsAdapter
 import com.example.filmosis.data.access.tmdb.MoviesAccess
 import com.example.filmosis.utilities.tmdb.TmdbData
+import com.google.android.material.textfield.TextInputLayout
 
 class ExploreFragment : Fragment() {
     private lateinit var rootView: View

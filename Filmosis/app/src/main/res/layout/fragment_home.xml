@@ -22,12 +22,26 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <SearchView
-                android:id="@+id/home_searchView"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/explore_searchViewTextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="8dp"
-                android:queryHint="Buscar películas" />
+                android:layout_margin="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <SearchView
+                    android:id="@+id/home_searchView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:queryBackground="@null"
+                    android:iconifiedByDefault="false"
+                    android:background="@drawable/search_view_border"
+                    android:backgroundTint="?attr/colorSurfaceVariant"
+                    android:paddingHorizontal="8dp"
+                    android:queryHint="Buscar películas" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:id="@+id/bienvenida"
