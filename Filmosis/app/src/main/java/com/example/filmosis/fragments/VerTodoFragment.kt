@@ -30,7 +30,7 @@ class VerTodoFragment : Fragment(), GridRecyclerViewAdapter.OnItemClickListener 
     private lateinit var recyclerViewProximamentes: RecyclerView
     private lateinit var adapter: GridRecyclerViewAdapter
 
-    private lateinit var scrollView: ScrollView
+//    private lateinit var scrollView: ScrollView
 
 
 
@@ -41,7 +41,7 @@ class VerTodoFragment : Fragment(), GridRecyclerViewAdapter.OnItemClickListener 
     ): View? {
 
         val view = inflater.inflate(R.layout.fragment_ver_todo, container, false)
-        scrollView = view.findViewById(R.id.scrollViewVerTodo)
+//        scrollView = view.findViewById(R.id.scrollViewVerTodo)
 
         //populares
         recyclerView = view.findViewById(R.id.recyclerViewVerTodo)
@@ -62,7 +62,7 @@ class VerTodoFragment : Fragment(), GridRecyclerViewAdapter.OnItemClickListener 
             adapter.setOnItemClickListener(this@VerTodoFragment)
         }
 
-        //proimamente
+        //proximamente
         recyclerViewProximamentes = view.findViewById(R.id.recyclerViewVerTodoProximamente)
         recyclerViewProximamentes.layoutManager = GridLayoutManager(requireContext(), 3)
         moviesAccess.listUpcomingMovies { movies ->

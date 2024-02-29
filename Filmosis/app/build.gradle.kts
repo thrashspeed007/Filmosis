@@ -81,6 +81,12 @@ dependencies {
     // Firebase Firestore
     implementation("com.google.firebase:firebase-firestore-ktx")
 
+    //Firebase Storage
+    implementation("com.google.firebase:firebase-storage-ktx:20.3.0")
+
+
+    //Picasso
+    implementation("com.squareup.picasso:picasso:2.71828")
 
     // Add the dependencies for any other desired Firebase products
     // https://firebase.google.com/docs/android/setup#available-libraries

@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <!-- ImageView con la imagen logoFilmosisPremium -->
     <LinearLayout
@@ -24,6 +25,7 @@
             android:contentDescription="Foto de perfil" />
 
         <ImageView
+            android:id="@+id/fragmentUser_editImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/baseline_edit_24"
@@ -54,7 +56,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            tools:context=".fragments.UserFragment">
 
             <ImageView
                 android:layout_width="wrap_content"
