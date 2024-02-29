@@ -16,8 +16,8 @@
 
         <ImageView
             android:id="@+id/icono_pelicula"
-            android:layout_width="124dp"
-            android:layout_height="124dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:src="@drawable/ic_amazon_prime"
             app:layout_constraintEnd_toEndOf="parent"

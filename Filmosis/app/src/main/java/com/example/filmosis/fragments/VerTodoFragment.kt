@@ -1,11 +1,16 @@
 package com.example.filmosis.fragments
 
+
+
 import android.os.Bundle
+import android.os.Debug
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ScrollView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -15,6 +20,7 @@ import com.example.filmosis.adapters.GridRecyclerViewAdapter
 import com.example.filmosis.data.access.tmdb.MoviesAccess
 import com.example.filmosis.data.model.tmdb.Result
 import com.google.android.material.button.MaterialButton
+
 
 class VerTodoFragment : Fragment(), GridRecyclerViewAdapter.OnItemClickListener {
     private val moviesAccess = MoviesAccess()
@@ -46,6 +52,7 @@ class VerTodoFragment : Fragment(), GridRecyclerViewAdapter.OnItemClickListener 
             adapter.setOnItemClickListener(this@VerTodoFragment)
         }
 
+
         //recomendadas
         recyclerViewRecomendados = view.findViewById(R.id.recyclerViewVerTodoRecomendados)
         recyclerViewRecomendados.layoutManager = GridLayoutManager(requireContext(), 3)
@@ -70,45 +77,54 @@ class VerTodoFragment : Fragment(), GridRecyclerViewAdapter.OnItemClickListener 
             parentFragmentManager.popBackStack()
         }
 
-//        val fragmentB: HomeFragment? =
-//            requireFragmentManager().findFragmentByTag("homeFragment") as HomeFragment?
+
+
+        // Busca la vista por su ID en el layout de HomeFragment
+//        val viewB: View? = activity?.findViewById(R.id.homeFragment)
+//        viewB?.let {
+//            // Accedemos a la vista de HomeFragment y realizamos ir a la seccion de las pelicualas
+//            //populares
+//            val buttonVerTodoPopulares: MaterialButton = viewB.findViewById(R.id.buttonShowAllPopulares)
+//            buttonVerTodoPopulares.setOnClickListener {
+//                scrollToSection(R.id.tvPopulares)
+////                Log.d("DEBUG", "Entro??????")
+//                println("Spursito xupala hermani")
+//            }
 //
+//            //proximamente
+//            val buttonVerTodoProximamente : MaterialButton = viewB.findViewById(R.id.buttonShowAllProximamente)
+//            buttonVerTodoProximamente.setOnClickListener{
+//                scrollToSection(R.id.tvProximamente)
+//            }
 //
-//
-//        //inflamos la vista
-//        //populares
-//        val buttonVerTodoPopulares: MaterialButton = fragmentB?.view.findViewById(R.id.buttonShowAllPopulares)
-//        buttonVerTodoPopulares.setOnClickListener {
-//            scrollToSection(R.id.tvPopulares)
-//        }
-//        //proximamente
-//        val buttonVerTodoProximamente : MaterialButton = view.findViewById(R.id.buttonShowAllProximamente)
-//        buttonVerTodoProximamente.setOnClickListener{
-//            scrollToSection(R.id.tvProximamente)
-//        }
-//        //recomendados
-//        val buttonVerTodoRecomendados : MaterialButton = view.findViewById(R.id.buttonShowAllRecomendaciones)
-//        buttonVerTodoRecomendados.setOnClickListener{
-//            scrollToSection(R.id.tvRecomendados)
-//        }
+//            //recomendados
+//            val buttonVerTodoRecomendados : MaterialButton = viewB.findViewById(R.id.buttonShowAllRecomendaciones)
+//            buttonVerTodoRecomendados.setOnClickListener{
+//                scrollToSection(R.id.tvRecomendados)
+//            }
 
 
 
 
+        //}
 
 
         return view
     }
 
     //Desplazamiento suave a la seccion deseada
-    private fun scrollToSection(sectionId: Int) {
-        val sectionView = view?.findViewById<View>(sectionId)
-        sectionView?.let { view ->
-            scrollView.post {
-                scrollView.smoothScrollTo(0, view.top)
-            }
-        }
-    }
+//    private fun scrollToSection(sectionId: Int) {
+//        val sectionView = view?.findViewById<View>(sectionId)
+//        sectionView?.let { view ->
+//            scrollView.post {
+//                Log.d("DEBUG", "Entro??????")
+//                scrollView.smoothScrollTo(0, view.top)
+//            }
+//        }
+////        scrollView.post(Runnable {scrollView.scrollTo(0,view.scrollY)  })
+////
+////        sView.post(Runnable { sView.scrollTo(sViewX, sViewY) })
+//    }
     override fun onItemClick(movie: Result) {
         // Aquí puedes manejar el clic en la película
         Toast.makeText(requireContext(), "hOLA", Toast.LENGTH_SHORT).show()

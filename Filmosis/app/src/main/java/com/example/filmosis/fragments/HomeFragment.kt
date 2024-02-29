@@ -1,9 +1,11 @@
 package com.example.filmosis.fragments
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -37,6 +39,8 @@ class HomeFragment : Fragment() {
 
     private lateinit var moviesAdapter: MoviesAdapter
 
+    private lateinit var scrollView: ScrollView
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -54,6 +58,8 @@ class HomeFragment : Fragment() {
 
         val prefs = requireActivity().getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)
         val username = prefs.getString("username", null)
+
+
 
         saludoUsuTextView.text = "Hi, $username"
 
@@ -104,6 +110,7 @@ class HomeFragment : Fragment() {
         //navegar
         val buttonPopu : MaterialButton = view.findViewById(R.id.buttonShowAllPopulares)
         buttonPopu.setOnClickListener {
+            scrollToSection(R.id.tvPopulares)
             val fragmentManager = requireActivity().supportFragmentManager
             val transaction = fragmentManager.beginTransaction()
             val nuevoFragmento = VerTodoFragment()
@@ -114,6 +121,7 @@ class HomeFragment : Fragment() {
 
         val buttonRecom : MaterialButton = view.findViewById(R.id.buttonShowAllRecomendaciones)
         buttonRecom.setOnClickListener {
+            scrollToSection(R.id.tvRecomendados)
             val fragmentManager = requireActivity().supportFragmentManager
             val transaction = fragmentManager.beginTransaction()
             val nuevoFragmento = VerTodoFragment()
@@ -124,6 +132,7 @@ class HomeFragment : Fragment() {
 
         val button : MaterialButton = view.findViewById(R.id.buttonShowAllProximamente)
         button.setOnClickListener {
+            scrollToSection(R.id.tvProximamente)
             val fragmentManager = requireActivity().supportFragmentManager
             val transaction = fragmentManager.beginTransaction()
             val nuevoFragmento = VerTodoFragment()
@@ -134,7 +143,18 @@ class HomeFragment : Fragment() {
 
 
 
-
+    }
+    private fun scrollToSection(sectionId: Int) {
+        val sectionView = view?.findViewById<View>(sectionId)
+        sectionView?.let { view ->
+            scrollView.post {
+                Log.d("DEBUG", "Entro??????")
+                scrollView.smoothScrollTo(0, view.top)
+            }
+        }
+//        scrollView.post(Runnable {scrollView.scrollTo(0,view.scrollY)  })
+//
+//        sView.post(Runnable { sView.scrollTo(sViewX, sViewY) })
     }
     private fun addMoviesToList() {
         moviesAccess.listPopularMovies { result ->
@@ -180,30 +200,6 @@ class HomeFragment : Fragment() {
     }
 
 
-    @Deprecated("Deprecated in Java")
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.app_bar_search -> {
-                Toast.makeText(requireContext(), "Búsqueda", Toast.LENGTH_SHORT).show()
 
-                true
-            }
-            R.id.notificacion_action->{
-                Toast.makeText(requireContext(), "Notificacion", Toast.LENGTH_SHORT).show()
-                true
-            }
-            else -> false
-        }
-    }
-
-
-    @Deprecated("Deprecated in Java", ReplaceWith(
-        "inflater.inflate(R.menu.options_menu, menu)",
-        "com.example.filmosis.R"
-    )
-    )
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.options_menu, menu)
-    }
 
 }
