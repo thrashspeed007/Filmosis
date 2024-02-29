@@ -1,10 +1,15 @@
 package com.example.filmosis
 
+import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -14,6 +19,7 @@ import com.example.filmosis.utilities.firebase.FirestoreUtilities
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.firestore.FirebaseFirestore
+import java.util.Calendar
 
 class SignUpActivity : AppCompatActivity() {
 
@@ -31,6 +37,9 @@ class SignUpActivity : AppCompatActivity() {
         val emailEditText: EditText = findViewById(R.id.signUp_emailEditText)
         val passwordEditText: EditText = findViewById(R.id.signUp_passwordEditText)
         val usernameEditText: EditText = findViewById(R.id.signUp_usernameEditText)
+        val nameEditText: EditText = findViewById(R.id.signUp_nameEditText)
+        val surnamesEditText: EditText = findViewById(R.id.signUp_surnameEditText)
+        val bornDateEditText = findViewById<EditText>(R.id.signUp_bornDateEditText)
         val signUpButton: Button = findViewById(R.id.signUp_signUpButton)
         val returnButton: Button = findViewById(R.id.signUp_returnButton)
 
@@ -51,7 +60,7 @@ class SignUpActivity : AppCompatActivity() {
                                     passwordEditText.text.toString()
                                 ).addOnCompleteListener { task ->
                                     if (task.isSuccessful) {
-                                        FirestoreUtilities.saveUserInFirestore(firestore, auth, usernameEditText.text.toString(), emailEditText.text.toString()) { success ->
+                                        FirestoreUtilities.saveUserInFirestore(firestore, auth, usernameEditText.text.toString(), emailEditText.text.toString(), nameEditText.text.toString() + surnamesEditText.text.toString(),bornDateEditText.text.toString()) { success ->
                                             if (success) {
                                                 guardarDatos(emailEditText.text.toString(), ProviderType.BASIC.toString(), usernameEditText.text.toString())
                                                 showMain()
@@ -80,6 +89,49 @@ class SignUpActivity : AppCompatActivity() {
         returnButton.setOnClickListener {
             returnToAuthScreen()
         }
+
+        bornDateEditText.setOnClickListener {
+            val calendar = Calendar.getInstance()
+            val year = calendar.get(Calendar.YEAR)
+            val month = calendar.get(Calendar.MONTH)
+            val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
+
+            val datePickerDialog = DatePickerDialog(
+                this,
+                DatePickerDialog.OnDateSetListener { _, selectedYear, selectedMonth, selectedDayOfMonth ->
+                    // Actualizar el texto del EditText con la fecha seleccionada
+                    val selectedDate = "$selectedDayOfMonth/${selectedMonth + 1}/$selectedYear"
+                    bornDateEditText.setText(selectedDate)
+                },
+                year,
+                month,
+                dayOfMonth
+            )
+            datePickerDialog.show()
+        }
+
+        val genderSpinner = findViewById<Spinner>(R.id.signUp_genderSpinner)
+
+// Obtener las opciones de género desde el archivo de recursos strings.xml
+        val genderOptions = resources.getStringArray(R.array.gender_options)
+
+// Crear un ArrayAdapter para el Spinner
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, genderOptions)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        genderSpinner.adapter = adapter
+
+// Manejar la selección del usuario
+        genderSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val selectedGender = genderOptions[position]
+                // Aquí puedes hacer lo que necesites con la opción de género seleccionada
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // No se seleccionó nada
+            }
+        }
+
     }
 
     private fun showMain() {
