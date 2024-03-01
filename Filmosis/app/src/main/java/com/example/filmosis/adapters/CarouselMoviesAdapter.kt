@@ -14,7 +14,6 @@ import com.example.filmosis.data.model.tmdb.Result
 class CarouselMoviesAdapter(private val movies: List<Result>, private val onMovieClick: (Result) -> Unit) : RecyclerView.Adapter<CarouselMoviesAdapter.CarouselMoviesViewHolder>() {
     class CarouselMoviesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val movieImageView : ImageView = itemView.findViewById(R.id.carousel_posterImageView)
-        val movieTitle : TextView = itemView.findViewById(R.id.carousel_movieTitleTextView)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CarouselMoviesViewHolder {
@@ -29,8 +28,6 @@ class CarouselMoviesAdapter(private val movies: List<Result>, private val onMovi
     override fun onBindViewHolder(holder: CarouselMoviesViewHolder, position: Int) {
         val movie = movies[position]
         val imageUrl = DatosConexion.TMDB_IMAGE_BASE_URL + movie.poster_path
-
-        holder.movieTitle.text = movie.title
 
         Glide.with(holder.movieImageView.context).load(imageUrl).into(holder.movieImageView)
         holder.itemView.setOnClickListener {onMovieClick.invoke(movie)}

@@ -69,6 +69,7 @@ class GenreSelectedFragment : Fragment() {
 
         moviesFilteredRv = view.findViewById(R.id.genreSelected_moviesFilteredRecyclerView)
         moviesFilteredRv.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+        initMoviesFilteredRv()
         initFilterMoviesButtons(view)
     }
 
@@ -78,33 +79,32 @@ class GenreSelectedFragment : Fragment() {
         val latestBtn: Button = view.findViewById(R.id.genreSelected_latestBtn)
         val upcomingBtn: Button = view.findViewById(R.id.genreSelected_upcomingBtn)
 
-        bestRatedBtn.setOnClickListener {
-            filteredMoviesList.clear()
-            moviesAccess.listBestRatedMoviesWithGenres(genres) {
-                updateFilteredMoviesList(it)
+        val buttons = listOf(bestRatedBtn, popularBtn, latestBtn, upcomingBtn)
+
+        for (actualButton in buttons) {
+
+            actualButton.isSelected = false
+
+            actualButton.setOnClickListener {
+                if (!actualButton.isSelected) {
+                    for (button in buttons) {
+                        button.isSelected = false
+                    }
+
+                    actualButton.isSelected = true
+
+                    filteredMoviesList.clear()
+                    when (actualButton.id) {
+                        R.id.genreSelected_topRatedBtn -> moviesAccess.listBestRatedMoviesWithGenres(genres) { updateFilteredMoviesList(it) }
+                        R.id.genreSelected_popularBtn -> moviesAccess.listPopularMoviesWithGenres(genres) { updateFilteredMoviesList(it) }
+                        R.id.genreSelected_latestBtn -> moviesAccess.listLatestMoviesWithGenres(genres) { updateFilteredMoviesList(it) }
+                        R.id.genreSelected_upcomingBtn -> moviesAccess.listUpcomingMoviesWithGenres(genres) { updateFilteredMoviesList(it) }
+                    }
+                }
             }
         }
 
-        popularBtn.setOnClickListener {
-            filteredMoviesList.clear()
-            moviesAccess.listPopularMoviesWithGenres(genres) {
-                updateFilteredMoviesList(it)
-            }
-        }
-
-        latestBtn.setOnClickListener {
-            filteredMoviesList.clear()
-            moviesAccess.listLatestMoviesWithGenres(genres) {
-                updateFilteredMoviesList(it)
-            }
-        }
-
-        upcomingBtn.setOnClickListener {
-            filteredMoviesList.clear()
-            moviesAccess.listUpcomingMoviesWithGenres(genres) {
-                updateFilteredMoviesList(it)
-            }
-        }
+        bestRatedBtn.isSelected = true
     }
 
     fun updateFilteredMoviesList (movies: List<Result>) {
@@ -136,5 +136,9 @@ class GenreSelectedFragment : Fragment() {
             popularMoviesRv.adapter = moviesAdapter
         }
 
+    }
+
+    private fun initMoviesFilteredRv() {
+        moviesAccess.listBestRatedMoviesWithGenres(genres) { updateFilteredMoviesList(it) }
     }
 }

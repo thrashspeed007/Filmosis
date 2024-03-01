@@ -51,7 +51,7 @@ interface TmdbApiInterface {
         @Query("append_to_response") appendToResponse: String = "videos"
     ): Call<MovieDetailsResponse>
 
-    @GET("discover/movie?language=es-ES&sort_by=vote_average.desc")
+    @GET("discover/movie?language=es-ES&sort_by=vote_average.desc&vote_count.gte=50")
     fun listMoviesWithGenresBestRated(
         @Query("api_key") apiKey: String,
         @Query("region") region: String,
