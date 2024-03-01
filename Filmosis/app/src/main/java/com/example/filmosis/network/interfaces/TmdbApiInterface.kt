@@ -2,6 +2,7 @@ package com.example.filmosis.network.interfaces
 
 import com.example.filmosis.data.model.tmdb.RemoteResult
 import com.example.filmosis.dataclass.MovieDetailsResponse
+import com.example.filmosis.dataclass.PeliculaDetalles
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -43,6 +44,12 @@ interface TmdbApiInterface {
         @Query("region") region: String,
         @Query("query") query: String
     ): Call<RemoteResult>
+    fun obtenerDetallesPelicula(
+        @Path("movie_id") idPelicula: Int,
+        @Query("api_key") apiKey: String
+    ): Call<PeliculaDetalles>
+
+
 
     @GET("movie/{movie_id}")
     fun getMovieDetails(
@@ -78,6 +85,7 @@ interface TmdbApiInterface {
         @Query("with_genres") genres: String,
         @Query("primary_release_date.gte") releaseDateGTE: String // Fecha de lanzamiento mayor o igual que
     ): Call<RemoteResult>
+
 
 }
 
