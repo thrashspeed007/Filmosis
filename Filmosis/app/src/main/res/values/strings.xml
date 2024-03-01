@@ -19,6 +19,11 @@
     <string name="search_action">Buscar</string>
     <string name="Notificacion">Notificación</string>
     <string name="pel_culas_populares">Películas populares</string>
+    <string name="tendencia">En Tendencia</string>
+    <string name="best_rated">Mejor valoradas</string>
+    <string name="popular">Populares</string>
+    <string name="latest">Últimas</string>
+    <string name="upcoming">Próximas</string>
     <string name="ver_mas">Ver todo</string>
     <string name="pel_prox">Próximamente</string>
     <string name="Actualmente">Actualmente</string>

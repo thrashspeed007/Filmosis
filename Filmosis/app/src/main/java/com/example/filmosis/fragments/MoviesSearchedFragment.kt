@@ -7,6 +7,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -52,6 +53,22 @@ class MoviesSearchedFragment : Fragment() {
 
     private fun setup(view: View) {
         val query = arguments?.getString(ARG_QUERY)
+        val searchView: SearchView = view.findViewById(R.id.moviesSearched_searchView)
+        searchView.setQuery(query, false)
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                if (query.isNotEmpty()) {
+                    performSearch(query)
+                    return true
+                }
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                return false
+            }
+        })
 
         rv = view.findViewById(R.id.moviesSearched_recyclerView)
         rv.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
@@ -61,15 +78,21 @@ class MoviesSearchedFragment : Fragment() {
         }
     }
 
+    private fun performSearch(query: String) {
+        addSearchedMoviesToRv(query)
+    }
+
     private fun addSearchedMoviesToRv(query: String) {
         moviesAccess.searchMovie(query) { result ->
+            moviesList.clear()
+
             result.forEach { movie ->
                 moviesList.add(movie)
             }
 
             if (moviesList.isEmpty()) {
                 Toast.makeText(requireContext(), "No hay resultados", Toast.LENGTH_LONG).show()
-                finishFragment()
+//                finishFragment()
             } else {
                 val moviesAdapter = ListedMoviesAdapter(moviesList) { movieClicked ->
                     // TODO

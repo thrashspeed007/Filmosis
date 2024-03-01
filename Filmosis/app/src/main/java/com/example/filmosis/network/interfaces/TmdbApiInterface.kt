@@ -51,5 +51,34 @@ interface TmdbApiInterface {
         @Query("append_to_response") appendToResponse: String = "videos"
     ): Call<MovieDetailsResponse>
 
+    @GET("discover/movie?language=es-ES&sort_by=vote_average.desc")
+    fun listMoviesWithGenresBestRated(
+        @Query("api_key") apiKey: String,
+        @Query("region") region: String,
+        @Query("with_genres") genres: String
+    ): Call<RemoteResult>
+
+    @GET("discover/movie?language=es-ES&sort_by=release_date.desc")
+    fun listMoviesWithGenresLatest(
+        @Query("api_key") apiKey: String,
+        @Query("region") region: String,
+        @Query("with_genres") genres: String
+    ): Call<RemoteResult>
+
+    @GET("trending/movie/week?language=es-ES")
+    fun listTrendingMoviesWithGenres(
+        @Query("api_key") apiKey: String,
+        @Query("region") region: String,
+        @Query("with_genres") genres: String
+    ): Call<RemoteResult>
+
+    @GET("discover/movie?language=es-ES")
+    fun listUpcomingMoviesWithGenres(
+        @Query("api_key") apiKey: String,
+        @Query("region") region: String,
+        @Query("with_genres") genres: String,
+        @Query("primary_release_date.gte") releaseDateGTE: String // Fecha de lanzamiento mayor o igual que
+    ): Call<RemoteResult>
+
 }
 
