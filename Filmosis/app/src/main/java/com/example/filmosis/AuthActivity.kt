@@ -133,7 +133,7 @@ class AuthActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     FirestoreUtilities.saveUserInFirestore(firestore, auth, auth.currentUser?.displayName.toString(), auth.currentUser?.email.toString(), auth.currentUser?.displayName.toString(), "") { success ->
                         if (success) {
-                            guardarDatos(auth.currentUser?.email ?: "", ProviderType.GOOGLE.toString(), auth.currentUser?.displayName ?: "")
+                            guardarDatos(auth.currentUser?.email ?: "", ProviderType.GOOGLE.toString(), auth.currentUser?.displayName ?: "", auth.currentUser?.displayName ?: "")
                             showMain()
                         } else {
                             showAlert("Error al guardar el usuario en la base de datos")
@@ -145,12 +145,13 @@ class AuthActivity : AppCompatActivity() {
             }
     }
 
-    private fun guardarDatos(email: String, provider: String, username : String) {
+    private fun guardarDatos(email: String, provider: String, username : String, fullname: String) {
         // Guardado de datos
         val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
         prefs.putString("email", email)
         prefs.putString("provider", provider)
         prefs.putString("username", username)
+        prefs.putString("fullname", fullname)
         prefs.apply()
     }
 

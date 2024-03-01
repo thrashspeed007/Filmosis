@@ -45,14 +45,16 @@ class LogInActivity : AppCompatActivity() {
                             // si ha encontrado un usuario con emai y nombre de usuario correspondiente que siga
                             // cogemos el email asociado con el nombre de usuario introducido en la coleccion de la db
                             var userEmail = ""
+                            var userFullName = ""
                             for (document in documents){
                                 userEmail = document.getString("email").toString()
+                                userFullName = document.getString("fullName").toString()
                             }
 
                             if (!userEmail.isNullOrBlank()) {
                                 FirebaseAuth.getInstance().signInWithEmailAndPassword(userEmail, passwordEditText.text.toString()).addOnCompleteListener { task ->
                                     if (task.isSuccessful) {// Anadimos a la base de datos si to'do sale bien
-                                        guardarDatos(userEmail, ProviderType.BASIC.toString(), username)
+                                        guardarDatos(userEmail, ProviderType.BASIC.toString(), username, userFullName)
                                         showMain()
                                     } else {
                                         if (task.exception is FirebaseAuthInvalidCredentialsException) {
@@ -99,12 +101,13 @@ class LogInActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    private fun guardarDatos(email: String, provider: String, username : String) {
+    private fun guardarDatos(email: String, provider: String, username : String, fullname : String) {
         // Guardado de datos
         val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
         prefs.putString("email", email)
         prefs.putString("provider", provider)
         prefs.putString("username", username)
+        prefs.putString("fullname", fullname)
         prefs.apply()
     }
 

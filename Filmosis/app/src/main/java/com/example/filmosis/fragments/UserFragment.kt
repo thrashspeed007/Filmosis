@@ -16,15 +16,14 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.example.filmosis.AuthActivity
 import com.example.filmosis.ChangePasswordActivity
 import com.example.filmosis.R
 import com.example.filmosis.init.FirebaseInitializer
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.storage.FirebaseStorage
-import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
-import java.util.UUID
+import org.w3c.dom.Text
 
 enum class ProviderType {
     BASIC,
@@ -32,7 +31,7 @@ enum class ProviderType {
 }
 
 class UserFragment : Fragment() {
-    lateinit var profilePic : CircleImageView
+    private lateinit var profilePic : CircleImageView
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -53,6 +52,7 @@ class UserFragment : Fragment() {
     }
 
     private fun setup(view: View, email: String, provider: String,username : String) {
+        val fullNameTextView: TextView = view.findViewById(R.id.user_userFullName)
         val emailTextView: TextView = view.findViewById(R.id.emailTextView)
         val providerTextView: TextView = view.findViewById(R.id.providerTextView)
         val userTextView : TextView = view.findViewById(R.id.userTextView)
@@ -63,8 +63,9 @@ class UserFragment : Fragment() {
         profilePic = view.findViewById(R.id.logoImageView)
 
         val prefs = activity?.getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)
+        val fullname: String? = prefs?.getString("fullname", "")
         val userName : String? = prefs?.getString("username","")
-        var confirmedUsername : String = ""
+        var confirmedUsername = ""
         if (!userName.isNullOrBlank()) {
             confirmedUsername = username
         }
@@ -72,7 +73,7 @@ class UserFragment : Fragment() {
 
         Log.d("User profile ref",profilePicSrc)
 // Obtener una referencia al Storage de Firebase
-        val storageReference = FirebaseStorage.getInstance().reference
+        val storageReference = FirebaseInitializer.firebaseStorageInstance.reference
 
 // Crear una referencia para la ubicación donde se almacenan las imágenes
         val imagesRef = storageReference.child("images")
@@ -89,7 +90,7 @@ class UserFragment : Fragment() {
                         item.downloadUrl.addOnSuccessListener { uri ->
                             val imageUrl = uri.toString()
                             // Cargar la imagen en el CircleImageView
-                            Picasso.get().load(imageUrl).into(profilePic)
+                            Glide.with(requireContext()).load(imageUrl).into(profilePic)
                         }.addOnFailureListener { exception ->
                             // Manejar errores al obtener la URL de la imagen
                             Log.e("Profile Pic", "Error al obtener la URL de la imagen", exception)
@@ -104,9 +105,7 @@ class UserFragment : Fragment() {
                 Log.e("Profile Pic", "Error al verificar la existencia del archivo en Firebase Storage", exception)
             }
 
-
-
-
+        fullNameTextView.text = fullname
         emailTextView.text = email
         providerTextView.text = provider
         userTextView.text = username
@@ -182,7 +181,7 @@ class UserFragment : Fragment() {
 
     private fun uploadImageToFirebaseStorage(imageUri: Uri, username: String) {
         // Obtener una referencia al Storage de Firebase
-        val storageReference = FirebaseStorage.getInstance().reference
+        val storageReference = FirebaseInitializer.firebaseStorageInstance.reference
 
         // Crear una referencia para la imagen en el Storage
         // Utiliza el nombre de usuario para generar el nombre del archivo

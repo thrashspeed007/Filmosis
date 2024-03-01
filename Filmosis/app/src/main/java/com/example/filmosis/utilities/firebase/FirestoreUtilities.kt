@@ -12,8 +12,8 @@ object FirestoreUtilities {
             val userData = hashMapOf(//creamos un map donde guardamos los datos del usuario
                 "username" to username,
                 "email" to email,
-                "full name" to fullName,
-                "birth date" to birthDate
+                "fullName" to fullName,
+                "birthDate" to birthDate
                 //no guardamos contrasena en la base de datos ya que habria que crear metodo para cifrarla(si eso lo hacemos mas adelante) metodo creado abajo
             )
 

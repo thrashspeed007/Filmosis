@@ -51,7 +51,7 @@ class SignUpActivity : AppCompatActivity() {
 
                     val users = firestore.collection("users")
 
-                    users.whereEqualTo("name", username)
+                    users.whereEqualTo("username", username)
                         .get().addOnSuccessListener { documents ->
                             if(!documents.isEmpty){
                                 showAlert("El nombre de usuario introducido ya está en uso por otra cuenta")
@@ -61,9 +61,9 @@ class SignUpActivity : AppCompatActivity() {
                                     passwordEditText.text.toString()
                                 ).addOnCompleteListener { task ->
                                     if (task.isSuccessful) {
-                                        FirestoreUtilities.saveUserInFirestore(firestore, auth, usernameEditText.text.toString(), emailEditText.text.toString(), nameEditText.text.toString() + surnamesEditText.text.toString(),bornDateEditText.text.toString()) { success ->
+                                        FirestoreUtilities.saveUserInFirestore(firestore, auth, usernameEditText.text.toString(), emailEditText.text.toString(), nameEditText.text.toString() + " " + surnamesEditText.text.toString(),bornDateEditText.text.toString()) { success ->
                                             if (success) {
-                                                guardarDatos(emailEditText.text.toString(), ProviderType.BASIC.toString(), usernameEditText.text.toString())
+                                                guardarDatos(emailEditText.text.toString(), ProviderType.BASIC.toString(), usernameEditText.text.toString(), nameEditText.text.toString() + surnamesEditText.text.toString())
                                                 showMain()
                                             } else {
                                                 showAlert("Error al guardar el usuario en la base de datos")
@@ -99,7 +99,7 @@ class SignUpActivity : AppCompatActivity() {
 
             val datePickerDialog = DatePickerDialog(
                 this,
-                DatePickerDialog.OnDateSetListener { _, selectedYear, selectedMonth, selectedDayOfMonth ->
+                { _, selectedYear, selectedMonth, selectedDayOfMonth ->
                     // Actualizar el texto del EditText con la fecha seleccionada
                     val selectedDate = "$selectedDayOfMonth/${selectedMonth + 1}/$selectedYear"
                     bornDateEditText.setText(selectedDate)
@@ -109,32 +109,8 @@ class SignUpActivity : AppCompatActivity() {
                 dayOfMonth
             )
 
-
             datePickerDialog.show()
         }
-
-        val genderSpinner = findViewById<Spinner>(R.id.signUp_genderSpinner)
-
-// Obtener las opciones de género desde el archivo de recursos strings.xml
-        val genderOptions = resources.getStringArray(R.array.gender_options)
-
-// Crear un ArrayAdapter para el Spinner
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, genderOptions)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        genderSpinner.adapter = adapter
-
-// Manejar la selección del usuario
-        genderSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val selectedGender = genderOptions[position]
-                // Aquí puedes hacer lo que necesites con la opción de género seleccionada
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                // No se seleccionó nada
-            }
-        }
-
     }
 
     private fun showMain() {
@@ -149,12 +125,13 @@ class SignUpActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun guardarDatos(email: String, provider: String, username : String) {
+    private fun guardarDatos(email: String, provider: String, username : String, fullname: String) {
         // Guardado de datos
         val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
         prefs.putString("email", email)
         prefs.putString("provider", provider)
         prefs.putString("username", username)
+        prefs.putString("fullname", fullname)
         prefs.apply()
     }
 

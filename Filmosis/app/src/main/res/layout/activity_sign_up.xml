@@ -113,14 +113,6 @@
             android:textColor="?attr/colorOnBackground"
             android:textCursorDrawable="@null" />
 
-        <Spinner
-            android:id="@+id/signUp_genderSpinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="?attr/colorOnBackground"
-            android:textColor="?attr/colorOnBackground"
-            android:layout_marginTop="8dp"/>
-
 
         <Button
             android:id="@+id/signUp_signUpButton"
