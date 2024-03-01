@@ -60,7 +60,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/button_selector"
-                    android:backgroundTint="@drawable/button_selector"
                     android:text="@string/best_rated"
                     android:textSize="12sp" />
 
@@ -70,7 +69,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/button_selector"
-                    android:backgroundTint="@drawable/button_selector"
                     android:text="@string/popular"
                     android:textSize="12sp" />
 
@@ -80,7 +78,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/button_selector"
-                    android:backgroundTint="@drawable/button_selector"
                     android:text="@string/latest"
                     android:textSize="12sp" />
 
@@ -90,7 +87,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/button_selector"
-                    android:backgroundTint="@drawable/button_selector"
                     android:text="@string/upcoming"
                     android:textSize="12sp" />
             </LinearLayout>

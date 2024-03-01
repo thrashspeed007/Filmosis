@@ -83,6 +83,7 @@ class GenreSelectedFragment : Fragment() {
 
         for (actualButton in buttons) {
 
+            // TODO
             actualButton.isSelected = false
 
             actualButton.setOnClickListener {
