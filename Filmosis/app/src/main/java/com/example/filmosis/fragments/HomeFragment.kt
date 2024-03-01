@@ -61,7 +61,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setup(view: View) {
-        val saludoUsuTextView: TextView = view.findViewById(R.id.saludoUsu)
+        val saludoUsuTextView: TextView = view.findViewById(R.id.home_tvUsuario)
 
         val prefs = requireActivity().getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)
         val username = prefs.getString("username", null)
@@ -87,7 +87,7 @@ class HomeFragment : Fragment() {
             }
         })
 
-        saludoUsuTextView.text = "Hi, $username"
+        saludoUsuTextView.text = "$username"
 
         //RecyclerView para las peliculas populares
         rvPopular = view.findViewById(R.id.moviesRecyclerView)

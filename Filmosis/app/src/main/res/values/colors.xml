@@ -14,7 +14,7 @@
     <color name="light_background">@color/white</color>
     <color name="light_onBackground">@color/black</color>
     <color name="light_surface">@color/white</color>
-    <color name="light_surfaceVariant">#B5B5B5</color>
+    <color name="light_surfaceVariant">#DDDDDD</color>
     <color name="light_onSurface">@color/black</color>
     <color name="light_onSurfaceVariant">#404040</color>
     <color name="light_outline">@color/black</color>
