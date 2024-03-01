@@ -47,15 +47,20 @@
                 android:id="@+id/bienvenida"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:text="@string/bienvenido"
                 android:textColor="?attr/colorOnBackground"
                 android:textSize="26dp" />
 
             <TextView
-                android:id="@+id/saludoUsu"
+                android:id="@+id/home_tvUsuario"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="?attr/colorOnBackground" />
+                android:layout_marginLeft="10dp"
+                android:text=""
+                android:textColor="?attr/colorPrimary"
+                android:textSize="26dp"
+                />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -65,6 +70,7 @@
                     android:id="@+id/tvPelisPopu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
                     android:text="@string/recomendaciones"
                     android:textColor="?attr/colorOnBackground"
                     android:textSize="26sp"
@@ -103,6 +109,7 @@
                     android:id="@+id/tvPelisProx"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
                     android:text="@string/pel_prox"
                     android:textColor="?attr/colorOnBackground"
                     android:textSize="26sp"
@@ -142,6 +149,7 @@
                     android:id="@+id/tvPelisPopus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
                     android:text="@string/pel_culas_populares"
                     android:textColor="?attr/colorOnBackground"
                     android:textSize="26sp"
@@ -181,6 +189,7 @@
                     android:id="@+id/tvServicios"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
                     android:text="@string/servicios"
                     android:textColor="?attr/colorOnBackground"
                     android:textSize="26sp"

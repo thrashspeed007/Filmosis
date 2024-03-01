@@ -6,8 +6,8 @@
 
     <ImageView
         android:id="@+id/moviePosterImageView"
-        android:layout_width="320dp"
-        android:layout_height="480dp"
+        android:layout_width="240dp"
+        android:layout_height="360dp"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
