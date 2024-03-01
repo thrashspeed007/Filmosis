@@ -25,9 +25,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="@string/tendencia"
+            android:text="@string/popular"
             android:textColor="?attr/colorOnBackground"
-            android:textSize="20sp"
+            android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/genreSelected_genreTitleTextView" />
@@ -36,7 +36,7 @@
             android:id="@+id/genreSelected_popularMoviesRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/genreSelected_popularMoviesTitle" />
@@ -58,8 +58,8 @@
                     android:id="@+id/genreSelected_topRatedBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="?attr/colorOnBackground"
                     android:layout_weight="1"
-                    android:background="@drawable/button_selector"
                     android:text="@string/best_rated"
                     android:textSize="12sp" />
 
@@ -67,8 +67,8 @@
                     android:id="@+id/genreSelected_popularBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="?attr/colorOnBackground"
                     android:layout_weight="1"
-                    android:background="@drawable/button_selector"
                     android:text="@string/popular"
                     android:textSize="12sp" />
 
@@ -77,7 +77,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@drawable/button_selector"
+                    android:textColor="?attr/colorOnBackground"
                     android:text="@string/latest"
                     android:textSize="12sp" />
 
@@ -86,7 +86,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@drawable/button_selector"
+                    android:textColor="?attr/colorOnBackground"
                     android:text="@string/upcoming"
                     android:textSize="12sp" />
             </LinearLayout>

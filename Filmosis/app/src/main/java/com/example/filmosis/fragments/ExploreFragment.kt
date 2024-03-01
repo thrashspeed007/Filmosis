@@ -1,6 +1,5 @@
 package com.example.filmosis.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,15 +11,19 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.filmosis.R
+import com.example.filmosis.adapters.CarouselMoviesAdapter
 import com.example.filmosis.adapters.GenresCardViewsAdapter
 import com.example.filmosis.data.access.tmdb.MoviesAccess
+import com.example.filmosis.data.model.tmdb.Result
 import com.example.filmosis.utilities.tmdb.TmdbData
-import com.google.android.material.textfield.TextInputLayout
 
 class ExploreFragment : Fragment() {
     private lateinit var rootView: View
 
     private val moviesAccess = MoviesAccess()
+
+    private var trendingMovies: ArrayList<Result> = ArrayList()
+    private lateinit var trendingMoviesRecyclerView: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,10 +35,10 @@ class ExploreFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setup()
+        setup(view)
     }
 
-    private fun setup() {
+    private fun setup(view: View) {
         val searchView: SearchView = rootView.findViewById(R.id.explore_searchView)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
@@ -51,6 +54,8 @@ class ExploreFragment : Fragment() {
             }
         })
 
+        trendingMoviesRecyclerView = view.findViewById(R.id.explore_trendingMoviesRecyclerView)
+        addMoviesTrendingMoviesRv()
         initGenreCardViews()
     }
 
@@ -60,6 +65,20 @@ class ExploreFragment : Fragment() {
             .replace(R.id.fragmentContainerView, MoviesSearchedFragment.newInstance(query))
             .addToBackStack(null)
             .commit()
+    }
+
+    private fun addMoviesTrendingMoviesRv() {
+        moviesAccess.listTrendingMovies { result ->
+            result.forEach { movie ->
+                trendingMovies.add(movie)
+            }
+
+            val moviesAdapter = CarouselMoviesAdapter(trendingMovies) { movieClicked ->
+                Toast.makeText(requireContext(), "Puntuación media: ${(movieClicked.vote_average)}", Toast.LENGTH_SHORT).show()
+            }
+
+            trendingMoviesRecyclerView.adapter = moviesAdapter
+        }
     }
 
     private fun initGenreCardViews() {

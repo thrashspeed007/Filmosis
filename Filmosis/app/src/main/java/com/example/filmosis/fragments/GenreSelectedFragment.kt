@@ -1,12 +1,15 @@
 package com.example.filmosis.fragments
 
+import android.content.Context
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -73,6 +76,13 @@ class GenreSelectedFragment : Fragment() {
         initFilterMoviesButtons(view)
     }
 
+    private fun resolveThemeColor(context: Context, attr: Int): Int {
+        val typedValue = TypedValue()
+        val theme = context.theme
+        theme.resolveAttribute(attr, typedValue, true)
+        return typedValue.data
+    }
+
     private fun initFilterMoviesButtons(view: View) {
         val bestRatedBtn: Button = view.findViewById(R.id.genreSelected_topRatedBtn)
         val popularBtn: Button = view.findViewById(R.id.genreSelected_popularBtn)
@@ -83,16 +93,17 @@ class GenreSelectedFragment : Fragment() {
 
         for (actualButton in buttons) {
 
-            // TODO
-            actualButton.isSelected = false
+            actualButton.setBackgroundColor(resolveThemeColor(requireContext(), androidx.appcompat.R.attr.colorBackgroundFloating))
 
             actualButton.setOnClickListener {
                 if (!actualButton.isSelected) {
                     for (button in buttons) {
                         button.isSelected = false
+                        button.setBackgroundColor(resolveThemeColor(requireContext(), androidx.appcompat.R.attr.colorBackgroundFloating))
                     }
 
                     actualButton.isSelected = true
+                    actualButton.setBackgroundColor(resolveThemeColor(requireContext(), androidx.appcompat.R.attr.colorPrimary))
 
                     filteredMoviesList.clear()
                     when (actualButton.id) {
@@ -106,9 +117,11 @@ class GenreSelectedFragment : Fragment() {
         }
 
         bestRatedBtn.isSelected = true
+        bestRatedBtn.setBackgroundColor(resolveThemeColor(requireContext(), androidx.appcompat.R.attr.colorPrimary))
     }
 
-    fun updateFilteredMoviesList (movies: List<Result>) {
+    private fun updateFilteredMoviesList (movies: List<Result>) {
+
         movies.forEach { movie ->
             filteredMoviesList.add(movie)
 
@@ -125,7 +138,7 @@ class GenreSelectedFragment : Fragment() {
     }
 
     private fun addTrendingMoviesWithGenreToRv(genres: List<Int>) {
-        moviesAccess.listTrendingMoviesWithGenres(genres) { result ->
+        moviesAccess.listPopularMoviesWithGenres(genres) { result ->
             result.forEach { movie ->
                 moviesListTrending.add(movie)
             }
@@ -136,7 +149,6 @@ class GenreSelectedFragment : Fragment() {
 
             popularMoviesRv.adapter = moviesAdapter
         }
-
     }
 
     private fun initMoviesFilteredRv() {
