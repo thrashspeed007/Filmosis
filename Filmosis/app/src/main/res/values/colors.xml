@@ -6,7 +6,7 @@
 
 <!--    Light theme colors -->
     <color name="light_primary">#FF9800</color>
-    <color name="light_onPrimary">@color/white</color>
+    <color name="light_onPrimary">@color/black</color>
     <color name="light_secondary">#058BD3</color>
     <color name="light_onSecondary">@color/white</color>
     <color name="light_error">#B3261E</color>
@@ -22,7 +22,7 @@
 
 <!--    Dark theme colors -->
     <color name="dark_primary">#FF9800</color>
-    <color name="dark_onPrimary">@color/white</color>
+    <color name="dark_onPrimary">@color/black</color>
     <color name="dark_secondary">#080078</color>
     <color name="dark_onSecondary">@color/white</color>
     <color name="dark_error">#B3261E</color>

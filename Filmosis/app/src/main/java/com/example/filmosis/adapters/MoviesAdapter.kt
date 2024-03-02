@@ -9,9 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.filmosis.R
 import com.example.filmosis.config.DatosConexion
-import com.example.filmosis.data.model.tmdb.Result
+import com.example.filmosis.data.model.tmdb.Movie
 
-class MoviesAdapter(private val movies: List<Result>, private val onMovieClick: (Result) -> Unit) : RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
+class MoviesAdapter(private val movies: List<Movie>, private val onMovieClick: (Movie) -> Unit) : RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
     class MoviesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val movieImageView : ImageView = itemView.findViewById(R.id.moviePosterImageView)
         val movieTitle : TextView = itemView.findViewById(R.id.movieTitleTextView)

@@ -1,16 +1,11 @@
 package com.example.filmosis.fragments
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.*
-import android.widget.Button
-import android.widget.ImageButton
 import android.widget.ScrollView
 import android.widget.SearchView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
@@ -20,7 +15,7 @@ import androidx.recyclerview.widget.SnapHelper
 import com.example.filmosis.R
 import com.example.filmosis.adapters.MoviesAdapter
 import com.example.filmosis.data.access.tmdb.MoviesAccess
-import com.example.filmosis.data.model.tmdb.Result
+import com.example.filmosis.data.model.tmdb.Movie
 import com.example.filmosis.dataclass.Servicio
 import com.example.filmosis.adapters.ServicioAdapter
 import com.google.android.material.button.MaterialButton
@@ -34,9 +29,9 @@ class HomeFragment : Fragment() {
 
 
 
-    private var moviesListPopulares: ArrayList<Result> = ArrayList()
-    private var moviesListSoon: ArrayList<Result> = ArrayList()
-    private var recommendedMovies: ArrayList<Result> = ArrayList()
+    private var moviesListPopulares: ArrayList<Movie> = ArrayList()
+    private var moviesListSoon: ArrayList<Movie> = ArrayList()
+    private var recommendedMovies: ArrayList<Movie> = ArrayList()
 //    private lateinit var tvRecom: TextView
 //    private lateinit var tvProx: TextView
 //    private lateinit var tvPopu: TextView

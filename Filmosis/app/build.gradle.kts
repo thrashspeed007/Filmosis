@@ -47,15 +47,18 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
     // Retrofit
+    // https://square.github.io/retrofit/
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    // Gson
+
+    // Gson (Retrofit version)
+    // https://github.com/google/gson
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
 
     // CarouselRecyclerView
     // https://github.com/sparrow007/CarouselRecyclerview
     implementation ("com.github.sparrow007:carouselrecyclerview:1.2.6")
 
-    //CircleImage
+    // CircleImage
     //https://github.com/hdodenhof/CircleImageView
     implementation("de.hdodenhof:circleimageview:3.1.0")
 
@@ -64,7 +67,11 @@ dependencies {
     dokkaPlugin("org.jetbrains.dokka:android-documentation-plugin:1.9.10")
 
     // Glide
+    // https://github.com/bumptech/glide
     implementation ("com.github.bumptech.glide:glide:4.16.0")
+
+    // librerias de Basefuego
+    // https://firebase.google.com/docs/android/setup#available-libraries
 
     // Firebase BoM
     implementation(platform("com.google.firebase:firebase-bom:32.7.1"))
@@ -83,12 +90,5 @@ dependencies {
 
     //Firebase Storage
     implementation("com.google.firebase:firebase-storage-ktx:20.3.0")
-
-    // Add the dependencies for any other desired Firebase products
-    // https://firebase.google.com/docs/android/setup#available-libraries
-
-    // El glide ya está incluido arriba , es necesaria esta versión?
-    implementation("com.github.bumptech.glide:glide:4.12.0")
-    annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
 
 }

@@ -4,14 +4,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.filmosis.R
 import com.example.filmosis.config.DatosConexion
-import com.example.filmosis.data.model.tmdb.Result
+import com.example.filmosis.data.model.tmdb.Movie
 
-class CarouselMoviesAdapter(private val movies: List<Result>, private val onMovieClick: (Result) -> Unit) : RecyclerView.Adapter<CarouselMoviesAdapter.CarouselMoviesViewHolder>() {
+class CarouselMoviesAdapter(private val movies: List<Movie>, private val onMovieClick: (Movie) -> Unit) : RecyclerView.Adapter<CarouselMoviesAdapter.CarouselMoviesViewHolder>() {
     class CarouselMoviesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val movieImageView : ImageView = itemView.findViewById(R.id.carousel_posterImageView)
     }

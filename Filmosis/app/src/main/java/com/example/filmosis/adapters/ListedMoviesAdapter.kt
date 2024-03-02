@@ -2,8 +2,6 @@ package com.example.filmosis.adapters
 
 import android.view.ContextMenu
 import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.MenuItem.OnMenuItemClickListener
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -14,10 +12,10 @@ import com.bumptech.glide.Glide
 import com.example.filmosis.MainActivity
 import com.example.filmosis.R
 import com.example.filmosis.config.DatosConexion
-import com.example.filmosis.data.model.tmdb.Result
+import com.example.filmosis.data.model.tmdb.Movie
 import com.example.filmosis.utilities.tmdb.TmdbData
 
-class ListedMoviesAdapter(private val movies: List<Result>, private val onMovieClick: (Result) -> Unit): RecyclerView.Adapter<ListedMoviesAdapter.MovieRowViewHolder>() {
+class ListedMoviesAdapter(private val movies: List<Movie>, private val onMovieClick: (Movie) -> Unit): RecyclerView.Adapter<ListedMoviesAdapter.MovieRowViewHolder>() {
     class MovieRowViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnCreateContextMenuListener {
         val movieImageView : ImageView = itemView.findViewById(R.id.itemMovieSearched_imagePoster)
         val movieName : TextView = itemView.findViewById(R.id.itemMovieSearched_movieName)

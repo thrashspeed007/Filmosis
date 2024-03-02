@@ -1,8 +1,8 @@
 package com.example.filmosis.data.model.tmdb
 
-data class RemoteResult(
+data class MoviesPage(
     val page: Int,
-    val results: List<Result>,
+    val results: List<Movie>,
     val total_pages: Int,
     val total_results: Int
 )

@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,14 +16,14 @@ import com.example.filmosis.R
 import com.example.filmosis.adapters.CarouselMoviesAdapter
 import com.example.filmosis.adapters.ListedMoviesAdapter
 import com.example.filmosis.data.access.tmdb.MoviesAccess
-import com.example.filmosis.data.model.tmdb.Result
+import com.example.filmosis.data.model.tmdb.Movie
 
 class GenreSelectedFragment : Fragment() {
 
     private val moviesAccess = MoviesAccess()
 
-    private var moviesListTrending: ArrayList<Result> = ArrayList()
-    private var filteredMoviesList: ArrayList<Result> = ArrayList()
+    private var moviesListTrending: ArrayList<Movie> = ArrayList()
+    private var filteredMoviesList: ArrayList<Movie> = ArrayList()
 
     private lateinit var genres: List<Int>
 
@@ -120,7 +119,7 @@ class GenreSelectedFragment : Fragment() {
         bestRatedBtn.setBackgroundColor(resolveThemeColor(requireContext(), androidx.appcompat.R.attr.colorPrimary))
     }
 
-    private fun updateFilteredMoviesList (movies: List<Result>) {
+    private fun updateFilteredMoviesList (movies: List<Movie>) {
 
         movies.forEach { movie ->
             filteredMoviesList.add(movie)

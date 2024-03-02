@@ -1,90 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content" >
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/explore_searchViewTextInputLayout"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="wrap_content">
 
-        <SearchView
-            android:id="@+id/explore_searchView"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/explore_searchViewTextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:queryBackground="@null"
-            android:background="@drawable/search_view_border"
-            android:backgroundTint="?attr/colorSurfaceVariant"
-            android:iconifiedByDefault="false"
+            android:layout_margin="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <SearchView
+                android:id="@+id/explore_searchView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:queryBackground="@null"
+                android:background="@drawable/search_view_border"
+                android:backgroundTint="?attr/colorSurfaceVariant"
+                android:iconifiedByDefault="false"
+                android:paddingHorizontal="8dp"
+                android:queryHint="Buscar películas"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:id="@+id/explore_genresContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/explore_searchViewTextInputLayout">
+
+            <TextView
+                android:id="@+id/explore_exploreTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/genresContainerTitle"
+                android:textColor="?attr/colorOnBackground"
+                android:textSize="24sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/explore_genresRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/explore_exploreTitle" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/explore_trendingMoviesContainer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical"
             android:paddingHorizontal="8dp"
-            android:queryHint="Buscar películas"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/explore_genresContainer">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <TextView
+                android:id="@+id/explore_trendingMoviesTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tendencia"
+                android:textColor="?attr/colorOnBackground"
+                android:textSize="24sp" />
 
-    <LinearLayout
-        android:id="@+id/explore_genresContainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/explore_searchViewTextInputLayout">
+            <com.jackandphantom.carouselrecyclerview.CarouselRecyclerview
+                android:id="@+id/explore_trendingMoviesRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/explore_exploreTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/genresContainerTitle"
-            android:textColor="?attr/colorOnBackground"
-            android:textSize="24sp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/explore_genresRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/explore_exploreTitle" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/explore_trendingMoviesContainer"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:orientation="vertical"
-        android:paddingHorizontal="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/explore_genresContainer">
-
-        <TextView
-            android:id="@+id/explore_trendingMoviesTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/tendencia"
-            android:textColor="?attr/colorOnBackground"
-            android:textSize="24sp" />
-
-        <com.jackandphantom.carouselrecyclerview.CarouselRecyclerview
-            android:id="@+id/explore_trendingMoviesRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="8dp" />
-    </LinearLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

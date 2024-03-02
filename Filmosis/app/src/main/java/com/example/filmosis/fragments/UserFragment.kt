@@ -54,7 +54,6 @@ class UserFragment : Fragment() {
     private fun setup(view: View, email: String, provider: String,username : String) {
         val fullNameTextView: TextView = view.findViewById(R.id.user_userFullName)
         val emailTextView: TextView = view.findViewById(R.id.emailTextView)
-        val providerTextView: TextView = view.findViewById(R.id.providerTextView)
         val userTextView : TextView = view.findViewById(R.id.userTextView)
         val logOutButton: Button = view.findViewById(R.id.logOutButton)
         val changePassButton : Button = view.findViewById(R.id.changePassButton)
@@ -90,7 +89,7 @@ class UserFragment : Fragment() {
                         item.downloadUrl.addOnSuccessListener { uri ->
                             val imageUrl = uri.toString()
                             // Cargar la imagen en el CircleImageView
-                            Glide.with(requireContext()).load(imageUrl).into(profilePic)
+                            Glide.with(view).load(imageUrl).into(profilePic)
                         }.addOnFailureListener { exception ->
                             // Manejar errores al obtener la URL de la imagen
                             Log.e("Profile Pic", "Error al obtener la URL de la imagen", exception)
@@ -107,7 +106,6 @@ class UserFragment : Fragment() {
 
         fullNameTextView.text = fullname
         emailTextView.text = email
-        providerTextView.text = provider
         userTextView.text = username
 
         logOutButton.setOnClickListener {

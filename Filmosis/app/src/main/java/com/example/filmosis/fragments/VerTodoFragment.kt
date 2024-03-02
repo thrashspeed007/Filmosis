@@ -2,20 +2,18 @@ package com.example.filmosis.fragments
 
 
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.filmosis.R
 import com.example.filmosis.adapters.GridRecyclerViewAdapter
 import com.example.filmosis.data.access.tmdb.MoviesAccess
-import com.example.filmosis.data.model.tmdb.Result
+import com.example.filmosis.data.model.tmdb.Movie
 
 
 class VerTodoFragment : Fragment(), GridRecyclerViewAdapter.OnItemClickListener {
@@ -121,7 +119,7 @@ class VerTodoFragment : Fragment(), GridRecyclerViewAdapter.OnItemClickListener 
 ////
 ////        sView.post(Runnable { sView.scrollTo(sViewX, sViewY) })
 //    }
-    override fun onItemClick(movie: Result) {
+    override fun onItemClick(movie: Movie) {
         val movieId = movie.id
         val bundle = Bundle().apply {
             putInt("movieId", movieId)

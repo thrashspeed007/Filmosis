@@ -1,7 +1,14 @@
 package com.example.filmosis
 
+import android.content.Context
 import android.os.Bundle
+import android.widget.ImageButton
+import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -10,14 +17,9 @@ import com.example.filmosis.fragments.HomeFragment
 import com.example.filmosis.fragments.SocialFragment
 import com.example.filmosis.fragments.UserFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var fragmentHome : HomeFragment
-    private lateinit var fragmentExplore : ExploreFragment
-    private lateinit var fragmentSocial : SocialFragment
-    private lateinit var fragmentUser : UserFragment
-
-    private lateinit var bottomNavigationView : BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,12 +29,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setup() {
-        bottomNavigationView = findViewById(R.id.bottomNavigationView)
+        initBottomNavigationViewAndFragments()
+        initDrawerLayout()
+    }
 
-        fragmentHome = HomeFragment()
-        fragmentExplore = ExploreFragment()
-        fragmentSocial = SocialFragment()
-        fragmentUser = UserFragment()
+    private fun initBottomNavigationViewAndFragments() {
+        val bottomNavigationView : BottomNavigationView = findViewById(R.id.bottomNavigationView)
+
+        val fragmentHome = HomeFragment()
+        val fragmentExplore = ExploreFragment()
+        val fragmentSocial = SocialFragment()
+        val fragmentUser = UserFragment()
 
         replaceFragment(fragmentHome)
 
@@ -47,6 +54,48 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun initDrawerLayout() {
+        val drawerLayout : DrawerLayout = findViewById(R.id.main_drawerLayout)
+        val drawerLayoutToggleBtn: ImageButton = findViewById(R.id.main_drawerLayoutToggle)
+
+        drawerLayoutToggleBtn.setOnClickListener {
+            drawerLayout.open()
+        }
+
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                } else {
+                    isEnabled = false
+                    onBackPressedDispatcher.onBackPressed()
+                }
+            }
+        })
+
+        val drawerNavigationView: NavigationView = findViewById(R.id.main_drawerNavigationView)
+
+        val drawerHeader = drawerNavigationView.getHeaderView(0)
+
+        val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)
+        drawerHeader.findViewById<TextView>(R.id.drawerHeader_usernameTextView).text = prefs.getString("username", "")
+        drawerHeader.findViewById<TextView>(R.id.drawerHeader_userEmailTextView).text = prefs.getString("email", "")
+
+        drawerNavigationView.setNavigationItemSelectedListener {
+            when (it.itemId) {
+                // TODO
+                R.id.drawerMenu_myLists -> {
+                    Toast.makeText(applicationContext, "*implementar fragmento de mis listas*", Toast.LENGTH_SHORT).show()
+                    return@setNavigationItemSelectedListener true
+                }
+
+                else -> {
+                    return@setNavigationItemSelectedListener true
+                }
+            }
+        }
+    }
+
     private fun replaceFragment(fragment: Fragment) {
         val fragmentManager: FragmentManager = supportFragmentManager
         val transaction: FragmentTransaction = fragmentManager.beginTransaction()
@@ -55,4 +104,5 @@ class MainActivity : AppCompatActivity() {
 
         transaction.commit()
     }
+
 }

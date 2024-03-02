@@ -1,10 +1,7 @@
 package com.example.filmosis.fragments
 
 import android.os.Bundle
-import android.view.ContextMenu
 import android.view.LayoutInflater
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
@@ -14,15 +11,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.filmosis.R
 import com.example.filmosis.adapters.ListedMoviesAdapter
-import com.example.filmosis.config.DatosConexion
 import com.example.filmosis.data.access.tmdb.MoviesAccess
-import com.example.filmosis.data.model.tmdb.Result
+import com.example.filmosis.data.model.tmdb.Movie
 
 class MoviesSearchedFragment : Fragment() {
     private val moviesAccess = MoviesAccess()
     private lateinit var rv: RecyclerView
 
-    private var moviesList: ArrayList<Result> = ArrayList()
+    private var moviesList: ArrayList<Movie> = ArrayList()
 
     companion object {
         private const val ARG_QUERY = "tmdbQuery"

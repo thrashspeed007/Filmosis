@@ -1,20 +1,16 @@
 package com.example.filmosis.adapters
 
-import android.graphics.Movie
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.filmosis.R
-import com.example.filmosis.data.model.tmdb.Result
-import com.example.filmosis.dataclass.Pelicula
-import com.example.filmosis.dataclass.Servicio
+import com.example.filmosis.data.model.tmdb.Movie
 
-class GridRecyclerViewAdapter(private val movies: List<Result>) : RecyclerView.Adapter<GridRecyclerViewAdapter.MyViewHolder>() {
+class GridRecyclerViewAdapter(private val movies: List<Movie>) : RecyclerView.Adapter<GridRecyclerViewAdapter.MyViewHolder>() {
     private var listener: OnItemClickListener? = null
 
     fun setOnItemClickListener(listener: OnItemClickListener) {
@@ -22,7 +18,7 @@ class GridRecyclerViewAdapter(private val movies: List<Result>) : RecyclerView.A
     }
 
     interface OnItemClickListener {
-        fun onItemClick(movie: Result)
+        fun onItemClick(movie: Movie)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -54,7 +50,7 @@ class GridRecyclerViewAdapter(private val movies: List<Result>) : RecyclerView.A
             }
         }
 
-        fun bind(pelicula: Result) {
+        fun bind(pelicula: Movie) {
             Glide.with(itemView.context)
                 .load("https://image.tmdb.org/t/p/w500${pelicula.poster_path}")
                 .into(iconoPelicula)

@@ -106,22 +106,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <!-- Resto del contenido de tu layout -->
-
-        <TextView
-            android:id="@+id/providerLabel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Provider: "
-            android:textColor="?attr/colorOnBackground" />
-
-        <TextView
-            android:id="@+id/providerTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="4dp"
-            android:textColor="?attr/colorOnBackground" />
-
         <Button
             android:id="@+id/logOutButton"
             android:layout_width="match_parent"

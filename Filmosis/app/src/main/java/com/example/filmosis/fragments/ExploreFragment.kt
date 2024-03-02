@@ -14,7 +14,7 @@ import com.example.filmosis.R
 import com.example.filmosis.adapters.CarouselMoviesAdapter
 import com.example.filmosis.adapters.GenresCardViewsAdapter
 import com.example.filmosis.data.access.tmdb.MoviesAccess
-import com.example.filmosis.data.model.tmdb.Result
+import com.example.filmosis.data.model.tmdb.Movie
 import com.example.filmosis.utilities.tmdb.TmdbData
 
 class ExploreFragment : Fragment() {
@@ -22,7 +22,7 @@ class ExploreFragment : Fragment() {
 
     private val moviesAccess = MoviesAccess()
 
-    private var trendingMovies: ArrayList<Result> = ArrayList()
+    private var trendingMovies: ArrayList<Movie> = ArrayList()
     private lateinit var trendingMoviesRecyclerView: RecyclerView
 
     override fun onCreateView(
