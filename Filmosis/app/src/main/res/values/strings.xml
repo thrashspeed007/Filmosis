@@ -9,11 +9,11 @@
 
     <!--    Explore fragment -->
     <string name="genresContainerTitle">Géneros</string>
-<!--    Movie Row Menu-->
+    <!--    Movie Row Menu-->
     <string name="movieRowMenu_addToList">Añadir a lista</string>
     <string name="movieRowMenu_downloadCover">Descargar portada</string>
     <string name="movieRowMenu_shareMovie">Compartir pelicula</string>
-<!--    Drawer Menu-->
+    <!--    Drawer Menu-->
     <string name="drawerMenu_myLists">Mis Listas</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>

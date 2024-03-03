@@ -135,6 +135,12 @@
             android:drawableLeft="@drawable/baseline_logout_24"
             android:text="Cerrar sesión"
             android:textColor="?attr/colorSurface" />
+
+        <Button
+            android:id="@+id/user_provisional"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Botón provisional" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

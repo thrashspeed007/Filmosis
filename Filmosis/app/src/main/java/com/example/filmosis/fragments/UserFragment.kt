@@ -19,11 +19,11 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.filmosis.AuthActivity
 import com.example.filmosis.ChangePasswordActivity
+import com.example.filmosis.ListActivity
 import com.example.filmosis.R
 import com.example.filmosis.init.FirebaseInitializer
 import com.google.firebase.auth.FirebaseAuth
 import de.hdodenhof.circleimageview.CircleImageView
-import org.w3c.dom.Text
 
 enum class ProviderType {
     BASIC,
@@ -162,6 +162,12 @@ class UserFragment : Fragment() {
             val pickImageIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             startActivityForResult(pickImageIntent, PICK_IMAGE_REQUEST)
         }
+
+        view.findViewById<Button>(R.id.user_provisional).setOnClickListener {
+            val listActivityIntent = Intent(requireContext(), ListActivity::class.java)
+            startActivity(listActivityIntent)
+        }
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

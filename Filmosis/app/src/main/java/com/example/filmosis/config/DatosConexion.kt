@@ -8,5 +8,7 @@ class DatosConexion {
 
         const val API_KEY = "3c11ed932b4a0231970e8e2f40509898"
         const val REGION = "ES"
+
+        const val LOCAL_SERVICE_URL = "http://10.0.2.2:8080/"
     }
 }

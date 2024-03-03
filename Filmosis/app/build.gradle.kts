@@ -91,4 +91,7 @@ dependencies {
     //Firebase Storage
     implementation("com.google.firebase:firebase-storage-ktx:20.3.0")
 
+    //okhttp
+    implementation("com.squareup.okhttp3:okhttp:4.9.2")
+
 }
