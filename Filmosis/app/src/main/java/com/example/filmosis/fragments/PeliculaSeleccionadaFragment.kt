@@ -3,6 +3,7 @@ package com.example.filmosis.fragments
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -50,11 +51,21 @@ class PeliculaSeleccionadaFragment : Fragment() {
 
     private fun mostrarVideo(urlVideo: String) {
         val videoUri = Uri.parse(urlVideo)
+        Log.d("Video", "URL del video: $videoUri")
+
         videoView.setVideoURI(videoUri)
         val mediaController = MediaController(requireContext())
         videoView.setMediaController(mediaController)
         mediaController.setAnchorView(videoView)
 
-        videoView.setOnPreparedListener { videoView.start() }
+        videoView.setOnPreparedListener {
+            Log.d("Video", "El video ha comenzado a cargar.")
+            videoView.start()
+        }
+
+        videoView.setOnCompletionListener {
+            Log.d("Video", "El video ha terminado de cargar.")
+        }
     }
+
 }

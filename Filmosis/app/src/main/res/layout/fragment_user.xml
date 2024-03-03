@@ -107,16 +107,6 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <Button
-            android:id="@+id/logOutButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="8dp"
-            android:backgroundTint="?attr/colorPrimary"
-            android:drawableLeft="@drawable/baseline_logout_24"
-            android:text="Cerrar sesión"
-            android:textColor="?attr/colorSurface" />
-
-        <Button
             android:id="@+id/changePassButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -134,6 +124,16 @@
             android:backgroundTint="?attr/colorPrimary"
             android:drawableLeft="@drawable/baseline_lock_reset_24"
             android:text="Resetear contraseña"
+            android:textColor="?attr/colorSurface" />
+
+        <Button
+            android:id="@+id/logOutButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="8dp"
+            android:backgroundTint="?attr/colorPrimary"
+            android:drawableLeft="@drawable/baseline_logout_24"
+            android:text="Cerrar sesión"
             android:textColor="?attr/colorSurface" />
     </LinearLayout>
 
