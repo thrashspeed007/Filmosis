@@ -1,5 +1,6 @@
 package com.example.filmosis.network.interfaces
 
+import com.example.filmosis.data.model.tmdb.Director
 import com.example.filmosis.data.model.tmdb.MoviesPage
 import com.example.filmosis.dataclass.MovieDetailsResponse
 import com.example.filmosis.dataclass.PeliculaDetalles
@@ -45,10 +46,6 @@ interface TmdbApiInterface {
         @Query("query") query: String
     ): Call<MoviesPage>
 
-    fun obtenerDetallesPelicula(
-        @Path("movie_id") idPelicula: Int,
-        @Query("api_key") apiKey: String
-    ): Call<PeliculaDetalles>
 
     @GET("movie/{movie_id}")
     fun getMovieDetails(
@@ -85,6 +82,15 @@ interface TmdbApiInterface {
         @Query("with_genres") genres: String,
         @Query("primary_release_date.gte") releaseDateGTE: String // Fecha de lanzamiento mayor o igual que
     ): Call<MoviesPage>
+
+
+    @GET("movie/{movie_id}/credits")
+    fun getMovieCredits(
+        @Path("movie_id") movieId: Int,
+        @Query("api_key") apiKey: String
+    ): Call<Director>
+
+
 
 
 }

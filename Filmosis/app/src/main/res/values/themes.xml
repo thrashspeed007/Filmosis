@@ -17,9 +17,10 @@
         <item name="colorOutline">@color/light_outline</item>
         <item name="colorAccent">@color/light_accent</item>
 
-<!--        Estos colores deberian quitarse una vez terminar el tema...-->
+        <!--        Estos colores deberian quitarse una vez terminar el tema...-->
         <item name="colorPrimaryDark">@color/darkPrimary</item>
         <item name="toolbarStyle">@color/Toolbar</item>
+
     </style>
 
     <style name="TransparentBackground">
@@ -36,6 +37,16 @@
         <item name="cornerSizeBottomRight">75dp</item>
         <item name="cornerFamilyBottomRight">rounded</item>
     </style>
+
+    <!--    font-->
+    <style name="CustomFontKaiet">
+        <item name="android:fontFamily">@font/font_kaiet</item>
+    </style>
+    <style name="CustomFont">
+        <item name="android:fontFamily">@font/app_default</item>
+    </style>
+
+
 
     <style name="Theme.Filmosis" parent="Base.Theme.Filmosis" />
 </resources>

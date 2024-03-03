@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorPrimary"
+    android:background="?attr/colorBackgroundFloating"
     android:id="@+id/fragment_container_verTodo"
     tools:context=".fragments.VerTodoFragment">
 
@@ -35,8 +35,12 @@
                 android:id="@+id/tvPopulares"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Peliculas populares"
-                android:textColor="?attr/colorOnBackground" />
+                android:text="PELICULAS POPULARES"
+                android:textColor="?attr/colorOnBackground"
+                android:textSize="15sp"
+                android:fontFamily="@font/font_kaiet"
+                android:layout_margin="10dp"
+                />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewVerTodo"
@@ -49,8 +53,11 @@
                 android:id="@+id/tvRecomendados"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Peliculas recomendadas"
-                android:textColor="?attr/colorOnBackground" />
+                android:text="PELICULAS RECOMENDADAS"
+                android:textColor="?attr/colorOnBackground"
+                android:textSize="15sp"
+                android:fontFamily="@font/font_kaiet"
+                android:layout_margin="10dp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewVerTodoRecomendados"
@@ -63,8 +70,11 @@
                 android:id="@+id/tvProximamente"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Proximamente"
-                android:textColor="?attr/colorOnBackground" />
+                android:text="PROXIMAMENTE"
+                android:textColor="?attr/colorOnBackground"
+                android:textSize="15sp"
+                android:fontFamily="@font/font_kaiet"
+                android:layout_margin="10dp"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewVerTodoProximamente"

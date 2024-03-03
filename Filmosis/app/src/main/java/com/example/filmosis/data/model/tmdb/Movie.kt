@@ -14,5 +14,33 @@ data class Movie(
     val title: String,
     val video: Boolean,
     val vote_average: Double,
-    val vote_count: Int
+    val vote_count: Int,
+)
+
+
+data class Director(
+    val name: String,
+    val profile_image_url: Int
+)
+
+data class Actor(
+    val name: String,
+    val profile_image_url: String
+)
+
+//Para recuperar los datos de la pelicula al seleccionarlo
+data class MovieData(
+    val movieId: Int,
+    val title: String,
+    val overview: String,
+    val popularity: Double,
+    val releaseDate: String,
+    val voteAverage: Double,
+    val voteCount: Int,
+    val adult: Boolean,
+    val backdropPath: String,
+    val originalLanguage: String,
+    val originalTitle: String,
+    val video: Boolean,
+    val posterPath: String,
 )

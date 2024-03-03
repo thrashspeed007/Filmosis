@@ -99,7 +99,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 app:reverseLayout="true" />
-<!--            -->
+            <!--            -->
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -14,7 +14,7 @@ import com.example.filmosis.data.model.tmdb.Movie
 class MoviesAdapter(private val movies: List<Movie>, private val onMovieClick: (Movie) -> Unit) : RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
     class MoviesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val movieImageView : ImageView = itemView.findViewById(R.id.moviePosterImageView)
-        val movieTitle : TextView = itemView.findViewById(R.id.movieTitleTextView)
+//        val movieTitle : TextView = itemView.findViewById(R.id.movieTitleTextView)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesViewHolder {
@@ -30,7 +30,7 @@ class MoviesAdapter(private val movies: List<Movie>, private val onMovieClick: (
         val movie = movies[position]
         val imageUrl = DatosConexion.TMDB_IMAGE_BASE_URL + movie.poster_path
         Glide.with(holder.movieImageView.context).load(imageUrl).into(holder.movieImageView)
-        holder.movieTitle.text = movie.title
+//        holder.movieTitle.text = movie.title
         holder.itemView.setOnClickListener {onMovieClick.invoke(movie)}
     }
 }
