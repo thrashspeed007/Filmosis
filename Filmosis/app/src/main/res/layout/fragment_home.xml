@@ -48,10 +48,10 @@
                 android:backgroundTint="?attr/colorSurfaceVariant"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_manage_search_24"
-                android:tint="?attr/colorOnSurfaceVariant"
                 app:layout_constraintBottom_toBottomOf="@+id/explore_searchViewTextInputLayout"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/explore_searchViewTextInputLayout" />
+                app:layout_constraintTop_toTopOf="@+id/explore_searchViewTextInputLayout"
+                app:tint="?attr/colorOnSurfaceVariant" />
 
             <TextView
                 android:id="@+id/bienvenida"
@@ -110,7 +110,7 @@
 
             </LinearLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
+            <com.jackandphantom.carouselrecyclerview.CarouselRecyclerview
                 android:id="@+id/movieRecomendedRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -156,7 +156,7 @@
 
             </LinearLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
+            <com.jackandphantom.carouselrecyclerview.CarouselRecyclerview
                 android:id="@+id/moviesSoonRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -200,7 +200,7 @@
 
             </LinearLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
+            <com.jackandphantom.carouselrecyclerview.CarouselRecyclerview
                 android:id="@+id/moviesRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -213,8 +213,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout13"
-                tools:layout_editor_absoluteX="1dp">
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout13">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/serviciosRecyclerview"

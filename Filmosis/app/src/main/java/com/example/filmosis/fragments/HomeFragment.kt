@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SnapHelper
 
 import com.example.filmosis.R
+import com.example.filmosis.adapters.CarouselMoviesAdapter
 import com.example.filmosis.adapters.MoviesAdapter
 import com.example.filmosis.data.access.tmdb.MoviesAccess
 import com.example.filmosis.data.model.tmdb.Movie
@@ -72,26 +73,16 @@ class HomeFragment : Fragment() {
         rvPopular = view.findViewById(R.id.moviesRecyclerView)
         //para mejorar el rendimiento, le indicamos que el tamano del contenido no cambiara
         rvPopular.setHasFixedSize(true)
-        rvPopular.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
-        val snapHelper: SnapHelper = LinearSnapHelper()
-        //cuando se desplaza se ajustan automaticamente
-        snapHelper.attachToRecyclerView(rvPopular)
         addMoviesToList()
 
         //RecyclerView para las pelis que saldran proximamente :)
         rvUpcoming = view.findViewById(R.id.moviesSoonRecyclerView)
         rvUpcoming.setHasFixedSize(true)
-        rvUpcoming.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
-        val snapHelper2: SnapHelper = LinearSnapHelper()
-        snapHelper2.attachToRecyclerView(rvUpcoming)
         addMoviesUpComingToList()
 
         //RecyclerView para las pelis recomendadas :)
         rvRecommend = view.findViewById(R.id.movieRecomendedRecyclerView)
         rvRecommend.setHasFixedSize(true)
-        rvRecommend.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
-        val snapHelper3: SnapHelper = LinearSnapHelper()
-        snapHelper3.attachToRecyclerView(rvRecommend)
         addMoviesRecommendedToList()
 
         //servicios
@@ -247,44 +238,42 @@ class HomeFragment : Fragment() {
 
     private fun addMoviesToList() {
         moviesAccess.listPopularMovies { result ->
+            moviesListPopulares.clear()
             result.forEach { movie ->
                 moviesListPopulares.add(movie)
             }
 
-            moviesAdapter = MoviesAdapter(moviesListPopulares) { movieClicked ->
+            rvPopular.adapter = CarouselMoviesAdapter(moviesListPopulares) { movieClicked ->
                 Toast.makeText(requireContext(), "Puntuación media: ${(movieClicked.video)}", Toast.LENGTH_SHORT).show()
             }
-            rvPopular.adapter = moviesAdapter
         }
 
     }
 
     private fun addMoviesUpComingToList(){
         moviesAccess.listUpcomingMovies { results ->
+            moviesListSoon.clear()
             results.forEach{movie->
                 moviesListSoon.add(movie)
             }
 
-            moviesAdapter = MoviesAdapter(moviesListSoon){movieClicked ->
+            rvUpcoming.adapter = CarouselMoviesAdapter(moviesListSoon){movieClicked ->
                 Toast.makeText(requireContext(),"Fecha de salida: ${movieClicked.release_date}", Toast.LENGTH_SHORT).show()
-
             }
-            rvUpcoming.adapter = moviesAdapter
         }
     }
 
     private fun addMoviesRecommendedToList() {
         //aqui le paso el id de una pelicula cualquiera(en este caso he pillado la de DUNE)
         moviesAccess.listRecommendedMovies(movieId=438631) { results ->
-//            Log.d("DEBUG", "Results size: ${results.size}")
+            recommendedMovies.clear()
             results.forEach { movie ->
                 recommendedMovies.add(movie)
             }
 
-            moviesAdapter = MoviesAdapter(recommendedMovies) { movieClicked ->
+            rvRecommend.adapter = CarouselMoviesAdapter(recommendedMovies) { movieClicked ->
                 Toast.makeText(requireContext(), "Informacion de la pelicula: ${movieClicked.release_date} ${movieClicked.vote_average} ${movieClicked.overview}", Toast.LENGTH_SHORT).show()
             }
-            rvRecommend.adapter = moviesAdapter
         }
     }
 
