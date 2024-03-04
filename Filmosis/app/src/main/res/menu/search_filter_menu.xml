@@ -4,10 +4,6 @@
         android:id="@+id/searchFilterMenu_searchMovies"
         android:title="@string/searchFilterMenu_searchMovies" />
     <item
-        android:id="@+id/searchFilterMenu_searchDirectors"
+        android:id="@+id/searchFilterMenu_searchPersons"
         android:title="@string/searchFilterMenu_searchDirectors" />
-
-    <item
-        android:id="@+id/searchFilterMenu_searchActors"
-        android:title="@string/searchFilterMenu_searchActors" />
 </menu>

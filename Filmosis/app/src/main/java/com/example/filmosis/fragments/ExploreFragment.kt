@@ -99,12 +99,8 @@ class ExploreFragment : Fragment() {
                     performSearchWithQueryHint(TmdbSearchQueries.MOVIES_SEARCH, "Buscar películas")
                     true
                 }
-                R.id.searchFilterMenu_searchDirectors -> {
-                    performSearchWithQueryHint(TmdbSearchQueries.DIRECTORS_SEARCH, "Buscar directores")
-                    true
-                }
-                R.id.searchFilterMenu_searchActors -> {
-                    performSearchWithQueryHint(TmdbSearchQueries.ACTORS_SEARCH, "Buscar actores")
+                R.id.searchFilterMenu_searchPersons -> {
+                    performSearchWithQueryHint(TmdbSearchQueries.PERSONS_SEARCH, "Buscar personas")
                     true
                 }
                 else -> false
@@ -123,15 +119,9 @@ class ExploreFragment : Fragment() {
                     .addToBackStack(null)
                     .commit()
             }
-            TmdbSearchQueries.DIRECTORS_SEARCH -> {
+            TmdbSearchQueries.PERSONS_SEARCH -> {
                 fragmentManager.beginTransaction()
-                    .replace(R.id.fragmentContainerView, DirectorsSearchedFragment.newInstance(query))
-                    .addToBackStack(null)
-                    .commit()
-            }
-            TmdbSearchQueries.ACTORS_SEARCH -> {
-                fragmentManager.beginTransaction()
-                    .replace(R.id.fragmentContainerView, ActorsSearchedFragment.newInstance(query))
+                    .replace(R.id.fragmentContainerView, PersonsSearchedFragment.newInstance(query))
                     .addToBackStack(null)
                     .commit()
             }

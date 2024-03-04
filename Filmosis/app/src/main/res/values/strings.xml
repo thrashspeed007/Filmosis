@@ -18,8 +18,7 @@
 
     <!--    Search Filter Menu-->
     <string name="searchFilterMenu_searchMovies">Buscar películas</string>
-    <string name="searchFilterMenu_searchDirectors">Buscar directores</string>
-    <string name="searchFilterMenu_searchActors">Buscar actores</string>
+    <string name="searchFilterMenu_searchDirectors">Buscar personas</string>
 
 
     <string name="hello_blank_fragment">Hello blank fragment</string>

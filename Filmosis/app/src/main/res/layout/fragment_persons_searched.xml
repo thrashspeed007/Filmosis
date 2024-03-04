@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.DirectorsSearchedFragment">
+    tools:context=".fragments.PersonsSearchedFragment">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/directorsSearched_searchViewTextInputLayout"
+        android:id="@+id/personsSearched_searchViewTextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <SearchView
-            android:id="@+id/directorsSearched_searchView"
+            android:id="@+id/personsSearched_searchView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/search_view_border"
@@ -24,15 +24,15 @@
             android:iconifiedByDefault="false"
             android:paddingHorizontal="8dp"
             android:queryBackground="@null"
-            android:queryHint="Buscar directores" />
+            android:queryHint="Buscar personas" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/directorsSearched_recyclerView"
-        android:layout_width="wrap_content"
+        android:id="@+id/personsSearched_recyclerView"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/directorsSearched_searchViewTextInputLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/personsSearched_searchViewTextInputLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
