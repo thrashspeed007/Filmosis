@@ -2,6 +2,7 @@ package com.example.filmosis.data.access.tmdb
 
 import android.util.Log
 import com.example.filmosis.config.DatosConexion
+import com.example.filmosis.data.model.tmdb.Director
 import com.example.filmosis.data.model.tmdb.MoviesPage
 import com.example.filmosis.data.model.tmdb.Movie
 import com.example.filmosis.dataclass.MovieDetailsResponse
@@ -19,7 +20,7 @@ class MoviesAccess {
 
         call.enqueue(object : Callback<MoviesPage> {
             override fun onFailure(call: Call<MoviesPage>, t: Throwable) {
-                Log.d("MoviesAccess", "listPopularMovies onFailure: " + t.message )
+                Log.d("MoviesAccess", "listPopularMovies onFailure: " + t.message)
             }
 
             override fun onResponse(call: Call<MoviesPage>, response: Response<MoviesPage>) {
@@ -33,11 +34,15 @@ class MoviesAccess {
     }
 
     fun listPopularMoviesWithGenres(genres: List<Int>, callback: (List<Movie>) -> Unit) {
-        val call = RetrofitService.tmdbApi.listPopularMoviesWithGenres(DatosConexion.API_KEY, DatosConexion.REGION, genres.joinToString(separator = "||"))
+        val call = RetrofitService.tmdbApi.listPopularMoviesWithGenres(
+            DatosConexion.API_KEY,
+            DatosConexion.REGION,
+            genres.joinToString(separator = "||")
+        )
 
         call.enqueue(object : Callback<MoviesPage> {
             override fun onFailure(call: Call<MoviesPage>, t: Throwable) {
-                Log.d("MoviesAccess", "listPopularMoviesWithGenres onFailure: " + t.message )
+                Log.d("MoviesAccess", "listPopularMoviesWithGenres onFailure: " + t.message)
             }
 
             override fun onResponse(call: Call<MoviesPage>, response: Response<MoviesPage>) {
@@ -52,10 +57,14 @@ class MoviesAccess {
 
     fun listUpcomingMovies(callback: (List<Movie>) -> Unit) {
         val currentDate = getCurrentDate()
-        val call = RetrofitService.tmdbApi.listUpcomingMovies(DatosConexion.API_KEY, DatosConexion.REGION,currentDate )
+        val call = RetrofitService.tmdbApi.listUpcomingMovies(
+            DatosConexion.API_KEY,
+            DatosConexion.REGION,
+            currentDate
+        )
         call.enqueue(object : Callback<MoviesPage> {
             override fun onFailure(call: Call<MoviesPage>, t: Throwable) {
-                Log.d("MoviesAccess", "listUpcomingMovies onFailure: " + t.message )
+                Log.d("MoviesAccess", "listUpcomingMovies onFailure: " + t.message)
             }
 
             override fun onResponse(call: Call<MoviesPage>, response: Response<MoviesPage>) {
@@ -73,7 +82,7 @@ class MoviesAccess {
 
         call.enqueue(object : Callback<MoviesPage> {
             override fun onFailure(call: Call<MoviesPage>, t: Throwable) {
-                Log.d("MoviesAccess", "listRecommendedMovies onFailure: " + t.message )
+                Log.d("MoviesAccess", "listRecommendedMovies onFailure: " + t.message)
             }
 
             override fun onResponse(call: Call<MoviesPage>, response: Response<MoviesPage>) {
@@ -87,7 +96,8 @@ class MoviesAccess {
     }
 
     fun searchMovie(query: String, callback: (List<Movie>) -> Unit) {
-        val call = RetrofitService.tmdbApi.searchMovie(DatosConexion.API_KEY, DatosConexion.REGION, query)
+        val call =
+            RetrofitService.tmdbApi.searchMovie(DatosConexion.API_KEY, DatosConexion.REGION, query)
 
         call.enqueue(object : Callback<MoviesPage> {
             override fun onFailure(call: Call<MoviesPage>, t: Throwable) {
@@ -114,10 +124,13 @@ class MoviesAccess {
                 callback.invoke(null)
             }
 
-            override fun onResponse(call: Call<MovieDetailsResponse>, response: Response<MovieDetailsResponse>) {
+            override fun onResponse(
+                call: Call<MovieDetailsResponse>,
+                response: Response<MovieDetailsResponse>
+            ) {
                 val videoKey = response.body()?.videos?.results?.firstOrNull()?.key
                 if (videoKey != null) {
-                    val videoUrl = "https://www.youtube.com/watch?v=$videoKey"
+                    val videoUrl = "https://www.youtube.com/embed/$videoKey"
                     callback.invoke(videoUrl)
                 } else {
                     callback.invoke(null)
@@ -126,12 +139,14 @@ class MoviesAccess {
         })
     }
 
+
     fun listTrendingMovies(callback: (List<Movie>) -> Unit) {
-        val call = RetrofitService.tmdbApi.listTrendingMovies(DatosConexion.API_KEY, DatosConexion.REGION)
+        val call =
+            RetrofitService.tmdbApi.listTrendingMovies(DatosConexion.API_KEY, DatosConexion.REGION)
 
         call.enqueue(object : Callback<MoviesPage> {
             override fun onFailure(call: Call<MoviesPage>, t: Throwable) {
-                Log.d("MoviesAccess", "listTrendingMovies onFailure: " + t.message )
+                Log.d("MoviesAccess", "listTrendingMovies onFailure: " + t.message)
             }
 
             override fun onResponse(call: Call<MoviesPage>, response: Response<MoviesPage>) {
@@ -145,11 +160,15 @@ class MoviesAccess {
     }
 
     fun listBestRatedMoviesWithGenres(genres: List<Int>, callback: (List<Movie>) -> Unit) {
-        val call = RetrofitService.tmdbApi.listBestRatedMoviesWithGenres(DatosConexion.API_KEY, DatosConexion.REGION, genres.joinToString(separator = "||"))
+        val call = RetrofitService.tmdbApi.listBestRatedMoviesWithGenres(
+            DatosConexion.API_KEY,
+            DatosConexion.REGION,
+            genres.joinToString(separator = "||")
+        )
 
         call.enqueue(object : Callback<MoviesPage> {
             override fun onFailure(call: Call<MoviesPage>, t: Throwable) {
-                Log.d("MoviesAccess", "listBestRatedMoviesWithGenres onFailure: " + t.message )
+                Log.d("MoviesAccess", "listBestRatedMoviesWithGenres onFailure: " + t.message)
             }
 
             override fun onResponse(call: Call<MoviesPage>, response: Response<MoviesPage>) {
@@ -163,11 +182,16 @@ class MoviesAccess {
     }
 
     fun listLatestMoviesWithGenres(genres: List<Int>, callback: (List<Movie>) -> Unit) {
-        val call = RetrofitService.tmdbApi.listLatestMoviesWithGenres(DatosConexion.API_KEY, DatosConexion.REGION, genres.joinToString(separator = "||"), getCurrentDate())
+        val call = RetrofitService.tmdbApi.listLatestMoviesWithGenres(
+            DatosConexion.API_KEY,
+            DatosConexion.REGION,
+            genres.joinToString(separator = "||"),
+            getCurrentDate()
+        )
 
         call.enqueue(object : Callback<MoviesPage> {
             override fun onFailure(call: Call<MoviesPage>, t: Throwable) {
-                Log.d("MoviesAccess", "listLatestMoviesWithGenres onFailure: " + t.message )
+                Log.d("MoviesAccess", "listLatestMoviesWithGenres onFailure: " + t.message)
             }
 
             override fun onResponse(call: Call<MoviesPage>, response: Response<MoviesPage>) {
@@ -181,11 +205,16 @@ class MoviesAccess {
     }
 
     fun listUpcomingMoviesWithGenres(genres: List<Int>, callback: (List<Movie>) -> Unit) {
-        val call = RetrofitService.tmdbApi.listUpcomingMoviesWithGenres(DatosConexion.API_KEY, DatosConexion.REGION, genres.joinToString(separator = "||"), getCurrentDate())
+        val call = RetrofitService.tmdbApi.listUpcomingMoviesWithGenres(
+            DatosConexion.API_KEY,
+            DatosConexion.REGION,
+            genres.joinToString(separator = "||"),
+            getCurrentDate()
+        )
 
         call.enqueue(object : Callback<MoviesPage> {
             override fun onFailure(call: Call<MoviesPage>, t: Throwable) {
-                Log.d("MoviesAccess", "listUpcomingMoviesWithGenres onFailure: " + t.message )
+                Log.d("MoviesAccess", "listUpcomingMoviesWithGenres onFailure: " + t.message)
             }
 
             override fun onResponse(call: Call<MoviesPage>, response: Response<MoviesPage>) {
@@ -197,6 +226,55 @@ class MoviesAccess {
             }
         })
     }
+
+//    fun getDirectorDetails(directorId: Int, callback: (MovieCredits?) -> Unit) {
+//        val call = RetrofitService.tmdbApi.getDirectorDetails(directorId)
+//
+//        call.enqueue(object : Callback<MovieCredits> {
+//            override fun onFailure(call: Call<MovieCredits>, t: Throwable) {
+//                Log.d("MoviesAccess", "getDirectorDetails onFailure: " + t.message)
+//                callback.invoke(null)
+//            }
+//
+//            override fun onResponse(call: Call<MovieCredits>, response: Response<MovieCredits>) {
+//                val movieCredits = response.body()
+//                callback.invoke(movieCredits)
+//            }
+//        })
+//    }
+
+    fun getDirectorDetails(movieId: Int, callback: (List<Director>?) -> Unit) {
+        val call = RetrofitService.tmdbApi.getMovieCredits(movieId, DatosConexion.API_KEY)
+
+        call.enqueue(object : Callback<Director> {
+            override fun onResponse(call: Call<Director>, response: Response<Director>) {
+                if (response.isSuccessful) {
+                    val director = response.body()
+                    if (director != null) {
+                        val directorsList: List<Director> = listOf(director)
+                        callback(directorsList)
+                    } else {
+                        callback(null)
+                    }
+                } else {
+                    callback(null)
+                }
+            }
+
+            override fun onFailure(call: Call<Director>, t: Throwable) {
+
+                callback(null)
+            }
+        })
+    }
+
+
+
+
+
+
+
+
 
     //Lo necesito para hacer la consulta a la bd
     private fun getCurrentDate(): String {

@@ -16,6 +16,12 @@
     <!--    Drawer Menu-->
     <string name="drawerMenu_myLists">Mis Listas</string>
 
+    <!--    Search Filter Menu-->
+    <string name="searchFilterMenu_searchMovies">Buscar películas</string>
+    <string name="searchFilterMenu_searchDirectors">Buscar directores</string>
+    <string name="searchFilterMenu_searchActors">Buscar actores</string>
+
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="bienvenido">Bienvenido de vuelta, </string>
     <string name="search_action">Buscar</string>

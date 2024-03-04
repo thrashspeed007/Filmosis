@@ -3,6 +3,7 @@ package com.example.filmosis.fragments
 
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import com.example.filmosis.R
 import com.example.filmosis.adapters.GridRecyclerViewAdapter
 import com.example.filmosis.data.access.tmdb.MoviesAccess
 import com.example.filmosis.data.model.tmdb.Movie
+import com.google.gson.Gson
 
 
 class VerTodoFragment : Fragment(), GridRecyclerViewAdapter.OnItemClickListener {
@@ -120,10 +122,25 @@ class VerTodoFragment : Fragment(), GridRecyclerViewAdapter.OnItemClickListener 
 ////        sView.post(Runnable { sView.scrollTo(sViewX, sViewY) })
 //    }
     override fun onItemClick(movie: Movie) {
-        val movieId = movie.id
+
         val bundle = Bundle().apply {
-            putInt("movieId", movieId)
+            putInt("movieId", movie.id)
+            putString("title", movie.title)
+            putString("overview", movie.overview)
+            putDouble("popularity", movie.popularity)
+            putString("release_date", movie.release_date)
+            putDouble("vote_average", movie.vote_average)
+            putInt("vote_count", movie.vote_count)
+            putBoolean("adult", movie.adult)
+            putString("backdrop_path", movie.backdrop_path)
+            putString("original_language", movie.original_language)
+            putString("original_title", movie.original_title)
+            putBoolean("video", movie.video)
+            putString("poster_path", movie.poster_path)
+
+
         }
+
 
         //Me llevo la inforamcion para luego recuperarlo en el onCreateView del fragment peliculaseleccionada
         val nuevoFragmento = PeliculaSeleccionadaFragment().apply {
@@ -136,4 +153,6 @@ class VerTodoFragment : Fragment(), GridRecyclerViewAdapter.OnItemClickListener 
         transaction.addToBackStack(null)
         transaction.commit()
     }
+
+
 }

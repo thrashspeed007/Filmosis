@@ -121,6 +121,7 @@
             android:layout_weight="1"
             android:backgroundTint="?attr/colorSecondary"
             android:text="ACCEDER"
+            android:textColor="?attr/colorOnSecondary"
             app:cornerRadius="24dp" />
 
         <TextView

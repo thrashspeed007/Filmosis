@@ -1,6 +1,10 @@
 package com.example.filmosis.network.interfaces
 
+import com.example.filmosis.data.model.tmdb.Cast
+import com.example.filmosis.data.model.tmdb.CombinedCredits
+import com.example.filmosis.data.model.tmdb.Director
 import com.example.filmosis.data.model.tmdb.MoviesPage
+import com.example.filmosis.data.model.tmdb.PersonsPage
 import com.example.filmosis.dataclass.MovieDetailsResponse
 import com.example.filmosis.dataclass.PeliculaDetalles
 import retrofit2.Call
@@ -45,10 +49,6 @@ interface TmdbApiInterface {
         @Query("query") query: String
     ): Call<MoviesPage>
 
-    fun obtenerDetallesPelicula(
-        @Path("movie_id") idPelicula: Int,
-        @Query("api_key") apiKey: String
-    ): Call<PeliculaDetalles>
 
     @GET("movie/{movie_id}")
     fun getMovieDetails(
@@ -85,6 +85,27 @@ interface TmdbApiInterface {
         @Query("with_genres") genres: String,
         @Query("primary_release_date.gte") releaseDateGTE: String // Fecha de lanzamiento mayor o igual que
     ): Call<MoviesPage>
+
+
+    @GET("movie/{movie_id}/credits")
+    fun getMovieCredits(
+        @Path("movie_id") movieId: Int,
+        @Query("api_key") apiKey: String
+    ): Call<Director>
+
+    @GET("person/{person_id}/combined_credits?language=es-ES")
+    fun getPersonCombinedCredits(
+        @Query("api_key") apiKey: String,
+        @Query("region") region: String,
+        @Path("person_id") personId: Int
+    ) : Call<CombinedCredits>
+
+    @GET("search/person?language=es-ES&page=1")
+    fun searchPerson(
+        @Query("api_key") apiKey: String,
+        @Query("region") region: String,
+        @Query("query") query: String
+    ): Call<PersonsPage>
 
 
 }

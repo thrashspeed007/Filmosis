@@ -2,19 +2,33 @@
 
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content" >
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <ImageButton
+            android:id="@+id/explore_searchFilterImageButton"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:backgroundTint="?attr/colorSurfaceVariant"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_manage_search_24"
+            android:tint="?attr/colorOnSurfaceVariant"
+            app:layout_constraintBottom_toBottomOf="@+id/explore_searchViewTextInputLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/explore_searchViewTextInputLayout" />
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/explore_searchViewTextInputLayout"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/explore_searchFilterImageButton"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -22,11 +36,11 @@
                 android:id="@+id/explore_searchView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:queryBackground="@null"
                 android:background="@drawable/search_view_border"
                 android:backgroundTint="?attr/colorSurfaceVariant"
                 android:iconifiedByDefault="false"
                 android:paddingHorizontal="8dp"
+                android:queryBackground="@null"
                 android:queryHint="Buscar películas"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
