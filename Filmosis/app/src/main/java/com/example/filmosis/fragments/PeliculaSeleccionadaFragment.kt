@@ -156,8 +156,6 @@ class PeliculaSeleccionadaFragment : Fragment() {
             }
             recyclerView.adapter = directorAdapter
 
-
-
         }
     }
 

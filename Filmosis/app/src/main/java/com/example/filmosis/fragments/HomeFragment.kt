@@ -39,7 +39,7 @@ class HomeFragment : Fragment() {
 //    private lateinit var tvPopu: TextView
 
 
-    private lateinit var moviesAdapter: MoviesAdapter
+    private lateinit var moviesAdapter: CarouselMoviesAdapter
 
     private lateinit var scrollView: ScrollView
 
@@ -244,12 +244,12 @@ class HomeFragment : Fragment() {
             }
 
             rvPopular.adapter = CarouselMoviesAdapter(moviesListPopulares) { movieClicked ->
-                Toast.makeText(requireContext(), "Puntuación media: ${(movieClicked.video)}", Toast.LENGTH_SHORT).show()
+
+                onItemClick(movieClicked)
             }
         }
 
     }
-
     private fun addMoviesUpComingToList(){
         moviesAccess.listUpcomingMovies { results ->
             moviesListSoon.clear()
@@ -258,7 +258,7 @@ class HomeFragment : Fragment() {
             }
 
             rvUpcoming.adapter = CarouselMoviesAdapter(moviesListSoon){movieClicked ->
-                Toast.makeText(requireContext(),"Fecha de salida: ${movieClicked.release_date}", Toast.LENGTH_SHORT).show()
+                onItemClick(movieClicked)
             }
         }
     }
@@ -272,9 +272,42 @@ class HomeFragment : Fragment() {
             }
 
             rvRecommend.adapter = CarouselMoviesAdapter(recommendedMovies) { movieClicked ->
-                Toast.makeText(requireContext(), "Informacion de la pelicula: ${movieClicked.release_date} ${movieClicked.vote_average} ${movieClicked.overview}", Toast.LENGTH_SHORT).show()
+                onItemClick(movieClicked)
             }
         }
+    }
+
+    fun onItemClick(movie: Movie) {
+
+        val bundle = Bundle().apply {
+            putInt("movieId", movie.id)
+            putString("title", movie.title)
+            putString("overview", movie.overview)
+            putDouble("popularity", movie.popularity)
+            putString("release_date", movie.release_date)
+            putDouble("vote_average", movie.vote_average)
+            putInt("vote_count", movie.vote_count)
+            putBoolean("adult", movie.adult)
+            putString("backdrop_path", movie.backdrop_path)
+            putString("original_language", movie.original_language)
+            putString("original_title", movie.original_title)
+            putBoolean("video", movie.video)
+            putString("poster_path", movie.poster_path)
+
+
+        }
+
+
+        //Me llevo la inforamcion para luego recuperarlo en el onCreateView del fragment peliculaseleccionada
+        val nuevoFragmento = PeliculaSeleccionadaFragment().apply {
+            arguments = bundle
+        }
+
+        val fragmentManager = requireActivity().supportFragmentManager
+        val transaction = fragmentManager.beginTransaction()
+        transaction.replace(R.id.homeFragment, nuevoFragmento)
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
 
 }
