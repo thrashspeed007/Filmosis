@@ -2,6 +2,8 @@ package com.example.filmosis.fragments
 import android.content.Context
 import android.os.Bundle
 import android.view.*
+import android.widget.ImageButton
+import android.widget.PopupMenu
 import android.widget.ScrollView
 import android.widget.SearchView
 import android.widget.TextView
@@ -18,6 +20,7 @@ import com.example.filmosis.data.access.tmdb.MoviesAccess
 import com.example.filmosis.data.model.tmdb.Movie
 import com.example.filmosis.dataclass.Servicio
 import com.example.filmosis.adapters.ServicioAdapter
+import com.example.filmosis.utilities.tmdb.TmdbSearchQueries
 import com.google.android.material.button.MaterialButton
 
 class HomeFragment : Fragment() {
@@ -26,8 +29,6 @@ class HomeFragment : Fragment() {
     private lateinit var rvPopular: RecyclerView
     private lateinit var rvUpcoming: RecyclerView
     private lateinit var rvRecommend: RecyclerView
-
-
 
     private var moviesListPopulares: ArrayList<Movie> = ArrayList()
     private var moviesListSoon: ArrayList<Movie> = ArrayList()
@@ -61,26 +62,9 @@ class HomeFragment : Fragment() {
         val prefs = requireActivity().getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)
         val username = prefs.getString("username", null)
 
-        val searchView: SearchView = view.findViewById(R.id.home_searchView)
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String): Boolean {
-                if (query.isNotEmpty()) {
-                    performSearch(query)
-                    return true
-                }
-                return false
-            }
+        initSearchViewAndSearchFilter(view)
 
-
-
-//        scrollView.findViewById<ScrollView>(R.id.scrollViewVerTodo)
-
-
-
-            override fun onQueryTextChange(newText: String): Boolean {
-                return false
-            }
-        })
+        //        scrollView.findViewById<ScrollView>(R.id.scrollViewVerTodo)
 
         saludoUsuTextView.text = "$username"
 
@@ -164,14 +148,94 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun performSearch(query: String) {
-        val fragmentManager = requireActivity().supportFragmentManager
-        fragmentManager.beginTransaction()
-            .replace(R.id.fragmentContainerView, MoviesSearchedFragment.newInstance(query))
-            .addToBackStack(null)
-            .commit()
+    private fun initSearchViewAndSearchFilter(view: View) {
+        val searchView: SearchView = view.findViewById(R.id.home_searchView)
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                if (query.isNotEmpty()) {
+                    performSearch(TmdbSearchQueries.MOVIES_SEARCH, query)
+                    return true
+                }
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                return false
+            }
+        })
+
+        val searchFilterImageButton : ImageButton = view.findViewById(R.id.home_searchFilterImageButton)
+        searchFilterImageButton.setOnClickListener {
+            showSearchFilterMenu(searchFilterImageButton)
+        }
     }
 
+    private fun performSearchWithQueryHint(searchType: TmdbSearchQueries, hint: String) {
+        val searchView: SearchView = requireView().findViewById(R.id.home_searchView)
+        searchView.queryHint = hint
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(queryText: String?): Boolean {
+                if (!queryText.isNullOrBlank()) {
+                    performSearch(searchType, queryText)
+                    return true
+                }
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+        })
+    }
+
+    private fun showSearchFilterMenu(anchor: View) {
+        val popupMenu = PopupMenu(requireContext(), anchor)
+        popupMenu.menuInflater.inflate(R.menu.search_filter_menu, popupMenu.menu)
+
+        popupMenu.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.searchFilterMenu_searchMovies -> {
+                    performSearchWithQueryHint(TmdbSearchQueries.MOVIES_SEARCH, "Buscar películas")
+                    true
+                }
+                R.id.searchFilterMenu_searchDirectors -> {
+                    performSearchWithQueryHint(TmdbSearchQueries.DIRECTORS_SEARCH, "Buscar directores")
+                    true
+                }
+                R.id.searchFilterMenu_searchActors -> {
+                    performSearchWithQueryHint(TmdbSearchQueries.ACTORS_SEARCH, "Buscar actores")
+                    true
+                }
+                else -> false
+            }
+        }
+
+        popupMenu.show()
+    }
+
+    private fun performSearch(searchType: TmdbSearchQueries, query: String) {
+        val fragmentManager = requireActivity().supportFragmentManager
+        when (searchType) {
+            TmdbSearchQueries.MOVIES_SEARCH -> {
+                fragmentManager.beginTransaction()
+                    .replace(R.id.fragmentContainerView, MoviesSearchedFragment.newInstance(query))
+                    .addToBackStack(null)
+                    .commit()
+            }
+            TmdbSearchQueries.DIRECTORS_SEARCH -> {
+                fragmentManager.beginTransaction()
+                    .replace(R.id.fragmentContainerView, DirectorsSearchedFragment.newInstance(query))
+                    .addToBackStack(null)
+                    .commit()
+            }
+            TmdbSearchQueries.ACTORS_SEARCH -> {
+                fragmentManager.beginTransaction()
+                    .replace(R.id.fragmentContainerView, ActorsSearchedFragment.newInstance(query))
+                    .addToBackStack(null)
+                    .commit()
+            }
+        }
+    }
 
     private fun scrollToSection(textView:TextView) {
         scrollView.post {

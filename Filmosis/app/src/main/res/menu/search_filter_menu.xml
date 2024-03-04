@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/searchFilterMenu_searchMovies"
+        android:title="@string/searchFilterMenu_searchMovies" />
+    <item
+        android:id="@+id/searchFilterMenu_searchDirectors"
+        android:title="@string/searchFilterMenu_searchDirectors" />
+
+    <item
+        android:id="@+id/searchFilterMenu_searchActors"
+        android:title="@string/searchFilterMenu_searchActors" />
+</menu>

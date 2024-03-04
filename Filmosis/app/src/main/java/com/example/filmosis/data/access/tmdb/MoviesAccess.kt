@@ -16,8 +16,7 @@ import java.time.format.DateTimeFormatter
 class MoviesAccess {
 
     fun listPopularMovies(callback: (List<Movie>) -> Unit) {
-        val call =
-            RetrofitService.tmdbApi.listPopularMovies(DatosConexion.API_KEY, DatosConexion.REGION)
+        val call = RetrofitService.tmdbApi.listPopularMovies(DatosConexion.API_KEY, DatosConexion.REGION)
 
         call.enqueue(object : Callback<MoviesPage> {
             override fun onFailure(call: Call<MoviesPage>, t: Throwable) {

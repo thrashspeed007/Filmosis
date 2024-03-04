@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
+import android.widget.PopupMenu
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -16,6 +18,7 @@ import com.example.filmosis.adapters.GenresCardViewsAdapter
 import com.example.filmosis.data.access.tmdb.MoviesAccess
 import com.example.filmosis.data.model.tmdb.Movie
 import com.example.filmosis.utilities.tmdb.TmdbData
+import com.example.filmosis.utilities.tmdb.TmdbSearchQueries
 
 class ExploreFragment : Fragment() {
     private lateinit var rootView: View
@@ -39,11 +42,19 @@ class ExploreFragment : Fragment() {
     }
 
     private fun setup(view: View) {
-        val searchView: SearchView = rootView.findViewById(R.id.explore_searchView)
+        trendingMoviesRecyclerView = view.findViewById(R.id.explore_trendingMoviesRecyclerView)
+        addMoviesTrendingMoviesRv()
+
+        initSearchViewAndSearchFilter(view)
+        initGenreCardViews()
+    }
+
+    private fun initSearchViewAndSearchFilter(view: View) {
+        val searchView: SearchView = view.findViewById(R.id.explore_searchView)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 if (query.isNotEmpty()) {
-                    performSearch(query)
+                    performSearch(TmdbSearchQueries.MOVIES_SEARCH ,query)
                     return true
                 }
                 return false
@@ -54,17 +65,77 @@ class ExploreFragment : Fragment() {
             }
         })
 
-        trendingMoviesRecyclerView = view.findViewById(R.id.explore_trendingMoviesRecyclerView)
-        addMoviesTrendingMoviesRv()
-        initGenreCardViews()
+        val searchFilterImageButton : ImageButton = view.findViewById(R.id.explore_searchFilterImageButton)
+        searchFilterImageButton.setOnClickListener {
+            showSearchFilterMenu(searchFilterImageButton)
+        }
     }
 
-    private fun performSearch(query: String) {
+    private fun performSearchWithQueryHint(searchType: TmdbSearchQueries, hint: String) {
+        val searchView: SearchView = requireView().findViewById(R.id.explore_searchView)
+        searchView.queryHint = hint
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(queryText: String?): Boolean {
+                if (!queryText.isNullOrBlank()) {
+                    performSearch(searchType, queryText)
+                    return true
+                }
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+        })
+    }
+
+    private fun showSearchFilterMenu(anchor: View) {
+        val popupMenu = PopupMenu(requireContext(), anchor)
+        popupMenu.menuInflater.inflate(R.menu.search_filter_menu, popupMenu.menu)
+
+        popupMenu.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.searchFilterMenu_searchMovies -> {
+                    performSearchWithQueryHint(TmdbSearchQueries.MOVIES_SEARCH, "Buscar películas")
+                    true
+                }
+                R.id.searchFilterMenu_searchDirectors -> {
+                    performSearchWithQueryHint(TmdbSearchQueries.DIRECTORS_SEARCH, "Buscar directores")
+                    true
+                }
+                R.id.searchFilterMenu_searchActors -> {
+                    performSearchWithQueryHint(TmdbSearchQueries.ACTORS_SEARCH, "Buscar actores")
+                    true
+                }
+                else -> false
+            }
+        }
+
+        popupMenu.show()
+    }
+
+    private fun performSearch(searchType: TmdbSearchQueries, query: String) {
         val fragmentManager = requireActivity().supportFragmentManager
-        fragmentManager.beginTransaction()
-            .replace(R.id.fragmentContainerView, MoviesSearchedFragment.newInstance(query))
-            .addToBackStack(null)
-            .commit()
+        when (searchType) {
+            TmdbSearchQueries.MOVIES_SEARCH -> {
+                fragmentManager.beginTransaction()
+                    .replace(R.id.fragmentContainerView, MoviesSearchedFragment.newInstance(query))
+                    .addToBackStack(null)
+                    .commit()
+            }
+            TmdbSearchQueries.DIRECTORS_SEARCH -> {
+                fragmentManager.beginTransaction()
+                    .replace(R.id.fragmentContainerView, DirectorsSearchedFragment.newInstance(query))
+                    .addToBackStack(null)
+                    .commit()
+            }
+            TmdbSearchQueries.ACTORS_SEARCH -> {
+                fragmentManager.beginTransaction()
+                    .replace(R.id.fragmentContainerView, ActorsSearchedFragment.newInstance(query))
+                    .addToBackStack(null)
+                    .commit()
+            }
+        }
     }
 
     private fun addMoviesTrendingMoviesRv() {
