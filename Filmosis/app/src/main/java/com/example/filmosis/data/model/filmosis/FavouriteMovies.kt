@@ -5,4 +5,5 @@ package com.example.filmosis.data.model.filmosis
         val director : String,
         val generos : List<String>,
         val fechaEstreno : String
+        //INtento de push
     )
