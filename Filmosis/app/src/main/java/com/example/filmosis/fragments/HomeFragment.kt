@@ -70,9 +70,11 @@ class HomeFragment : Fragment() {
 
         //RecyclerView para las peliculas populares
         rvPopular = view.findViewById(R.id.moviesRecyclerView)
+        //para mejorar el rendimiento, le indicamos que el tamano del contenido no cambiara
         rvPopular.setHasFixedSize(true)
         rvPopular.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
         val snapHelper: SnapHelper = LinearSnapHelper()
+        //cuando se desplaza se ajustan automaticamente
         snapHelper.attachToRecyclerView(rvPopular)
         addMoviesToList()
 

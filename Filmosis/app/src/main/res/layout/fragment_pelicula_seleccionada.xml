@@ -22,6 +22,14 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <ImageButton
+                android:id="@+id/back"
+                style="@style/TransparentBackground"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:contentDescription="atras"
+                android:src="@drawable/baseline_arrow_back_24" />
+
             <WebView
                 android:id="@+id/webView2"
                 android:layout_width="415dp"
@@ -43,9 +51,11 @@
             <LinearLayout
                 android:layout_gravity="center"
                 android:id="@+id/linearLayout5"
-                android:layout_width="248dp"
-                android:layout_height="204dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.496"
@@ -54,18 +64,14 @@
                 app:layout_constraintVertical_bias="0.0">
 
 
+
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="match_parent">
 
-                    <!-- ImageView para la imagen de fondo -->
-                    <ImageView
-                        android:id="@+id/image"
-                        android:src="@drawable/logofilmosispremium"
+                    <com.example.filmosis.CurvedBackgroundView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:scaleType="centerCrop"
-                        android:contentDescription="TODO" />
+                        android:layout_height="match_parent" />
 
                     <!-- LinearLayout para contener los TextViews -->
                     <LinearLayout
@@ -107,15 +113,25 @@
                         </LinearLayout>
 
                         <!-- TextView para la puntuación promedio -->
-                        <TextView
+                        <LinearLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="5dp"
-                            android:text="Puntuacion"
-                            />
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:text="Puntuacion: " />
+                            <TextView
+                                android:id="@+id/tvAvg"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:text="aiaia"/>
+                        </LinearLayout>
 
                         <!-- RatingBar para mostrar la puntuación -->
                         <RatingBar
+                            android:layout_gravity="center"
                             android:id="@+id/averageVote"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
@@ -212,6 +228,7 @@
             </LinearLayout>
 
             <LinearLayout
+
                 android:id="@+id/linearLayout9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -221,14 +238,14 @@
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout8">
 
                 <TextView
-                    android:layout_margin="10dp"
+                    android:layout_margin="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Sinopsis"
                     android:textSize="20sp" />
 
                 <TextView
-                    android:layout_margin="10dp"
+                    android:layout_margin="5dp"
                     android:id="@+id/tvSinopsis"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -243,12 +260,14 @@
                 app:layout_constraintBottom_toBottomOf="@+id/linearLayout9">
 
                 <TextView
+                    android:layout_margin="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Director"
                     android:textSize="20sp" />
 
                 <LinearLayout
+                    android:layout_margin="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="171dp"
                     android:orientation="horizontal">

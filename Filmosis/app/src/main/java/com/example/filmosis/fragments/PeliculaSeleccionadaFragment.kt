@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebChromeClient
 import android.webkit.WebView
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
@@ -36,6 +37,8 @@ class PeliculaSeleccionadaFragment : Fragment() {
     private lateinit var tvReleaseDate : TextView
     private lateinit var tvAvg : RatingBar
     private lateinit var image : ImageView
+    private lateinit var tvavg : TextView
+    private lateinit var ibBack : ImageButton
 
     private var directores: ArrayList<Director> = ArrayList()
     private val ma = MoviesAccess()
@@ -120,11 +123,22 @@ class PeliculaSeleccionadaFragment : Fragment() {
         }
 
 
-        image = view.findViewById(R.id.image)
+//        image = view.findViewById(R.id.image)
+//        if (datosPeli != null) {
+//            val uri = Uri.parse(datosPeli.posterPath)
+//            image.setImageURI(uri)
+//        }
+
+        tvavg = view.findViewById(R.id.tvAvg)
         if (datosPeli != null) {
-            val uri = Uri.parse(datosPeli.posterPath)
-            image.setImageURI(uri)
+            tvavg.text = datosPeli.voteAverage.toString()
+        };
+
+        ibBack = view.findViewById(R.id.back)
+        ibBack.setOnClickListener {
+            parentFragmentManager.popBackStack()
         }
+
 
 
 
