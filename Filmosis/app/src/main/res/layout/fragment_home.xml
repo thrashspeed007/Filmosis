@@ -242,20 +242,20 @@
                     android:visibility="visible" />
 
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/buttonShowAllServices"
-                    style="@style/TransparentBackground"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:text="@string/ver_mas"
-                    android:textAlignment="textEnd"
-                    android:textColor="?attr/colorPrimary"
-                    android:textSize="10sp"
-                    app:icon="@drawable/ic_rigth_arrow"
-                    app:iconGravity="textEnd"
-                    app:iconSize="15dp"
-                    app:iconTint="?attr/colorPrimary" />
+<!--                <com.google.android.material.button.MaterialButton-->
+<!--                    android:id="@+id/buttonShowAllServices"-->
+<!--                    style="@style/TransparentBackground"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_gravity="end"-->
+<!--                    android:text="@string/ver_mas"-->
+<!--                    android:textAlignment="textEnd"-->
+<!--                    android:textColor="?attr/colorPrimary"-->
+<!--                    android:textSize="10sp"-->
+<!--                    app:icon="@drawable/ic_rigth_arrow"-->
+<!--                    app:iconGravity="textEnd"-->
+<!--                    app:iconSize="15dp"-->
+<!--                    app:iconTint="?attr/colorPrimary" />-->
 
 
             </LinearLayout>
