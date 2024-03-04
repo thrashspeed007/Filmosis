@@ -140,6 +140,7 @@ class ExploreFragment : Fragment() {
 
     private fun addMoviesTrendingMoviesRv() {
         moviesAccess.listTrendingMovies { result ->
+            trendingMovies.clear()
             result.forEach { movie ->
                 trendingMovies.add(movie)
             }
