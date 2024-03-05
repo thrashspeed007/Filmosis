@@ -44,5 +44,8 @@
     <string name="servicios">Servicios</string>
     <string name="recomendaciones">Recomendaciones</string>
     <string name="ver_todo">Ver todo</string>
+    <string name="movie_director_placeholder">Director de ejemplo</string>
+    <string name="movie_title_placeholder">Título de ejemplo</string>
+    <string name="movie_date_placeholder">1970-01-01</string>
 
 </resources>

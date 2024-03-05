@@ -1,6 +1,7 @@
 package com.example.filmosis
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.TextView
@@ -86,6 +87,7 @@ class MainActivity : AppCompatActivity() {
                 // TODO
                 R.id.drawerMenu_myLists -> {
                     Toast.makeText(applicationContext, "*implementar fragmento de mis listas*", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this, ListActivity::class.java))
                     return@setNavigationItemSelectedListener true
                 }
 
