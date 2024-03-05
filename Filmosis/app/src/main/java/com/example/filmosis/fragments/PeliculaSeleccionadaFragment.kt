@@ -1,7 +1,6 @@
 package com.example.filmosis.fragments
 
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,24 +11,20 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.SnapHelper
-import com.bumptech.glide.Glide
 import com.example.filmosis.R
-import com.example.filmosis.adapters.ListedPersonsAdapter
 import com.example.filmosis.adapters.PersonasAdapter
+import com.example.filmosis.adapters.ServicioAdapter
 import com.example.filmosis.data.access.tmdb.MoviesAccess
 import com.example.filmosis.data.model.tmdb.Director
 import com.example.filmosis.data.model.tmdb.MovieData
-import com.example.filmosis.data.model.tmdb.Person
 
 class PeliculaSeleccionadaFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var recyclerViewReparto: RecyclerView
+    private lateinit var recyclerViewServie: RecyclerView
     private lateinit var videoView: WebView
     private lateinit var directorAdapter: PersonasAdapter
     private lateinit var tvGenero : TextView
@@ -92,6 +87,10 @@ class PeliculaSeleccionadaFragment : Fragment() {
         if (datosPeli != null) {
             addActoresToList(requireContext(), datosPeli)
         }
+        //servicio TODO clase
+//        recyclerViewServie = view.findViewById(R.id.recyclerServicio)
+//        recyclerViewServie.setHasFixedSize(true)
+
 
 
 
@@ -199,45 +198,53 @@ class PeliculaSeleccionadaFragment : Fragment() {
         }
     }
 
+//    private fun addServicesToList(context: Context, data: MovieData) {
+//        ma.getPlatformDetails(data.provider_id) { platformDetails ->
+//            platformDetails?.let { details ->
+//                recyclerViewServie.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+////                recyclerViewServie.adapter = ServicioAdapter(context, details.servicios)
+//            }
+//        }
+//    }
 
 
 
     fun recuperarDatos(bundle: Bundle?): MovieData? {
-            if (bundle == null) return null
+        if (bundle == null) return null
 
-            // Extrae los datos del Bundle
-            val movieId = bundle.getInt("movieId", -1)
-            val title = bundle.getString("title", "")
-            val overview = bundle.getString("overview", "")
-            val popularity = bundle.getDouble("popularity", 0.0)
-            val releaseDate = bundle.getString("release_date", "")
-            val voteAverage = bundle.getDouble("vote_average", 0.0)
-            val voteCount = bundle.getInt("vote_count", 0)
-            val adult = bundle.getBoolean("adult", false)
-            val backdropPath = bundle.getString("backdrop_path", "")
-            val originalLanguage = bundle.getString("original_language", "")
-            val originalTitle = bundle.getString("original_title", "")
-            val video = bundle.getBoolean("video", false)
-            val posterPath = bundle.getString("poster_path", "")
+        // Extrae los datos del Bundle
+        val movieId = bundle.getInt("movieId", -1)
+        val title = bundle.getString("title", "")
+        val overview = bundle.getString("overview", "")
+        val popularity = bundle.getDouble("popularity", 0.0)
+        val releaseDate = bundle.getString("release_date", "")
+        val voteAverage = bundle.getDouble("vote_average", 0.0)
+        val voteCount = bundle.getInt("vote_count", 0)
+        val adult = bundle.getBoolean("adult", false)
+        val backdropPath = bundle.getString("backdrop_path", "")
+        val originalLanguage = bundle.getString("original_language", "")
+        val originalTitle = bundle.getString("original_title", "")
+        val video = bundle.getBoolean("video", false)
+        val posterPath = bundle.getString("poster_path", "")
 
-            // retornamos los datos de la pelicula
-            return MovieData(
-                movieId,
-                title,
-                overview,
-                popularity,
-                releaseDate,
-                voteAverage,
-                voteCount,
-                adult,
-                backdropPath,
-                originalLanguage,
-                originalTitle,
-                video,
-                posterPath,
+        // retornamos los datos de la pelicula
+        return MovieData(
+            movieId,
+            title,
+            overview,
+            popularity,
+            releaseDate,
+            voteAverage,
+            voteCount,
+            adult,
+            backdropPath,
+            originalLanguage,
+            originalTitle,
+            video,
+            posterPath )
 
-                )
-        }
     }
+}
+
 
 

@@ -8,13 +8,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.filmosis.R
+import com.example.filmosis.dataclass.PlatformDetails
 import com.example.filmosis.dataclass.Servicio
 
 class ServicioAdapter(private val context: Context, private val servicios: List<Servicio>) :
     RecyclerView.Adapter<ServicioAdapter.ServicioViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ServicioViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.row_servicio, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.row_servicio, parent, false)
         return ServicioViewHolder(view)
     }
 

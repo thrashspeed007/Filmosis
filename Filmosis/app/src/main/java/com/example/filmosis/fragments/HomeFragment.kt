@@ -267,6 +267,7 @@ class HomeFragment : Fragment() {
         }
     }
 
+
     fun onItemClick(movie: Movie) {
 
         val bundle = Bundle().apply {

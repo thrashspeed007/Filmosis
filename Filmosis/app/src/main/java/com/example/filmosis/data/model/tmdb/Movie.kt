@@ -42,5 +42,6 @@ data class MovieData(
     val originalLanguage: String,
     val originalTitle: String,
     val video: Boolean,
-    val posterPath: String,
+    val posterPath: String
+
 )

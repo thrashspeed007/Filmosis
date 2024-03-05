@@ -10,6 +10,8 @@ import com.example.filmosis.data.model.tmdb.MoviesPage
 import com.example.filmosis.data.model.tmdb.Movie
 import com.example.filmosis.data.model.tmdb.Person
 import com.example.filmosis.dataclass.MovieDetailsResponse
+import com.example.filmosis.dataclass.PlatformDetails
+import com.example.filmosis.dataclass.Servicio
 import com.example.filmosis.network.RetrofitService
 import retrofit2.Call
 import retrofit2.Callback
@@ -295,6 +297,28 @@ class MoviesAccess {
             }
         })
     }
+    fun getPlatformDetails(platformId: Int, callback: (PlatformDetails?) -> Unit) {
+        val call = RetrofitService.tmdbApi.getPlatformDetails(platformId, DatosConexion.API_KEY)
+
+        call.enqueue(object : Callback<PlatformDetails> {
+            override fun onResponse(call: Call<PlatformDetails>, response: Response<PlatformDetails>) {
+                if (response.isSuccessful) {
+                    val platformDetails = response.body()
+                    callback(platformDetails)
+                } else {
+                    callback(null)
+                }
+            }
+
+            override fun onFailure(call: Call<PlatformDetails>, t: Throwable) {
+                callback(null)
+            }
+        })
+    }
+
+
+
+
 
 
 

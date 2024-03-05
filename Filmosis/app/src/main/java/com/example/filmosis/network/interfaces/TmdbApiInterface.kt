@@ -9,6 +9,7 @@ import com.example.filmosis.data.model.tmdb.PersonDetails
 import com.example.filmosis.data.model.tmdb.PersonsPage
 import com.example.filmosis.dataclass.MovieDetailsResponse
 import com.example.filmosis.dataclass.PeliculaDetalles
+import com.example.filmosis.dataclass.PlatformDetails
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -116,5 +117,15 @@ interface TmdbApiInterface {
         @Query("region") region: String
     ): Call<PersonDetails>
 
+    //TODO en clase
+
+    //https://developer.themoviedb.org/reference/tv-season-watch-providers
+    @GET("platform/{platform_id}")
+    fun getPlatformDetails(
+        @Path("platform_id") platformId: Int,
+        @Query("api_key") apiKey: String
+    ): Call<PlatformDetails>
 }
+
+
 
