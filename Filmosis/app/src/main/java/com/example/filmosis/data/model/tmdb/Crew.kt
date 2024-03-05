@@ -19,5 +19,13 @@ data class Crew(
     val popularity: Double,
     val poster_path: String,
     val vote_average: Double,
-    val vote_count: Int
+    val vote_count: Int,
+    val profile_path: String
+
+)
+
+
+data class CreditsResponse(
+    val crew: List<Crew>,
+
 )

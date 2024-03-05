@@ -1,5 +1,6 @@
 package com.example.filmosis.fragments
 
+import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -19,13 +20,16 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SnapHelper
 import com.bumptech.glide.Glide
 import com.example.filmosis.R
+import com.example.filmosis.adapters.ListedPersonsAdapter
 import com.example.filmosis.adapters.PersonasAdapter
 import com.example.filmosis.data.access.tmdb.MoviesAccess
 import com.example.filmosis.data.model.tmdb.Director
 import com.example.filmosis.data.model.tmdb.MovieData
+import com.example.filmosis.data.model.tmdb.Person
 
 class PeliculaSeleccionadaFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
+    private lateinit var recyclerViewReparto: RecyclerView
     private lateinit var videoView: WebView
     private lateinit var directorAdapter: PersonasAdapter
     private lateinit var tvGenero : TextView
@@ -40,7 +44,7 @@ class PeliculaSeleccionadaFragment : Fragment() {
     private lateinit var tvavg : TextView
     private lateinit var ibBack : ImageButton
 
-    private var directores: ArrayList<Director> = ArrayList()
+    private var directores:  ArrayList<Director> = ArrayList()
     private val ma = MoviesAccess()
 
 
@@ -75,15 +79,24 @@ class PeliculaSeleccionadaFragment : Fragment() {
         }
 
 
-        //Recyclerview para directores actores...
+        //Recyclerview para directores
         recyclerView = view.findViewById(R.id.recyclerPersonas)
         recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager = LinearLayoutManager(requireContext(),RecyclerView.HORIZONTAL, false)
-        val snapHelper3: SnapHelper = LinearSnapHelper()
-        snapHelper3.attachToRecyclerView(recyclerView)
         if (datosPeli != null) {
-            addDirectoresToList(datosPeli)
+            addDirectoresToList(requireContext(), datosPeli)
         }
+
+        //reparto
+        recyclerViewReparto = view.findViewById(R.id.recyclerActores)
+        recyclerViewReparto.setHasFixedSize(true)
+        if (datosPeli != null) {
+            addActoresToList(requireContext(), datosPeli)
+        }
+
+
+
+
+
         //Datos de la pelicula
 //        tvGenero = view.findViewById(R.id.tvGenero)
 //        tvGenero.text = datosPeli
@@ -146,54 +159,85 @@ class PeliculaSeleccionadaFragment : Fragment() {
 
     }
 
-    private fun addDirectoresToList(data: MovieData) {
-        ma.getDirectorDetails(data.movieId){directors ->
-            directors?.forEach{ director ->
-                directores.add(director)
-            }
-            directorAdapter = PersonasAdapter(directores){directorClicked ->
-                Toast.makeText(requireContext(), directorClicked.name,Toast.LENGTH_SHORT).show()
-            }
-            recyclerView.adapter = directorAdapter
+    private fun addDirectoresToList(context: Context, data: MovieData) {
+        ma.getDirectorDetails(data.movieId) { directors ->
+            directors?.let { directorList ->
+                recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                recyclerView.adapter = PersonasAdapter(directorList) { directorClicked ->
+                    //TODO hablarlo con adrianix para saber de que manera lo quiere hacer, por que creo que lo hacemos diferente
 
+//                    val bundle = Bundle().apply {
+//                        putString("name",directorClicked.name)
+//                        putString("job",directorClicked.job)
+//                        putString("image",directorClicked.profilePath)
+//
+//                    }
+//                    val nuevoFragmento = PersonDetailsFragment().apply {
+//                        arguments = bundle
+//                    }
+//
+//                    val fragmentManager = requireActivity().supportFragmentManager
+//                    val transaction = fragmentManager.beginTransaction()
+//                    transaction.replace(R.id.homeFragment, nuevoFragmento)
+//                    transaction.addToBackStack(null)
+//                    transaction.commit()
+
+                }
+            }
         }
     }
 
-    private fun recuperarDatos (bundle: Bundle?): MovieData?{
-        if (bundle == null) return null
+    private fun addActoresToList(context: Context, data: MovieData) {
+        ma.getActorDetails(data.movieId) { actores ->
+            actores?.let { actorList ->
+                //TODO me pilla la lista vacia tinee que ser por  getActorDetails
+                recyclerViewReparto.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                recyclerViewReparto.adapter = PersonasAdapter(actorList) { actorClicked ->
 
-        // Extrae los datos del Bundle
-        val movieId = bundle.getInt("movieId", -1)
-        val title = bundle.getString("title", "")
-        val overview = bundle.getString("overview", "")
-        val popularity = bundle.getDouble("popularity", 0.0)
-        val releaseDate = bundle.getString("release_date", "")
-        val voteAverage = bundle.getDouble("vote_average", 0.0)
-        val voteCount = bundle.getInt("vote_count", 0)
-        val adult = bundle.getBoolean("adult", false)
-        val backdropPath = bundle.getString("backdrop_path", "")
-        val originalLanguage = bundle.getString("original_language", "")
-        val originalTitle = bundle.getString("original_title", "")
-        val video = bundle.getBoolean("video", false)
-        val posterPath = bundle.getString("poster_path", "")
-
-        // retornamos los datos de la pelicula
-        return MovieData(
-            movieId,
-            title,
-            overview,
-            popularity,
-            releaseDate,
-            voteAverage,
-            voteCount,
-            adult,
-            backdropPath,
-            originalLanguage,
-            originalTitle,
-            video,
-            posterPath,
-
-            )
+                }
+            }
+        }
     }
 
-}
+
+
+
+    fun recuperarDatos(bundle: Bundle?): MovieData? {
+            if (bundle == null) return null
+
+            // Extrae los datos del Bundle
+            val movieId = bundle.getInt("movieId", -1)
+            val title = bundle.getString("title", "")
+            val overview = bundle.getString("overview", "")
+            val popularity = bundle.getDouble("popularity", 0.0)
+            val releaseDate = bundle.getString("release_date", "")
+            val voteAverage = bundle.getDouble("vote_average", 0.0)
+            val voteCount = bundle.getInt("vote_count", 0)
+            val adult = bundle.getBoolean("adult", false)
+            val backdropPath = bundle.getString("backdrop_path", "")
+            val originalLanguage = bundle.getString("original_language", "")
+            val originalTitle = bundle.getString("original_title", "")
+            val video = bundle.getBoolean("video", false)
+            val posterPath = bundle.getString("poster_path", "")
+
+            // retornamos los datos de la pelicula
+            return MovieData(
+                movieId,
+                title,
+                overview,
+                popularity,
+                releaseDate,
+                voteAverage,
+                voteCount,
+                adult,
+                backdropPath,
+                originalLanguage,
+                originalTitle,
+                video,
+                posterPath,
+
+                )
+        }
+    }
+
+

@@ -2,9 +2,13 @@ package com.example.filmosis.data.access.tmdb
 
 import android.util.Log
 import com.example.filmosis.config.DatosConexion
+import com.example.filmosis.data.model.tmdb.CreditsResponse
+import com.example.filmosis.data.model.tmdb.Crew
+
 import com.example.filmosis.data.model.tmdb.Director
 import com.example.filmosis.data.model.tmdb.MoviesPage
 import com.example.filmosis.data.model.tmdb.Movie
+import com.example.filmosis.data.model.tmdb.Person
 import com.example.filmosis.dataclass.MovieDetailsResponse
 import com.example.filmosis.network.RetrofitService
 import retrofit2.Call
@@ -243,15 +247,16 @@ class MoviesAccess {
 //        })
 //    }
 
-    fun getDirectorDetails(movieId: Int, callback: (List<Director>?) -> Unit) {
+
+    fun getDirectorDetails(movieId: Int, callback: (List<Crew>?) -> Unit) {
         val call = RetrofitService.tmdbApi.getMovieCredits(movieId, DatosConexion.API_KEY)
 
-        call.enqueue(object : Callback<Director> {
-            override fun onResponse(call: Call<Director>, response: Response<Director>) {
+        call.enqueue(object : Callback<CreditsResponse> {
+            override fun onResponse(call: Call<CreditsResponse>, response: Response<CreditsResponse>) {
                 if (response.isSuccessful) {
-                    val director = response.body()
-                    if (director != null) {
-                        val directorsList: List<Director> = listOf(director)
+                    val creditsResponse = response.body()
+                    if (creditsResponse != null) {
+                        val directorsList = creditsResponse.crew.filter { it.job == "Director" }
                         callback(directorsList)
                     } else {
                         callback(null)
@@ -261,15 +266,35 @@ class MoviesAccess {
                 }
             }
 
-            override fun onFailure(call: Call<Director>, t: Throwable) {
-
+            override fun onFailure(call: Call<CreditsResponse>, t: Throwable) {
                 callback(null)
             }
         })
     }
 
+    fun getActorDetails(movieId: Int, callback: (List<Crew>?) -> Unit) {
+        val call = RetrofitService.tmdbApi.getMovieCredits(movieId, DatosConexion.API_KEY)
 
+        call.enqueue(object : Callback<CreditsResponse> {
+            override fun onResponse(call: Call<CreditsResponse>, response: Response<CreditsResponse>) {
+                if (response.isSuccessful) {
+                    val creditsResponse = response.body()
+                    if (creditsResponse != null) {
+                        val actorList = creditsResponse.crew.filter { it.job == "Actor"}
+                        callback(actorList)
+                    } else {
+                        callback(null)
+                    }
+                } else {
+                    callback(null)
+                }
+            }
 
+            override fun onFailure(call: Call<CreditsResponse>, t: Throwable) {
+                callback(null)
+            }
+        })
+    }
 
 
 

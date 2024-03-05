@@ -2,6 +2,7 @@ package com.example.filmosis.network.interfaces
 
 import com.example.filmosis.data.model.tmdb.Cast
 import com.example.filmosis.data.model.tmdb.CombinedCredits
+import com.example.filmosis.data.model.tmdb.CreditsResponse
 import com.example.filmosis.data.model.tmdb.Director
 import com.example.filmosis.data.model.tmdb.MoviesPage
 import com.example.filmosis.data.model.tmdb.PersonDetails
@@ -92,7 +93,7 @@ interface TmdbApiInterface {
     fun getMovieCredits(
         @Path("movie_id") movieId: Int,
         @Query("api_key") apiKey: String
-    ): Call<Director>
+    ): Call<CreditsResponse>
 
     @GET("person/{person_id}/combined_credits?language=es-ES")
     fun getPersonCombinedCredits(

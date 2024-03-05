@@ -1,6 +1,5 @@
 package com.example.filmosis.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,32 +9,42 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.filmosis.R
 import com.example.filmosis.config.DatosConexion
-import com.example.filmosis.data.model.tmdb.Director
-import com.example.filmosis.data.model.tmdb.Movie
-import com.example.filmosis.dataclass.Servicio
+import com.example.filmosis.data.model.tmdb.Crew
 
-class PersonasAdapter(private val directores: List<Director>, private val onDirectorClick: (Director) -> Unit) : RecyclerView.Adapter<PersonasAdapter.PersonaViewHolder>() {
 
-    class PersonaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val nombrePersona: TextView = itemView.findViewById(R.id.nombre_persona)
-        val iconoPersona :ImageView = itemView.findViewById(R.id.icono_persona)
+class PersonasAdapter(private val crewMembers: List<Crew>, private val onPersonClick: (Crew) -> Unit): RecyclerView.Adapter<PersonasAdapter.PersonRowViewHolder>() {
 
+    class PersonRowViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val personProfilePic: ImageView = itemView.findViewById(R.id.personSearched_profilePic)
+        val personName: TextView = itemView.findViewById(R.id.personSearched_personTitle)
+        val personType: TextView = itemView.findViewById(R.id.personSearched_personType)
     }
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PersonaViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.row_personas, parent, false)
-        return PersonaViewHolder(itemView)
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PersonRowViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_person_searched, parent, false)
+        return PersonRowViewHolder(view)
     }
 
     override fun getItemCount(): Int {
-        return directores.size
+        return crewMembers.size
     }
 
-    override fun onBindViewHolder(holder: PersonaViewHolder, position: Int) {
-        val director = directores[position]
-        val imageUrl = DatosConexion.TMDB_IMAGE_BASE_URL + director.profile_image_url
-        Glide.with(holder.iconoPersona.context).load(imageUrl).into(holder.iconoPersona)
-        holder.nombrePersona.text = director.name
-        holder.itemView.setOnClickListener{onDirectorClick.invoke(director)}
+    override fun onBindViewHolder(holder: PersonRowViewHolder, position: Int) {
+        val crewMember = crewMembers[position]
+        val imageUrl = DatosConexion.TMDB_IMAGE_BASE_URL + crewMember.profile_path
+
+        holder.personName.text = crewMember.name
+        holder.personType.text = crewMember.job
+
+        if (!crewMember.profile_path.isNullOrEmpty()) {
+            Glide.with(holder.personProfilePic.context)
+                .load(imageUrl)
+                .into(holder.personProfilePic)
+        } else {
+            holder.personProfilePic.setImageResource(R.drawable.logofilmosispremium)
+        }
+
+        holder.itemView.setOnClickListener { onPersonClick.invoke(crewMember) }
     }
 
 }
