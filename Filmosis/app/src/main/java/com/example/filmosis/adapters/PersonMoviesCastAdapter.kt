@@ -41,8 +41,12 @@ class PersonMoviesCastAdapter(private val casts: List<Cast>, private val onCastC
 
         if (!cast.title.isNullOrEmpty()) {
             holder.movieName.text = cast.title
-        } else {
+        } else if (!cast.original_title.isNullOrEmpty()) {
             holder.movieName.text = cast.original_title
+        } else if (!cast.name.isNullOrEmpty()) {
+            holder.movieName.text = cast.name
+        } else {
+            holder.movieName.text = cast.original_name
         }
 
         if (!cast.character.isNullOrEmpty()) {
