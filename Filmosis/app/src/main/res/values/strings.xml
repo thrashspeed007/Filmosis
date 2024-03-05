@@ -20,6 +20,13 @@
     <string name="searchFilterMenu_searchMovies">Buscar películas</string>
     <string name="searchFilterMenu_searchDirectors">Buscar personas</string>
 
+<!--    Item person Movie Cast-->
+    <string name="itemPersonMovieCast_CharacterLabel">Personaje:</string>
+
+<!--    Person Details Fragment-->
+    <string name="personDetails_biographyTitle">Biografía</string>
+    <string name="personDetails_personMoviesRvTitle">Películas</string>
+
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="bienvenido">Bienvenido de vuelta, </string>

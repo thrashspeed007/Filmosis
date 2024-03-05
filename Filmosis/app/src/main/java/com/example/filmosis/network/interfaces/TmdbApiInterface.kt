@@ -4,6 +4,7 @@ import com.example.filmosis.data.model.tmdb.Cast
 import com.example.filmosis.data.model.tmdb.CombinedCredits
 import com.example.filmosis.data.model.tmdb.Director
 import com.example.filmosis.data.model.tmdb.MoviesPage
+import com.example.filmosis.data.model.tmdb.PersonDetails
 import com.example.filmosis.data.model.tmdb.PersonsPage
 import com.example.filmosis.dataclass.MovieDetailsResponse
 import com.example.filmosis.dataclass.PeliculaDetalles
@@ -95,9 +96,9 @@ interface TmdbApiInterface {
 
     @GET("person/{person_id}/combined_credits?language=es-ES")
     fun getPersonCombinedCredits(
+        @Path("person_id") personId: Int,
         @Query("api_key") apiKey: String,
-        @Query("region") region: String,
-        @Path("person_id") personId: Int
+        @Query("region") region: String
     ) : Call<CombinedCredits>
 
     @GET("search/person?language=es-ES&page=1")
@@ -107,6 +108,12 @@ interface TmdbApiInterface {
         @Query("query") query: String
     ): Call<PersonsPage>
 
+    @GET("person/{person_id}?language=es-ES")
+    fun getPersonDetails(
+        @Path("person_id") personId: Int,
+        @Query("api_key") apiKey: String,
+        @Query("region") region: String
+    ): Call<PersonDetails>
 
 }
 

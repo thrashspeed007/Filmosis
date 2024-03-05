@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:fillViewport="true"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="8dp"
+        tools:context=".fragments.PersonDetailsFragment">
+
+        <ImageView
+            android:id="@+id/personDetails_personProfilePic"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/logofilmosispremium"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/personDetails_nameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="Name"
+            android:textColor="?attr/colorPrimary"
+            android:textSize="18sp"
+            app:layout_constraintStart_toEndOf="@+id/personDetails_personProfilePic"
+            app:layout_constraintTop_toTopOf="@+id/personDetails_personProfilePic" />
+
+        <TextView
+            android:id="@+id/personDetails_departmentTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="Department"
+            android:textColor="?attr/colorOnBackground"
+            app:layout_constraintStart_toEndOf="@+id/personDetails_personProfilePic"
+            app:layout_constraintTop_toBottomOf="@+id/personDetails_nameTextView" />
+
+        <TextView
+            android:id="@+id/personDetails_birthPlaceTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="8dp"
+            android:text="Birth place"
+            android:textColor="?attr/colorOnBackground"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@+id/personDetails_birthdayTextView"
+            app:layout_constraintStart_toEndOf="@+id/personDetails_personProfilePic" />
+
+        <TextView
+            android:id="@+id/personDetails_birthdayTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="Birth day"
+            android:textColor="?attr/colorOnBackground"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/personDetails_personProfilePic"
+            app:layout_constraintStart_toEndOf="@+id/personDetails_personProfilePic" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout11"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:gravity="center|start"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/personDetails_personProfilePic">
+
+            <TextView
+                android:id="@+id/personDetails_biographyLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/personDetails_biographyTitle"
+                android:textColor="?attr/colorOnBackground"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/personDetails_biography"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="4dp"
+                android:text="Biography"
+                android:textColor="?attr/colorOnBackground"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout11">
+
+            <TextView
+                android:id="@+id/personDetails_personMoviesRvTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/personDetails_personMoviesRvTitle"
+                android:textColor="?attr/colorOnBackground"
+                android:textSize="18sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/personDetails_personMoviesRv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

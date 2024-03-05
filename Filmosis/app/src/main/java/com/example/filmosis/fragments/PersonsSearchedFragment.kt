@@ -89,12 +89,11 @@ class PersonsSearchedFragment : Fragment() {
             if (personsList.isEmpty()) {
                 Toast.makeText(requireContext(), "No hay resultados", Toast.LENGTH_LONG).show()
             } else {
-                // TODO
-                // CREAR ADAPTADOR DE LISTAS DE PERSONAS...
                 val personsAdapter = ListedPersonsAdapter(personsList) { personClicked ->
-                    // TODO
-                    // LLEVAR A PANTALLA DE ACTIVIDAD DE DETALLES PERSONA , DEPENDIENDO SI ES DIRECTOR O ACTOR Y ESO
-                    Toast.makeText(requireContext(), personClicked.id.toString(), Toast.LENGTH_SHORT)
+                    requireActivity().supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragmentContainerView, PersonDetailsFragment.newInstance(personClicked.id))
+                        .addToBackStack(null)
+                        .commit()
                 }
 
                 rv.adapter = personsAdapter

@@ -17,40 +17,10 @@ import com.example.filmosis.utilities.tmdb.TmdbData
 import de.hdodenhof.circleimageview.CircleImageView
 
 class ListedPersonsAdapter(private val persons: List<Person>, private val onPersonClick: (Person) -> Unit): RecyclerView.Adapter<ListedPersonsAdapter.PersonRowViewHolder>() {
-    class PersonRowViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnCreateContextMenuListener {
+    class PersonRowViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val personProfilePic : CircleImageView = itemView.findViewById(R.id.personSearched_profilePic)
         val personName : TextView = itemView.findViewById(R.id.personSearched_personTitle)
         val personType: TextView = itemView.findViewById(R.id.personSearched_personType)
-
-        init {
-            itemView.setOnCreateContextMenuListener(this)
-        }
-
-        override fun onCreateContextMenu(
-            menu: ContextMenu?,
-            v: View?,
-            menuInfo: ContextMenu.ContextMenuInfo?
-        ) {
-            (v?.context as? MainActivity)?.menuInflater?.inflate(R.menu.movie_row_menu, menu)
-            menu?.setHeaderTitle("Opciones pelicula")
-
-            // Accion de cada item de menu...
-
-            menu?.findItem(R.id.movieRowMenu_addTolist)?.setOnMenuItemClickListener {
-                Toast.makeText(itemView.context, "*implementar añadir a lista*", Toast.LENGTH_SHORT).show()
-                return@setOnMenuItemClickListener true
-            }
-
-            menu?.findItem(R.id.movieRowMenu_shareMovie)?.setOnMenuItemClickListener {
-                Toast.makeText(itemView.context, "*implementar compartir pelicula*", Toast.LENGTH_SHORT).show()
-                return@setOnMenuItemClickListener true
-            }
-
-            menu?.findItem(R.id.movieRowMenu_download_cover)?.setOnMenuItemClickListener {
-                Toast.makeText(itemView.context, "*implementar descargar portada*", Toast.LENGTH_SHORT).show()
-                return@setOnMenuItemClickListener true
-            }
-        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PersonRowViewHolder {
