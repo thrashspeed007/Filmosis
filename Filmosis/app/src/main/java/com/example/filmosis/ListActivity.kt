@@ -46,11 +46,13 @@ class ListActivity : AppCompatActivity() {
 
                             val recyclerViewId = resources.getIdentifier("lists_recycler$index", "id", packageName)
                             val recyclerView = findViewById<RecyclerView>(recyclerViewId)
+                            var listTitleId = "list_title"
+                            listTitleId += index
+                            val listTitleView = findViewById<TextView>(resources.getIdentifier(listTitleId, "id", packageName))
 
-                            findViewById<TextView>(R.id.list_title)?.text = listTitle
+                            listTitleView.text = listTitle
 
                             val moviesList = mutableListOf<ListMovie>()
-                            Log.d("ListActivity", "Iteración $index: $moviesList")
 
                             if (value is List<*>) {
                                 for (entry in value) {
@@ -65,6 +67,7 @@ class ListActivity : AppCompatActivity() {
                                     }
                                 }
                             }
+                            Log.d("ListActivity", "Iteración $index: $moviesList")
 
                             Log.d("ListActivity", "Tamaño de la lista de películas: ${moviesList.size}")
 
