@@ -86,7 +86,6 @@ class MainActivity : AppCompatActivity() {
             when (it.itemId) {
                 // TODO
                 R.id.drawerMenu_myLists -> {
-                    Toast.makeText(applicationContext, "*implementar fragmento de mis listas*", Toast.LENGTH_SHORT).show()
                     startActivity(Intent(this, ListActivity::class.java))
                     return@setNavigationItemSelectedListener true
                 }

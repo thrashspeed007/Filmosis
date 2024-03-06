@@ -1,6 +1,5 @@
 package com.example.filmosis.adapters
 // ListMovieAdapter.kt
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,13 +17,11 @@ class ListMovieAdapter(private val movies: List<ListMovie>) : RecyclerView.Adapt
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListMovieViewHolder {
-        Log.d("ListMovieAdapter", "onCreateViewHolder")
         val view = LayoutInflater.from(parent.context).inflate(R.layout.row_movie_list, parent, false)
         return ListMovieViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ListMovieViewHolder, position: Int) {
-        Log.d("ListMovieAdapter", "onBindViewHolder: position = $position")
         val movie = movies[position]
 
         holder.titleTextView.text = movie.title ?: ""
@@ -33,8 +30,31 @@ class ListMovieAdapter(private val movies: List<ListMovie>) : RecyclerView.Adapt
     }
 
     override fun getItemCount(): Int {
-        Log.d("ListMovieAdapter", "getItemCount: ${movies.size}")
         return movies.size
     }
+
+    // Método para centrar suavemente el elemento actualmente visible
+    fun centerCurrentItem(recyclerView: RecyclerView) {
+        val layoutManager = recyclerView.layoutManager
+        if (layoutManager is androidx.recyclerview.widget.LinearLayoutManager) {
+            val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
+            val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
+
+            val visibleItemCount = lastVisibleItemPosition - firstVisibleItemPosition + 1
+            if (visibleItemCount == 0) return
+
+            val centerItemPosition = firstVisibleItemPosition + visibleItemCount / 2
+            val centerView = layoutManager.findViewByPosition(centerItemPosition)
+
+            if (centerView != null) {
+                val recyclerViewWidth = recyclerView.width
+                val centerViewWidth = centerView.width
+                val scrollToX = centerView.left - (recyclerViewWidth - centerViewWidth) / 2
+
+                recyclerView.smoothScrollBy(scrollToX, 0)
+            }
+        }
+    }
 }
+
 

@@ -97,5 +97,8 @@ dependencies {
     //okhttp
     implementation("com.squareup.okhttp3:okhttp:4.9.2")
 
+    //Material Cardview
+    implementation("com.google.android.material:material:1.11.0")
+
 
 }
