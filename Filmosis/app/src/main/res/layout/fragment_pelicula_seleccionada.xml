@@ -5,7 +5,6 @@
     android:id="@+id/fragment_container_peliculaSeleccionada"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dark_onBackground"
     tools:context=".fragments.PeliculaSeleccionadaFragment">
 
     <ScrollView

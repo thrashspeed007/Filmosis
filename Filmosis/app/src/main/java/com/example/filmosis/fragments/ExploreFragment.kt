@@ -136,7 +136,13 @@ class ExploreFragment : Fragment() {
             }
 
             val moviesAdapter = CarouselMoviesAdapter(trendingMovies) { movieClicked ->
-                Toast.makeText(requireContext(), "Puntuación media: ${(movieClicked.vote_average)}", Toast.LENGTH_SHORT).show()
+                //flow adrianix
+
+                val fragmentManager = requireActivity().supportFragmentManager
+                val transaction = fragmentManager.beginTransaction()
+                transaction.replace(R.id.fragmentContainerView, PeliculaSeleccionadaFragment.newInstance(movieClicked.id))
+                transaction.addToBackStack(null)
+                transaction.commit()
             }
 
             trendingMoviesRecyclerView.adapter = moviesAdapter

@@ -314,7 +314,7 @@ class HomeFragment : Fragment() {
 
         val fragmentManager = requireActivity().supportFragmentManager
         val transaction = fragmentManager.beginTransaction()
-        transaction.replace(R.id.homeFragment, nuevoFragmento)
+        transaction.replace(R.id.fragmentContainerView, nuevoFragmento)
         transaction.addToBackStack(null)
         transaction.commit()
     }
