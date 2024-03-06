@@ -12,6 +12,7 @@ import com.example.filmosis.data.model.tmdb.Crew
 import com.example.filmosis.data.model.tmdb.Director
 import com.example.filmosis.data.model.tmdb.MoviesPage
 import com.example.filmosis.data.model.tmdb.Movie
+import com.example.filmosis.data.model.tmdb.MovieData
 import com.example.filmosis.data.model.tmdb.Person
 import com.example.filmosis.dataclass.MovieDetailsResponse
 import com.example.filmosis.dataclass.NetworkDetailsResponse
@@ -217,6 +218,29 @@ class MoviesAccess {
             }
         })
     }
+
+    fun getMovieData(movieId: Int, callback: (MovieData?) -> Unit) {
+        val call = RetrofitService.tmdbApi.getMovieDetailsRecuperar(movieId, DatosConexion.API_KEY)
+        call.enqueue(object : Callback<MovieData> {
+            override fun onResponse(call: Call<MovieData>, response: Response<MovieData>) {
+                if (response.isSuccessful) {
+                    val movieDetails = response.body()
+                    callback(movieDetails)
+                } else {
+                    callback(null)
+                }
+            }
+
+            override fun onFailure(call: Call<MovieData>, t: Throwable) {
+                Log.d("MoviesAccess", "getMovieData onFailure: ${t.message}")
+                callback(null)
+            }
+        })
+    }
+
+
+
+
 
     fun listUpcomingMoviesWithGenres(genres: List<Int>, callback: (List<Movie>) -> Unit) {
         val call = RetrofitService.tmdbApi.listUpcomingMoviesWithGenres(

@@ -20,6 +20,7 @@ import com.example.filmosis.adapters.PersonasAdapter
 import com.example.filmosis.adapters.ServicioAdapter
 import com.example.filmosis.data.access.tmdb.MoviesAccess
 import com.example.filmosis.data.model.tmdb.Director
+import com.example.filmosis.data.model.tmdb.Movie
 import com.example.filmosis.data.model.tmdb.MovieData
 
 class PeliculaSeleccionadaFragment : Fragment() {
@@ -39,6 +40,7 @@ class PeliculaSeleccionadaFragment : Fragment() {
     private lateinit var image : ImageView
     private lateinit var tvavg : TextView
     private lateinit var ibBack : ImageButton
+//    private lateinit var recuperacionInfo : MovieData
 
     private var directores:  ArrayList<Director> = ArrayList()
     private val ma = MoviesAccess()
@@ -63,8 +65,8 @@ class PeliculaSeleccionadaFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val datosPeli = recuperarDatos(arguments)
-
-
+        //TODO cuando llegue a casa lo hago
+//        recuperarDatosInfo()
         val view = inflater.inflate(R.layout.fragment_pelicula_seleccionada, container, false)
 
         videoView = view.findViewById(R.id.webView2)
@@ -143,6 +145,8 @@ class PeliculaSeleccionadaFragment : Fragment() {
             tvReleaseDate.text = datosPeli.releaseDate.toString()
         }
         tvAvg = view.findViewById(R.id.averageVote)
+//        tvAvg.isIndicator
+//        tvAvg.isFocusable
         if (datosPeli != null) {
             val maxRating = 10
             val voteAverage = datosPeli.voteAverage.toFloat()
@@ -187,27 +191,28 @@ class PeliculaSeleccionadaFragment : Fragment() {
                     transaction.addToBackStack(null)
                     transaction.commit()
 
-
-//                    val bundle = Bundle().apply {
-//                        putString("name",directorClicked.name)
-//                        putString("job",directorClicked.job)
-//                        putString("image",directorClicked.profilePath)
-//
-//                    }
-//                    val nuevoFragmento = PersonDetailsFragment().apply {
-//                        arguments = bundle
-//                    }
-//
-//                    val fragmentManager = requireActivity().supportFragmentManager
-//                    val transaction = fragmentManager.beginTransaction()
-//                    transaction.replace(R.id.homeFragment, nuevoFragmento)
-//                    transaction.addToBackStack(null)
-//                    transaction.commit()
-
                 }
             }
         }
     }
+
+    //TODO cuando llegue a casa lo hago
+
+//    private fun recuperarDatosInfo(movieId: Int) {
+//        ma.getMovieData(movieId) { movieData ->
+//
+//            if (movieData != null) {
+//                //La idea es guardar los datos de pelicula que hemos clickado en una variable y luego llamando a PeliculaSeleccionadaFragment.ARG_MOVIE_ID
+//                recuperacionInfo = MovieData(movieData.movieId, movieData.title, movieData.overview, movieData.popularity, movieData.releaseDate, movieData.voteAverage, movieData.voteCount, movieData.adult,
+//                    movieData.backdropPath, movieData.originalLanguage,
+//                    movieData.originalTitle, movieData.video, movieData.posterPath)
+//
+//            } else {
+//                println("F")
+//            }
+//        }
+//    }
+
 
     private fun addActoresToList(context: Context, data: MovieData) {
         ma.getActorDetails(data.movieId) { actores ->
@@ -269,6 +274,12 @@ class PeliculaSeleccionadaFragment : Fragment() {
             originalTitle,
             video,
             posterPath )
+
+    }
+
+    fun anadirLista(view: View) {
+        //Logica para añadir a la lista
+        //TODO
 
     }
 }

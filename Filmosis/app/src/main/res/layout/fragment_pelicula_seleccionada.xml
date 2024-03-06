@@ -82,11 +82,15 @@
                         <!-- TextView para el título -->
                         <TextView
                             android:id="@+id/tvTitle"
+                            style="@style/CustomFontKaiet"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/font_kaiet"
                             android:text="Avengers: Infinity corridas"
+
+
                             android:textSize="20sp"
-                            />
+                            android:textStyle="bold" />
 
                         <LinearLayout
                             android:orientation="horizontal"
@@ -94,11 +98,13 @@
                             android:layout_height="wrap_content">
 
                             <TextView
+
                                 android:id="@+id/tvTimeFilm"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="10dp"
+                                android:layout_marginTop="10dp"
                                 android:text="2h29m"
+
                                 />
 
                             <!-- TextView para la fecha de lanzamiento -->
@@ -107,8 +113,20 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="10dp"
-                                android:text="16.12.2022"
-                                />
+                                android:text="16.12.2022" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/anadirLista"
+                                android:layout_width="132dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="45dp"
+
+                                android:layout_gravity="end"
+                                android:gravity="end"
+                                android:onClick="anadirLista"
+                                android:text="Añadir a lista"
+                                app:icon="@drawable/baseline_add_24"
+                                app:iconGravity="end" />
                         </LinearLayout>
 
                         <!-- TextView para la puntuación promedio -->
@@ -118,7 +136,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="5dp"
+                                android:layout_marginTop="5dp"
                                 android:text="Puntuacion: " />
                             <TextView
                                 android:id="@+id/tvAvg"
@@ -130,10 +148,11 @@
 
                         <!-- RatingBar para mostrar la puntuación -->
                         <RatingBar
-                            android:layout_gravity="center"
                             android:id="@+id/averageVote"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:contextClickable="false" />
                     </LinearLayout>
                 </FrameLayout>
 
@@ -241,7 +260,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Sinopsis"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    style="@style/CustomFontKaiet"
+                    />
 
                 <TextView
                     android:layout_margin="5dp"
@@ -264,7 +285,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Director"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:fontFamily="@font/font_kaiet" />
 
                 <LinearLayout
                     android:layout_margin="5dp"

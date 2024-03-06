@@ -128,9 +128,12 @@ class GenreSelectedFragment : Fragment() {
 
         val moviesAdapter = ListedMoviesAdapter(filteredMoviesList) {
             movieClicked ->
-            // TODO
-            // LLEVAR A PANTALLA DE DETALLES PELICULA
-            Toast.makeText(requireContext(), "Puntuación media: ${(movieClicked.vote_average)}", Toast.LENGTH_SHORT).show()
+
+            val fragmentManager = requireActivity().supportFragmentManager
+            val transaction = fragmentManager.beginTransaction()
+            transaction.replace(R.id.fragmentContainerView, PeliculaSeleccionadaFragment.newInstance(movieClicked.id))
+            transaction.addToBackStack(null)
+            transaction.commit()
         }
 
         moviesFilteredRv.adapter = moviesAdapter
@@ -143,7 +146,11 @@ class GenreSelectedFragment : Fragment() {
             }
 
             val moviesAdapter = CarouselMoviesAdapter(moviesListTrending) { movieClicked ->
-                Toast.makeText(requireContext(), "Puntuación media: ${(movieClicked.vote_average)}", Toast.LENGTH_SHORT).show()
+                val fragmentManager = requireActivity().supportFragmentManager
+                val transaction = fragmentManager.beginTransaction()
+                transaction.replace(R.id.fragmentContainerView, PeliculaSeleccionadaFragment.newInstance(movieClicked.id))
+                transaction.addToBackStack(null)
+                transaction.commit()
             }
 
             popularMoviesRv.adapter = moviesAdapter
