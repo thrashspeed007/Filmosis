@@ -7,34 +7,37 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.filmosis.R
-import com.example.filmosis.dataclass.PlatformDetails
+import com.example.filmosis.dataclass.NetworkDetailsResponse
 import com.example.filmosis.dataclass.Servicio
 
-class ServicioAdapter(private val context: Context, private val servicios: List<Servicio>) :
-    RecyclerView.Adapter<ServicioAdapter.ServicioViewHolder>() {
+class ServicioAdapter(private val platforms: List<NetworkDetailsResponse>) :
+    RecyclerView.Adapter<ServicioAdapter.PlatformViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ServicioViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlatformViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.row_servicio, parent, false)
-        return ServicioViewHolder(view)
+        return PlatformViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ServicioViewHolder, position: Int) {
-        val servicio = servicios[position]
-        holder.bind(servicio)
+    override fun onBindViewHolder(holder: PlatformViewHolder, position: Int) {
+        val platform = platforms[position]
+        holder.bind(platform)
     }
 
     override fun getItemCount(): Int {
-        return servicios.size
+        return platforms.size
     }
 
-    inner class ServicioViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val iconoServicio: ImageView = itemView.findViewById(R.id.icono_servicio)
-        private val nombreServicio: TextView = itemView.findViewById(R.id.nombre_servicio)
+    inner class PlatformViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val iconoPlatform: ImageView = itemView.findViewById(R.id.icono_servicio)
+        private val nombrePlatform: TextView = itemView.findViewById(R.id.nombre_servicio)
 
-        fun bind(servicio: Servicio) {
-            iconoServicio.setImageResource(servicio.icono)
-            nombreServicio.text = servicio.nombre
+        fun bind(platform: NetworkDetailsResponse) {
+            Glide.with(itemView)
+                .load(platform.logo_path)
+                .into(iconoPlatform)
+            nombrePlatform.text = platform.name
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.example.filmosis.network.interfaces
 
 import com.example.filmosis.data.model.tmdb.Cast
+import com.example.filmosis.data.model.tmdb.CastResponse
 import com.example.filmosis.data.model.tmdb.CombinedCredits
 import com.example.filmosis.data.model.tmdb.CreditsResponse
 import com.example.filmosis.data.model.tmdb.Director
@@ -8,8 +9,10 @@ import com.example.filmosis.data.model.tmdb.MoviesPage
 import com.example.filmosis.data.model.tmdb.PersonDetails
 import com.example.filmosis.data.model.tmdb.PersonsPage
 import com.example.filmosis.dataclass.MovieDetailsResponse
+import com.example.filmosis.dataclass.NetworkDetailsResponse
 import com.example.filmosis.dataclass.PeliculaDetalles
-import com.example.filmosis.dataclass.PlatformDetails
+
+
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -96,6 +99,12 @@ interface TmdbApiInterface {
         @Query("api_key") apiKey: String
     ): Call<CreditsResponse>
 
+    @GET("movie/{movie_id}/credits")
+    fun getMovieCredits2(
+        @Path("movie_id") movieId: Int,
+        @Query("api_key") apiKey: String
+    ): Call<CastResponse>
+
     @GET("person/{person_id}/combined_credits?language=es-ES")
     fun getPersonCombinedCredits(
         @Path("person_id") personId: Int,
@@ -117,14 +126,12 @@ interface TmdbApiInterface {
         @Query("region") region: String
     ): Call<PersonDetails>
 
-    //TODO en clase
 
-    //https://developer.themoviedb.org/reference/tv-season-watch-providers
-    @GET("platform/{platform_id}")
-    fun getPlatformDetails(
-        @Path("platform_id") platformId: Int,
+    @GET("network/{network_id}")
+    fun getNetworkDetails(
+        @Path("network_id") networkId: Int,
         @Query("api_key") apiKey: String
-    ): Call<PlatformDetails>
+    ): Call<NetworkDetailsResponse>
 }
 
 

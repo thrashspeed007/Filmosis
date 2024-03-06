@@ -1,7 +1,11 @@
 package com.example.filmosis.data.access.tmdb
 
 import android.util.Log
+import androidx.recyclerview.widget.RecyclerView
+import com.example.filmosis.adapters.ServicioAdapter
 import com.example.filmosis.config.DatosConexion
+import com.example.filmosis.data.model.tmdb.Cast
+import com.example.filmosis.data.model.tmdb.CastResponse
 import com.example.filmosis.data.model.tmdb.CreditsResponse
 import com.example.filmosis.data.model.tmdb.Crew
 
@@ -10,19 +14,23 @@ import com.example.filmosis.data.model.tmdb.MoviesPage
 import com.example.filmosis.data.model.tmdb.Movie
 import com.example.filmosis.data.model.tmdb.Person
 import com.example.filmosis.dataclass.MovieDetailsResponse
-import com.example.filmosis.dataclass.PlatformDetails
+import com.example.filmosis.dataclass.NetworkDetailsResponse
 import com.example.filmosis.dataclass.Servicio
 import com.example.filmosis.network.RetrofitService
+import com.example.filmosis.network.interfaces.TmdbApiInterface
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 class MoviesAccess {
 
     fun listPopularMovies(callback: (List<Movie>) -> Unit) {
-        val call = RetrofitService.tmdbApi.listPopularMovies(DatosConexion.API_KEY, DatosConexion.REGION)
+        val call =
+            RetrofitService.tmdbApi.listPopularMovies(DatosConexion.API_KEY, DatosConexion.REGION)
 
         call.enqueue(object : Callback<MoviesPage> {
             override fun onFailure(call: Call<MoviesPage>, t: Throwable) {
@@ -233,28 +241,14 @@ class MoviesAccess {
         })
     }
 
-//    fun getDirectorDetails(directorId: Int, callback: (MovieCredits?) -> Unit) {
-//        val call = RetrofitService.tmdbApi.getDirectorDetails(directorId)
-//
-//        call.enqueue(object : Callback<MovieCredits> {
-//            override fun onFailure(call: Call<MovieCredits>, t: Throwable) {
-//                Log.d("MoviesAccess", "getDirectorDetails onFailure: " + t.message)
-//                callback.invoke(null)
-//            }
-//
-//            override fun onResponse(call: Call<MovieCredits>, response: Response<MovieCredits>) {
-//                val movieCredits = response.body()
-//                callback.invoke(movieCredits)
-//            }
-//        })
-//    }
-
-
     fun getDirectorDetails(movieId: Int, callback: (List<Crew>?) -> Unit) {
         val call = RetrofitService.tmdbApi.getMovieCredits(movieId, DatosConexion.API_KEY)
 
         call.enqueue(object : Callback<CreditsResponse> {
-            override fun onResponse(call: Call<CreditsResponse>, response: Response<CreditsResponse>) {
+            override fun onResponse(
+                call: Call<CreditsResponse>,
+                response: Response<CreditsResponse>
+            ) {
                 if (response.isSuccessful) {
                     val creditsResponse = response.body()
                     if (creditsResponse != null) {
@@ -274,15 +268,17 @@ class MoviesAccess {
         })
     }
 
-    fun getActorDetails(movieId: Int, callback: (List<Crew>?) -> Unit) {
-        val call = RetrofitService.tmdbApi.getMovieCredits(movieId, DatosConexion.API_KEY)
-
-        call.enqueue(object : Callback<CreditsResponse> {
-            override fun onResponse(call: Call<CreditsResponse>, response: Response<CreditsResponse>) {
+    fun getActorDetails(movieId: Int, callback: (List<Cast>?) -> Unit) {
+        val call = RetrofitService.tmdbApi.getMovieCredits2(movieId, DatosConexion.API_KEY)
+        call.enqueue(object : Callback<CastResponse> {
+            override fun onResponse(
+                call: Call<CastResponse>,
+                response: Response<CastResponse>
+            ) {
                 if (response.isSuccessful) {
                     val creditsResponse = response.body()
                     if (creditsResponse != null) {
-                        val actorList = creditsResponse.crew.filter { it.job == "Actor"}
+                        val actorList = creditsResponse.crew.filter { it.known_for_department == "Acting" }
                         callback(actorList)
                     } else {
                         callback(null)
@@ -292,29 +288,34 @@ class MoviesAccess {
                 }
             }
 
-            override fun onFailure(call: Call<CreditsResponse>, t: Throwable) {
+            override fun onFailure(call: Call<CastResponse>, t: Throwable) {
                 callback(null)
             }
         })
     }
-    fun getPlatformDetails(platformId: Int, callback: (PlatformDetails?) -> Unit) {
-        val call = RetrofitService.tmdbApi.getPlatformDetails(platformId, DatosConexion.API_KEY)
 
-        call.enqueue(object : Callback<PlatformDetails> {
-            override fun onResponse(call: Call<PlatformDetails>, response: Response<PlatformDetails>) {
+    fun fetchNetworkDetails(networkId: Int, callback: (NetworkDetailsResponse?) -> Unit) {
+        val call = RetrofitService.tmdbApi.getNetworkDetails(networkId, DatosConexion.API_KEY)
+
+        call.enqueue(object : Callback<NetworkDetailsResponse> {
+            override fun onResponse(
+                call: Call<NetworkDetailsResponse>,
+                response: Response<NetworkDetailsResponse>
+            ) {
                 if (response.isSuccessful) {
-                    val platformDetails = response.body()
-                    callback(platformDetails)
+                    val networkDetailsResponse = response.body()
+                    callback(networkDetailsResponse)
                 } else {
-                    callback(null)
+                    println("Solicitud fallida - Código de estado: ${response.code()}")
                 }
             }
 
-            override fun onFailure(call: Call<PlatformDetails>, t: Throwable) {
-                callback(null)
+            override fun onFailure(call: Call<NetworkDetailsResponse>, t: Throwable) {
+                println("Error de red: ${t.message}")
             }
         })
     }
+
 
 
 
@@ -331,4 +332,5 @@ class MoviesAccess {
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
         return currentDate.format(formatter)
     }
+
 }

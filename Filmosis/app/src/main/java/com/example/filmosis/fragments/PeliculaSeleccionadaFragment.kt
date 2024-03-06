@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.filmosis.R
+import com.example.filmosis.adapters.ActoresAdapter
 import com.example.filmosis.adapters.PersonasAdapter
 import com.example.filmosis.adapters.ServicioAdapter
 import com.example.filmosis.data.access.tmdb.MoviesAccess
@@ -90,6 +91,9 @@ class PeliculaSeleccionadaFragment : Fragment() {
         //servicio TODO clase
 //        recyclerViewServie = view.findViewById(R.id.recyclerServicio)
 //        recyclerViewServie.setHasFixedSize(true)
+//        if (datosPeli != null) {
+//            addServicesToList(requireContext(), datosPeli)
+//        }
 
 
 
@@ -161,7 +165,7 @@ class PeliculaSeleccionadaFragment : Fragment() {
     private fun addDirectoresToList(context: Context, data: MovieData) {
         ma.getDirectorDetails(data.movieId) { directors ->
             directors?.let { directorList ->
-                recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
                 recyclerView.adapter = PersonasAdapter(directorList) { directorClicked ->
                     //TODO hablarlo con adrianix para saber de que manera lo quiere hacer, por que creo que lo hacemos diferente
 
@@ -190,8 +194,8 @@ class PeliculaSeleccionadaFragment : Fragment() {
         ma.getActorDetails(data.movieId) { actores ->
             actores?.let { actorList ->
                 //TODO me pilla la lista vacia tinee que ser por  getActorDetails
-                recyclerViewReparto.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                recyclerViewReparto.adapter = PersonasAdapter(actorList) { actorClicked ->
+                recyclerViewReparto.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                recyclerViewReparto.adapter = ActoresAdapter(actorList) { actorClicked ->
 
                 }
             }
@@ -202,7 +206,7 @@ class PeliculaSeleccionadaFragment : Fragment() {
 //        ma.getPlatformDetails(data.provider_id) { platformDetails ->
 //            platformDetails?.let { details ->
 //                recyclerViewServie.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-////                recyclerViewServie.adapter = ServicioAdapter(context, details.servicios)
+//                recyclerViewServie.adapter = ServicioAdapter(context, details.servicios)
 //            }
 //        }
 //    }

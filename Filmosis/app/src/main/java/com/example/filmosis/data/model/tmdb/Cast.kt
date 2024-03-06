@@ -23,5 +23,12 @@ data class Cast(
     val title: String,
     val video: Boolean,
     val vote_average: Double,
-    val vote_count: Int
+    val vote_count: Int,
+    val known_for_department: String,
+    val profile_path : String
 )
+
+data class CastResponse(
+    val crew: List<Cast>,
+
+    )

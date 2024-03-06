@@ -1,26 +1,29 @@
 package com.example.filmosis.fragments
 import android.content.Context
+import android.media.Image
+import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.ScrollView
 import android.widget.SearchView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.SnapHelper
+import androidx.recyclerview.widget.RecyclerView.LayoutManager
 
 import com.example.filmosis.R
 import com.example.filmosis.adapters.CarouselMoviesAdapter
-import com.example.filmosis.adapters.MoviesAdapter
+import com.example.filmosis.adapters.ServicioAdapter
 import com.example.filmosis.data.access.tmdb.MoviesAccess
 import com.example.filmosis.data.model.tmdb.Movie
+import com.example.filmosis.dataclass.NetworkDetailsResponse
+
 import com.example.filmosis.dataclass.Servicio
-import com.example.filmosis.adapters.ServicioAdapter
+import com.example.filmosis.network.interfaces.TmdbApiInterface
 import com.example.filmosis.utilities.tmdb.TmdbSearchQueries
 import com.google.android.material.button.MaterialButton
 
@@ -30,10 +33,12 @@ class HomeFragment : Fragment() {
     private lateinit var rvPopular: RecyclerView
     private lateinit var rvUpcoming: RecyclerView
     private lateinit var rvRecommend: RecyclerView
+    private lateinit var rvServicios: RecyclerView
 
     private var moviesListPopulares: ArrayList<Movie> = ArrayList()
     private var moviesListSoon: ArrayList<Movie> = ArrayList()
     private var recommendedMovies: ArrayList<Movie> = ArrayList()
+    private var services: ArrayList<NetworkDetailsResponse> = ArrayList()
 //    private lateinit var tvRecom: TextView
 //    private lateinit var tvProx: TextView
 //    private lateinit var tvPopu: TextView
@@ -86,19 +91,16 @@ class HomeFragment : Fragment() {
         addMoviesRecommendedToList()
 
         //servicios
-        val recyclerView: RecyclerView = view.findViewById(R.id.serviciosRecyclerview)
-        recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        rvServicios = view.findViewById(R.id.serviciosRecyclerview)
+        rvServicios.setHasFixedSize(true)
+        servicios()
 
-        val servicios = listOf(
-            Servicio(R.drawable.ic_netflix, "Netflix"),
-            Servicio(R.drawable.ic_movistar, "Movistar Plus"),
-            Servicio(R.drawable.ic_amazon_prime, "Amazon Prime"),
-            Servicio(R.drawable.ic_hbomax, "HBO max")
 
-        )
 
-        val adapter = ServicioAdapter(requireContext(), servicios)
-        recyclerView.adapter = adapter
+
+
+
+
 
         //navegar
         val buttonPopu : MaterialButton = view.findViewById(R.id.buttonShowAllPopulares)
@@ -266,6 +268,22 @@ class HomeFragment : Fragment() {
             }
         }
     }
+
+    private fun servicios() {
+        moviesAccess.fetchNetworkDetails(networkId = 12200) { result ->
+            if (result != null) {
+                services.clear()
+                services.add(result)
+
+                rvServicios.adapter = ServicioAdapter(services)
+            } else {
+                println("nada")
+            }
+        }
+    }
+
+
+
 
 
     fun onItemClick(movie: Movie) {
