@@ -90,6 +90,13 @@ class MoviesSearchedFragment : Fragment() {
                 Toast.makeText(requireContext(), "No hay resultados", Toast.LENGTH_LONG).show()
             } else {
                 val moviesAdapter = ListedMoviesAdapter(moviesList) { movieClicked ->
+                    //flow adrianix
+
+                    val fragmentManager = requireActivity().supportFragmentManager
+                    val transaction = fragmentManager.beginTransaction()
+                    transaction.replace(R.id.fragmentContainerView, PeliculaSeleccionadaFragment.newInstance(movieClicked.id))
+                    transaction.addToBackStack(null)
+                    transaction.commit()
 
                 }
 

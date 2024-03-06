@@ -44,7 +44,19 @@ class PeliculaSeleccionadaFragment : Fragment() {
     private val ma = MoviesAccess()
 
 
+    companion object {
+        private const val ARG_MOVIE_ID = "movieId"
 
+        fun newInstance(movieId: Int): PeliculaSeleccionadaFragment {
+            val fragment = PeliculaSeleccionadaFragment()
+            val args = Bundle()
+
+            args.putInt(ARG_MOVIE_ID, movieId)
+
+            fragment.arguments = args
+            return fragment
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

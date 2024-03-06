@@ -137,7 +137,13 @@ class ExploreFragment : Fragment() {
             }
 
             val moviesAdapter = CarouselMoviesAdapter(trendingMovies) { movieClicked ->
-                navigateToMovie(movieClicked)
+                //flow adrianix
+
+                val fragmentManager = requireActivity().supportFragmentManager
+                val transaction = fragmentManager.beginTransaction()
+                transaction.replace(R.id.fragmentContainerView, PeliculaSeleccionadaFragment.newInstance(movieClicked.id))
+                transaction.addToBackStack(null)
+                transaction.commit()
             }
 
             trendingMoviesRecyclerView.adapter = moviesAdapter
