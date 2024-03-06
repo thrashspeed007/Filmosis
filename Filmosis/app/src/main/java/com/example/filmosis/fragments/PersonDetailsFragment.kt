@@ -6,22 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.SearchView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.filmosis.R
-import com.example.filmosis.adapters.ListedPersonsAdapter
 import com.example.filmosis.adapters.PersonMoviesCastAdapter
 import com.example.filmosis.config.DatosConexion
 import com.example.filmosis.data.access.tmdb.PersonsAccess
 import com.example.filmosis.data.model.tmdb.Cast
-import com.example.filmosis.data.model.tmdb.Crew
-
-import com.example.filmosis.data.model.tmdb.MovieData
-import com.example.filmosis.data.model.tmdb.Person
 
 class PersonDetailsFragment : Fragment() {
     private val personsAccess = PersonsAccess()
@@ -101,11 +95,11 @@ class PersonDetailsFragment : Fragment() {
             }
 
             //TODO no va el clik, he entendido que quieres navegar al fragment PeliculaSeleccionada pero el clik no funcionar
-            val castsAdapter = PersonMoviesCastAdapter(castList) {castClicked  ->
+            val castsAdapter = PersonMoviesCastAdapter(castList) { castClicked ->
                 // TODO
                 // LLEVAR A PANTALLA DE DETALLES DE PELICULA...
-//                navegar(castClicked)
-                Toast.makeText(context, "Funciona", Toast.LENGTH_SHORT).show()
+                navigateToMovie(castClicked)
+                Toast.makeText(requireContext(), "Funciona", Toast.LENGTH_SHORT).show()
 
             }
 
@@ -114,42 +108,32 @@ class PersonDetailsFragment : Fragment() {
     }
 
     //TODO hablar con adrianixx_sniper_you_xx, estos son los datos de mi fragmento peliculaSeleccionada, los datos del director
-//    fun recuperarDatos(bundle: Bundle?): CrewMember? {
-//        if (bundle == null) return null
-//
-//        val name = bundle.getString("name", "")
-//        val job = bundle.getString("job", "")
-//        val profilePath = bundle.getString("image", "")
-//
-//        return CrewMember(name = name, job = job, profilePath = profilePath)
-//    }
+    fun navigateToMovie(movie:Cast){
+        val bundle = Bundle().apply {
+            putInt("movieId", movie.id)
+            putString("title", movie.title)
+            putString("overview", movie.overview)
+            putDouble("popularity", movie.popularity)
+            putString("release_date", movie.release_date)
+            putDouble("vote_average", movie.vote_average)
+            putInt("vote_count", movie.vote_count)
+            putBoolean("adult", movie.adult)
+            putString("backdrop_path", movie.backdrop_path)
+            putString("original_language", movie.original_language)
+            putString("original_title", movie.original_title)
+            putBoolean("video", movie.video)
+            putString("poster_path", movie.poster_path)
 
-//    fun navegar(movie:Cast){
-//        val bundle = Bundle().apply {
-//            putInt("movieId", movie.id)
-//            putString("title", movie.title)
-//            putString("overview", movie.overview)
-//            putDouble("popularity", movie.popularity)
-//            putString("release_date", movie.release_date)
-//            putDouble("vote_average", movie.vote_average)
-//            putInt("vote_count", movie.vote_count)
-//            putBoolean("adult", movie.adult)
-//            putString("backdrop_path", movie.backdrop_path)
-//            putString("original_language", movie.original_language)
-//            putString("original_title", movie.original_title)
-//            putBoolean("video", movie.video)
-//            putString("poster_path", movie.poster_path)
-//
-//        }
-//        val nuevoFragmento = PeliculaSeleccionadaFragment().apply {
-//            arguments = bundle
-//        }
-//
-//        val fragmentManager = requireActivity().supportFragmentManager
-//        val transaction = fragmentManager.beginTransaction()
-//        transaction.replace(R.id.fragment_container_person_details, nuevoFragmento)
-//        transaction.addToBackStack(null)
-//        transaction.commit()
-//    }
+        }
+        val nuevoFragmento = PeliculaSeleccionadaFragment().apply {
+            arguments = bundle
+        }
+
+        val fragmentManager = requireActivity().supportFragmentManager
+        val transaction = fragmentManager.beginTransaction()
+        transaction.replace(R.id.fragmentContainerView, nuevoFragmento)
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
 
 }

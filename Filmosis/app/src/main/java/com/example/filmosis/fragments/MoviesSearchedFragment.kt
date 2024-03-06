@@ -88,11 +88,9 @@ class MoviesSearchedFragment : Fragment() {
 
             if (moviesList.isEmpty()) {
                 Toast.makeText(requireContext(), "No hay resultados", Toast.LENGTH_LONG).show()
-//                finishFragment()
             } else {
                 val moviesAdapter = ListedMoviesAdapter(moviesList) { movieClicked ->
-                    // TODO
-                    // LLEVAR A PANTALLA DE ACTIVIDAD DE PELICULAS
+
                 }
 
                 rv.adapter = moviesAdapter

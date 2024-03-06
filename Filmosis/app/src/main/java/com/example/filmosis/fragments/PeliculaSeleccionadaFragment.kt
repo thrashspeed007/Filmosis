@@ -169,6 +169,13 @@ class PeliculaSeleccionadaFragment : Fragment() {
                 recyclerView.adapter = PersonasAdapter(directorList) { directorClicked ->
                     //TODO hablarlo con adrianix para saber de que manera lo quiere hacer, por que creo que lo hacemos diferente
 
+                    val fragmentManager = requireActivity().supportFragmentManager
+                    val transaction = fragmentManager.beginTransaction()
+                    transaction.replace(R.id.fragmentContainerView, PersonDetailsFragment.newInstance(directorClicked.id))
+                    transaction.addToBackStack(null)
+                    transaction.commit()
+
+
 //                    val bundle = Bundle().apply {
 //                        putString("name",directorClicked.name)
 //                        putString("job",directorClicked.job)
@@ -194,9 +201,13 @@ class PeliculaSeleccionadaFragment : Fragment() {
         ma.getActorDetails(data.movieId) { actores ->
             actores?.let { actorList ->
                 //TODO me pilla la lista vacia tinee que ser por  getActorDetails
-                recyclerViewReparto.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                recyclerViewReparto.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 recyclerViewReparto.adapter = ActoresAdapter(actorList) { actorClicked ->
-
+                    val fragmentManager = requireActivity().supportFragmentManager
+                    val transaction = fragmentManager.beginTransaction()
+                    transaction.replace(R.id.fragmentContainerView, PersonDetailsFragment.newInstance(actorClicked.id))
+                    transaction.addToBackStack(null)
+                    transaction.commit()
                 }
             }
         }

@@ -55,5 +55,7 @@ class PersonMoviesCastAdapter(private val casts: List<Cast>, private val onCastC
             holder.characterLabel.visibility = View.GONE
             holder.characterName.visibility = View.GONE
         }
+
+        holder.itemView.setOnClickListener { onCastClick.invoke(cast) }
     }
 }
