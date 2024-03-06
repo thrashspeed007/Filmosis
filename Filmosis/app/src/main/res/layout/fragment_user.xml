@@ -25,6 +25,14 @@
             android:scaleType="centerCrop"
             android:src="@drawable/logofilmosispremium" />
 
+        <ImageView
+            android:id="@+id/fragmentUser_editImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:contentDescription="Editar"
+            android:src="@drawable/baseline_edit_24" />
+
         <LinearLayout
             android:id="@+id/user_userInfoContainer"
             android:layout_width="wrap_content"
@@ -84,14 +92,6 @@
 
             </LinearLayout>
         </LinearLayout>
-
-        <ImageView
-            android:id="@+id/fragmentUser_editImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:contentDescription="Editar"
-            android:src="@drawable/baseline_edit_24" />
 
     </LinearLayout>
 

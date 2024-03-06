@@ -20,10 +20,10 @@
     <string name="searchFilterMenu_searchMovies">Buscar películas</string>
     <string name="searchFilterMenu_searchDirectors">Buscar personas</string>
 
-<!--    Item person Movie Cast-->
+    <!--    Item person Movie Cast-->
     <string name="itemPersonMovieCast_CharacterLabel">Personaje:</string>
 
-<!--    Person Details Fragment-->
+    <!--    Person Details Fragment-->
     <string name="personDetails_biographyTitle">Biografía</string>
     <string name="personDetails_personMoviesRvTitle">Películas</string>
 

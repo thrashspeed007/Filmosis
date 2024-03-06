@@ -57,6 +57,7 @@
                 android:id="@+id/bienvenida"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
                 android:text="@string/bienvenido"
                 android:textColor="?attr/colorOnBackground"
                 android:textSize="26dp"
@@ -68,6 +69,7 @@
                 android:id="@+id/home_tvUsuario"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
                 android:text=""
                 android:textColor="?attr/colorPrimary"
                 android:textSize="26dp"
@@ -79,6 +81,8 @@
                 android:id="@+id/linearLayout10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/home_tvUsuario">
@@ -90,7 +94,7 @@
                     android:layout_marginLeft="10dp"
                     android:text="@string/recomendaciones"
                     android:textColor="?attr/colorOnBackground"
-                    android:textSize="26sp"
+                    android:textSize="24sp"
                     android:visibility="visible" />
 
                 <com.google.android.material.button.MaterialButton
@@ -102,7 +106,7 @@
                     android:text="@string/ver_mas"
                     android:textAlignment="textEnd"
                     android:textColor="?attr/colorPrimary"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     app:icon="@drawable/ic_rigth_arrow"
                     app:iconGravity="textEnd"
                     app:iconSize="15dp"
@@ -125,6 +129,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
+                android:gravity="center"
                 app:layout_constraintTop_toBottomOf="@+id/movieRecomendedRecyclerView"
                 tools:layout_editor_absoluteX="1dp">
 
@@ -135,7 +140,7 @@
                     android:layout_marginLeft="10dp"
                     android:text="@string/pel_prox"
                     android:textColor="?attr/colorOnBackground"
-                    android:textSize="26sp"
+                    android:textSize="24sp"
                     android:visibility="visible" />
 
                 <com.google.android.material.button.MaterialButton
@@ -147,7 +152,7 @@
                     android:text="@string/ver_mas"
                     android:textAlignment="textEnd"
                     android:textColor="?attr/colorPrimary"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     app:icon="@drawable/ic_rigth_arrow"
                     app:iconGravity="textEnd"
                     app:iconSize="15dp"
@@ -169,6 +174,7 @@
                 android:id="@+id/uwu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 app:layout_constraintTop_toBottomOf="@+id/moviesSoonRecyclerView"
                 tools:layout_editor_absoluteX="1dp">
 
@@ -179,7 +185,7 @@
                     android:layout_marginLeft="10dp"
                     android:text="@string/pel_culas_populares"
                     android:textColor="?attr/colorOnBackground"
-                    android:textSize="26sp"
+                    android:textSize="24sp"
                     android:visibility="visible" />
 
                 <com.google.android.material.button.MaterialButton
@@ -191,7 +197,7 @@
                     android:text="@string/ver_mas"
                     android:textAlignment="textEnd"
                     android:textColor="?attr/colorPrimary"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     app:icon="@drawable/ic_rigth_arrow"
                     app:iconGravity="textEnd"
                     app:iconSize="15dp"
@@ -238,7 +244,7 @@
                     android:layout_marginLeft="10dp"
                     android:text="@string/servicios"
                     android:textColor="?attr/colorOnBackground"
-                    android:textSize="26sp"
+                    android:textSize="24sp"
                     android:visibility="visible" />
 
 
