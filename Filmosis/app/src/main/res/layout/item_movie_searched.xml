@@ -44,7 +44,6 @@
                 android:id="@+id/itemMovieSearched_movieGenres"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Action, Adventure"
                 android:textColor="?attr/colorOnSurface"
                 android:textSize="14sp" />
 

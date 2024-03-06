@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.filmosis.R
 import com.example.filmosis.adapters.ListedMoviesAdapter
 import com.example.filmosis.data.access.tmdb.MoviesAccess
+import com.example.filmosis.data.model.tmdb.Cast
 import com.example.filmosis.data.model.tmdb.Movie
 
 class MoviesSearchedFragment : Fragment() {
@@ -105,7 +106,31 @@ class MoviesSearchedFragment : Fragment() {
         }
     }
 
-    private fun finishFragment() {
-        activity?.supportFragmentManager?.popBackStack()
+    fun navigateToMovie(movie: Movie){
+        val bundle = Bundle().apply {
+            putInt("movieId", movie.id)
+            putString("title", movie.title)
+            putString("overview", movie.overview)
+            putDouble("popularity", movie.popularity)
+            putString("release_date", movie.release_date)
+            putDouble("vote_average", movie.vote_average)
+            putInt("vote_count", movie.vote_count)
+            putBoolean("adult", movie.adult)
+            putString("backdrop_path", movie.backdrop_path)
+            putString("original_language", movie.original_language)
+            putString("original_title", movie.original_title)
+            putBoolean("video", movie.video)
+            putString("poster_path", movie.poster_path)
+
+        }
+        val nuevoFragmento = PeliculaSeleccionadaFragment().apply {
+            arguments = bundle
+        }
+
+        val fragmentManager = requireActivity().supportFragmentManager
+        val transaction = fragmentManager.beginTransaction()
+        transaction.replace(R.id.fragmentContainerView, nuevoFragmento)
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
 }

@@ -15,6 +15,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.example.filmosis.fragments.ExploreFragment
 import com.example.filmosis.fragments.HomeFragment
+import com.example.filmosis.fragments.ListsFragment
 import com.example.filmosis.fragments.SocialFragment
 import com.example.filmosis.fragments.UserFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -86,7 +87,9 @@ class MainActivity : AppCompatActivity() {
             when (it.itemId) {
                 // TODO
                 R.id.drawerMenu_myLists -> {
-                    startActivity(Intent(this, ListActivity::class.java))
+                    replaceFragment(ListsFragment())
+                    val drawerLayout : DrawerLayout = findViewById(R.id.main_drawerLayout)
+                    drawerLayout.close()
                     return@setNavigationItemSelectedListener true
                 }
 
