@@ -23,10 +23,7 @@ data class Director(
     val profile_image_url: Int
 )
 
-data class Actor(
-    val name: String,
-    val profile_image_url: String
-)
+
 
 //Para recuperar los datos de la pelicula al seleccionarlo
 data class MovieData(
@@ -34,14 +31,16 @@ data class MovieData(
     val title: String,
     val overview: String,
     val popularity: Double,
-    val releaseDate: String,
+    val releaseDate: String?,
     val voteAverage: Double,
     val voteCount: Int,
     val adult: Boolean,
-    val backdropPath: String,
-    val originalLanguage: String,
+    val backdropPath: String?,
+    val originalLanguage: String?,
     val originalTitle: String,
     val video: Boolean,
     val posterPath: String
-
 )
+
+
+

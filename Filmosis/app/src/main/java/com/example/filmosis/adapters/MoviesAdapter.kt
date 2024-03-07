@@ -5,11 +5,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.filmosis.R
 import com.example.filmosis.config.DatosConexion
 import com.example.filmosis.data.model.tmdb.Movie
+import com.example.filmosis.fragments.GenreSelectedFragment
+import com.example.filmosis.fragments.PeliculaSeleccionadaFragment
 
 class MoviesAdapter(private val movies: List<Movie>, private val onMovieClick: (Movie) -> Unit) : RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
     class MoviesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -31,6 +34,7 @@ class MoviesAdapter(private val movies: List<Movie>, private val onMovieClick: (
         val imageUrl = DatosConexion.TMDB_IMAGE_BASE_URL + movie.poster_path
         Glide.with(holder.movieImageView.context).load(imageUrl).into(holder.movieImageView)
 //        holder.movieTitle.text = movie.title
-        holder.itemView.setOnClickListener {onMovieClick.invoke(movie)}
+        holder.itemView.setOnClickListener { onMovieClick.invoke(movie) }
+
     }
 }

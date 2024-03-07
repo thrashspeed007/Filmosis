@@ -219,26 +219,6 @@ class MoviesAccess {
         })
     }
 
-    fun getMovieData(movieId: Int, callback: (MovieData?) -> Unit) {
-        val call = RetrofitService.tmdbApi.getMovieDetailsRecuperar(movieId, DatosConexion.API_KEY)
-        call.enqueue(object : Callback<MovieData> {
-            override fun onResponse(call: Call<MovieData>, response: Response<MovieData>) {
-                if (response.isSuccessful) {
-                    val movieDetails = response.body()
-                    callback(movieDetails)
-                } else {
-                    callback(null)
-                }
-            }
-
-            override fun onFailure(call: Call<MovieData>, t: Throwable) {
-                Log.d("MoviesAccess", "getMovieData onFailure: ${t.message}")
-                callback(null)
-            }
-        })
-    }
-
-
 
 
 
@@ -264,6 +244,27 @@ class MoviesAccess {
             }
         })
     }
+
+    //TODO aqui esta el problema
+    fun getMovieData(movieId: Int, callback: (Movie?) -> Unit) {
+        val call = RetrofitService.tmdbApi.getMovieDetailsRecuperar(movieId, DatosConexion.API_KEY)
+
+        call.enqueue(object : Callback<Movie> {
+            override fun onFailure(call: Call<Movie>, t: Throwable) {
+                Log.d("MoviesAccess", "getMovieData onFailure: " + t.message)
+                callback.invoke(null)
+            }
+
+            override fun onResponse(call: Call<Movie>, response: Response<Movie>) {
+                val movie = response.body()
+                callback.invoke(movie)
+            }
+        })
+    }
+
+
+
+
 
     fun getDirectorDetails(movieId: Int, callback: (List<Crew>?) -> Unit) {
         val call = RetrofitService.tmdbApi.getMovieCredits(movieId, DatosConexion.API_KEY)

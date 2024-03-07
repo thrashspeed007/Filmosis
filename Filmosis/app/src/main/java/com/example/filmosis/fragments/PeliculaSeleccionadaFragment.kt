@@ -1,7 +1,9 @@
 package com.example.filmosis.fragments
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.filmosis.R
 import com.example.filmosis.adapters.ActoresAdapter
 import com.example.filmosis.adapters.PersonasAdapter
-import com.example.filmosis.adapters.ServicioAdapter
 import com.example.filmosis.data.access.tmdb.MoviesAccess
 import com.example.filmosis.data.model.tmdb.Director
 import com.example.filmosis.data.model.tmdb.Movie
@@ -40,10 +41,28 @@ class PeliculaSeleccionadaFragment : Fragment() {
     private lateinit var image : ImageView
     private lateinit var tvavg : TextView
     private lateinit var ibBack : ImageButton
-//    private lateinit var recuperacionInfo : MovieData
+    private lateinit var seleccionada : PeliculaSeleccionadaFragment
 
     private var directores:  ArrayList<Director> = ArrayList()
     private val ma = MoviesAccess()
+    private var recuperacionInfo: Movie = Movie(
+        adult = false,
+        backdrop_path = "",
+        genre_ids = emptyList(),
+        id = 0,
+        original_language = "",
+        original_title = "",
+        overview = "",
+        popularity = 0.0,
+        poster_path = "",
+        release_date = "",
+        title = "",
+        video = false,
+        vote_average = 0.0,
+        vote_count = 0
+    )
+
+
 
 
     companion object {
@@ -64,27 +83,22 @@ class PeliculaSeleccionadaFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val datosPeli = recuperarDatos(arguments)
-        //TODO cuando llegue a casa lo hago
-//        recuperarDatosInfo()
+        recuperarDatosInfo()
         val view = inflater.inflate(R.layout.fragment_pelicula_seleccionada, container, false)
-
         videoView = view.findViewById(R.id.webView2)
 
-        if (datosPeli != null) {
-            ma.getMovieDetails(datosPeli.movieId) { videoUrl ->
-                if (videoUrl != null) {
-                    val videoIframe = "<iframe width=\"100%\" height=\"100%\" src=\"$videoUrl\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>"
-                    videoView.settings.javaScriptEnabled = true
-                    videoView.webChromeClient = WebChromeClient()
-                    videoView.loadData(videoIframe,"text/html","utf-8")
+        ma.getMovieDetails(recuperacionInfo.id) { videoUrl ->
+            if (videoUrl != null) {
+                val videoIframe = "<iframe width=\"100%\" height=\"100%\" src=\"$videoUrl\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>"
+                videoView.settings.javaScriptEnabled = true
+                videoView.webChromeClient = WebChromeClient()
+                videoView.loadData(videoIframe,"text/html","utf-8")
 
 
-                } else {
-                    val textView = view.findViewById<TextView>(R.id.errorvideo)
-                    textView.text = "El video no está disponible"
+            } else {
+                val textView = view.findViewById<TextView>(R.id.errorvideo)
+                textView.text = "El video no está disponible"
 
-                }
             }
         }
 
@@ -92,98 +106,55 @@ class PeliculaSeleccionadaFragment : Fragment() {
         //Recyclerview para directores
         recyclerView = view.findViewById(R.id.recyclerPersonas)
         recyclerView.setHasFixedSize(true)
-        if (datosPeli != null) {
-            addDirectoresToList(requireContext(), datosPeli)
-        }
+        addDirectoresToList(requireContext(), recuperacionInfo)
 
         //reparto
         recyclerViewReparto = view.findViewById(R.id.recyclerActores)
         recyclerViewReparto.setHasFixedSize(true)
-        if (datosPeli != null) {
-            addActoresToList(requireContext(), datosPeli)
-        }
-        //servicio TODO clase
-//        recyclerViewServie = view.findViewById(R.id.recyclerServicio)
-//        recyclerViewServie.setHasFixedSize(true)
-//        if (datosPeli != null) {
-//            addServicesToList(requireContext(), datosPeli)
-//        }
-
-
-
-
-
+        addActoresToList(requireContext(), recuperacionInfo)
 
         //Datos de la pelicula
-//        tvGenero = view.findViewById(R.id.tvGenero)
-//        tvGenero.text = datosPeli
         tvCensura = view.findViewById(R.id.tvCensura)
-        if (datosPeli != null) {
-            if (datosPeli.adult) {
-                tvCensura.text =  " +18"
-            }else{
-                tvCensura.text =  " Todos los publicos"
-            }
+        if (recuperacionInfo.adult) {
+            tvCensura.text = " +18"
+        } else {
+            tvCensura.text = " Todos los públicos"
         }
         tvIdioma = view.findViewById(R.id.tvLenguage)
-        if (datosPeli != null) {
-            tvIdioma.text = datosPeli.originalLanguage.uppercase()
-        }
+        tvIdioma.text = recuperacionInfo.original_language?.uppercase()
+
         tvSinopsis = view.findViewById(R.id.tvSinopsis)
-        if (datosPeli != null) {
-            tvSinopsis.text = datosPeli.overview
-        }
+        tvSinopsis.text = recuperacionInfo.overview
+
         tvTitle = view.findViewById(R.id.tvTitle)
-        if (datosPeli != null) {
-            tvTitle.text = datosPeli.title
-        }
-//        tvTime = view.findViewById(R.id.tvTimeFilm)
-//        tvTime.text = datosPeli.
+        tvTitle.text = recuperacionInfo.title
 
         tvReleaseDate = view.findViewById(R.id.tvReleaseDate)
-        if (datosPeli != null) {
-            tvReleaseDate.text = datosPeli.releaseDate.toString()
-        }
+        tvReleaseDate.text = recuperacionInfo.release_date
+
         tvAvg = view.findViewById(R.id.averageVote)
-//        tvAvg.isIndicator
-//        tvAvg.isFocusable
-        if (datosPeli != null) {
-            val maxRating = 10
-            val voteAverage = datosPeli.voteAverage.toFloat()
-            val rating = (voteAverage / maxRating) * tvAvg.numStars
-            tvAvg.rating = rating
-        }
-
-
-//        image = view.findViewById(R.id.image)
-//        if (datosPeli != null) {
-//            val uri = Uri.parse(datosPeli.posterPath)
-//            image.setImageURI(uri)
-//        }
+        val maxRating = 10
+        val voteAverage = recuperacionInfo.vote_average
+        val rating = (voteAverage / maxRating) * tvAvg.numStars
+        tvAvg.rating = rating.toFloat()
 
         tvavg = view.findViewById(R.id.tvAvg)
-        if (datosPeli != null) {
-            tvavg.text = datosPeli.voteAverage.toString()
-        };
+        tvavg.text = recuperacionInfo.vote_average?.toString() ?: ""
 
         ibBack = view.findViewById(R.id.back)
         ibBack.setOnClickListener {
             parentFragmentManager.popBackStack()
         }
 
-
-
-
         return view
 
     }
 
-    private fun addDirectoresToList(context: Context, data: MovieData) {
-        ma.getDirectorDetails(data.movieId) { directors ->
+    private fun addDirectoresToList(context: Context, data: Movie) {
+        ma.getDirectorDetails(data.id) { directors ->
             directors?.let { directorList ->
                 recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
                 recyclerView.adapter = PersonasAdapter(directorList) { directorClicked ->
-                    //TODO hablarlo con adrianix para saber de que manera lo quiere hacer, por que creo que lo hacemos diferente
 
                     val fragmentManager = requireActivity().supportFragmentManager
                     val transaction = fragmentManager.beginTransaction()
@@ -196,28 +167,22 @@ class PeliculaSeleccionadaFragment : Fragment() {
         }
     }
 
-    //TODO cuando llegue a casa lo hago
 
-//    private fun recuperarDatosInfo(movieId: Int) {
-//        ma.getMovieData(movieId) { movieData ->
-//
-//            if (movieData != null) {
-//                //La idea es guardar los datos de pelicula que hemos clickado en una variable y luego llamando a PeliculaSeleccionadaFragment.ARG_MOVIE_ID
-//                recuperacionInfo = MovieData(movieData.movieId, movieData.title, movieData.overview, movieData.popularity, movieData.releaseDate, movieData.voteAverage, movieData.voteCount, movieData.adult,
-//                    movieData.backdropPath, movieData.originalLanguage,
-//                    movieData.originalTitle, movieData.video, movieData.posterPath)
-//
-//            } else {
-//                println("F")
-//            }
-//        }
-//    }
+    private fun recuperarDatosInfo() {
+        val movieId = arguments?.getInt(ARG_MOVIE_ID)
+        movieId?.let { id ->
+            ma.getMovieData(id) { movie ->
+                movie?.let { data ->
+                    recuperacionInfo = data
+                }
+            }
+        }
+    }
 
 
-    private fun addActoresToList(context: Context, data: MovieData) {
-        ma.getActorDetails(data.movieId) { actores ->
+    private fun addActoresToList(context: Context, data: Movie) {
+        ma.getActorDetails(data.id) { actores ->
             actores?.let { actorList ->
-                //TODO me pilla la lista vacia tinee que ser por  getActorDetails
                 recyclerViewReparto.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 recyclerViewReparto.adapter = ActoresAdapter(actorList) { actorClicked ->
                     val fragmentManager = requireActivity().supportFragmentManager
@@ -230,58 +195,9 @@ class PeliculaSeleccionadaFragment : Fragment() {
         }
     }
 
-//    private fun addServicesToList(context: Context, data: MovieData) {
-//        ma.getPlatformDetails(data.provider_id) { platformDetails ->
-//            platformDetails?.let { details ->
-//                recyclerViewServie.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-//                recyclerViewServie.adapter = ServicioAdapter(context, details.servicios)
-//            }
-//        }
-//    }
 
 
 
-    fun recuperarDatos(bundle: Bundle?): MovieData? {
-        if (bundle == null) return null
-
-        // Extrae los datos del Bundle
-        val movieId = bundle.getInt("movieId", -1)
-        val title = bundle.getString("title", "")
-        val overview = bundle.getString("overview", "")
-        val popularity = bundle.getDouble("popularity", 0.0)
-        val releaseDate = bundle.getString("release_date", "")
-        val voteAverage = bundle.getDouble("vote_average", 0.0)
-        val voteCount = bundle.getInt("vote_count", 0)
-        val adult = bundle.getBoolean("adult", false)
-        val backdropPath = bundle.getString("backdrop_path", "")
-        val originalLanguage = bundle.getString("original_language", "")
-        val originalTitle = bundle.getString("original_title", "")
-        val video = bundle.getBoolean("video", false)
-        val posterPath = bundle.getString("poster_path", "")
-
-        // retornamos los datos de la pelicula
-        return MovieData(
-            movieId,
-            title,
-            overview,
-            popularity,
-            releaseDate,
-            voteAverage,
-            voteCount,
-            adult,
-            backdropPath,
-            originalLanguage,
-            originalTitle,
-            video,
-            posterPath )
-
-    }
-
-    fun anadirLista(view: View) {
-        //Logica para añadir a la lista
-        //TODO
-
-    }
 }
 
 
