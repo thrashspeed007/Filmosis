@@ -2,15 +2,17 @@ package com.example.filmosis.fragments
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.filmosis.R
 import com.example.filmosis.adapters.MoviesInListAdapter
 import com.example.filmosis.dataclass.ListedMovie
 import com.example.filmosis.init.FirebaseInitializer
-import com.example.filmosis.utilities.firebase.FirestoreUtilities
 
 class MoviesInListFragment : Fragment() {
 
@@ -53,6 +55,8 @@ class MoviesInListFragment : Fragment() {
         if (currentUserEmail != null && listId != null) {
             fetchDocument(currentUserEmail,listId)
         }
+
+
     }
 
     private fun fetchDocument(username: String, desiredListId: Int) {
@@ -73,12 +77,6 @@ class MoviesInListFragment : Fragment() {
                             val listDate = listData?.get("listDate") as? String
 
                             if (listId == desiredListId) {
-                                Log.d("ListActivity", "List Data:")
-                                Log.d("ListActivity", "  listId: $listId")
-                                Log.d("ListActivity", "  listName: $listName")
-                                Log.d("ListActivity", "  listDescription: $listDescription")
-                                Log.d("ListActivity", "  listDate: $listDate")
-
                                 val listMovies = listData?.get("listMovies") as? List<Map<String, Any>>?
                                 val listedMovies = listMovies?.map { movie ->
                                     val averageVote = movie["averageVote"].toString().toDouble()
@@ -96,6 +94,17 @@ class MoviesInListFragment : Fragment() {
                                     Log.d("ListActivity", "    releaseDate: ${listedMovie.releaseDate}")
                                     Log.d("ListActivity", "    averageVote: ${listedMovie.averageVote}")
                                 }
+
+                                // Inicialización de información de lista y recycler view
+
+                                if (listName != null && listDescription != null) {
+                                    initListInfo(listName, listDescription)
+                                }
+
+                                if (listedMovies != null) {
+                                    initRv(listedMovies)
+                                }
+
                             }
                         }
                     } else {
@@ -110,5 +119,22 @@ class MoviesInListFragment : Fragment() {
             }
     }
 
+    private fun initRv(listedMovies: List<ListedMovie>){
 
+        val rv = requireView().findViewById<RecyclerView>(R.id.moviesInList_moviesRecyclerView)
+        rv.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+
+        rv.adapter = MoviesInListAdapter(listedMovies) {
+            val fragmentManager = requireActivity().supportFragmentManager
+            val transaction = fragmentManager.beginTransaction()
+            transaction.replace(R.id.fragmentContainerView, PeliculaSeleccionadaFragment.newInstance(it.id))
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
+    }
+
+    private fun initListInfo(listName: String, listDescription: String) {
+        requireView().findViewById<TextView>(R.id.moviesInList_listTitle).text = listName
+        requireView().findViewById<TextView>(R.id.moviesInList_listDescription).text = listDescription
+    }
 }
