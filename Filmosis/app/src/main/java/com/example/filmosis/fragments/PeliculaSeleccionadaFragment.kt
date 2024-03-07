@@ -83,8 +83,64 @@ class PeliculaSeleccionadaFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        recuperarDatosInfo()
+
         val view = inflater.inflate(R.layout.fragment_pelicula_seleccionada, container, false)
+        recuperarDatosInfo(view)
+
+        return view
+
+    }
+
+    private fun addDirectoresToList(context: Context, data: Movie) {
+        ma.getDirectorDetails(data.id) { directors ->
+            directors?.let { directorList ->
+                recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                recyclerView.adapter = PersonasAdapter(directorList) { directorClicked ->
+
+                    val fragmentManager = requireActivity().supportFragmentManager
+                    val transaction = fragmentManager.beginTransaction()
+                    transaction.replace(R.id.fragmentContainerView, PersonDetailsFragment.newInstance(directorClicked.id))
+                    transaction.addToBackStack(null)
+                    transaction.commit()
+
+                }
+            }
+        }
+    }
+
+
+    private fun recuperarDatosInfo(view: View) {
+        val movieId = arguments?.getInt(ARG_MOVIE_ID)
+
+        if (movieId != null) {
+            ma.getMovieData(movieId) { movie ->
+                if (movie != null) {
+                    recuperacionInfo = movie
+
+
+                    recyclerControl(view)
+                    datosPeliculas(view)
+                    video(view)
+
+                }
+            }
+        }
+    }
+
+    fun recyclerControl(view: View){
+        //Recyclerview para directores
+        recyclerView = view.findViewById(R.id.recyclerPersonas)
+        recyclerView.setHasFixedSize(true)
+        addDirectoresToList(requireContext(), recuperacionInfo)
+
+        //reparto
+        recyclerViewReparto = view.findViewById(R.id.recyclerActores)
+        recyclerViewReparto.setHasFixedSize(true)
+        addActoresToList(requireContext(), recuperacionInfo)
+
+    }
+
+    fun video (view: View){
         videoView = view.findViewById(R.id.webView2)
 
         ma.getMovieDetails(recuperacionInfo.id) { videoUrl ->
@@ -103,16 +159,10 @@ class PeliculaSeleccionadaFragment : Fragment() {
         }
 
 
-        //Recyclerview para directores
-        recyclerView = view.findViewById(R.id.recyclerPersonas)
-        recyclerView.setHasFixedSize(true)
-        addDirectoresToList(requireContext(), recuperacionInfo)
 
-        //reparto
-        recyclerViewReparto = view.findViewById(R.id.recyclerActores)
-        recyclerViewReparto.setHasFixedSize(true)
-        addActoresToList(requireContext(), recuperacionInfo)
+    }
 
+    fun datosPeliculas(view: View){
         //Datos de la pelicula
         tvCensura = view.findViewById(R.id.tvCensura)
         if (recuperacionInfo.adult) {
@@ -146,37 +196,6 @@ class PeliculaSeleccionadaFragment : Fragment() {
             parentFragmentManager.popBackStack()
         }
 
-        return view
-
-    }
-
-    private fun addDirectoresToList(context: Context, data: Movie) {
-        ma.getDirectorDetails(data.id) { directors ->
-            directors?.let { directorList ->
-                recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-                recyclerView.adapter = PersonasAdapter(directorList) { directorClicked ->
-
-                    val fragmentManager = requireActivity().supportFragmentManager
-                    val transaction = fragmentManager.beginTransaction()
-                    transaction.replace(R.id.fragmentContainerView, PersonDetailsFragment.newInstance(directorClicked.id))
-                    transaction.addToBackStack(null)
-                    transaction.commit()
-
-                }
-            }
-        }
-    }
-
-
-    private fun recuperarDatosInfo() {
-        val movieId = arguments?.getInt(ARG_MOVIE_ID)
-        movieId?.let { id ->
-            ma.getMovieData(id) { movie ->
-                movie?.let { data ->
-                    recuperacionInfo = data
-                }
-            }
-        }
     }
 
 
@@ -194,9 +213,6 @@ class PeliculaSeleccionadaFragment : Fragment() {
             }
         }
     }
-
-
-
 
 }
 
