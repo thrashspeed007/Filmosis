@@ -63,7 +63,7 @@ class ListsFragment : Fragment() {
 
                         val listOfLists = keys.map { key ->
                             val listData = data[key] as? Map<*, *>
-                            val listId = listData?.get("listId").toString().toInt()
+                            val listId = listData?.get("listId").toString()
                             Log.d("ListActivity", "listId: $listId")
                             val listName = listData?.get("listName") as? String
                             Log.d("ListActivity", "listName: ${listName.toString()}")
@@ -72,7 +72,7 @@ class ListsFragment : Fragment() {
                             val listDate = listData?.get("listDate") as? String
                             Log.d("ListActivity", "listDate: ${listDate.toString()}")
 
-                            ListItem(listId?.toString()?.toIntOrNull() ?: -1, listName.toString(), listDescription.toString(), listDate.toString())
+                            ListItem(listId, listName.toString(), listDescription.toString(), listDate.toString())
                         }
 
                         val rv = requireView().findViewById<RecyclerView>(R.id.lists_recyclerView)

@@ -21,13 +21,13 @@ class MoviesInListFragment : Fragment() {
     companion object {
         private const val ARG_LIST_ID = "listId"
 
-        fun newInstance(listId: Int): MoviesInListFragment {
+        fun newInstance(listId: String): MoviesInListFragment {
             val fragment = MoviesInListFragment()
             val args = Bundle()
 
-            args.putInt(ARG_LIST_ID, listId)
+            args.putString(ARG_LIST_ID, listId)
 
-            Log.d("MoviesFragment", listId.toString())
+            Log.d("MoviesFragment", listId)
 
             fragment.arguments = args
             return fragment
@@ -49,7 +49,7 @@ class MoviesInListFragment : Fragment() {
 
     private fun setup() {
         val currentUserEmail = FirebaseInitializer.authInstance.currentUser?.email
-        val listId = arguments?.getInt(ARG_LIST_ID)
+        val listId = arguments?.getString(ARG_LIST_ID)
         Log.d("MovieInListFragment",listId.toString())
 
         if (currentUserEmail != null && listId != null) {
@@ -59,7 +59,7 @@ class MoviesInListFragment : Fragment() {
 
     }
 
-    private fun fetchDocument(username: String, desiredListId: Int) {
+    private fun fetchDocument(username: String, desiredListId: String) {
         val docRef = firestore.collection("lists").document(username)
 
         Log.d("MovieInListFragment", docRef.toString())
@@ -71,7 +71,7 @@ class MoviesInListFragment : Fragment() {
                     if (data != null) {
                         data.forEach { (key, value) ->
                             val listData = value as? Map<*, *>
-                            val listId = listData?.get("listId").toString().toInt()
+                            val listId = listData?.get("listId").toString()
                             val listName = listData?.get("listName") as? String
                             val listDescription = listData?.get("listDescription") as? String
                             val listDate = listData?.get("listDate") as? String

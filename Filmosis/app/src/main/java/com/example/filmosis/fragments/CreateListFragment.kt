@@ -57,13 +57,15 @@ class CreateListFragment : Fragment() {
         val email: String = FirebaseInitializer.authInstance.currentUser?.email!!
 
         // Generar un nombre aleatorio para el campo contenedor
-        val nombreCampoContenedor = "lista_${UUID.randomUUID()}"
+
+        val uuid: UUID = UUID.randomUUID()
+        val nombreCampoContenedor = "lista_${uuid}"
 
         // Crear un mapa con todos los campos, incluido listMovies
         val listaDatosAdicionales = hashMapOf<String, Any>(
             "$nombreCampoContenedor.listDate" to obtenerFechaActual(),
             "$nombreCampoContenedor.listDescription" to descripcionLista,
-            "$nombreCampoContenedor.listId" to 1, // Opción fija según tu ejemplo
+            "$nombreCampoContenedor.listId" to uuid, // Opción fija según tu ejemplo
             "$nombreCampoContenedor.listName" to nombreLista,
             "$nombreCampoContenedor.listMovies" to arrayListOf<Map<String, Any>>() // ArrayList vacío para listMovies
         )
