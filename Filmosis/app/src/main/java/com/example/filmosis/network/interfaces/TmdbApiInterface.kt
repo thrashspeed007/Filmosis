@@ -129,9 +129,9 @@ interface TmdbApiInterface {
     ): Call<PersonDetails>
 
 
-    @GET("network/{network_id}")
+    @GET("network/{id}")
     fun getNetworkDetails(
-        @Path("network_id") networkId: Int,
+        @Path("id") networkId: Int,
         @Query("api_key") apiKey: String
     ): Call<NetworkDetailsResponse>
 

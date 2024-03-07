@@ -9,17 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.filmosis.R
 import com.example.filmosis.data.model.tmdb.Movie
+import com.example.filmosis.fragments.PeliculaSeleccionadaFragment
 
-class GridRecyclerViewAdapter(private val movies: List<Movie>) : RecyclerView.Adapter<GridRecyclerViewAdapter.MyViewHolder>() {
-    private var listener: OnItemClickListener? = null
+class GridRecyclerViewAdapter(private val movies: List<Movie>, private val onMovieClick: (Movie) -> Unit) : RecyclerView.Adapter<GridRecyclerViewAdapter.MyViewHolder>() {
 
-    fun setOnItemClickListener(listener: OnItemClickListener) {
-        this.listener = listener
-    }
-
-    interface OnItemClickListener {
-        fun onItemClick(movie: Movie)
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.row_movie, parent, false)
@@ -33,22 +26,12 @@ class GridRecyclerViewAdapter(private val movies: List<Movie>) : RecyclerView.Ad
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val movie = movies[position]
         holder.bind(movie)
+        holder.itemView.setOnClickListener { onMovieClick.invoke(movie) }
     }
 
-    inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         private val iconoPelicula: ImageView = itemView.findViewById(R.id.icono_pelicula)
         private val nombrePelicula: TextView = itemView.findViewById(R.id.nombre_pelicula)
-
-        init {
-            itemView.setOnClickListener(this)
-        }
-
-        override fun onClick(v: View?) {
-            val position = adapterPosition
-            if (position != RecyclerView.NO_POSITION) {
-                listener?.onItemClick(movies[position])
-            }
-        }
 
         fun bind(pelicula: Movie) {
             Glide.with(itemView.context)

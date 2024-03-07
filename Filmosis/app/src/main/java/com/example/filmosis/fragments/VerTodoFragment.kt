@@ -18,7 +18,7 @@ import com.example.filmosis.data.model.tmdb.Movie
 import com.google.gson.Gson
 
 
-class VerTodoFragment : Fragment(), GridRecyclerViewAdapter.OnItemClickListener {
+class VerTodoFragment : Fragment() {
     private val moviesAccess = MoviesAccess()
 
     private lateinit var recyclerView: RecyclerView
@@ -43,9 +43,16 @@ class VerTodoFragment : Fragment(), GridRecyclerViewAdapter.OnItemClickListener 
         recyclerView = view.findViewById(R.id.recyclerViewVerTodo)
         recyclerView.layoutManager = GridLayoutManager(requireContext(), 3)
         moviesAccess.listPopularMovies { movies ->
-            adapter = GridRecyclerViewAdapter(movies)
+            adapter = GridRecyclerViewAdapter(movies){movie ->
+                val fragmentManager = requireActivity().supportFragmentManager
+                val transaction = fragmentManager.beginTransaction()
+                transaction.replace(R.id.fragmentContainerView, PeliculaSeleccionadaFragment.newInstance(movie.id))
+                transaction.addToBackStack(null)
+                transaction.commit()
+
+            }
             recyclerView.adapter = adapter
-            adapter.setOnItemClickListener(this@VerTodoFragment)
+
         }
 
 
@@ -53,18 +60,30 @@ class VerTodoFragment : Fragment(), GridRecyclerViewAdapter.OnItemClickListener 
         recyclerViewRecomendados = view.findViewById(R.id.recyclerViewVerTodoRecomendados)
         recyclerViewRecomendados.layoutManager = GridLayoutManager(requireContext(), 3)
         moviesAccess.listRecommendedMovies(movieId = 438631) { movies ->
-            adapter = GridRecyclerViewAdapter(movies)
+            adapter = GridRecyclerViewAdapter(movies){movie ->
+                val fragmentManager = requireActivity().supportFragmentManager
+                val transaction = fragmentManager.beginTransaction()
+                transaction.replace(R.id.fragmentContainerView, PeliculaSeleccionadaFragment.newInstance(movie.id))
+                transaction.addToBackStack(null)
+                transaction.commit()
+
+            }
             recyclerViewRecomendados.adapter = adapter
-            adapter.setOnItemClickListener(this@VerTodoFragment)
         }
 
         //proximamente
         recyclerViewProximamentes = view.findViewById(R.id.recyclerViewVerTodoProximamente)
         recyclerViewProximamentes.layoutManager = GridLayoutManager(requireContext(), 3)
         moviesAccess.listUpcomingMovies { movies ->
-            adapter = GridRecyclerViewAdapter(movies)
+            adapter = GridRecyclerViewAdapter(movies){movie ->
+                val fragmentManager = requireActivity().supportFragmentManager
+                val transaction = fragmentManager.beginTransaction()
+                transaction.replace(R.id.fragmentContainerView, PeliculaSeleccionadaFragment.newInstance(movie.id))
+                transaction.addToBackStack(null)
+                transaction.commit()
+
+            }
             recyclerViewProximamentes.adapter = adapter
-            adapter.setOnItemClickListener(this@VerTodoFragment)
         }
 
 
@@ -121,38 +140,7 @@ class VerTodoFragment : Fragment(), GridRecyclerViewAdapter.OnItemClickListener 
 ////
 ////        sView.post(Runnable { sView.scrollTo(sViewX, sViewY) })
 //    }
-    override fun onItemClick(movie: Movie) {
 
-        val bundle = Bundle().apply {
-            putInt("movieId", movie.id)
-            putString("title", movie.title)
-            putString("overview", movie.overview)
-            putDouble("popularity", movie.popularity)
-            putString("release_date", movie.release_date)
-            putDouble("vote_average", movie.vote_average)
-            putInt("vote_count", movie.vote_count)
-            putBoolean("adult", movie.adult)
-            putString("backdrop_path", movie.backdrop_path)
-            putString("original_language", movie.original_language)
-            putString("original_title", movie.original_title)
-            putBoolean("video", movie.video)
-            putString("poster_path", movie.poster_path)
-
-
-        }
-
-
-        //Me llevo la inforamcion para luego recuperarlo en el onCreateView del fragment peliculaseleccionada
-        val nuevoFragmento = PeliculaSeleccionadaFragment().apply {
-            arguments = bundle
-        }
-
-        val fragmentManager = requireActivity().supportFragmentManager
-        val transaction = fragmentManager.beginTransaction()
-        transaction.replace(R.id.fragment_container_verTodo, nuevoFragmento)
-        transaction.addToBackStack(null)
-        transaction.commit()
-    }
 
 
 }
