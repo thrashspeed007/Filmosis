@@ -83,26 +83,127 @@ class PeliculaSeleccionadaFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        recuperarDatosInfo()
+
         val view = inflater.inflate(R.layout.fragment_pelicula_seleccionada, container, false)
-        videoView = view.findViewById(R.id.webView2)
+        recuperarDatosInfo(view)
+//        videoView = view.findViewById(R.id.webView2)
+//
+//        ma.getMovieDetails(recuperacionInfo.id) { videoUrl ->
+//            if (videoUrl != null) {
+//                val videoIframe = "<iframe width=\"100%\" height=\"100%\" src=\"$videoUrl\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>"
+//                videoView.settings.javaScriptEnabled = true
+//                videoView.webChromeClient = WebChromeClient()
+//                videoView.loadData(videoIframe,"text/html","utf-8")
+//
+//
+//            } else {
+//                val textView = view.findViewById<TextView>(R.id.errorvideo)
+//                textView.text = "El video no está disponible"
+//
+//            }
+//        }
+//
+//
+//        //Recyclerview para directores
+//        recyclerView = view.findViewById(R.id.recyclerPersonas)
+//        recyclerView.setHasFixedSize(true)
+//        addDirectoresToList(requireContext(), recuperacionInfo)
+//
+//        //reparto
+//        recyclerViewReparto = view.findViewById(R.id.recyclerActores)
+//        recyclerViewReparto.setHasFixedSize(true)
+//        addActoresToList(requireContext(), recuperacionInfo)
+//
+//        //Datos de la pelicula
+//        tvCensura = view.findViewById(R.id.tvCensura)
+//        if (recuperacionInfo.adult) {
+//            tvCensura.text = " +18"
+//        } else {
+//            tvCensura.text = " Todos los públicos"
+//        }
+//        tvIdioma = view.findViewById(R.id.tvLenguage)
+//        tvIdioma.text = recuperacionInfo.original_language?.uppercase()
+//
+//        tvSinopsis = view.findViewById(R.id.tvSinopsis)
+//        tvSinopsis.text = recuperacionInfo.overview
+//
+//        tvTitle = view.findViewById(R.id.tvTitle)
+//        tvTitle.text = recuperacionInfo.title
+//
+//        tvReleaseDate = view.findViewById(R.id.tvReleaseDate)
+//        tvReleaseDate.text = recuperacionInfo.release_date
+//
+//        tvAvg = view.findViewById(R.id.averageVote)
+//        val maxRating = 10
+//        val voteAverage = recuperacionInfo.vote_average
+//        val rating = (voteAverage / maxRating) * tvAvg.numStars
+//        tvAvg.rating = rating.toFloat()
+//
+//        tvavg = view.findViewById(R.id.tvAvg)
+//        tvavg.text = recuperacionInfo.vote_average?.toString() ?: ""
+//
+//        ibBack = view.findViewById(R.id.back)
+//        ibBack.setOnClickListener {
+//            parentFragmentManager.popBackStack()
+//        }
 
-        ma.getMovieDetails(recuperacionInfo.id) { videoUrl ->
-            if (videoUrl != null) {
-                val videoIframe = "<iframe width=\"100%\" height=\"100%\" src=\"$videoUrl\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>"
-                videoView.settings.javaScriptEnabled = true
-                videoView.webChromeClient = WebChromeClient()
-                videoView.loadData(videoIframe,"text/html","utf-8")
+        return view
 
+    }
 
-            } else {
-                val textView = view.findViewById<TextView>(R.id.errorvideo)
-                textView.text = "El video no está disponible"
+    private fun addDirectoresToList(context: Context, data: Movie) {
+        ma.getDirectorDetails(data.id) { directors ->
+            directors?.let { directorList ->
+                recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                recyclerView.adapter = PersonasAdapter(directorList) { directorClicked ->
 
+                    val fragmentManager = requireActivity().supportFragmentManager
+                    val transaction = fragmentManager.beginTransaction()
+                    transaction.replace(R.id.fragmentContainerView, PersonDetailsFragment.newInstance(directorClicked.id))
+                    transaction.addToBackStack(null)
+                    transaction.commit()
+
+                }
             }
         }
+    }
 
 
+    private fun recuperarDatosInfo(view: View) {
+        val movieId = arguments?.getInt(ARG_MOVIE_ID)
+
+        if (movieId != null) {
+            ma.getMovieData(movieId) { movie ->
+                if (movie != null) {
+                    recuperacionInfo = movie
+
+                    videoView = view.findViewById(R.id.webView2)
+
+                    ma.getMovieDetails(recuperacionInfo.id) { videoUrl ->
+                        if (videoUrl != null) {
+                            val videoIframe = "<iframe width=\"100%\" height=\"100%\" src=\"$videoUrl\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>"
+                            videoView.settings.javaScriptEnabled = true
+                            videoView.webChromeClient = WebChromeClient()
+                            videoView.loadData(videoIframe,"text/html","utf-8")
+
+
+                        } else {
+                            val textView = view.findViewById<TextView>(R.id.errorvideo)
+                            textView.text = "El video no está disponible"
+
+                        }
+                    }
+
+
+                    recyclerControl(view)
+                    datosPeliculas(view)
+
+                }
+            }
+        }
+    }
+
+    fun recyclerControl(view: View){
         //Recyclerview para directores
         recyclerView = view.findViewById(R.id.recyclerPersonas)
         recyclerView.setHasFixedSize(true)
@@ -113,6 +214,9 @@ class PeliculaSeleccionadaFragment : Fragment() {
         recyclerViewReparto.setHasFixedSize(true)
         addActoresToList(requireContext(), recuperacionInfo)
 
+    }
+
+    fun datosPeliculas(view: View){
         //Datos de la pelicula
         tvCensura = view.findViewById(R.id.tvCensura)
         if (recuperacionInfo.adult) {
@@ -146,37 +250,6 @@ class PeliculaSeleccionadaFragment : Fragment() {
             parentFragmentManager.popBackStack()
         }
 
-        return view
-
-    }
-
-    private fun addDirectoresToList(context: Context, data: Movie) {
-        ma.getDirectorDetails(data.id) { directors ->
-            directors?.let { directorList ->
-                recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-                recyclerView.adapter = PersonasAdapter(directorList) { directorClicked ->
-
-                    val fragmentManager = requireActivity().supportFragmentManager
-                    val transaction = fragmentManager.beginTransaction()
-                    transaction.replace(R.id.fragmentContainerView, PersonDetailsFragment.newInstance(directorClicked.id))
-                    transaction.addToBackStack(null)
-                    transaction.commit()
-
-                }
-            }
-        }
-    }
-
-
-    private fun recuperarDatosInfo() {
-        val movieId = arguments?.getInt(ARG_MOVIE_ID)
-        movieId?.let { id ->
-            ma.getMovieData(id) { movie ->
-                movie?.let { data ->
-                    recuperacionInfo = data
-                }
-            }
-        }
     }
 
 

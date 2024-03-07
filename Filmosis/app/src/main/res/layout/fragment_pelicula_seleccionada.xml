@@ -46,7 +46,7 @@
             <TextView
                 android:id="@+id/errorvideo"
                 android:layout_width="match_parent"
-                android:layout_height="14dp"
+                android:layout_height="wrap_content"
                 android:text=""
                 android:textAlignment="center"
                 android:textSize="20dp" />
