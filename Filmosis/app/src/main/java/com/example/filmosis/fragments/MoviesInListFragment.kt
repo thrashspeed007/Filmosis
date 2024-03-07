@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -62,7 +63,6 @@ class MoviesInListFragment : Fragment() {
     private fun fetchDocument(username: String, desiredListId: String) {
         val docRef = firestore.collection("lists").document(username)
 
-        Log.d("MovieInListFragment", docRef.toString())
         docRef.get()
             .addOnSuccessListener { document ->
                 Log.d("MovieInListFragment", document.toString())
@@ -85,7 +85,7 @@ class MoviesInListFragment : Fragment() {
                                     val title = movie["title"] as? String ?: ""
 
                                     ListedMovie(title, releaseDate, averageVote, movieId)
-                                }
+                                }?.toMutableList()
 
                                 listedMovies?.forEachIndexed { index, listedMovie ->
                                     Log.d("ListActivity", "  Movie $index:")
@@ -119,22 +119,75 @@ class MoviesInListFragment : Fragment() {
             }
     }
 
-    private fun initRv(listedMovies: List<ListedMovie>){
+    private fun initRv(listedMovies: MutableList<ListedMovie>){
 
         val rv = requireView().findViewById<RecyclerView>(R.id.moviesInList_moviesRecyclerView)
         rv.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
-        rv.adapter = MoviesInListAdapter(listedMovies) {
+        rv.adapter = MoviesInListAdapter(
+            listedMovies,
+
+            onMovieClick = {
             val fragmentManager = requireActivity().supportFragmentManager
             val transaction = fragmentManager.beginTransaction()
             transaction.replace(R.id.fragmentContainerView, PeliculaSeleccionadaFragment.newInstance(it.id))
             transaction.addToBackStack(null)
             transaction.commit()
-        }
+            },
+
+            isDeleteable = true,
+
+            onDeleteMovie = {
+                deleteMovieFromFirestore(it.id)
+            })
     }
 
     private fun initListInfo(listName: String, listDescription: String) {
         requireView().findViewById<TextView>(R.id.moviesInList_listTitle).text = listName
         requireView().findViewById<TextView>(R.id.moviesInList_listDescription).text = listDescription
     }
+
+    private fun deleteMovieFromFirestore(movieId: Int) {
+        val userEmail = FirebaseInitializer.authInstance.currentUser?.email.toString()
+        val listsRef = firestore.collection("lists").document(userEmail)
+        val desiredListId = arguments?.getInt(ARG_LIST_ID)
+
+
+        // TODO
+        // NO PUEDO TIO
+
+        listsRef
+            .get()
+            .addOnSuccessListener { document ->
+                val data = document.data
+
+                data?.forEach { (key, value) ->
+                    val listData = value as? Map<*, *>
+                    val listId = listData?.get("listId").toString().toInt()
+
+                    if (listId == desiredListId) {
+                        val moviesList = document.get("listMovies") as? MutableList<Map<String, Any>>
+                        val movieRemoved = moviesList?.removeIf { it["movieId"] == movieId }
+
+                        if (movieRemoved == true) {
+                            listsRef.update("listMovies", moviesList)
+                                .addOnSuccessListener {
+                                    Log.d("bruh", "Movie deleted successfully.")
+                                }
+                                .addOnFailureListener { exception ->
+                                    Log.d("bruh", "Error updating document: $exception")
+                                }
+                        }
+
+                    } else {
+                        Toast.makeText(requireContext(), "bruh", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+            }
+            .addOnFailureListener { exception ->
+                Log.d("bruh", "Error fetching lists: $exception")
+            }
+    }
+
 }

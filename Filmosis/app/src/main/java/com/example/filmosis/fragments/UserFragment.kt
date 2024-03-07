@@ -156,12 +156,6 @@ class UserFragment : Fragment() {
             val pickImageIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             startActivityForResult(pickImageIntent, PICK_IMAGE_REQUEST)
         }
-
-        view.findViewById<Button>(R.id.user_provisional).setOnClickListener {
-//            val listActivityIntent = Intent(requireContext(), ListActivity::class.java)
-//            startActivity(listActivityIntent)
-        }
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

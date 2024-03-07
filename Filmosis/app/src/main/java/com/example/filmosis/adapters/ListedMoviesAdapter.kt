@@ -4,6 +4,7 @@ import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -15,7 +16,7 @@ import com.example.filmosis.config.DatosConexion
 import com.example.filmosis.data.model.tmdb.Movie
 import com.example.filmosis.utilities.tmdb.TmdbData
 
-class ListedMoviesAdapter(private val movies: List<Movie>, private val onMovieClick: (Movie) -> Unit): RecyclerView.Adapter<ListedMoviesAdapter.MovieRowViewHolder>() {
+class ListedMoviesAdapter(private val movies: List<Movie>, private val onMovieClick: (Movie) -> Unit) : RecyclerView.Adapter<ListedMoviesAdapter.MovieRowViewHolder>() {
     class MovieRowViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnCreateContextMenuListener {
         val movieImageView : ImageView = itemView.findViewById(R.id.itemMovieSearched_imagePoster)
         val movieName : TextView = itemView.findViewById(R.id.itemMovieSearched_movieName)
@@ -70,6 +71,10 @@ class ListedMoviesAdapter(private val movies: List<Movie>, private val onMovieCl
 
     override fun onBindViewHolder(holder: MovieRowViewHolder, position: Int) {
         val movie = movies[position]
+
+        // Ocultar botón de ocultar ya que no tiene que tener al buscar ...
+        holder.itemView.findViewById<ImageButton>(R.id.itemMovieSearched_deleteButton).visibility = View.INVISIBLE
+
         val imageUrl = DatosConexion.TMDB_IMAGE_BASE_URL + movie.poster_path
         holder.movieName.text = movie.title
 

@@ -1,9 +1,11 @@
 package com.example.filmosis.adapters
 
+import android.util.Log
 import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -16,7 +18,7 @@ import com.example.filmosis.data.model.tmdb.Movie
 import com.example.filmosis.dataclass.ListedMovie
 import com.example.filmosis.utilities.tmdb.TmdbData
 
-class MoviesInListAdapter(private val movies: List<ListedMovie>, private val onMovieClick: (ListedMovie) -> Unit): RecyclerView.Adapter<MoviesInListAdapter.MovieRowViewHolder>() {
+class MoviesInListAdapter(private val movies: MutableList<ListedMovie>, private val onMovieClick: (ListedMovie) -> Unit, private val isDeleteable: Boolean = false, private val onDeleteMovie: (ListedMovie) -> Unit = {}): RecyclerView.Adapter<MoviesInListAdapter.MovieRowViewHolder>() {
     class MovieRowViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnCreateContextMenuListener {
         val movieName : TextView = itemView.findViewById(R.id.itemMovieSearched_movieName)
         val movieDate : TextView = itemView.findViewById(R.id.itemMovieSearched_textReleaseDate)
@@ -69,11 +71,31 @@ class MoviesInListAdapter(private val movies: List<ListedMovie>, private val onM
 
     override fun onBindViewHolder(holder: MovieRowViewHolder, position: Int) {
         val movie = movies[position]
+        // Comprobar si los items se pueden borrar, si no es asi ocultar el botón...
+        if (isDeleteable) {
+            holder.itemView.findViewById<ImageButton>(R.id.itemMovieSearched_deleteButton).setOnClickListener {
+                deleteItem(position)
+                onDeleteMovie.invoke(movie)
+            }
+        } else {
+            holder.itemView.findViewById<ImageButton>(R.id.itemMovieSearched_deleteButton).visibility = View.INVISIBLE
+        }
+
         holder.movieName.text = movie.title
 
         holder.movieDate.text = "Fecha de salida: ${movie.releaseDate}"
         holder.movieVoteAverage.text = "Puntuación media: ${movie.averageVote}"
 
-        holder.itemView.setOnClickListener {onMovieClick.invoke(movie)}
+        holder.itemView.setOnClickListener {
+            onMovieClick.invoke(movie)
+        }
+    }
+
+    fun deleteItem(position: Int) {
+        if (position in 0 until movies.size) {
+            movies.removeAt(position)
+            notifyItemRemoved(position)
+            notifyItemRangeChanged(position, movies.size)
+        }
     }
 }

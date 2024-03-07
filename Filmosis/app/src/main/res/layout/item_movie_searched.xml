@@ -1,80 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="120dp"
     android:layout_margin="8dp"
     app:cardCornerRadius="8dp">
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="?attr/colorSurfaceVariant">
 
         <!-- Movie Poster -->
+        <ImageButton
+            android:id="@+id/itemMovieSearched_deleteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_delete_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <ImageView
             android:id="@+id/itemMovieSearched_imagePoster"
             android:layout_width="80dp"
             android:layout_height="120dp"
-            android:layout_alignParentStart="true"
             android:contentDescription=""
             android:scaleType="centerCrop"
-            android:src="@drawable/logofilmosispremium" />
+            android:src="@drawable/logofilmosispremium"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <!-- Movie Details -->
-        <LinearLayout
-            android:layout_width="match_parent"
+
+
+        <!-- Movie Name -->
+        <TextView
+            android:id="@+id/itemMovieSearched_movieName"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/itemMovieSearched_imagePoster"
-            android:orientation="vertical"
-            android:padding="8dp">
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:text="Movie Name"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/itemMovieSearched_deleteButton"
+            app:layout_constraintStart_toEndOf="@+id/itemMovieSearched_imagePoster"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <!-- Movie Name -->
-            <TextView
-                android:id="@+id/itemMovieSearched_movieName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Movie Name"
-                android:textColor="?attr/colorOnSurface"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <!-- Movie Genre -->
-            <TextView
-                android:id="@+id/itemMovieSearched_movieGenres"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="?attr/colorOnSurface"
-                android:textSize="14sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <!-- Movie Genre -->
+        <TextView
+            android:id="@+id/itemMovieSearched_movieGenres"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/itemMovieSearched_imagePoster"
-            android:layout_toEndOf="@id/itemMovieSearched_imagePoster"
-            android:orientation="vertical"
-            android:padding="8dp">
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@+id/itemMovieSearched_deleteButton"
+            app:layout_constraintStart_toEndOf="@+id/itemMovieSearched_imagePoster"
+            app:layout_constraintTop_toBottomOf="@+id/itemMovieSearched_movieName" />
 
-            <!-- Movie Average Vote -->
-            <TextView
-                android:id="@+id/itemMovieSearched_textAverageVote"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Average Vote: 8.5"
-                android:textColor="?attr/colorOnSurfaceVariant"
-                android:textSize="14sp" />
 
-            <!-- Movie Release Date -->
-            <TextView
-                android:id="@+id/itemMovieSearched_textReleaseDate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Release Date: January 1, 2023"
-                android:textColor="?attr/colorOnSurfaceVariant"
-                android:textSize="14sp" />
-        </LinearLayout>
+        <!-- Movie Average Vote -->
+        <TextView
+            android:id="@+id/itemMovieSearched_textAverageVote"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="4dp"
+            android:text="Average Vote: 8.5"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@+id/itemMovieSearched_textReleaseDate"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/itemMovieSearched_imagePoster" />
 
-    </RelativeLayout>
+        <!-- Movie Release Date -->
+        <TextView
+            android:id="@+id/itemMovieSearched_textReleaseDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="4dp"
+            android:text="Release Date: January 1, 2023"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/itemMovieSearched_imagePoster" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>
