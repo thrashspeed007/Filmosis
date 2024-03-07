@@ -5,12 +5,16 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
+import android.util.TypedValue
 import android.view.View
+import androidx.core.content.ContextCompat
 
 class CurvedBackgroundView : View {
 
     private val backgroundColor = Color.parseColor("#FF9800") // Color de fondo naranja
-    private val curveColor = Color.parseColor("#FFFFFF") // Color de las curvas blanco
+    val typedValue = TypedValue()
+    private val curveColorAttr = context.theme.resolveAttribute(com.google.android.material.R.attr.colorSurfaceVariant, typedValue, true) // Color de las curvas blanco
+    private val curveColor = ContextCompat.getColor(context, typedValue.resourceId)
 
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
 

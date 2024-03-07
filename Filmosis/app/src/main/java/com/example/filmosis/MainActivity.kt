@@ -1,23 +1,27 @@
 package com.example.filmosis
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import com.bumptech.glide.Glide
 import com.example.filmosis.fragments.ExploreFragment
 import com.example.filmosis.fragments.HomeFragment
 import com.example.filmosis.fragments.ListsFragment
 import com.example.filmosis.fragments.SocialFragment
 import com.example.filmosis.fragments.UserFragment
+import com.example.filmosis.init.FirebaseInitializer
+import com.example.filmosis.utilities.firebase.FirestoreImageManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 
@@ -33,6 +37,40 @@ class MainActivity : AppCompatActivity() {
     private fun setup() {
         initBottomNavigationViewAndFragments()
         initDrawerLayout()
+        checkProfilePic()
+    }
+
+    private fun checkProfilePic() {
+        if (FirestoreImageManager.isTemporaryImageUriEmpty()) {
+            val storageReference = FirebaseInitializer.firebaseStorageInstance.reference
+
+            val username : String? = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)?.getString("username","")
+            if (!username.isNullOrBlank()) {
+                val profilePicSrc: String = "profilepic_$username.jpg"
+
+                val imagesRef = storageReference.child("images")
+
+                imagesRef.listAll()
+                    .addOnSuccessListener { listResult ->
+                        for (item in listResult.items) {
+                            if (item.name == profilePicSrc) {
+                                item.downloadUrl.addOnSuccessListener { uri ->
+                                    val imageUrl = uri.toString()
+                                    FirestoreImageManager.setTemporaryImageUri(imageUrl)
+                                    val drawerNavigationView: NavigationView = findViewById(R.id.main_drawerNavigationView)
+                                    Glide.with(applicationContext).load(imageUrl).into(drawerNavigationView.getHeaderView(0).findViewById(R.id.drawerHeader_profilePic))
+                                }.addOnFailureListener { exception ->
+                                    Log.d("Profile Pic", "Error al obtener la URL de la imagen", exception)
+                                }
+                                return@addOnSuccessListener
+                            }
+                        }
+                    }
+                    .addOnFailureListener { exception ->
+                        Log.d("Profile Pic", "Error al verificar la existencia del archivo en Firebase Storage", exception)
+                    }
+            }
+        }
     }
 
     private fun initBottomNavigationViewAndFragments() {

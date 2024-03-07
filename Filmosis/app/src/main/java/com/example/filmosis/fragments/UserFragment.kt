@@ -19,9 +19,9 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.filmosis.AuthActivity
 import com.example.filmosis.ChangePasswordActivity
-import com.example.filmosis.ListActivity
 import com.example.filmosis.R
 import com.example.filmosis.init.FirebaseInitializer
+import com.example.filmosis.utilities.firebase.FirestoreImageManager
 import com.google.firebase.auth.FirebaseAuth
 import de.hdodenhof.circleimageview.CircleImageView
 
@@ -63,46 +63,40 @@ class UserFragment : Fragment() {
 
         val prefs = activity?.getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)
         val fullname: String? = prefs?.getString("fullname", "")
-        val userName : String? = prefs?.getString("username","")
-        var confirmedUsername = ""
-        if (!userName.isNullOrBlank()) {
-            confirmedUsername = username
-        }
-        val profilePicSrc: String = "profilepic_$confirmedUsername.jpg" // Nombre del archivo a verificar
 
-        Log.d("User profile ref",profilePicSrc)
-// Obtener una referencia al Storage de Firebase
-        val storageReference = FirebaseInitializer.firebaseStorageInstance.reference
+        if (FirestoreImageManager.isTemporaryImageUriEmpty()) {
+            val storageReference = FirebaseInitializer.firebaseStorageInstance.reference
 
-// Crear una referencia para la ubicación donde se almacenan las imágenes
-        val imagesRef = storageReference.child("images")
+            val username : String? = requireActivity().getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)?.getString("username","")
+            if (!username.isNullOrBlank()) {
+                val profilePicSrc: String = "profilepic_$username.jpg"
 
-// Verificar si existe el archivo en Firebase Storage
-        imagesRef.listAll()
-            .addOnSuccessListener { listResult ->
-                // Iterar sobre la lista de elementos en la ubicación
-                for (item in listResult.items) {
-                    // Verificar si el nombre del archivo coincide con el que estamos buscando
-                    if (item.name == profilePicSrc) {
-                        // El archivo existe en Firebase Storage
-                        // Obtener la URL de la imagen y cargarla en el CircleImageView
-                        item.downloadUrl.addOnSuccessListener { uri ->
-                            val imageUrl = uri.toString()
-                            // Cargar la imagen en el CircleImageView
-                            Glide.with(view).load(imageUrl).into(profilePic)
-                        }.addOnFailureListener { exception ->
-                            // Manejar errores al obtener la URL de la imagen
-                            Log.e("Profile Pic", "Error al obtener la URL de la imagen", exception)
+                val imagesRef = storageReference.child("images")
+
+                imagesRef.listAll()
+                    .addOnSuccessListener { listResult ->
+                        for (item in listResult.items) {
+                            if (item.name == profilePicSrc) {
+                                item.downloadUrl.addOnSuccessListener { uri ->
+                                    val imageUrl = uri.toString()
+                                    FirestoreImageManager.setTemporaryImageUri(imageUrl)
+                                    Glide.with(view).load(imageUrl).into(profilePic)
+                                }.addOnFailureListener { exception ->
+                                    Log.d("Profile Pic", "Error al obtener la URL de la imagen", exception)
+                                }
+                                return@addOnSuccessListener
+                            }
                         }
-                        return@addOnSuccessListener
                     }
-                }
-                // Si el archivo no se encuentra, puedes manejarlo aquí
+                    .addOnFailureListener { exception ->
+                        Log.d("Profile Pic", "Error al verificar la existencia del archivo en Firebase Storage", exception)
+                    }
             }
-            .addOnFailureListener { exception ->
-                // Manejar errores
-                Log.e("Profile Pic", "Error al verificar la existencia del archivo en Firebase Storage", exception)
-            }
+        } else {
+            Glide.with(view).load(FirestoreImageManager.getTemporaryImageUri()).into(profilePic)
+        }
+
+
 
         fullNameTextView.text = fullname
         emailTextView.text = email
@@ -164,8 +158,8 @@ class UserFragment : Fragment() {
         }
 
         view.findViewById<Button>(R.id.user_provisional).setOnClickListener {
-            val listActivityIntent = Intent(requireContext(), ListActivity::class.java)
-            startActivity(listActivityIntent)
+//            val listActivityIntent = Intent(requireContext(), ListActivity::class.java)
+//            startActivity(listActivityIntent)
         }
 
     }
@@ -176,6 +170,7 @@ class UserFragment : Fragment() {
             val selectedImageUri: Uri? = data.data
             Log.d("Foto seleccionada",selectedImageUri.toString())
             profilePic.setImageURI(selectedImageUri)
+            FirestoreImageManager.setTemporaryImageUri(selectedImageUri.toString())
             val prefs = activity?.getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)
             if (selectedImageUri != null && prefs?.getString("username","") != null) {
                 uploadImageToFirebaseStorage(selectedImageUri, prefs.getString("username","")!!)

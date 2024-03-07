@@ -58,9 +58,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
+                android:layout_marginTop="8dp"
                 android:text="@string/bienvenido"
                 android:textColor="?attr/colorOnBackground"
-                android:textSize="26dp"
+                android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/explore_searchViewTextInputLayout" />
@@ -72,7 +73,7 @@
                 android:layout_marginStart="10dp"
                 android:text=""
                 android:textColor="?attr/colorPrimary"
-                android:textSize="26dp"
+                android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/bienvenida" />
@@ -92,6 +93,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
+                    android:fontFamily="@font/font_kaiet"
                     android:text="@string/recomendaciones"
                     android:textColor="?attr/colorOnBackground"
                     android:textSize="24sp"
@@ -106,7 +108,7 @@
                     android:text="@string/ver_mas"
                     android:textAlignment="textEnd"
                     android:textColor="?attr/colorPrimary"
-                    android:textSize="12sp"
+                    android:textSize="14sp"
                     app:icon="@drawable/ic_rigth_arrow"
                     app:iconGravity="textEnd"
                     app:iconSize="15dp"
@@ -118,6 +120,7 @@
                 android:id="@+id/movieRecomendedRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -128,7 +131,7 @@
                 android:id="@+id/home_proximamenteTitleContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
+                android:layout_marginTop="8dp"
                 android:gravity="center"
                 app:layout_constraintTop_toBottomOf="@+id/movieRecomendedRecyclerView"
                 tools:layout_editor_absoluteX="1dp">
@@ -138,6 +141,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
+                    android:fontFamily="@font/font_kaiet"
                     android:text="@string/pel_prox"
                     android:textColor="?attr/colorOnBackground"
                     android:textSize="24sp"
@@ -152,7 +156,7 @@
                     android:text="@string/ver_mas"
                     android:textAlignment="textEnd"
                     android:textColor="?attr/colorPrimary"
-                    android:textSize="12sp"
+                    android:textSize="14sp"
                     app:icon="@drawable/ic_rigth_arrow"
                     app:iconGravity="textEnd"
                     app:iconSize="15dp"
@@ -165,6 +169,7 @@
                 android:id="@+id/moviesSoonRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:orientation="horizontal"
                 app:layout_constraintTop_toBottomOf="@+id/home_proximamenteTitleContainer"
                 app:reverseLayout="true"
@@ -174,6 +179,7 @@
                 android:id="@+id/uwu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:gravity="center"
                 app:layout_constraintTop_toBottomOf="@+id/moviesSoonRecyclerView"
                 tools:layout_editor_absoluteX="1dp">
@@ -183,6 +189,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
+                    android:fontFamily="@font/font_kaiet"
                     android:text="@string/pel_culas_populares"
                     android:textColor="?attr/colorOnBackground"
                     android:textSize="24sp"
@@ -194,10 +201,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
+                    android:gravity="center"
                     android:text="@string/ver_mas"
                     android:textAlignment="textEnd"
                     android:textColor="?attr/colorPrimary"
-                    android:textSize="12sp"
+                    android:textSize="14sp"
                     app:icon="@drawable/ic_rigth_arrow"
                     app:iconGravity="textEnd"
                     app:iconSize="15dp"
@@ -210,6 +218,7 @@
                 android:id="@+id/moviesRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:orientation="horizontal"
                 app:layout_constraintTop_toBottomOf="@+id/uwu"
                 app:reverseLayout="true"
@@ -234,6 +243,7 @@
                 android:id="@+id/linearLayout13"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 app:layout_constraintTop_toBottomOf="@+id/moviesRecyclerView"
                 tools:layout_editor_absoluteX="1dp">
 
@@ -242,26 +252,27 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
+                    android:fontFamily="@font/font_kaiet"
                     android:text="@string/servicios"
                     android:textColor="?attr/colorOnBackground"
                     android:textSize="24sp"
                     android:visibility="visible" />
 
 
-<!--                <com.google.android.material.button.MaterialButton-->
-<!--                    android:id="@+id/buttonShowAllServices"-->
-<!--                    style="@style/TransparentBackground"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_gravity="end"-->
-<!--                    android:text="@string/ver_mas"-->
-<!--                    android:textAlignment="textEnd"-->
-<!--                    android:textColor="?attr/colorPrimary"-->
-<!--                    android:textSize="10sp"-->
-<!--                    app:icon="@drawable/ic_rigth_arrow"-->
-<!--                    app:iconGravity="textEnd"-->
-<!--                    app:iconSize="15dp"-->
-<!--                    app:iconTint="?attr/colorPrimary" />-->
+                <!--                <com.google.android.material.button.MaterialButton-->
+                <!--                    android:id="@+id/buttonShowAllServices"-->
+                <!--                    style="@style/TransparentBackground"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_gravity="end"-->
+                <!--                    android:text="@string/ver_mas"-->
+                <!--                    android:textAlignment="textEnd"-->
+                <!--                    android:textColor="?attr/colorPrimary"-->
+                <!--                    android:textSize="10sp"-->
+                <!--                    app:icon="@drawable/ic_rigth_arrow"-->
+                <!--                    app:iconGravity="textEnd"-->
+                <!--                    app:iconSize="15dp"-->
+                <!--                    app:iconTint="?attr/colorPrimary" />-->
 
 
             </LinearLayout>

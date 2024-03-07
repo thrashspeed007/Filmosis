@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 data class PeliculaDetalles(
     @SerializedName("title") val titulo: String,
     @SerializedName("overview") val descripcion: String,
-    @SerializedName("release_date") val fechaLanzamiento: String,@SerializedName("original_title") val tituloOriginal: String,
+    @SerializedName("release_date") val fechaLanzamiento: String, @SerializedName("original_title") val tituloOriginal: String,
     @SerializedName("runtime") val duracion: Int,
     @SerializedName("popularity") val popularidad: Double,
     @SerializedName("vote_average") val calificacionPromedio: Double,

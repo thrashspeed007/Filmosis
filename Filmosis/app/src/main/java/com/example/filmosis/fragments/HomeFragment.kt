@@ -109,7 +109,7 @@ class HomeFragment : Fragment() {
             val fragmentManager = requireActivity().supportFragmentManager
             val transaction = fragmentManager.beginTransaction()
             val nuevoFragmento = VerTodoFragment()
-            transaction.replace(R.id.homeFragment, nuevoFragmento)
+            transaction.replace(R.id.fragmentContainerView, nuevoFragmento)
             transaction.addToBackStack(null)
             transaction.commit()
 //            scrollToSection(tvPopu)
@@ -121,7 +121,7 @@ class HomeFragment : Fragment() {
             val fragmentManager = requireActivity().supportFragmentManager
             val transaction = fragmentManager.beginTransaction()
             val nuevoFragmento = VerTodoFragment()
-            transaction.replace(R.id.homeFragment, nuevoFragmento)
+            transaction.replace(R.id.fragmentContainerView, nuevoFragmento)
             transaction.addToBackStack(null)
             transaction.commit()
 //            scrollToSection(tvRecom)
@@ -134,7 +134,7 @@ class HomeFragment : Fragment() {
             val fragmentManager = requireActivity().supportFragmentManager
             val transaction = fragmentManager.beginTransaction()
             val nuevoFragmento = VerTodoFragment()
-            transaction.replace(R.id.homeFragment, nuevoFragmento)
+            transaction.replace(R.id.fragmentContainerView, nuevoFragmento)
             transaction.addToBackStack(null)
             transaction.commit()
 //            scrollToSection(tvProx)

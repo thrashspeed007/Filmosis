@@ -8,7 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.filmosis.R
+import com.example.filmosis.adapters.ListsAdapter
+import com.example.filmosis.dataclass.ListItem
 import com.example.filmosis.dataclass.ListedMovie
 import com.example.filmosis.init.FirebaseInitializer
 import com.google.firebase.firestore.FirebaseFirestore
@@ -46,48 +51,21 @@ class ListsFragment : Fragment() {
                 if (document.exists()) {
                     val data = document.data
                     if (data != null) {
-                        val listData = data["list"] as? Map<String, Any>
+                        val keys = data.keys.toList()
 
-                        if (listData != null) {
-                            val listName = listData["listName"] as? String
-                            val listDescription = listData["listDescription"] as? String
-                            val listDate = listData["listDate"] as? String
+                        val listOfLists = keys.map { key ->
+                            val listData = data[key] as? Map<*, *>
+                            val listName = listData?.get("listName") as? String
+                            val listDescription = listData?.get("listDescription") as? String
+                            val listDate = listData?.get("listDate") as? String
 
-                            Log.d("ListActivity", "Nombre de la lista: $listName")
-                            Log.d("ListActivity", "Descripción: $listDescription")
-                            Log.d("ListActivity", "Fecha: $listDate")
+                            ListItem(listName.toString(), listDescription.toString(), listDate.toString())
+                        }
 
-                            var listMovies = listData["listMovies"] as? List<Map<String, Any>>
-
-                            if (listMovies != null) {
-                                val peliculasInside : ArrayList<ListedMovie> = ArrayList()
-                                for (movie in listMovies) {
-                                    val title = movie["title"] as? String
-                                    val releaseDate = movie["releaseDate"] as? String
-                                    val averageVote = movie["averageVote"]
-                                    val averageVoteText = averageVote.toString()
-                                    val id = (movie["id"] as? Long)?.toInt()
-
-                                    // Crear mapa para cada película
-                                    val movieMap = mapOf(
-                                        "title" to title,
-                                        "releaseDate" to releaseDate,
-                                        "averageVote" to averageVote,
-                                        "id" to id
-                                    )
-
-                                    val movie = ListedMovie(
-                                        title.toString(),
-                                        releaseDate.toString(),averageVoteText, id!!)
-
-                                    peliculasInside.add(movie)
-                                }
-                                Log.d("ListActivity",peliculasInside.toString())
-                            } else {
-                                Log.d("ListActivity", "No se encontraron películas en la lista.")
-                            }
-                        } else {
-                            Log.d("ListActivity", "No se encontró la lista en los datos.")
+                        val rv = requireView().findViewById<RecyclerView>(R.id.lists_recyclerView)
+                        rv.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                        rv.adapter = ListsAdapter(listOfLists) {
+                            Toast.makeText(requireContext(), "*llevar a pelis de lista*", Toast.LENGTH_SHORT).show()
                         }
                     } else {
                         Log.d("ListActivity", "El documento está vacío para el usuario $username.")

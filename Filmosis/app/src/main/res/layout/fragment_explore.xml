@@ -63,6 +63,7 @@
                 android:id="@+id/explore_exploreTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/font_kaiet"
                 android:text="@string/genresContainerTitle"
                 android:textColor="?attr/colorOnBackground"
                 android:textSize="24sp" />
@@ -94,6 +95,7 @@
                 android:id="@+id/explore_trendingMoviesTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/font_kaiet"
                 android:text="@string/tendencia"
                 android:textColor="?attr/colorOnBackground"
                 android:textSize="24sp" />

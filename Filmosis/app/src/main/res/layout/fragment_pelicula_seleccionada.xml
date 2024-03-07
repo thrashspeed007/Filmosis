@@ -5,6 +5,7 @@
     android:id="@+id/fragment_container_peliculaSeleccionada"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="8dp"
     tools:context=".fragments.PeliculaSeleccionadaFragment">
 
     <ScrollView
@@ -25,43 +26,46 @@
                 android:id="@+id/back"
                 style="@style/TransparentBackground"
                 android:layout_width="50dp"
-                android:layout_height="30dp"
+                android:layout_height="35dp"
                 android:contentDescription="atras"
                 android:src="@drawable/baseline_arrow_back_24" />
 
             <WebView
                 android:id="@+id/webView2"
-                android:layout_width="415dp"
-                android:layout_height="196dp"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:layout_margin="0dp"
+                android:padding="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0" />
+
             <TextView
                 android:id="@+id/errorvideo"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="14dp"
+                android:text=""
                 android:textAlignment="center"
-                android:textSize="20dp"
-                android:text=""/>
+                android:textSize="20dp" />
 
             <LinearLayout
-                android:layout_gravity="center"
                 android:id="@+id/linearLayout5"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginVertical="8dp"
+                android:elevation="8dp"
                 android:orientation="vertical"
-                android:layout_marginLeft="40dp"
-                android:layout_marginRight="40dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.496"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/webView"
                 app:layout_constraintVertical_bias="0.0">
-
 
 
                 <FrameLayout
@@ -75,9 +79,10 @@
                     <!-- LinearLayout para contener los TextViews -->
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
                         android:orientation="vertical"
-                        android:gravity="center_vertical">
+                        android:padding="8dp">
 
                         <!-- TextView para el título -->
                         <TextView
@@ -89,13 +94,14 @@
                             android:text="Avengers: Infinity corridas"
 
 
+                            android:textColor="?attr/colorOnPrimary"
                             android:textSize="20sp"
                             android:textStyle="bold" />
 
                         <LinearLayout
-                            android:orientation="horizontal"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
 
                             <TextView
 
@@ -105,7 +111,7 @@
                                 android:layout_marginTop="10dp"
                                 android:text="2h29m"
 
-                                />
+                                android:textColor="?attr/colorOnPrimary" />
 
                             <!-- TextView para la fecha de lanzamiento -->
                             <TextView
@@ -113,15 +119,16 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="10dp"
-                                android:text="16.12.2022" />
+                                android:text="16.12.2022"
+                                android:textColor="?attr/colorOnPrimary" />
 
                             <com.google.android.material.button.MaterialButton
                                 android:id="@+id/anadirLista"
                                 android:layout_width="132dp"
                                 android:layout_height="match_parent"
-                                android:layout_marginLeft="45dp"
-
                                 android:layout_gravity="end"
+
+                                android:layout_marginLeft="45dp"
                                 android:gravity="end"
                                 android:onClick="anadirLista"
                                 android:text="Añadir a lista"
@@ -133,17 +140,21 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content">
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:text="Puntuacion: " />
+                                android:text="Puntuacion: "
+                                android:textColor="?attr/colorOnPrimary" />
+
                             <TextView
                                 android:id="@+id/tvAvg"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="5dp"
-                                android:text="aiaia"/>
+                                android:text="aiaia"
+                                android:textColor="?attr/colorOnPrimary" />
                         </LinearLayout>
 
                         <!-- RatingBar para mostrar la puntuación -->
@@ -152,10 +163,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:contextClickable="false" />
+                            android:contextClickable="false"
+                            android:isIndicator="true" />
                     </LinearLayout>
                 </FrameLayout>
-
 
 
             </LinearLayout>
@@ -164,6 +175,8 @@
                 android:id="@+id/linearLayout6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingVertical="4dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.276"
@@ -174,15 +187,16 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:text="Genero: " />
+                    android:text="Genero: "
+                    android:textColor="?attr/colorOnBackground" />
 
                 <TextView
                     android:id="@+id/tvGenero"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
+                    android:layout_marginHorizontal="6dp"
                     android:text="Genero"
+                    android:textColor="?attr/colorOnBackground"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -193,6 +207,8 @@
 
 
                 android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingVertical="4dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/linearLayout6"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -203,15 +219,15 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:text="Censura: " />
+                    android:text="Censura: "
+                    android:textColor="?attr/colorOnBackground" />
 
                 <TextView
                     android:id="@+id/tvCensura"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
                     android:text="censura"
+                    android:textColor="?attr/colorOnBackground"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -221,6 +237,8 @@
                 android:id="@+id/linearLayout8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingVertical="4dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/linearLayout7"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -231,15 +249,16 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:text="Idioma: " />
+                    android:text="Idioma: "
+                    android:textColor="?attr/colorOnBackground" />
 
                 <TextView
                     android:id="@+id/tvLenguage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
+                    android:layout_marginStart="6dp"
                     android:text="idimoa"
+                    android:textColor="?attr/colorOnBackground"
                     android:textStyle="bold" />
 
 
@@ -250,26 +269,26 @@
                 android:id="@+id/linearLayout9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginVertical="8dp"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout8">
 
                 <TextView
-                    android:layout_margin="5dp"
+                    style="@style/CustomFontKaiet"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Sinopsis"
-                    android:textSize="20sp"
-                    style="@style/CustomFontKaiet"
-                    />
+                    android:textColor="?attr/colorOnBackground"
+                    android:textSize="20sp" />
 
                 <TextView
-                    android:layout_margin="5dp"
                     android:id="@+id/tvSinopsis"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer rutrum iaculis sapien, ac cursus justo volutpat ac. Integer vulputate laoreet mauris, at eleifend augue sollicitudin a. Integer vel aliquet velit. Quisque placerat vehicula magna id consectetur. Nunc ac pulvinar velit, id dictum augue. Donec id risus in orci elementum ultrices. Nullam tincidunt, enim a elementum ultrices, diam lorem aliquam ex, et rutrum nunc est ut lorem. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus a molestie leo. Sed aliquam vel nulla nec ornare. " />
+                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer rutrum iaculis sapien, ac cursus justo volutpat ac. Integer vulputate laoreet mauris, at eleifend augue sollicitudin a. Integer vel aliquet velit. Quisque placerat vehicula magna id consectetur. Nunc ac pulvinar velit, id dictum augue. Donec id risus in orci elementum ultrices. Nullam tincidunt, enim a elementum ultrices, diam lorem aliquam ex, et rutrum nunc est ut lorem. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus a molestie leo. Sed aliquam vel nulla nec ornare. "
+                    android:textColor="?attr/colorOnBackground" />
 
             </LinearLayout>
 
@@ -277,21 +296,21 @@
                 android:id="@+id/linearLayout10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginVertical="8dp"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="@+id/linearLayout9">
 
                 <TextView
-                    android:layout_margin="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/font_kaiet"
                     android:text="Director"
-                    android:textSize="20sp"
-                    android:fontFamily="@font/font_kaiet" />
+                    android:textColor="?attr/colorOnBackground"
+                    android:textSize="20sp" />
 
                 <LinearLayout
-                    android:layout_margin="5dp"
                     android:layout_width="match_parent"
-                    android:layout_height="171dp"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -308,20 +327,21 @@
                     android:id="@+id/linearLayout11"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginVertical="8dp"
                     android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="@+id/linearLayout10">
 
                     <TextView
-                        android:layout_margin="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/font_kaiet"
                         android:text="Reparto"
+                        android:textColor="?attr/colorOnBackground"
                         android:textSize="20sp" />
 
                     <LinearLayout
-                        android:layout_margin="5dp"
                         android:layout_width="match_parent"
-                        android:layout_height="171dp"
+                        android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
                         <androidx.recyclerview.widget.RecyclerView

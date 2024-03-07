@@ -33,7 +33,7 @@
     <string name="search_action">Buscar</string>
     <string name="Notificacion">Notificación</string>
     <string name="pel_culas_populares">Películas populares</string>
-    <string name="tendencia">En Tendencia</string>
+    <string name="tendencia">En Tendencia esta semana</string>
     <string name="best_rated">Mejor valoradas</string>
     <string name="popular">Populares</string>
     <string name="latest">Últimas</string>
