@@ -47,5 +47,6 @@
     <string name="movie_director_placeholder">Director de ejemplo</string>
     <string name="movie_title_placeholder">Título de ejemplo</string>
     <string name="movie_date_placeholder">1970-01-01</string>
+    <string name="createList_addListTv">Añadir una lista</string>
 
 </resources>

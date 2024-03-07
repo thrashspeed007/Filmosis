@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -36,6 +37,13 @@ class ListsFragment : Fragment() {
 
     private fun setup() {
         val username: String? = FirebaseInitializer.authInstance.currentUser?.email
+
+        val createListBtn : Button = requireView().findViewById(R.id.list_createListBtn)
+
+        createListBtn.setOnClickListener {
+            crearLista()
+        }
+
 
         if (username != null) {
             fetchDocument(username)
@@ -87,5 +95,14 @@ class ListsFragment : Fragment() {
                 Log.d("ListActivity", "Error al obtener el documento: $exception")
             }
     }
+
+    private fun crearLista() {
+        val fragmentManager = requireActivity().supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.fragmentContainerView, CreateListFragment())
+        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.commit()
+    }
+
 
 }
