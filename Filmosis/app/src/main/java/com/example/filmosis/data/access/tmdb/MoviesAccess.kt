@@ -9,10 +9,8 @@ import com.example.filmosis.data.model.tmdb.CastResponse
 import com.example.filmosis.data.model.tmdb.CreditsResponse
 import com.example.filmosis.data.model.tmdb.Crew
 
-import com.example.filmosis.data.model.tmdb.Director
 import com.example.filmosis.data.model.tmdb.MoviesPage
 import com.example.filmosis.data.model.tmdb.Movie
-import com.example.filmosis.data.model.tmdb.MovieData
 import com.example.filmosis.data.model.tmdb.Person
 import com.example.filmosis.dataclass.MovieDetailsResponse
 import com.example.filmosis.dataclass.NetworkDetailsResponse
@@ -318,9 +316,31 @@ class MoviesAccess {
             }
         })
     }
+    //TODO no me lo borreis
+//    fun fetchNetworkDetails(networkId: Int, callback: (NetworkDetailsResponse?) -> Unit) {
+//        val call = RetrofitService.tmdbApi.getNetworkDetails(networkId, DatosConexion.API_KEY)
+//
+//        call.enqueue(object : Callback<NetworkDetailsResponse> {
+//            override fun onResponse(
+//                call: Call<NetworkDetailsResponse>,
+//                response: Response<NetworkDetailsResponse>
+//            ) {
+//                if (response.isSuccessful) {
+//                    val networkDetailsResponse = response.body()
+//                    callback(networkDetailsResponse)
+//                } else {
+//                    println("Solicitud fallida - Código de estado: ${response.code()}")
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<NetworkDetailsResponse>, t: Throwable) {
+//                println("Error de red: ${t.message}")
+//            }
+//        })
+//    }
 
-    fun fetchNetworkDetails(networkId: Int, callback: (NetworkDetailsResponse?) -> Unit) {
-        val call = RetrofitService.tmdbApi.getNetworkDetails(networkId, DatosConexion.API_KEY)
+    fun fetchNetworkDetails2(movieId: Int, callback: (NetworkDetailsResponse?) -> Unit) {
+        val call = RetrofitService.tmdbApi.getStreamingProviders(movieId, DatosConexion.API_KEY)
 
         call.enqueue(object : Callback<NetworkDetailsResponse> {
             override fun onResponse(
@@ -340,14 +360,6 @@ class MoviesAccess {
             }
         })
     }
-
-
-
-
-
-
-
-
 
 
 

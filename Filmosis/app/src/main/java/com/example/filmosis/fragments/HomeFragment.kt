@@ -12,8 +12,10 @@ import android.widget.SearchView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
+import androidx.recyclerview.widget.SnapHelper
 
 import com.example.filmosis.R
 import com.example.filmosis.adapters.CarouselMoviesAdapter
@@ -39,6 +41,13 @@ class HomeFragment : Fragment() {
     private var moviesListSoon: ArrayList<Movie> = ArrayList()
     private var recommendedMovies: ArrayList<Movie> = ArrayList()
     private var services: ArrayList<NetworkDetailsResponse> = ArrayList()
+
+    private var idServicios: ArrayList<Int> = arrayListOf(
+
+    )
+
+
+
 //    private lateinit var tvRecom: TextView
 //    private lateinit var tvProx: TextView
 //    private lateinit var tvPopu: TextView
@@ -91,9 +100,6 @@ class HomeFragment : Fragment() {
         addMoviesRecommendedToList()
 
         //servicios
-        rvServicios = view.findViewById(R.id.serviciosRecyclerview)
-        rvServicios.setHasFixedSize(true)
-        servicios()
 
 
 
@@ -281,19 +287,23 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun servicios() {
-        moviesAccess.fetchNetworkDetails(networkId = 200) { result ->
-            if (result != null) {
-                services.clear()
-                println(result.name)
-                services.add(result)
+//    private fun cargarServicios() {
+//        idServicios.forEach{ids->
+//            moviesAccess.fetchNetworkDetails(ids) { result ->
+//                if (result != null) {
+//
+//                    //if (result.name == "HBO" || result.name == "Netflix"){
+//                        services.add(result)
+//                    //}
+//
+//                    rvServicios.adapter = ServicioAdapter(services)
+//                } else {
+//                    println("Error: No se pudo obtener los detalles de la red.")
+//                }
+//            }
+//        }
 
-                rvServicios.adapter = ServicioAdapter(services)
-            } else {
-                println("nada")
-            }
-        }
-    }
+
 
 
 }

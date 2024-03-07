@@ -4,9 +4,7 @@ import com.example.filmosis.data.model.tmdb.Cast
 import com.example.filmosis.data.model.tmdb.CastResponse
 import com.example.filmosis.data.model.tmdb.CombinedCredits
 import com.example.filmosis.data.model.tmdb.CreditsResponse
-import com.example.filmosis.data.model.tmdb.Director
 import com.example.filmosis.data.model.tmdb.Movie
-import com.example.filmosis.data.model.tmdb.MovieData
 import com.example.filmosis.data.model.tmdb.MoviesPage
 import com.example.filmosis.data.model.tmdb.PersonDetails
 import com.example.filmosis.data.model.tmdb.PersonsPage
@@ -129,9 +127,17 @@ interface TmdbApiInterface {
     ): Call<PersonDetails>
 
 
+    //TODO cambiar el netork con https://api.themoviedb.org/3/movie/{movie_id}/watch/providers
+    //https://developer.themoviedb.org/reference/movie-watch-providers
     @GET("network/{id}")
     fun getNetworkDetails(
         @Path("id") networkId: Int,
+        @Query("api_key") apiKey: String
+    ): Call<NetworkDetailsResponse>
+
+    @GET("movie/{movie_id}/watch/providers")
+    fun getStreamingProviders(
+        @Path("movie_id") movieId: Int,
         @Query("api_key") apiKey: String
     ): Call<NetworkDetailsResponse>
 

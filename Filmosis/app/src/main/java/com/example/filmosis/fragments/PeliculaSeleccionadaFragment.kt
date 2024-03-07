@@ -1,6 +1,5 @@
 package com.example.filmosis.fragments
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -13,23 +12,32 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SnapHelper
 import com.example.filmosis.R
 import com.example.filmosis.adapters.ActoresAdapter
 import com.example.filmosis.adapters.PersonasAdapter
+import com.example.filmosis.adapters.ServicioAdapter
 import com.example.filmosis.data.access.tmdb.MoviesAccess
-import com.example.filmosis.data.model.tmdb.Director
 import com.example.filmosis.data.model.tmdb.Movie
-import com.example.filmosis.data.model.tmdb.MovieData
+
+import com.example.filmosis.dataclass.Servicio
+import com.example.filmosis.utilities.app.ResourcesMapping
+import com.example.filmosis.utilities.tmdb.TmdbData
 
 class PeliculaSeleccionadaFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var recyclerViewReparto: RecyclerView
-    private lateinit var recyclerViewServie: RecyclerView
+
+
+    private lateinit var recyclerViewService: RecyclerView
+    private lateinit var recyclerViewServiceAlquiler: RecyclerView
+    private lateinit var recyclerViewServiceCompra: RecyclerView
     private lateinit var videoView: WebView
-    private lateinit var directorAdapter: PersonasAdapter
     private lateinit var tvGenero : TextView
     private lateinit var tvCensura : TextView
     private lateinit var tvIdioma : TextView
@@ -41,9 +49,14 @@ class PeliculaSeleccionadaFragment : Fragment() {
     private lateinit var image : ImageView
     private lateinit var tvavg : TextView
     private lateinit var ibBack : ImageButton
-    private lateinit var seleccionada : PeliculaSeleccionadaFragment
 
-    private var directores:  ArrayList<Director> = ArrayList()
+    private lateinit var textNodispSubs : TextView
+    private lateinit var textNodispAlq : TextView
+    private lateinit var textNodispComp : TextView
+
+
+
+    private var services: HashSet<Servicio> = HashSet()
     private val ma = MoviesAccess()
     private var recuperacionInfo: Movie = Movie(
         adult = false,
@@ -87,6 +100,10 @@ class PeliculaSeleccionadaFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_pelicula_seleccionada, container, false)
         recuperarDatosInfo(view)
 
+        textNodispComp = view.findViewById(R.id.textNoDisponibleCompra)
+        textNodispAlq= view.findViewById(R.id.textNoDisponibleAlquiler)
+        textNodispSubs = view.findViewById(R.id.textNoDisponible)
+
         return view
 
     }
@@ -116,7 +133,7 @@ class PeliculaSeleccionadaFragment : Fragment() {
             ma.getMovieData(movieId) { movie ->
                 if (movie != null) {
                     recuperacionInfo = movie
-
+                    Toast.makeText(requireContext(), movie.genre_ids.toString(), Toast.LENGTH_SHORT).show()
 
                     recyclerControl(view)
                     datosPeliculas(view)
@@ -126,6 +143,8 @@ class PeliculaSeleccionadaFragment : Fragment() {
             }
         }
     }
+
+
 
     fun recyclerControl(view: View){
         //Recyclerview para directores
@@ -137,6 +156,22 @@ class PeliculaSeleccionadaFragment : Fragment() {
         recyclerViewReparto = view.findViewById(R.id.recyclerActores)
         recyclerViewReparto.setHasFixedSize(true)
         addActoresToList(requireContext(), recuperacionInfo)
+
+        //SERVICIOS
+
+        recyclerViewService = view.findViewById(R.id.recyclerServiciosPeli)
+        recyclerViewServiceAlquiler = view.findViewById(R.id.recyclerServiciosPeliAlquiler)
+        recyclerViewServiceCompra = view.findViewById(R.id.recyclerServiciosPeliComprar)
+
+        val snapHelper: SnapHelper = LinearSnapHelper()
+        snapHelper.attachToRecyclerView(recyclerViewService)
+        val snapHelper2: SnapHelper = LinearSnapHelper()
+        snapHelper2.attachToRecyclerView(recyclerViewServiceAlquiler)
+        val snapHelper3: SnapHelper = LinearSnapHelper()
+        snapHelper3.attachToRecyclerView(recyclerViewServiceCompra)
+
+        addService(requireContext(), recuperacionInfo)
+
 
     }
 
@@ -182,6 +217,17 @@ class PeliculaSeleccionadaFragment : Fragment() {
         tvReleaseDate = view.findViewById(R.id.tvReleaseDate)
         tvReleaseDate.text = recuperacionInfo.release_date
 
+//        tvTime = view.findViewById(R.id.tvTimeFilm)
+//        tvTime.text = recuperacionInfo.ti
+        //TODO Me pilla todos los datos menos genreIds que me da null
+                view.findViewById<TextView>(R.id.tvGenero).text = obtenerGeneros(recuperacionInfo.genre_ids)
+//            val generos = obtenerGeneros(genreIds)
+//            val generosConcatenados = generos.joinToString(", ")
+
+//            tvGenero.text = generosConcatenados
+
+
+
         tvAvg = view.findViewById(R.id.averageVote)
         val maxRating = 10
         val voteAverage = recuperacionInfo.vote_average
@@ -197,6 +243,21 @@ class PeliculaSeleccionadaFragment : Fragment() {
         }
 
     }
+
+    private fun obtenerGeneros(genreIds: List<Int>): String {
+        var genresString: ArrayList<String> = ArrayList()
+        for (id in genreIds) {
+            for (genrePair in TmdbData.movieGenresIds) {
+                if (genrePair.first == id) {
+                    genresString.add(genrePair.second)
+                    break
+                }
+            }
+        }
+
+        return genresString.joinToString(", ")
+    }
+
 
 
     private fun addActoresToList(context: Context, data: Movie) {
@@ -214,7 +275,63 @@ class PeliculaSeleccionadaFragment : Fragment() {
         }
     }
 
+    private fun addService(context: Context, data: Movie) {
+        ma.fetchNetworkDetails2(data.id) { response ->
+            response?.let { networkDetails ->
+                val serviceListSubs = ArrayList<Servicio>()
+                val serviceListAlq = ArrayList<Servicio>()
+                val serviceListComprar = ArrayList<Servicio>()
+
+                networkDetails.results?.let { results ->
+
+                    results["ES"]?.flatrate?.forEach { servicio ->
+                        servicio?.let { serviceListSubs.add(it) }
+                    }
+                    results["ES"]?.rent?.forEach { servicio ->
+                        servicio?.let { serviceListAlq.add(it) }
+                    }
+                    results["ES"]?.buy?.forEach { servicio ->
+                        servicio?.let { serviceListComprar.add(it) }
+                    }
+                }
+
+                // Mostrar o ocultar los textos según la disponibilidad de servicios
+                updateTextViewVisibility(serviceListAlq, textNodispAlq)
+                updateTextViewVisibility(serviceListComprar, textNodispComp)
+                updateTextViewVisibility(serviceListSubs, textNodispSubs)
+
+                // Configurar adaptadores y administradores de diseño para RecyclerViews
+                setupRecyclerView(recyclerViewService, context, serviceListSubs)
+                setupRecyclerView(recyclerViewServiceAlquiler, context, serviceListAlq)
+                setupRecyclerView(recyclerViewServiceCompra, context, serviceListComprar)
+            } ?: kotlin.run {
+                Log.e("addService", "Error: La respuesta es nula")
+            }
+        }
+    }
+
+    private fun setupRecyclerView(recyclerView: RecyclerView, context: Context, serviceList: List<Servicio>) {
+        recyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+        recyclerView.adapter = ServicioAdapter(serviceList)
+    }
+
+    private fun updateTextViewVisibility(serviceList: List<Servicio>, textView: TextView) {
+        if (serviceList.isEmpty()) {
+            textView.visibility = View.VISIBLE
+        } else {
+            textView.visibility = View.GONE
+        }
+    }
+
+
+
 }
+
+
+
+
+
+
 
 
 
