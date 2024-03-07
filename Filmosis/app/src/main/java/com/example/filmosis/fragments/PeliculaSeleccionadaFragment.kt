@@ -86,66 +86,6 @@ class PeliculaSeleccionadaFragment : Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_pelicula_seleccionada, container, false)
         recuperarDatosInfo(view)
-//        videoView = view.findViewById(R.id.webView2)
-//
-//        ma.getMovieDetails(recuperacionInfo.id) { videoUrl ->
-//            if (videoUrl != null) {
-//                val videoIframe = "<iframe width=\"100%\" height=\"100%\" src=\"$videoUrl\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>"
-//                videoView.settings.javaScriptEnabled = true
-//                videoView.webChromeClient = WebChromeClient()
-//                videoView.loadData(videoIframe,"text/html","utf-8")
-//
-//
-//            } else {
-//                val textView = view.findViewById<TextView>(R.id.errorvideo)
-//                textView.text = "El video no está disponible"
-//
-//            }
-//        }
-//
-//
-//        //Recyclerview para directores
-//        recyclerView = view.findViewById(R.id.recyclerPersonas)
-//        recyclerView.setHasFixedSize(true)
-//        addDirectoresToList(requireContext(), recuperacionInfo)
-//
-//        //reparto
-//        recyclerViewReparto = view.findViewById(R.id.recyclerActores)
-//        recyclerViewReparto.setHasFixedSize(true)
-//        addActoresToList(requireContext(), recuperacionInfo)
-//
-//        //Datos de la pelicula
-//        tvCensura = view.findViewById(R.id.tvCensura)
-//        if (recuperacionInfo.adult) {
-//            tvCensura.text = " +18"
-//        } else {
-//            tvCensura.text = " Todos los públicos"
-//        }
-//        tvIdioma = view.findViewById(R.id.tvLenguage)
-//        tvIdioma.text = recuperacionInfo.original_language?.uppercase()
-//
-//        tvSinopsis = view.findViewById(R.id.tvSinopsis)
-//        tvSinopsis.text = recuperacionInfo.overview
-//
-//        tvTitle = view.findViewById(R.id.tvTitle)
-//        tvTitle.text = recuperacionInfo.title
-//
-//        tvReleaseDate = view.findViewById(R.id.tvReleaseDate)
-//        tvReleaseDate.text = recuperacionInfo.release_date
-//
-//        tvAvg = view.findViewById(R.id.averageVote)
-//        val maxRating = 10
-//        val voteAverage = recuperacionInfo.vote_average
-//        val rating = (voteAverage / maxRating) * tvAvg.numStars
-//        tvAvg.rating = rating.toFloat()
-//
-//        tvavg = view.findViewById(R.id.tvAvg)
-//        tvavg.text = recuperacionInfo.vote_average?.toString() ?: ""
-//
-//        ibBack = view.findViewById(R.id.back)
-//        ibBack.setOnClickListener {
-//            parentFragmentManager.popBackStack()
-//        }
 
         return view
 
@@ -177,26 +117,10 @@ class PeliculaSeleccionadaFragment : Fragment() {
                 if (movie != null) {
                     recuperacionInfo = movie
 
-                    videoView = view.findViewById(R.id.webView2)
-
-                    ma.getMovieDetails(recuperacionInfo.id) { videoUrl ->
-                        if (videoUrl != null) {
-                            val videoIframe = "<iframe width=\"100%\" height=\"100%\" src=\"$videoUrl\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>"
-                            videoView.settings.javaScriptEnabled = true
-                            videoView.webChromeClient = WebChromeClient()
-                            videoView.loadData(videoIframe,"text/html","utf-8")
-
-
-                        } else {
-                            val textView = view.findViewById<TextView>(R.id.errorvideo)
-                            textView.text = "El video no está disponible"
-
-                        }
-                    }
-
 
                     recyclerControl(view)
                     datosPeliculas(view)
+                    video(view)
 
                 }
             }
@@ -213,6 +137,28 @@ class PeliculaSeleccionadaFragment : Fragment() {
         recyclerViewReparto = view.findViewById(R.id.recyclerActores)
         recyclerViewReparto.setHasFixedSize(true)
         addActoresToList(requireContext(), recuperacionInfo)
+
+    }
+
+    fun video (view: View){
+        videoView = view.findViewById(R.id.webView2)
+
+        ma.getMovieDetails(recuperacionInfo.id) { videoUrl ->
+            if (videoUrl != null) {
+                val videoIframe = "<iframe width=\"100%\" height=\"100%\" src=\"$videoUrl\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>"
+                videoView.settings.javaScriptEnabled = true
+                videoView.webChromeClient = WebChromeClient()
+                videoView.loadData(videoIframe,"text/html","utf-8")
+
+
+            } else {
+                val textView = view.findViewById<TextView>(R.id.errorvideo)
+                textView.text = "El video no está disponible"
+
+            }
+        }
+
+
 
     }
 
@@ -267,9 +213,6 @@ class PeliculaSeleccionadaFragment : Fragment() {
             }
         }
     }
-
-
-
 
 }
 
