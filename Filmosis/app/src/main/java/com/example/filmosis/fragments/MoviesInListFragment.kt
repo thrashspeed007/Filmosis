@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.filmosis.R
 import com.example.filmosis.adapters.MoviesInListAdapter
+import com.example.filmosis.dataclass.ListedMovie
 import com.example.filmosis.init.FirebaseInitializer
 import com.example.filmosis.utilities.firebase.FirestoreUtilities
 
@@ -52,47 +53,6 @@ class MoviesInListFragment : Fragment() {
         if (currentUserEmail != null && listId != null) {
             fetchDocument(currentUserEmail,listId)
         }
-
-
-//        if (currentUserEmail != null && listId != null) {
-//            val docRef = firestore.collection("lists").document(currentUserEmail)
-//            docRef.get()
-//                .addOnSuccessListener { document ->
-//                    if (document.exists()) {
-//                        val data = document.data
-//                        if (data != null) {
-//                            val listMovies = data["listMovies"] as? List<Map<String, Any>>
-//
-//                            if (listMovies != null) {
-//                                for (movieData in listMovies) {
-//                                    val movieId = (movieData["id"] as? String)?.toIntOrNull()
-//                                    if (movieId == listId) {
-//                                        val movieTitle = movieData["title"] as? String
-//                                        val releaseDate = movieData["releaseDate"] as? String
-//                                        val averageVote = movieData["averageVote"] as? Double
-//
-//                                        Log.d("MovieInListFragment", "Movie Data: {id: $movieId, title: $movieTitle, releaseDate: $releaseDate, averageVote: $averageVote}")
-//
-//                                        // Aquí puedes realizar las acciones que necesites con los datos de la película encontrada
-//                                        break
-//                                    }
-//                                }
-//                            } else {
-//                                Log.d("MovieInListFragment", "No se encontró la lista de películas en el documento para el usuario $currentUserEmail.")
-//                            }
-//                        } else {
-//                            Log.d("MovieInListFragment", "El documento está vacío para el usuario $currentUserEmail.")
-//                        }
-//                    } else {
-//                        Log.d("MovieInListFragment", "No se encontró ningún documento para el usuario $currentUserEmail.")
-//                    }
-//                }
-//                .addOnFailureListener { exception ->
-//                    Log.d("MovieInListFragment", "Error al obtener el documento: $exception")
-//                }
-//        } else {
-//            Log.d("MovieInListFragment", "El usuario no está autenticado o no se proporcionó un listId válido.")
-//        }
     }
 
     private fun fetchDocument(username: String, desiredListId: Int) {
@@ -101,7 +61,7 @@ class MoviesInListFragment : Fragment() {
         Log.d("MovieInListFragment", docRef.toString())
         docRef.get()
             .addOnSuccessListener { document ->
-                Log.d("MovieInListFragment",document.toString())
+                Log.d("MovieInListFragment", document.toString())
                 if (document.exists()) {
                     val data = document.data
                     if (data != null) {
@@ -112,11 +72,31 @@ class MoviesInListFragment : Fragment() {
                             val listDescription = listData?.get("listDescription") as? String
                             val listDate = listData?.get("listDate") as? String
 
-                            Log.d("ListActivity", "List Data:")
-                            Log.d("ListActivity", "  listId: $listId")
-                            Log.d("ListActivity", "  listName: $listName")
-                            Log.d("ListActivity", "  listDescription: $listDescription")
-                            Log.d("ListActivity", "  listDate: $listDate")
+                            if (listId == desiredListId) {
+                                Log.d("ListActivity", "List Data:")
+                                Log.d("ListActivity", "  listId: $listId")
+                                Log.d("ListActivity", "  listName: $listName")
+                                Log.d("ListActivity", "  listDescription: $listDescription")
+                                Log.d("ListActivity", "  listDate: $listDate")
+
+                                val listMovies = listData?.get("listMovies") as? List<Map<String, Any>>?
+                                val listedMovies = listMovies?.map { movie ->
+                                    val averageVote = movie["averageVote"].toString().toDouble()
+                                    val movieId = movie["id"].toString().toInt()
+                                    val releaseDate = movie["releaseDate"] as? String ?: ""
+                                    val title = movie["title"] as? String ?: ""
+
+                                    ListedMovie(title, releaseDate, averageVote, movieId)
+                                }
+
+                                listedMovies?.forEachIndexed { index, listedMovie ->
+                                    Log.d("ListActivity", "  Movie $index:")
+                                    Log.d("ListActivity", "    movieId: ${listedMovie.id}")
+                                    Log.d("ListActivity", "    title: ${listedMovie.title}")
+                                    Log.d("ListActivity", "    releaseDate: ${listedMovie.releaseDate}")
+                                    Log.d("ListActivity", "    averageVote: ${listedMovie.averageVote}")
+                                }
+                            }
                         }
                     } else {
                         Log.d("ListActivity", "El documento está vacío para el usuario $username.")
@@ -129,4 +109,6 @@ class MoviesInListFragment : Fragment() {
                 Log.d("ListActivity", "Error al obtener el documento: $exception")
             }
     }
+
+
 }

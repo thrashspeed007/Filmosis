@@ -55,17 +55,26 @@ class ListsFragment : Fragment() {
 
                         val listOfLists = keys.map { key ->
                             val listData = data[key] as? Map<*, *>
+                            val listId = listData?.get("listId").toString().toInt()
+                            Log.d("ListActivity", "listId: $listId")
                             val listName = listData?.get("listName") as? String
+                            Log.d("ListActivity", "listName: ${listName.toString()}")
                             val listDescription = listData?.get("listDescription") as? String
+                            Log.d("ListActivity", "listDescription: ${listDescription.toString()}")
                             val listDate = listData?.get("listDate") as? String
+                            Log.d("ListActivity", "listDate: ${listDate.toString()}")
 
-                            ListItem(listName.toString(), listDescription.toString(), listDate.toString())
+                            ListItem(listId?.toString()?.toIntOrNull() ?: -1, listName.toString(), listDescription.toString(), listDate.toString())
                         }
 
                         val rv = requireView().findViewById<RecyclerView>(R.id.lists_recyclerView)
                         rv.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
                         rv.adapter = ListsAdapter(listOfLists) {
-                            Toast.makeText(requireContext(), "*llevar a pelis de lista*", Toast.LENGTH_SHORT).show()
+                            val fragmentManager = requireActivity().supportFragmentManager
+                            val transaction = fragmentManager.beginTransaction()
+                            transaction.replace(R.id.fragmentContainerView, MoviesInListFragment.newInstance(it.listId))
+                            transaction.addToBackStack(null)
+                            transaction.commit()
                         }
                     } else {
                         Log.d("ListActivity", "El documento está vacío para el usuario $username.")
