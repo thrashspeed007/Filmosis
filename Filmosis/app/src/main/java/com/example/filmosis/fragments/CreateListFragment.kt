@@ -12,6 +12,8 @@ import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.example.filmosis.R
+import com.example.filmosis.adapters.ListsAdapter
+import com.example.filmosis.dataclass.ListItem
 import com.example.filmosis.init.FirebaseInitializer
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -44,6 +46,16 @@ class CreateListFragment : DialogFragment() {
         cancelarBtn.setOnClickListener {
             dismiss()
         }
+
+
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        val nombreListaTv : EditText = requireView().findViewById(R.id.createList_editTextTitle)
+        val descripListaTv : EditText = requireView().findViewById(R.id.createList_editTextDescription)
+        val guardarListaBtn : Button = requireView().findViewById(R.id.createList_buttonSave)
 
         guardarListaBtn.setOnClickListener{
             val titleLista = nombreListaTv.text.toString()
@@ -78,8 +90,14 @@ class CreateListFragment : DialogFragment() {
         // Agregar los campos adicionales al documento existente usando update()
         docRef.update(listaDatosAdicionales)
             .addOnSuccessListener {
-                Log.d("CrearLista", "Campos agregados correctamente")
-                Toast.makeText(requireContext(), "Campos agregados correctamente", Toast.LENGTH_SHORT).show()
+                val fragmentoContenedor = requireActivity().supportFragmentManager.findFragmentByTag("LISTS_FRAGMENT") as? ListsFragment
+                fragmentoContenedor?.actualizarLista(
+                    ListItem(listaDatosAdicionales["$nombreCampoContenedor.listId"].toString(),listaDatosAdicionales["$nombreCampoContenedor.listName"].toString(),
+                        listaDatosAdicionales["$nombreCampoContenedor.listDescription"].toString(),listaDatosAdicionales["$nombreCampoContenedor.listDate"].toString())
+                )
+
+                // Cerrar el diálogo
+                dismiss()
             }
             .addOnFailureListener { e ->
                 Log.w("CrearLista", "Error al agregar campos", e)

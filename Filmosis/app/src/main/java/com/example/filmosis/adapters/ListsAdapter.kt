@@ -1,5 +1,6 @@
 package com.example.filmosis.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,9 +11,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.filmosis.R
 import com.example.filmosis.dataclass.ListItem
+import com.example.filmosis.dataclass.ListedMovie
 import com.example.filmosis.utilities.firebase.FirestoreImageManager
 
-class ListsAdapter(private val lists: List<ListItem>, private val onListClick: (ListItem) -> Unit) : RecyclerView.Adapter<ListsAdapter.ListViewHolder>() {
+class ListsAdapter(private val lists: MutableList<ListItem>, private val onListClick: (ListItem) -> Unit) : RecyclerView.Adapter<ListsAdapter.ListViewHolder>() {
 
     inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imageView: ImageView = itemView.findViewById(R.id.itemList_imageView)
@@ -35,6 +37,13 @@ class ListsAdapter(private val lists: List<ListItem>, private val onListClick: (
         holder.dateTextView.text = list.listCreationDate
 
         holder.itemView.setOnClickListener { onListClick.invoke(list) }
+    }
+
+    fun addItem(item: ListItem) {
+
+        Log.d("OnActivityCreated",item.toString())
+        lists.add(item)
+        notifyItemInserted(lists.size - 1)
     }
 
     override fun getItemCount(): Int {

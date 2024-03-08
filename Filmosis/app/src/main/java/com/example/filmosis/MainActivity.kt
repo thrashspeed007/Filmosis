@@ -125,7 +125,7 @@ class MainActivity : AppCompatActivity() {
             when (it.itemId) {
                 // TODO
                 R.id.drawerMenu_myLists -> {
-                    replaceFragment(ListsFragment())
+                    replaceFragment(ListsFragment(),"LISTS_FRAGMENT")
                     val drawerLayout : DrawerLayout = findViewById(R.id.main_drawerLayout)
                     drawerLayout.close()
                     return@setNavigationItemSelectedListener true
@@ -138,11 +138,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun replaceFragment(fragment: Fragment) {
+    private fun replaceFragment(fragment: Fragment, tag : String = "") {
         val fragmentManager: FragmentManager = supportFragmentManager
         val transaction: FragmentTransaction = fragmentManager.beginTransaction()
 
-        transaction.replace(R.id.fragmentContainerView, fragment)
+        if (tag.isNotEmpty()) {
+            transaction.replace(R.id.fragmentContainerView, fragment,tag)
+        }else {
+            transaction.replace(R.id.fragmentContainerView, fragment)
+        }
 
         transaction.commit()
     }

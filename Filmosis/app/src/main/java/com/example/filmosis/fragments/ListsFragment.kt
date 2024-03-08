@@ -72,7 +72,7 @@ class ListsFragment : Fragment() {
                             Log.d("ListActivity", "listDate: ${listDate.toString()}")
 
                             ListItem(listId, listName.toString(), listDescription.toString(), listDate.toString())
-                        }
+                        }.toMutableList()
 
                         initListsRv(listOfLists)
 
@@ -88,7 +88,7 @@ class ListsFragment : Fragment() {
             }
     }
 
-    private fun initListsRv(lists: List<ListItem>) {
+    private fun initListsRv(lists: MutableList<ListItem>) {
         val rv = requireView().findViewById<RecyclerView>(R.id.lists_recyclerView)
         rv.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         rv.adapter = ListsAdapter(lists) {
@@ -103,6 +103,11 @@ class ListsFragment : Fragment() {
     private fun crearLista() {
         val dialog = CreateListFragment()
         dialog.show(requireActivity().supportFragmentManager, "createListFragment")
+    }
+
+    fun actualizarLista(listItem : ListItem) {
+        val rvAdapter = requireView().findViewById<RecyclerView>(R.id.lists_recyclerView).adapter as ListsAdapter
+        rvAdapter.addItem(listItem)
     }
 
 
