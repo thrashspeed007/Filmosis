@@ -5,6 +5,7 @@ import com.example.filmosis.data.model.tmdb.CastResponse
 import com.example.filmosis.data.model.tmdb.CombinedCredits
 import com.example.filmosis.data.model.tmdb.CreditsResponse
 import com.example.filmosis.data.model.tmdb.Movie
+import com.example.filmosis.data.model.tmdb.Moviefr
 import com.example.filmosis.data.model.tmdb.MoviesPage
 import com.example.filmosis.data.model.tmdb.PersonDetails
 import com.example.filmosis.data.model.tmdb.PersonsPage
@@ -141,6 +142,12 @@ interface TmdbApiInterface {
         @Query("api_key") apiKey: String
     ): Call<NetworkDetailsResponse>
 
+
+    @GET("movie/{movie_id}")
+    fun getMovieDetailsRecuperarGenres(
+        @Path("movie_id") movieId: Int,
+        @Query("api_key") apiKey: String
+    ): Call<Moviefr>
 
     @GET("movie/{movie_id}")
     fun getMovieDetailsRecuperar(

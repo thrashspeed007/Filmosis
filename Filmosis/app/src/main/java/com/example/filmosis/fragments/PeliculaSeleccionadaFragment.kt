@@ -23,7 +23,9 @@ import com.example.filmosis.adapters.ActoresAdapter
 import com.example.filmosis.adapters.PersonasAdapter
 import com.example.filmosis.adapters.ServicioAdapter
 import com.example.filmosis.data.access.tmdb.MoviesAccess
+import com.example.filmosis.data.model.tmdb.Genre
 import com.example.filmosis.data.model.tmdb.Movie
+import com.example.filmosis.data.model.tmdb.Moviefr
 
 import com.example.filmosis.dataclass.Servicio
 import com.example.filmosis.utilities.app.ResourcesMapping
@@ -48,7 +50,9 @@ class PeliculaSeleccionadaFragment : Fragment() {
     private lateinit var tvAvg : RatingBar
     private lateinit var image : ImageView
     private lateinit var tvavg : TextView
+    private lateinit var tvPupu : TextView
     private lateinit var ibBack : ImageButton
+    lateinit var idioma : String
 
     private lateinit var textNodispSubs : TextView
     private lateinit var textNodispAlq : TextView
@@ -72,7 +76,25 @@ class PeliculaSeleccionadaFragment : Fragment() {
         title = "",
         video = false,
         vote_average = 0.0,
-        vote_count = 0
+        vote_count = 0,
+        spoken_languages = emptyList()
+    )
+    private var recuperacionInfoGenres: Moviefr = Moviefr(
+        adult = false,
+        backdrop_path = "",
+        genres = emptyList(),
+        id = 0,
+        original_language = "",
+        original_title = "",
+        overview = "",
+        popularity = 0.0,
+        poster_path = "",
+        release_date = "",
+        title = "",
+        video = false,
+        vote_average = 0.0,
+        vote_count = 0,
+        spoken_languages = emptyList()
     )
 
 
@@ -99,6 +121,7 @@ class PeliculaSeleccionadaFragment : Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_pelicula_seleccionada, container, false)
         recuperarDatosInfo(view)
+
 
         textNodispComp = view.findViewById(R.id.textNoDisponibleCompra)
         textNodispAlq= view.findViewById(R.id.textNoDisponibleAlquiler)
@@ -133,11 +156,17 @@ class PeliculaSeleccionadaFragment : Fragment() {
             ma.getMovieData(movieId) { movie ->
                 if (movie != null) {
                     recuperacionInfo = movie
-                    Toast.makeText(requireContext(), movie.genre_ids.toString(), Toast.LENGTH_SHORT).show()
-
+//                    recuperacionInfoGenres = movie
                     recyclerControl(view)
                     datosPeliculas(view)
                     video(view)
+
+                }
+            }
+            ma.getMovieDataGenres(movieId){movie ->
+                if (movie != null) {
+                    recuperacionInfoGenres = movie
+                    view.findViewById<TextView>(R.id.tvGenero).text = obtenerGeneros(recuperacionInfoGenres.genres)
 
                 }
             }
@@ -206,7 +235,12 @@ class PeliculaSeleccionadaFragment : Fragment() {
             tvCensura.text = " Todos los públicos"
         }
         tvIdioma = view.findViewById(R.id.tvLenguage)
-        tvIdioma.text = recuperacionInfo.original_language?.uppercase()
+
+        recuperacionInfo.spoken_languages.forEach {laidioma ->
+            idioma = laidioma.name
+        }
+        tvIdioma.text = idioma
+
 
         tvSinopsis = view.findViewById(R.id.tvSinopsis)
         tvSinopsis.text = recuperacionInfo.overview
@@ -217,16 +251,8 @@ class PeliculaSeleccionadaFragment : Fragment() {
         tvReleaseDate = view.findViewById(R.id.tvReleaseDate)
         tvReleaseDate.text = recuperacionInfo.release_date
 
-//        tvTime = view.findViewById(R.id.tvTimeFilm)
-//        tvTime.text = recuperacionInfo.ti
-        //TODO Me pilla todos los datos menos genreIds que me da null
-                view.findViewById<TextView>(R.id.tvGenero).text = obtenerGeneros(recuperacionInfo.genre_ids)
-//            val generos = obtenerGeneros(genreIds)
-//            val generosConcatenados = generos.joinToString(", ")
-
-//            tvGenero.text = generosConcatenados
-
-
+        tvPupu = view.findViewById(R.id.tvPopu)
+        tvPupu.text = recuperacionInfo.popularity.toString()
 
         tvAvg = view.findViewById(R.id.averageVote)
         val maxRating = 10
@@ -244,19 +270,11 @@ class PeliculaSeleccionadaFragment : Fragment() {
 
     }
 
-    private fun obtenerGeneros(genreIds: List<Int>): String {
-        var genresString: ArrayList<String> = ArrayList()
-        for (id in genreIds) {
-            for (genrePair in TmdbData.movieGenresIds) {
-                if (genrePair.first == id) {
-                    genresString.add(genrePair.second)
-                    break
-                }
-            }
-        }
-
+    private fun obtenerGeneros(genres: List<Genre>): String {
+        val genresString = genres.map { it.name }
         return genresString.joinToString(", ")
     }
+
 
 
 

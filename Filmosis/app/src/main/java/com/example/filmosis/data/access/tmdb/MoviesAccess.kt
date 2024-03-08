@@ -11,6 +11,7 @@ import com.example.filmosis.data.model.tmdb.Crew
 
 import com.example.filmosis.data.model.tmdb.MoviesPage
 import com.example.filmosis.data.model.tmdb.Movie
+import com.example.filmosis.data.model.tmdb.Moviefr
 import com.example.filmosis.data.model.tmdb.Person
 import com.example.filmosis.dataclass.MovieDetailsResponse
 import com.example.filmosis.dataclass.NetworkDetailsResponse
@@ -244,6 +245,22 @@ class MoviesAccess {
     }
 
     //TODO aqui esta el problema
+    fun getMovieDataGenres(movieId: Int, callback: (Moviefr?) -> Unit) {
+        val call = RetrofitService.tmdbApi.getMovieDetailsRecuperarGenres(movieId, DatosConexion.API_KEY)
+
+        call.enqueue(object : Callback<Moviefr> {
+            override fun onFailure(call: Call<Moviefr>, t: Throwable) {
+                Log.d("MoviesAccess", "getMovieData onFailure: " + t.message)
+                callback.invoke(null)
+            }
+
+            override fun onResponse(call: Call<Moviefr>, response: Response<Moviefr>) {
+                val movie = response.body()
+                callback.invoke(movie)
+            }
+        })
+    }
+
     fun getMovieData(movieId: Int, callback: (Movie?) -> Unit) {
         val call = RetrofitService.tmdbApi.getMovieDetailsRecuperar(movieId, DatosConexion.API_KEY)
 

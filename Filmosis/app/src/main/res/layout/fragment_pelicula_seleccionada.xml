@@ -99,19 +99,19 @@
                             android:textStyle="bold" />
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
-                            <TextView
+<!--                            <TextView-->
 
-                                android:id="@+id/tvTimeFilm"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:text="2h29m"
+<!--                                android:id="@+id/tvTimeFilm"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_marginTop="10dp"-->
+<!--                                android:text="2h29m"-->
 
-                                android:textColor="?attr/colorOnPrimary" />
+<!--                                android:textColor="?attr/colorOnPrimary" />-->
 
                             <!-- TextView para la fecha de lanzamiento -->
                             <TextView
@@ -123,13 +123,11 @@
                                 android:textColor="?attr/colorOnPrimary" />
 
                             <com.google.android.material.button.MaterialButton
-                                android:id="@+id/anadirLista"
-                                android:layout_width="132dp"
-                                android:layout_height="match_parent"
+                                android:layout_marginLeft="100dp"
                                 android:layout_gravity="end"
-
-                                android:layout_marginLeft="45dp"
-                                android:gravity="end"
+                                android:id="@+id/anadirLista"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:onClick="anadirLista"
                                 android:text="Añadir a lista"
                                 app:icon="@drawable/baseline_add_24"
@@ -150,6 +148,22 @@
 
                             <TextView
                                 android:id="@+id/tvAvg"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:text="aiaia"
+                                android:textColor="?attr/colorOnPrimary" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginLeft="10dp"
+                                android:text="Popularidad: "
+                                android:textColor="?attr/colorOnPrimary" />
+
+                            <TextView
+                                android:id="@+id/tvPopu"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="5dp"

@@ -158,6 +158,7 @@ class ExploreFragment : Fragment() {
         genresRecyclerView.layoutManager = GridLayoutManager(requireContext(), 3, LinearLayoutManager.HORIZONTAL, false)
     }
 
+    //TODO Esto se puede quitar
     fun navigateToMovie(movie:Movie){
         val bundle = Bundle().apply {
             putInt("movieId", movie.id)
