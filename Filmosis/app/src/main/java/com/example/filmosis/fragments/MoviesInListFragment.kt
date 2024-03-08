@@ -74,17 +74,17 @@ class MoviesInListFragment : Fragment() {
                             val listId = listData?.get("listId").toString()
                             val listName = listData?.get("listName") as? String
                             val listDescription = listData?.get("listDescription") as? String
-                            val listDate = listData?.get("listDate") as? String
 
                             if (listId == desiredListId) {
                                 val listMovies = listData?.get("listMovies") as? List<Map<String, Any>>?
                                 val listedMovies = listMovies?.map { movie ->
                                     val averageVote = movie["averageVote"].toString().toDouble()
                                     val movieId = movie["id"].toString().toInt()
+                                    val moviePosterPath = movie["posterPath"] as? String ?: ""
                                     val releaseDate = movie["releaseDate"] as? String ?: ""
                                     val title = movie["title"] as? String ?: ""
 
-                                    ListedMovie(title, releaseDate, averageVote, movieId)
+                                    ListedMovie(title, moviePosterPath, releaseDate, averageVote, movieId)
                                 }?.toMutableList()
 
                                 listedMovies?.forEachIndexed { index, listedMovie ->
@@ -139,7 +139,8 @@ class MoviesInListFragment : Fragment() {
 
             onDeleteMovie = {
                 deleteMovieFromFirestore(it.id)
-            })
+            }
+        )
     }
 
     private fun initListInfo(listName: String, listDescription: String) {
@@ -150,7 +151,7 @@ class MoviesInListFragment : Fragment() {
     private fun deleteMovieFromFirestore(movieId: Int) {
         val userEmail = FirebaseInitializer.authInstance.currentUser?.email.toString()
         val listsRef = firestore.collection("lists").document(userEmail)
-        val desiredListId = arguments?.getInt(ARG_LIST_ID)
+        val desiredListId = arguments?.getString(ARG_LIST_ID)
 
 
         // TODO
@@ -163,14 +164,15 @@ class MoviesInListFragment : Fragment() {
 
                 data?.forEach { (key, value) ->
                     val listData = value as? Map<*, *>
-                    val listId = listData?.get("listId").toString().toInt()
+                    val listId = listData?.get("listId").toString()
 
                     if (listId == desiredListId) {
-                        val moviesList = document.get("listMovies") as? MutableList<Map<String, Any>>
-                        val movieRemoved = moviesList?.removeIf { it["movieId"] == movieId }
+                        val moviesList = document.get("lista_$listId.listMovies") as? MutableList<Map<String, Any>>
+                        val movieRemoved = moviesList?.removeIf { it["id"] == movieId.toLong() }
 
                         if (movieRemoved == true) {
-                            listsRef.update("listMovies", moviesList)
+                            Log.d("bruh", listId)
+                            listsRef.update("lista_$listId.listMovies", moviesList)
                                 .addOnSuccessListener {
                                     Log.d("bruh", "Movie deleted successfully.")
                                 }
@@ -179,8 +181,6 @@ class MoviesInListFragment : Fragment() {
                                 }
                         }
 
-                    } else {
-                        Toast.makeText(requireContext(), "bruh", Toast.LENGTH_SHORT).show()
                     }
                 }
 

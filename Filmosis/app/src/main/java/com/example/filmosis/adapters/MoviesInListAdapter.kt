@@ -21,6 +21,7 @@ import com.example.filmosis.utilities.tmdb.TmdbData
 class MoviesInListAdapter(private val movies: MutableList<ListedMovie>, private val onMovieClick: (ListedMovie) -> Unit, private val isDeleteable: Boolean = false, private val onDeleteMovie: (ListedMovie) -> Unit = {}): RecyclerView.Adapter<MoviesInListAdapter.MovieRowViewHolder>() {
     class MovieRowViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnCreateContextMenuListener {
         val movieName : TextView = itemView.findViewById(R.id.itemMovieSearched_movieName)
+        val moviePoster: ImageView = itemView.findViewById(R.id.itemMovieSearched_imagePoster)
         val movieDate : TextView = itemView.findViewById(R.id.itemMovieSearched_textReleaseDate)
         val movieVoteAverage : TextView = itemView.findViewById(R.id.itemMovieSearched_textAverageVote)
 
@@ -79,6 +80,11 @@ class MoviesInListAdapter(private val movies: MutableList<ListedMovie>, private 
             }
         } else {
             holder.itemView.findViewById<ImageButton>(R.id.itemMovieSearched_deleteButton).visibility = View.INVISIBLE
+        }
+
+        if (movie.poster_path.isNotEmpty()) {
+            val imageUrl = DatosConexion.TMDB_IMAGE_BASE_URL + movie.poster_path
+            Glide.with(holder.itemView.context).load(imageUrl).into(holder.moviePoster)
         }
 
         holder.movieName.text = movie.title

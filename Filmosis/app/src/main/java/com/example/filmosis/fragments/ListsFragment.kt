@@ -2,22 +2,21 @@ package com.example.filmosis.fragments
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import android.view.WindowManager
 import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.filmosis.R
 import com.example.filmosis.adapters.ListsAdapter
 import com.example.filmosis.dataclass.ListItem
-import com.example.filmosis.dataclass.ListedMovie
 import com.example.filmosis.init.FirebaseInitializer
 import com.google.firebase.firestore.FirebaseFirestore
+
 
 class ListsFragment : Fragment() {
 
@@ -75,15 +74,8 @@ class ListsFragment : Fragment() {
                             ListItem(listId, listName.toString(), listDescription.toString(), listDate.toString())
                         }
 
-                        val rv = requireView().findViewById<RecyclerView>(R.id.lists_recyclerView)
-                        rv.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-                        rv.adapter = ListsAdapter(listOfLists) {
-                            val fragmentManager = requireActivity().supportFragmentManager
-                            val transaction = fragmentManager.beginTransaction()
-                            transaction.replace(R.id.fragmentContainerView, MoviesInListFragment.newInstance(it.listId))
-                            transaction.addToBackStack(null)
-                            transaction.commit()
-                        }
+                        initListsRv(listOfLists)
+
                     } else {
                         Log.d("ListActivity", "El documento está vacío para el usuario $username.")
                     }
@@ -96,12 +88,21 @@ class ListsFragment : Fragment() {
             }
     }
 
+    private fun initListsRv(lists: List<ListItem>) {
+        val rv = requireView().findViewById<RecyclerView>(R.id.lists_recyclerView)
+        rv.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        rv.adapter = ListsAdapter(lists) {
+            val fragmentManager = requireActivity().supportFragmentManager
+            val transaction = fragmentManager.beginTransaction()
+            transaction.replace(R.id.fragmentContainerView, MoviesInListFragment.newInstance(it.listId))
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
+    }
+
     private fun crearLista() {
-        val fragmentManager = requireActivity().supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.fragmentContainerView, CreateListFragment())
-        fragmentTransaction.addToBackStack(null)
-        fragmentTransaction.commit()
+        val dialog = CreateListFragment()
+        dialog.show(requireActivity().supportFragmentManager, "createListFragment")
     }
 
 

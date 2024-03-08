@@ -1,5 +1,6 @@
 package com.example.filmosis.fragments
 
+import android.app.Dialog
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.example.filmosis.R
 import com.example.filmosis.init.FirebaseInitializer
@@ -16,7 +18,7 @@ import java.util.Date
 import java.util.Locale
 import java.util.UUID
 
-class CreateListFragment : Fragment() {
+class CreateListFragment : DialogFragment() {
 
     private val firestore = FirebaseInitializer.firestoreInstance
 
@@ -40,12 +42,12 @@ class CreateListFragment : Fragment() {
         val cancelarBtn : Button = requireView().findViewById(R.id.createList_buttonCancel)
 
         cancelarBtn.setOnClickListener {
-            requireActivity().onBackPressedDispatcher.onBackPressed()
+            dismiss()
         }
 
         guardarListaBtn.setOnClickListener{
             val titleLista = nombreListaTv.text.toString()
-            if (titleLista != "") {
+            if (titleLista.isNotEmpty()) {
                 crearLista(titleLista,descripListaTv.text.toString())
             } else {
                 Toast.makeText(requireContext(),"El título no puede estar vacío",Toast.LENGTH_LONG).show()
@@ -65,7 +67,7 @@ class CreateListFragment : Fragment() {
         val listaDatosAdicionales = hashMapOf<String, Any>(
             "$nombreCampoContenedor.listDate" to obtenerFechaActual(),
             "$nombreCampoContenedor.listDescription" to descripcionLista,
-            "$nombreCampoContenedor.listId" to uuid, // Opción fija según tu ejemplo
+            "$nombreCampoContenedor.listId" to uuid.toString(), // Opción fija según tu ejemplo
             "$nombreCampoContenedor.listName" to nombreLista,
             "$nombreCampoContenedor.listMovies" to arrayListOf<Map<String, Any>>() // ArrayList vacío para listMovies
         )
