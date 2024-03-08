@@ -42,16 +42,5 @@ class GridRecyclerViewAdapter(private val movies: List<Movie>, private val onMov
     }
 }
 
-//    class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-//        private val iconoPelicula: ImageView = itemView.findViewById(R.id.icono_pelicula)
-//        private val nombrePelicula: TextView = itemView.findViewById(R.id.nombre_pelicula)
-//
-//        fun bind(pelicula: Result) {
-//            Glide.with(itemView.context)
-//                .load("https://image.tmdb.org/t/p/w500${pelicula.poster_path}")
-//                .into(iconoPelicula)
-//            nombrePelicula.text = pelicula.title
-//        }
-//    }
 
 

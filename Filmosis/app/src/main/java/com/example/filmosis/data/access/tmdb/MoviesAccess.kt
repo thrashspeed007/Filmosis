@@ -14,6 +14,7 @@ import com.example.filmosis.data.model.tmdb.Movie
 import com.example.filmosis.data.model.tmdb.Moviefr
 import com.example.filmosis.data.model.tmdb.Person
 import com.example.filmosis.dataclass.MovieDetailsResponse
+import com.example.filmosis.dataclass.Network
 import com.example.filmosis.dataclass.NetworkDetailsResponse
 import com.example.filmosis.dataclass.Servicio
 import com.example.filmosis.network.RetrofitService
@@ -333,28 +334,29 @@ class MoviesAccess {
             }
         })
     }
-    //TODO no me lo borreis
-//    fun fetchNetworkDetails(networkId: Int, callback: (NetworkDetailsResponse?) -> Unit) {
-//        val call = RetrofitService.tmdbApi.getNetworkDetails(networkId, DatosConexion.API_KEY)
-//
-//        call.enqueue(object : Callback<NetworkDetailsResponse> {
-//            override fun onResponse(
-//                call: Call<NetworkDetailsResponse>,
-//                response: Response<NetworkDetailsResponse>
-//            ) {
-//                if (response.isSuccessful) {
-//                    val networkDetailsResponse = response.body()
-//                    callback(networkDetailsResponse)
-//                } else {
-//                    println("Solicitud fallida - Código de estado: ${response.code()}")
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<NetworkDetailsResponse>, t: Throwable) {
-//                println("Error de red: ${t.message}")
-//            }
-//        })
-//    }
+
+    fun fetchNetworkDetails(networkId: Int, callback: (Network?) -> Unit) {
+        val call = RetrofitService.tmdbApi.getNetworkDetails(networkId, DatosConexion.API_KEY)
+
+        call.enqueue(object : Callback<Network> {
+            override fun onResponse(call: Call<Network>, response: Response<Network>) {
+                if (response.isSuccessful) {
+                    val networkDetailsResponse = response.body()
+                    callback(networkDetailsResponse)
+                } else {
+                    println("Solicitud fallida - Código de estado: ${response.code()}")
+                    callback(null) // Handle failure by invoking the callback with null
+                }
+            }
+
+            override fun onFailure(call: Call<Network>, t: Throwable) {
+                println("Error de red: ${t.message}")
+                callback(null) // Handle failure by invoking the callback with null
+            }
+        })
+    }
+
+
 
     fun fetchNetworkDetails2(movieId: Int, callback: (NetworkDetailsResponse?) -> Unit) {
         val call = RetrofitService.tmdbApi.getStreamingProviders(movieId, DatosConexion.API_KEY)

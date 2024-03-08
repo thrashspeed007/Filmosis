@@ -156,7 +156,6 @@ class PeliculaSeleccionadaFragment : Fragment() {
             ma.getMovieData(movieId) { movie ->
                 if (movie != null) {
                     recuperacionInfo = movie
-//                    recuperacionInfoGenres = movie
                     recyclerControl(view)
                     datosPeliculas(view)
                     video(view)
@@ -236,11 +235,8 @@ class PeliculaSeleccionadaFragment : Fragment() {
         }
         tvIdioma = view.findViewById(R.id.tvLenguage)
 
-        recuperacionInfo.spoken_languages.forEach {laidioma ->
-            idioma = laidioma.name
-        }
+        recuperacionInfo.spoken_languages.firstOrNull()?.let { idioma = it.name }
         tvIdioma.text = idioma
-
 
         tvSinopsis = view.findViewById(R.id.tvSinopsis)
         tvSinopsis.text = recuperacionInfo.overview

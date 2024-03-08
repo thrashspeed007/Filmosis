@@ -270,7 +270,7 @@
                     android:text="@string/ver_mas"
                     android:textAlignment="textEnd"
                     android:textColor="?attr/colorPrimary"
-                    android:textSize="10sp"
+                    android:textSize="14sp"
                     app:icon="@drawable/ic_rigth_arrow"
                     app:iconGravity="textEnd"
                     app:iconSize="15dp"

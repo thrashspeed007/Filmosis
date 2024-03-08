@@ -10,6 +10,7 @@ import com.example.filmosis.data.model.tmdb.MoviesPage
 import com.example.filmosis.data.model.tmdb.PersonDetails
 import com.example.filmosis.data.model.tmdb.PersonsPage
 import com.example.filmosis.dataclass.MovieDetailsResponse
+import com.example.filmosis.dataclass.Network
 import com.example.filmosis.dataclass.NetworkDetailsResponse
 import com.example.filmosis.dataclass.PeliculaDetalles
 
@@ -134,7 +135,7 @@ interface TmdbApiInterface {
     fun getNetworkDetails(
         @Path("id") networkId: Int,
         @Query("api_key") apiKey: String
-    ): Call<NetworkDetailsResponse>
+    ): Call<Network>
 
     @GET("movie/{movie_id}/watch/providers")
     fun getStreamingProviders(
@@ -155,6 +156,5 @@ interface TmdbApiInterface {
         @Query("api_key") apiKey: String
     ): Call<Movie>
 }
-
 
 
