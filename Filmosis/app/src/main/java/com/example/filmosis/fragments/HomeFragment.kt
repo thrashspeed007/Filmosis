@@ -146,12 +146,12 @@ class HomeFragment : Fragment() {
 
         val buttonservice : MaterialButton = view.findViewById(R.id.buttonShowAllServices)
         buttonservice.setOnClickListener {
-//            val fragmentManager = requireActivity().supportFragmentManager
-//            val transaction = fragmentManager.beginTransaction()
-//            val nuevoFragmento = ServiceVerTodoFragment()
-//            transaction.replace(R.id.fragmentContainerView, nuevoFragmento)
-//            transaction.addToBackStack(null)
-//            transaction.commit()
+            val fragmentManager = requireActivity().supportFragmentManager
+            val transaction = fragmentManager.beginTransaction()
+            val nuevoFragmento = ServiceVerTodoFragment()
+            transaction.replace(R.id.fragmentContainerView, nuevoFragmento)
+            transaction.addToBackStack(null)
+            transaction.commit()
         }
 
     }
