@@ -14,12 +14,22 @@ data class PaisServicios(
     val rent: List<Servicio>,
     val buy: List<Servicio>
 )
-
 data class Servicio(
     val logo_path: String,
     val provider_id: Int,
     val provider_name: String,
     val display_priority: Int
+)
+
+
+
+data class Network(
+    val id: Int,
+    val name: String,
+    val logo_path: String,
+    val headquarters: String,
+    val homepage: String,
+    val origin_country: String
 )
 
 
@@ -31,3 +41,7 @@ data class Servicio(
 //    "name": "HBO",
 //    "origin_country": "US"
 //}
+
+
+
+

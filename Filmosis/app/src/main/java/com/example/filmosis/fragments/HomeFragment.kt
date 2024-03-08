@@ -1,31 +1,23 @@
 package com.example.filmosis.fragments
 import android.content.Context
-import android.media.Image
-import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import android.widget.ImageButton
-import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.ScrollView
 import android.widget.SearchView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.LayoutManager
-import androidx.recyclerview.widget.SnapHelper
 
 import com.example.filmosis.R
 import com.example.filmosis.adapters.CarouselMoviesAdapter
 import com.example.filmosis.adapters.ServicioAdapter
 import com.example.filmosis.data.access.tmdb.MoviesAccess
 import com.example.filmosis.data.model.tmdb.Movie
-import com.example.filmosis.dataclass.NetworkDetailsResponse
+import com.example.filmosis.dataclass.Network
 
-import com.example.filmosis.dataclass.Servicio
-import com.example.filmosis.network.interfaces.TmdbApiInterface
 import com.example.filmosis.utilities.tmdb.TmdbSearchQueries
 import com.google.android.material.button.MaterialButton
 
@@ -40,11 +32,11 @@ class HomeFragment : Fragment() {
     private var moviesListPopulares: ArrayList<Movie> = ArrayList()
     private var moviesListSoon: ArrayList<Movie> = ArrayList()
     private var recommendedMovies: ArrayList<Movie> = ArrayList()
-    private var services: ArrayList<NetworkDetailsResponse> = ArrayList()
+    private var services: ArrayList<Network> = ArrayList()
 
-    private var idServicios: ArrayList<Int> = arrayListOf(
-
-    )
+    private var ids: ArrayList<Int> = ArrayList<Int>().apply {
+        addAll(listOf(49, 213, 2739,18,94,50,2740))
+    }
 
 
 
@@ -62,6 +54,7 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
@@ -99,7 +92,10 @@ class HomeFragment : Fragment() {
         rvRecommend.setHasFixedSize(true)
         addMoviesRecommendedToList()
 
-        //servicios
+//        servicios
+        rvServicios = view.findViewById(R.id.serviciosRecyclerview)
+        rvServicios.setHasFixedSize(true)
+        cargarServicios()
 
 
 
@@ -147,6 +143,17 @@ class HomeFragment : Fragment() {
 
 
         }
+
+        val buttonservice : MaterialButton = view.findViewById(R.id.buttonShowAllServices)
+        buttonservice.setOnClickListener {
+//            val fragmentManager = requireActivity().supportFragmentManager
+//            val transaction = fragmentManager.beginTransaction()
+//            val nuevoFragmento = ServiceVerTodoFragment()
+//            transaction.replace(R.id.fragmentContainerView, nuevoFragmento)
+//            transaction.addToBackStack(null)
+//            transaction.commit()
+        }
+
     }
 
     private fun initSearchViewAndSearchFilter(view: View) {
@@ -287,23 +294,21 @@ class HomeFragment : Fragment() {
         }
     }
 
-//    private fun cargarServicios() {
-//        idServicios.forEach{ids->
-//            moviesAccess.fetchNetworkDetails(ids) { result ->
-//                if (result != null) {
-//
-//                    //if (result.name == "HBO" || result.name == "Netflix"){
-//                        services.add(result)
-//                    //}
-//
-//                    rvServicios.adapter = ServicioAdapter(services)
-//                } else {
-//                    println("Error: No se pudo obtener los detalles de la red.")
-//                }
-//            }
-//        }
+    private fun cargarServicios() {
+        for (id in ids) {
+            moviesAccess.fetchNetworkDetails(id) { result ->
+                if (result != null) {
+                    services.add(result)
 
+                    rvServicios.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL,false)
+                    rvServicios.adapter = ServicioAdapter(services)
+                } else {
+                    println("Error: No se pudo obtener los detalles de la red.")
+                }
+            }
+        }
 
+    }
 
 
 }
