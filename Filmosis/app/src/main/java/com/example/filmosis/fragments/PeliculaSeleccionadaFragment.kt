@@ -1,5 +1,7 @@
 package com.example.filmosis.fragments
 
+import android.app.AlertDialog
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebChromeClient
 import android.webkit.WebView
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.RatingBar
@@ -28,8 +31,12 @@ import com.example.filmosis.data.model.tmdb.Movie
 import com.example.filmosis.data.model.tmdb.Moviefr
 
 import com.example.filmosis.dataclass.Servicio
+import com.example.filmosis.init.FirebaseInitializer
 import com.example.filmosis.utilities.app.ResourcesMapping
 import com.example.filmosis.utilities.tmdb.TmdbData
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.firestore
 
 class PeliculaSeleccionadaFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
@@ -264,6 +271,12 @@ class PeliculaSeleccionadaFragment : Fragment() {
             parentFragmentManager.popBackStack()
         }
 
+        val button =view.findViewById<Button>(R.id.anadirLista)
+        button.setOnClickListener {
+            addMovieToList(recuperacionInfo)
+        }
+
+
     }
 
     private fun obtenerGeneros(genres: List<Genre>): String {
@@ -335,6 +348,127 @@ class PeliculaSeleccionadaFragment : Fragment() {
         } else {
             textView.visibility = View.GONE
         }
+    }
+
+    private fun addMovieToList(movie: Movie) {
+        val userEmail = FirebaseInitializer.authInstance.currentUser?.email.toString()
+        val listsRef = FirebaseInitializer.firestoreInstance.collection("lists").document(userEmail)
+
+        listsRef
+            .get()
+            .addOnSuccessListener { document ->
+                val data = document.data
+
+                val listOptions = ArrayList<String>()
+                val listIds = ArrayList<String>()
+
+                data?.forEach { (key, value) ->
+                    val listData = value as? Map<*, *>
+                    val listId = listData?.get("listId").toString()
+                    val listName = listData?.get("listName").toString()
+
+                    listOptions.add(listName)
+                    listIds.add(listId)
+                }
+                val builder = AlertDialog.Builder(requireContext())
+                builder.setTitle("Elige una lista")
+                    .setItems(listOptions.toTypedArray()) { dialog, which ->
+                        val selectedListId = listIds[which]
+                        addMovieToSelectedList(movie, selectedListId)
+                    }
+                    .setNegativeButton("Cancelar") { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                builder.create().show()
+
+
+            }
+            .addOnFailureListener { exception ->
+                Log.d("Error", "Error fetching lists: $exception")
+
+            }
+    }
+
+    private fun addMovieToSelectedList(movie: Movie, desiredListId: String) {
+        if (isAdded) {
+            // El fragmento está adjunto a una actividad, es seguro llamar a requireContext() aquí
+            val userEmail = FirebaseInitializer.authInstance.currentUser?.email.toString()
+            val listsRef =
+                FirebaseInitializer.firestoreInstance.collection("lists").document(userEmail)
+
+            listsRef.get()
+                .addOnSuccessListener { document ->
+                    val data = document.data
+                    data?.forEach { (key, value) ->
+                        val listData = value as? Map<*, *>
+                        val listId = listData?.get("listId").toString()
+
+                        if (listId == desiredListId) {
+                            val moviesList =
+                                document.get("lista_$listId.listMovies") as? MutableList<Map<String, Any>>
+
+                            moviesList?.add(
+                                mapOf(
+                                    "id" to movie.id,
+                                    "title" to movie.title,
+                                    "poster_path" to movie.poster_path,
+                                    "releaseDate" to movie.release_date,
+                                    "averageVote" to movie.vote_average
+                                )
+                            )
+
+                            listsRef.update("lista_$listId.listMovies", moviesList)
+                                .addOnSuccessListener {
+                                    requireActivity().onBackPressedDispatcher.onBackPressed()
+                                }
+                                .addOnFailureListener { exception ->
+                                    handleAddMovieToListError(exception)
+                                }
+                        }
+                    }
+
+//
+//                    if (document != null) {
+//                        val moviesList = document.get("listMovies") as? ArrayList<HashMap<String, Any>>?
+//
+//                        moviesList?.add(
+//                            hashMapOf(
+//                                "id" to movie.id,
+//                                "title" to movie.title,
+//                                "poster_path" to movie.poster_path,
+//                                "releaseDate" to movie.release_date,
+//                                "averageVote" to movie.vote_average
+//                            )
+//                        )
+//
+//                        listDocRef.update("listMovies", moviesList)
+//                            .addOnSuccessListener {
+//                                requireActivity().onBackPressedDispatcher.onBackPressed()
+//                            }
+//                            .addOnFailureListener { e ->
+//                                Log.e(TAG, "Error updating movies list: $e")
+//                                Toast.makeText(requireContext(), "Error updating movies list", Toast.LENGTH_SHORT).show()
+//                            }
+//                    } else {
+//                        Log.e(TAG, "Document not found")
+//                    }
+//                }
+//                .addOnFailureListener { e ->
+//                    Log.e(TAG, "Error getting document: $e")
+//                    Toast.makeText(requireContext(), "Error getting document", Toast.LENGTH_SHORT).show()
+//                }
+//        } else {
+//            Log.e(TAG, "Fragment not attached to activity")
+//        }
+                }
+        }
+    }
+
+
+
+    private fun handleAddMovieToListError(exception: Exception) {
+        requireActivity().onBackPressedDispatcher.onBackPressed()
+        Toast.makeText(requireContext(), "Error al añadir la película a la lista: ${exception.message}", Toast.LENGTH_SHORT).show()
     }
 
 
