@@ -426,40 +426,6 @@ class PeliculaSeleccionadaFragment : Fragment() {
                                 }
                         }
                     }
-
-//
-//                    if (document != null) {
-//                        val moviesList = document.get("listMovies") as? ArrayList<HashMap<String, Any>>?
-//
-//                        moviesList?.add(
-//                            hashMapOf(
-//                                "id" to movie.id,
-//                                "title" to movie.title,
-//                                "poster_path" to movie.poster_path,
-//                                "releaseDate" to movie.release_date,
-//                                "averageVote" to movie.vote_average
-//                            )
-//                        )
-//
-//                        listDocRef.update("listMovies", moviesList)
-//                            .addOnSuccessListener {
-//                                requireActivity().onBackPressedDispatcher.onBackPressed()
-//                            }
-//                            .addOnFailureListener { e ->
-//                                Log.e(TAG, "Error updating movies list: $e")
-//                                Toast.makeText(requireContext(), "Error updating movies list", Toast.LENGTH_SHORT).show()
-//                            }
-//                    } else {
-//                        Log.e(TAG, "Document not found")
-//                    }
-//                }
-//                .addOnFailureListener { e ->
-//                    Log.e(TAG, "Error getting document: $e")
-//                    Toast.makeText(requireContext(), "Error getting document", Toast.LENGTH_SHORT).show()
-//                }
-//        } else {
-//            Log.e(TAG, "Fragment not attached to activity")
-//        }
                 }
         }
     }
