@@ -196,6 +196,27 @@ class MoviesAccess {
         })
     }
 
+    fun listBestRatedMovies(callback: (List<Movie>) -> Unit) {
+        val call = RetrofitService.tmdbApi.listBestRatedMoves(
+            DatosConexion.API_KEY,
+            DatosConexion.REGION,
+        )
+
+        call.enqueue(object : Callback<MoviesPage> {
+            override fun onFailure(call: Call<MoviesPage>, t: Throwable) {
+                Log.d("MoviesAccess", "listBestRatedMovies onFailure: " + t.message)
+            }
+
+            override fun onResponse(call: Call<MoviesPage>, response: Response<MoviesPage>) {
+                val movies = response.body()?.results
+
+                if (movies != null) {
+                    callback.invoke(movies)
+                }
+            }
+        })
+    }
+
     fun listLatestMoviesWithGenres(genres: List<Int>, callback: (List<Movie>) -> Unit) {
         val call = RetrofitService.tmdbApi.listLatestMoviesWithGenres(
             DatosConexion.API_KEY,
@@ -219,7 +240,27 @@ class MoviesAccess {
         })
     }
 
+    fun listLatestMovies(callback: (List<Movie>) -> Unit) {
+        val call = RetrofitService.tmdbApi.listLatestMovies(
+            DatosConexion.API_KEY,
+            DatosConexion.REGION,
+            getCurrentDate()
+        )
 
+        call.enqueue(object : Callback<MoviesPage> {
+            override fun onFailure(call: Call<MoviesPage>, t: Throwable) {
+                Log.d("MoviesAccess", "listLatestMovies onFailure: " + t.message)
+            }
+
+            override fun onResponse(call: Call<MoviesPage>, response: Response<MoviesPage>) {
+                val movies = response.body()?.results
+
+                if (movies != null) {
+                    callback.invoke(movies)
+                }
+            }
+        })
+    }
 
 
     fun listUpcomingMoviesWithGenres(genres: List<Int>, callback: (List<Movie>) -> Unit) {

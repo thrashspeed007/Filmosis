@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
 import android.widget.Button
+import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -89,6 +90,8 @@ class ListsFragment : Fragment() {
     }
 
     private fun initListsRv(lists: MutableList<ListItem>) {
+        requireView().findViewById<ProgressBar>(R.id.lists_progressCircle).visibility = View.GONE
+
         val rv = requireView().findViewById<RecyclerView>(R.id.lists_recyclerView)
         rv.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         rv.adapter = ListsAdapter(lists) {

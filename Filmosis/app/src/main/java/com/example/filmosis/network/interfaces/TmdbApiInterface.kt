@@ -30,7 +30,7 @@ interface TmdbApiInterface {
         @Query("region") region: String
     ): Call<MoviesPage>
 
-    @GET("discover/movie?language=es-ES")
+    @GET("discover/movie?language=es-ES&sort_by=popularity.desc")
     fun listUpcomingMovies(
         @Query("api_key") apiKey: String,
         @Query("region") region: String,
@@ -72,11 +72,24 @@ interface TmdbApiInterface {
         @Query("with_genres") genres: String
     ): Call<MoviesPage>
 
+    @GET("discover/movie?include_adult=false&include_video=false&language=es-ES&page=1&sort_by=vote_average.desc&without_genres=99,10755&vote_count.gte=200")
+    fun listBestRatedMoves(
+        @Query("api_key") apiKey: String,
+        @Query("region") region: String
+    ): Call<MoviesPage>
+
     @GET("discover/movie?language=es-ES&sort_by=release_date.desc&vote_count.gte=20")
     fun listLatestMoviesWithGenres(
         @Query("api_key") apiKey: String,
         @Query("region") region: String,
         @Query("with_genres") genres: String,
+        @Query("primary_release_date.lte") releaseDateLTE: String // Fecha de lanzamiento menor o igual que
+    ): Call<MoviesPage>
+
+    @GET("discover/movie?language=es-ES&sort_by=release_date.desc&vote_count.gte=20")
+    fun listLatestMovies(
+        @Query("api_key") apiKey: String,
+        @Query("region") region: String,
         @Query("primary_release_date.lte") releaseDateLTE: String // Fecha de lanzamiento menor o igual que
     ): Call<MoviesPage>
 

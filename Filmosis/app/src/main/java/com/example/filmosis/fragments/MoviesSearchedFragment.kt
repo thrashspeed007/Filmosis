@@ -1,9 +1,13 @@
 package com.example.filmosis.fragments
 
+import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -12,23 +16,28 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.filmosis.R
 import com.example.filmosis.adapters.ListedMoviesAdapter
 import com.example.filmosis.data.access.tmdb.MoviesAccess
-import com.example.filmosis.data.model.tmdb.Cast
 import com.example.filmosis.data.model.tmdb.Movie
+import com.example.filmosis.init.FirebaseInitializer
+
 
 class MoviesSearchedFragment : Fragment() {
+
     private val moviesAccess = MoviesAccess()
     private lateinit var rv: RecyclerView
-
     private var moviesList: ArrayList<Movie> = ArrayList()
 
     companion object {
         private const val ARG_QUERY = "tmdbQuery"
+        private const val ARG_ADD_TO_LIST = "performAddToList"
+        private const val ARG_LIST_ID = "listId"
 
-        fun newInstance(query: String): MoviesSearchedFragment {
+        fun newInstance(query: String, performAddToList: Boolean = false, listId: String = ""): MoviesSearchedFragment {
             val fragment = MoviesSearchedFragment()
             val args = Bundle()
 
             args.putString(ARG_QUERY, query)
+            args.putBoolean(ARG_ADD_TO_LIST, performAddToList)
+            args.putString(ARG_LIST_ID, listId)
 
             fragment.arguments = args
             return fragment
@@ -70,67 +79,125 @@ class MoviesSearchedFragment : Fragment() {
         rv = view.findViewById(R.id.moviesSearched_recyclerView)
         rv.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
 
-        if (query != null) {
+        if (query.isNullOrEmpty()) {
+            loadPopularMovies()
+        } else {
             addSearchedMoviesToRv(query)
         }
     }
 
     private fun performSearch(query: String) {
         addSearchedMoviesToRv(query)
+        hideKeyboard()
+    }
+
+    private fun hideKeyboard() {
+        val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(requireView().windowToken, 0)
+    }
+
+    private fun loadPopularMovies() {
+        moviesAccess.listPopularMovies { movies ->
+            moviesList.addAll(movies)
+            rv.adapter = ListedMoviesAdapter(moviesList) { movie ->
+                handleMovieClick(movie)
+            }
+        }
     }
 
     private fun addSearchedMoviesToRv(query: String) {
         moviesAccess.searchMovie(query) { result ->
             moviesList.clear()
-
-            result.forEach { movie ->
-                moviesList.add(movie)
-            }
+            moviesList.addAll(result)
 
             if (moviesList.isEmpty()) {
-                Toast.makeText(requireContext(), "No hay resultados", Toast.LENGTH_LONG).show()
+                showToast("No hay resultados")
             } else {
-                val moviesAdapter = ListedMoviesAdapter(moviesList) { movieClicked ->
-                    //flow adrianix
-
-                    val fragmentManager = requireActivity().supportFragmentManager
-                    val transaction = fragmentManager.beginTransaction()
-                    transaction.replace(R.id.fragmentContainerView, PeliculaSeleccionadaFragment.newInstance(movieClicked.id))
-                    transaction.addToBackStack(null)
-                    transaction.commit()
-
+                rv.adapter = ListedMoviesAdapter(moviesList) { movie ->
+                    handleMovieClick(movie)
                 }
-
-                rv.adapter = moviesAdapter
             }
         }
     }
 
-    fun navigateToMovie(movie: Movie){
-        val bundle = Bundle().apply {
-            putInt("movieId", movie.id)
-            putString("title", movie.title)
-            putString("overview", movie.overview)
-            putDouble("popularity", movie.popularity)
-            putString("release_date", movie.release_date)
-            putDouble("vote_average", movie.vote_average)
-            putInt("vote_count", movie.vote_count)
-            putBoolean("adult", movie.adult)
-            putString("backdrop_path", movie.backdrop_path)
-            putString("original_language", movie.original_language)
-            putString("original_title", movie.original_title)
-            putBoolean("video", movie.video)
-            putString("poster_path", movie.poster_path)
+    private fun showToast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
+    }
 
+    private fun handleMovieClick(movie: Movie) {
+        if (arguments?.getBoolean(ARG_ADD_TO_LIST) == true) {
+            showAddToListDialog(movie)
+        } else {
+            navigateToMovieDetailFragment(movie.id)
         }
-        val nuevoFragmento = PeliculaSeleccionadaFragment().apply {
-            arguments = bundle
-        }
+    }
 
+    private fun showAddToListDialog(movie: Movie) {
+        val listId: String? = arguments?.getString(ARG_LIST_ID)
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Confirmación")
+        builder.setMessage("¿Añadir ${movie.title} a la lista?")
+            .setPositiveButton("Aceptar") { dialog, id ->
+                listId?.let { addMovieToList(movie, it) }
+            }
+            .setNegativeButton("Cancelar") { dialog, id ->
+                dialog.dismiss()
+            }
+        builder.create().show()
+    }
+
+    private fun navigateToMovieDetailFragment(movieId: Int) {
         val fragmentManager = requireActivity().supportFragmentManager
         val transaction = fragmentManager.beginTransaction()
-        transaction.replace(R.id.fragmentContainerView, nuevoFragmento)
+        transaction.replace(R.id.fragmentContainerView, PeliculaSeleccionadaFragment.newInstance(movieId))
         transaction.addToBackStack(null)
         transaction.commit()
+    }
+
+    private fun addMovieToList(movie: Movie, desiredListId: String) {
+        val userEmail = FirebaseInitializer.authInstance.currentUser?.email.toString()
+        val listsRef = FirebaseInitializer.firestoreInstance.collection("lists").document(userEmail)
+
+        listsRef
+            .get()
+            .addOnSuccessListener { document ->
+                val data = document.data
+
+                data?.forEach { (key, value) ->
+                    val listData = value as? Map<*, *>
+                    val listId = listData?.get("listId").toString()
+
+                    if (listId == desiredListId) {
+                        val moviesList = document.get("lista_$listId.listMovies") as? MutableList<Map<String, Any>>
+
+                        moviesList?.add(
+                            mapOf(
+                                "id" to movie.id,
+                                "title" to movie.title,
+                                "poster_path" to movie.poster_path,
+                                "releaseDate" to movie.release_date,
+                                "averageVote" to movie.vote_average
+                            )
+                        )
+
+                        listsRef.update("lista_$listId.listMovies", moviesList)
+                            .addOnSuccessListener {
+                                requireActivity().onBackPressedDispatcher.onBackPressed()
+                            }
+                            .addOnFailureListener { exception ->
+                                handleAddMovieToListError(exception)
+                            }
+                    }
+                }
+
+            }
+            .addOnFailureListener { exception ->
+                Log.d("bruh", "Error fetching lists: $exception")
+            }
+    }
+
+    private fun handleAddMovieToListError(exception: Exception) {
+        requireActivity().onBackPressedDispatcher.onBackPressed()
+        Toast.makeText(requireContext(), "Error al añadir la película a la lista: ${exception.message}", Toast.LENGTH_SHORT).show()
     }
 }

@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/notificacion_action"
-        android:icon="@drawable/ic_notification"
-        android:title="@string/Notificacion"
+        android:id="@+id/toolbarMenu_themeMenu"
+        android:icon="@drawable/outline_brightness_6_24"
+        android:title="@string/Theme"
         app:iconTint="?attr/colorOnPrimary"
         app:showAsAction="ifRoom" />
 </menu>

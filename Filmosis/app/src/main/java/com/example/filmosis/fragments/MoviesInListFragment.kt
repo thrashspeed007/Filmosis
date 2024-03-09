@@ -1,10 +1,13 @@
 package com.example.filmosis.fragments
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -53,6 +56,8 @@ class MoviesInListFragment : Fragment() {
         val listId = arguments?.getString(ARG_LIST_ID)
         Log.d("MovieInListFragment",listId.toString())
 
+        initAddMovieButton()
+
         if (currentUserEmail != null && listId != null) {
             fetchDocument(currentUserEmail,listId)
         }
@@ -80,7 +85,7 @@ class MoviesInListFragment : Fragment() {
                                 val listedMovies = listMovies?.map { movie ->
                                     val averageVote = movie["averageVote"].toString().toDouble()
                                     val movieId = movie["id"].toString().toInt()
-                                    val moviePosterPath = movie["posterPath"] as? String ?: ""
+                                    val moviePosterPath = movie["poster_path"] as? String ?: ""
                                     val releaseDate = movie["releaseDate"] as? String ?: ""
                                     val title = movie["title"] as? String ?: ""
 
@@ -120,6 +125,7 @@ class MoviesInListFragment : Fragment() {
     }
 
     private fun initRv(listedMovies: MutableList<ListedMovie>){
+        requireView().findViewById<ProgressBar>(R.id.moviesInList_progressCircle).visibility = View.GONE
 
         val rv = requireView().findViewById<RecyclerView>(R.id.moviesInList_moviesRecyclerView)
         rv.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
@@ -148,14 +154,22 @@ class MoviesInListFragment : Fragment() {
         requireView().findViewById<TextView>(R.id.moviesInList_listDescription).text = listDescription
     }
 
+    private fun initAddMovieButton() {
+        val addMovieBtn: Button = requireView().findViewById(R.id.moviesInList_addMovieBtn)
+
+        addMovieBtn.setOnClickListener {
+            val fragmentManager = requireActivity().supportFragmentManager
+            val transaction = fragmentManager.beginTransaction()
+            transaction.replace(R.id.fragmentContainerView, MoviesSearchedFragment.newInstance("", true, arguments?.getString(ARG_LIST_ID).toString()))
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
+    }
+
     private fun deleteMovieFromFirestore(movieId: Int) {
         val userEmail = FirebaseInitializer.authInstance.currentUser?.email.toString()
         val listsRef = firestore.collection("lists").document(userEmail)
         val desiredListId = arguments?.getString(ARG_LIST_ID)
-
-
-        // TODO
-        // NO PUEDO TIO
 
         listsRef
             .get()
@@ -174,10 +188,10 @@ class MoviesInListFragment : Fragment() {
                             Log.d("bruh", listId)
                             listsRef.update("lista_$listId.listMovies", moviesList)
                                 .addOnSuccessListener {
-                                    Log.d("bruh", "Movie deleted successfully.")
+
                                 }
                                 .addOnFailureListener { exception ->
-                                    Log.d("bruh", "Error updating document: $exception")
+                                    Toast.makeText(requireContext(), "Error al eliminar la lista: ${exception.message}", Toast.LENGTH_SHORT).show()
                                 }
                         }
 

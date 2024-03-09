@@ -1,9 +1,12 @@
 package com.example.filmosis.fragments
 
+import android.content.Context
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.PopupMenu
 import android.widget.SearchView
@@ -15,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.filmosis.R
 import com.example.filmosis.adapters.CarouselMoviesAdapter
 import com.example.filmosis.adapters.GenresCardViewsAdapter
+import com.example.filmosis.adapters.ListedMoviesAdapter
 import com.example.filmosis.data.access.tmdb.MoviesAccess
 import com.example.filmosis.data.model.tmdb.Cast
 import com.example.filmosis.data.model.tmdb.Movie
@@ -27,7 +31,10 @@ class ExploreFragment : Fragment() {
     private val moviesAccess = MoviesAccess()
 
     private var trendingMovies: ArrayList<Movie> = ArrayList()
+    private var filteredMoviesList: ArrayList<Movie> = ArrayList()
+
     private lateinit var trendingMoviesRecyclerView: RecyclerView
+    private lateinit var moviesFilteredRv: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,8 +53,13 @@ class ExploreFragment : Fragment() {
         trendingMoviesRecyclerView = view.findViewById(R.id.explore_trendingMoviesRecyclerView)
         addMoviesTrendingMoviesRv()
 
+        moviesFilteredRv = view.findViewById(R.id.explore_moviesListsRecyclerView)
+        moviesFilteredRv.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+        initMoviesFilteredRv()
+
         initSearchViewAndSearchFilter(view)
         initGenreCardViews()
+        initFilterMoviesButtons(view)
     }
 
     private fun initSearchViewAndSearchFilter(view: View) {
@@ -158,33 +170,71 @@ class ExploreFragment : Fragment() {
         genresRecyclerView.layoutManager = GridLayoutManager(requireContext(), 3, LinearLayoutManager.HORIZONTAL, false)
     }
 
-    //TODO Esto se puede quitar
-    fun navigateToMovie(movie:Movie){
-        val bundle = Bundle().apply {
-            putInt("movieId", movie.id)
-            putString("title", movie.title)
-            putString("overview", movie.overview)
-            putDouble("popularity", movie.popularity)
-            putString("release_date", movie.release_date)
-            putDouble("vote_average", movie.vote_average)
-            putInt("vote_count", movie.vote_count)
-            putBoolean("adult", movie.adult)
-            putString("backdrop_path", movie.backdrop_path)
-            putString("original_language", movie.original_language)
-            putString("original_title", movie.original_title)
-            putBoolean("video", movie.video)
-            putString("poster_path", movie.poster_path)
-
-        }
-        val nuevoFragmento = PeliculaSeleccionadaFragment().apply {
-            arguments = bundle
-        }
-
-        val fragmentManager = requireActivity().supportFragmentManager
-        val transaction = fragmentManager.beginTransaction()
-        transaction.replace(R.id.fragmentContainerView, nuevoFragmento)
-        transaction.addToBackStack(null)
-        transaction.commit()
+    private fun resolveThemeColor(context: Context, attr: Int): Int {
+        val typedValue = TypedValue()
+        val theme = context.theme
+        theme.resolveAttribute(attr, typedValue, true)
+        return typedValue.data
     }
 
+    private fun initFilterMoviesButtons(view: View) {
+        val bestRatedBtn: Button = view.findViewById(R.id.explore_bestRatedBtn)
+        val popularBtn: Button = view.findViewById(R.id.explore_popularBtn)
+        val latestBtn: Button = view.findViewById(R.id.explore_latestBtn)
+        val upcomingBtn: Button = view.findViewById(R.id.explore_upcomingBtn)
+
+        val buttons = listOf(bestRatedBtn, popularBtn, latestBtn, upcomingBtn)
+
+        for (actualButton in buttons) {
+
+            actualButton.setBackgroundColor(resolveThemeColor(requireContext(), androidx.appcompat.R.attr.colorBackgroundFloating))
+
+            actualButton.setOnClickListener {
+                if (!actualButton.isSelected) {
+                    for (button in buttons) {
+                        button.isSelected = false
+                        button.setBackgroundColor(resolveThemeColor(requireContext(), androidx.appcompat.R.attr.colorBackgroundFloating))
+                    }
+
+                    actualButton.isSelected = true
+                    actualButton.setBackgroundColor(resolveThemeColor(requireContext(), androidx.appcompat.R.attr.colorPrimary))
+
+                    filteredMoviesList.clear()
+                    when (actualButton.id) {
+                        R.id.explore_bestRatedBtn -> moviesAccess.listBestRatedMovies { updateFilteredMoviesList(it) }
+                        R.id.explore_popularBtn -> moviesAccess.listPopularMovies { updateFilteredMoviesList(it) }
+                        R.id.explore_latestBtn -> moviesAccess.listLatestMovies { updateFilteredMoviesList(it) }
+                        R.id.explore_upcomingBtn -> moviesAccess.listUpcomingMovies { updateFilteredMoviesList(it) }
+                    }
+                }
+            }
+        }
+
+        bestRatedBtn.isSelected = true
+        bestRatedBtn.setBackgroundColor(resolveThemeColor(requireContext(), androidx.appcompat.R.attr.colorPrimary))
+    }
+
+    private fun updateFilteredMoviesList (movies: List<Movie>) {
+
+        movies.forEach { movie ->
+            filteredMoviesList.add(movie)
+
+        }
+
+        val moviesAdapter = ListedMoviesAdapter(filteredMoviesList) {
+                movieClicked ->
+
+            val fragmentManager = requireActivity().supportFragmentManager
+            val transaction = fragmentManager.beginTransaction()
+            transaction.replace(R.id.fragmentContainerView, PeliculaSeleccionadaFragment.newInstance(movieClicked.id))
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
+
+        moviesFilteredRv.adapter = moviesAdapter
+    }
+
+    private fun initMoviesFilteredRv() {
+        moviesAccess.listBestRatedMovies { updateFilteredMoviesList(it) }
+    }
 }

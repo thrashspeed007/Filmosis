@@ -3,12 +3,14 @@ package com.example.filmosis
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.ImageButton
-import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.net.toUri
+import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
@@ -38,6 +40,26 @@ class MainActivity : AppCompatActivity() {
         initBottomNavigationViewAndFragments()
         initDrawerLayout()
         checkProfilePic()
+
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.title = null
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.options_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.toolbarMenu_themeMenu -> {
+                Toast.makeText(applicationContext, "implementar selector de tema", Toast.LENGTH_SHORT).show()
+                return true
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
     private fun checkProfilePic() {
@@ -123,10 +145,8 @@ class MainActivity : AppCompatActivity() {
 
         drawerNavigationView.setNavigationItemSelectedListener {
             when (it.itemId) {
-                // TODO
                 R.id.drawerMenu_myLists -> {
                     replaceFragment(ListsFragment(),"LISTS_FRAGMENT")
-                    val drawerLayout : DrawerLayout = findViewById(R.id.main_drawerLayout)
                     drawerLayout.close()
                     return@setNavigationItemSelectedListener true
                 }
@@ -144,7 +164,8 @@ class MainActivity : AppCompatActivity() {
 
         if (tag.isNotEmpty()) {
             transaction.replace(R.id.fragmentContainerView, fragment,tag)
-        }else {
+            transaction.addToBackStack(null)
+        } else {
             transaction.replace(R.id.fragmentContainerView, fragment)
         }
 
