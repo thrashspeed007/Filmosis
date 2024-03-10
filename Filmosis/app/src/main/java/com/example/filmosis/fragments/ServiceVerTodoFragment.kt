@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageButton
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -26,7 +28,7 @@ class ServiceVerTodoFragment : Fragment() {
 
     private var ids: ArrayList<Int> = ArrayList<Int>().apply {
         addAll(listOf(49, 213, 2739,18,94,50,2740))
-        addAll(generateRandomNumbers(300))
+        addAll(generateRandomNumbers(100))
     }
 
     override fun onCreateView(
@@ -51,6 +53,11 @@ class ServiceVerTodoFragment : Fragment() {
                     adapter.notifyDataSetChanged()
                 }
             }
+        }
+
+        val goBack : ImageButton = view.findViewById(R.id.goBack)
+        goBack.setOnClickListener{
+            parentFragmentManager.popBackStack()
         }
 
         return view
