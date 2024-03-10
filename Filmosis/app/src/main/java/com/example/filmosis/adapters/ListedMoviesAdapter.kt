@@ -17,51 +17,16 @@ import com.example.filmosis.data.model.tmdb.Movie
 import com.example.filmosis.utilities.tmdb.TmdbData
 
 class ListedMoviesAdapter(private val movies: List<Movie>, private val onMovieClick: (Movie) -> Unit) : RecyclerView.Adapter<ListedMoviesAdapter.MovieRowViewHolder>() {
-    class MovieRowViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnCreateContextMenuListener {
+    class MovieRowViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val movieImageView : ImageView = itemView.findViewById(R.id.itemMovieSearched_imagePoster)
         val movieName : TextView = itemView.findViewById(R.id.itemMovieSearched_movieName)
         val movieGenres : TextView = itemView.findViewById(R.id.itemMovieSearched_movieGenres)
         val movieDate : TextView = itemView.findViewById(R.id.itemMovieSearched_textReleaseDate)
         val movieVoteAverage : TextView = itemView.findViewById(R.id.itemMovieSearched_textAverageVote)
-
-        init {
-            itemView.setOnCreateContextMenuListener(this)
-        }
-
-        override fun onCreateContextMenu(
-            menu: ContextMenu?,
-            v: View?,
-            menuInfo: ContextMenu.ContextMenuInfo?
-        ) {
-            (v?.context as? MainActivity)?.menuInflater?.inflate(R.menu.movie_row_menu, menu)
-            menu?.setHeaderTitle("Opciones pelicula")
-
-            // Accion de cada item de menu...
-
-            menu?.findItem(R.id.movieRowMenu_addTolist)?.setOnMenuItemClickListener {
-                Toast.makeText(itemView.context, "*implementar añadir a lista*", Toast.LENGTH_SHORT).show()
-                return@setOnMenuItemClickListener true
-            }
-
-            menu?.findItem(R.id.movieRowMenu_shareMovie)?.setOnMenuItemClickListener {
-                Toast.makeText(itemView.context, "*implementar compartir pelicula*", Toast.LENGTH_SHORT).show()
-                return@setOnMenuItemClickListener true
-            }
-
-            menu?.findItem(R.id.movieRowMenu_download_cover)?.setOnMenuItemClickListener {
-                Toast.makeText(itemView.context, "*implementar descargar portada*", Toast.LENGTH_SHORT).show()
-                return@setOnMenuItemClickListener true
-            }
-        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieRowViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_movie_searched, parent, false)
-        view.setOnCreateContextMenuListener { menu, v, menuInfo ->
-            val activity = view.context as? MainActivity
-            activity?.menuInflater?.inflate(R.menu.movie_row_menu, menu)
-            menu.setHeaderTitle("Opciones de película")
-        }
         return MovieRowViewHolder(view)
     }
 
