@@ -63,6 +63,14 @@
 
         </LinearLayout>
 
+        <ImageButton
+            android:id="@+id/itemList_deleteBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@android:color/transparent"
+            android:src="@drawable/baseline_delete_24"
+            android:tint="?attr/colorOnBackground" />
+
     </LinearLayout>
 
 </com.google.android.material.card.MaterialCardView>

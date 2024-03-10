@@ -22,6 +22,7 @@ import com.example.filmosis.ChangePasswordActivity
 import com.example.filmosis.R
 import com.example.filmosis.init.FirebaseInitializer
 import com.example.filmosis.utilities.firebase.FirestoreImageManager
+import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import de.hdodenhof.circleimageview.CircleImageView
 
@@ -32,6 +33,8 @@ enum class ProviderType {
 
 class UserFragment : Fragment() {
     private lateinit var profilePic : CircleImageView
+    private var ultimoTiempoRequest: Long = 0
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -130,25 +133,43 @@ class UserFragment : Fragment() {
         }
 
         resetPassButon.setOnClickListener {
-            val user = FirebaseInitializer.authInstance.currentUser
+            val tiempoActual = System.currentTimeMillis()
 
-            val email = user?.email
-            var confirmedEmail : String = ""
-            if (email != null) {
-                if (email.isNotEmpty()) {
-                    confirmedEmail = email.toString()
-                }
-            }
+            if (tiempoActual - ultimoTiempoRequest >= 60000) { // 60000 milisegundos = 1 minuto
+                val user = FirebaseInitializer.authInstance.currentUser
 
-            FirebaseInitializer.authInstance.sendPasswordResetEmail(confirmedEmail).addOnCompleteListener{
-                    task ->
-                if (task.isSuccessful) {
-                    Toast.makeText(requireContext(),"Revisa tu correo electrónico (${confirmedEmail})",
-                        Toast.LENGTH_SHORT).show()
-                }else {
-                    Toast.makeText(requireContext(),"Error ${task.exception?.message}",
-                        Toast.LENGTH_LONG).show()
+                val email = user?.email
+                var confirmedEmail : String = ""
+                if (email != null) {
+                    if (email.isNotEmpty()) {
+                        confirmedEmail = email.toString()
+                    }
                 }
+
+                FirebaseInitializer.authInstance.sendPasswordResetEmail(confirmedEmail).addOnCompleteListener{
+                        task ->
+                    if (task.isSuccessful) {
+                        val builder = AlertDialog.Builder(requireContext())
+
+                        builder.setTitle("Reestablecimiento de constraseña")
+                        builder.setMessage("Revisa tu correo electrónico: $email")
+
+                        builder.setPositiveButton("Aceptar") { dialog, _  ->
+                            dialog.dismiss()
+                        }
+
+                        val alertDialog: AlertDialog = builder.create()
+                        alertDialog.show()
+                    }else {
+                        Toast.makeText(requireContext(),"Error ${task.exception?.message}",
+                            Toast.LENGTH_LONG).show()
+                    }
+                }
+
+                ultimoTiempoRequest = tiempoActual
+            } else {
+                Toast.makeText(requireContext(),"Espera 1 minuto para volver a reenviar el correo de restablecimiento de contraseña.",
+                    Toast.LENGTH_LONG).show()
             }
         }
 
@@ -164,21 +185,23 @@ class UserFragment : Fragment() {
             val selectedImageUri: Uri? = data.data
             Log.d("Foto seleccionada",selectedImageUri.toString())
             profilePic.setImageURI(selectedImageUri)
+            val drawerNavigationView: NavigationView = requireActivity().findViewById(R.id.main_drawerNavigationView)
+            Glide.with(requireContext()).load(selectedImageUri).into(drawerNavigationView.getHeaderView(0).findViewById(R.id.drawerHeader_profilePic))
             FirestoreImageManager.setTemporaryImageUri(selectedImageUri.toString())
             val prefs = activity?.getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)
             if (selectedImageUri != null && prefs?.getString("username","") != null) {
-                uploadImageToFirebaseStorage(selectedImageUri, prefs.getString("username","")!!)
+                uploadImageToFirebaseStorage(selectedImageUri, prefs.getString("email","")!!)
             }
         }
     }
 
-    private fun uploadImageToFirebaseStorage(imageUri: Uri, username: String) {
+    private fun uploadImageToFirebaseStorage(imageUri: Uri, email: String) {
         // Obtener una referencia al Storage de Firebase
         val storageReference = FirebaseInitializer.firebaseStorageInstance.reference
 
         // Crear una referencia para la imagen en el Storage
         // Utiliza el nombre de usuario para generar el nombre del archivo
-        val imageName = "profilepic_$username.jpg"
+        val imageName = "profilepic_$email.jpg"
         val imagesRef = storageReference.child("images/$imageName")
 
         // Subir la imagen al Storage

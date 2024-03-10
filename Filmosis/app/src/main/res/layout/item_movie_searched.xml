@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@android:color/transparent"
             android:src="@drawable/baseline_delete_24"
-            android:tint="?attr/colorOnBackground"
+            app:tint="?attr/colorOnBackground"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -59,11 +59,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
             android:textColor="?attr/colorOnSurface"
             android:textSize="14sp"
-            app:layout_constraintEnd_toStartOf="@+id/itemMovieSearched_deleteButton"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/itemMovieSearched_imagePoster"
             app:layout_constraintTop_toBottomOf="@+id/itemMovieSearched_movieName" />
 
@@ -74,7 +73,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginBottom="4dp"
             android:text="Average Vote: 8.5"
             android:textColor="?attr/colorOnSurfaceVariant"
             android:textSize="14sp"

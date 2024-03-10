@@ -35,12 +35,22 @@ class CreateListFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setup()
+
+        val nombreListaTv: EditText = view.findViewById(R.id.createList_editTextTitle)
+        val descripListaTv: EditText = view.findViewById(R.id.createList_editTextDescription)
+        val guardarListaBtn: Button = view.findViewById(R.id.createList_buttonSave)
+
+        guardarListaBtn.setOnClickListener {
+            val titleLista = nombreListaTv.text.toString()
+            if (titleLista.isNotEmpty()) {
+                crearLista(titleLista, descripListaTv.text.toString())
+            } else {
+                Toast.makeText(requireContext(), "El título no puede estar vacío", Toast.LENGTH_LONG).show()
+            }
+        }
     }
 
     private fun setup() {
-        val nombreListaTv : EditText = requireView().findViewById(R.id.createList_editTextTitle)
-        val descripListaTv : EditText = requireView().findViewById(R.id.createList_editTextDescription)
-        val guardarListaBtn : Button = requireView().findViewById(R.id.createList_buttonSave)
         val cancelarBtn : Button = requireView().findViewById(R.id.createList_buttonCancel)
 
         cancelarBtn.setOnClickListener {
@@ -50,22 +60,6 @@ class CreateListFragment : DialogFragment() {
 
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        val nombreListaTv : EditText = requireView().findViewById(R.id.createList_editTextTitle)
-        val descripListaTv : EditText = requireView().findViewById(R.id.createList_editTextDescription)
-        val guardarListaBtn : Button = requireView().findViewById(R.id.createList_buttonSave)
-
-        guardarListaBtn.setOnClickListener{
-            val titleLista = nombreListaTv.text.toString()
-            if (titleLista.isNotEmpty()) {
-                crearLista(titleLista,descripListaTv.text.toString())
-            } else {
-                Toast.makeText(requireContext(),"El título no puede estar vacío",Toast.LENGTH_LONG).show()
-            }
-        }
-    }
 
     private fun crearLista(nombreLista: String, descripcionLista: String) {
         val email: String = FirebaseInitializer.authInstance.currentUser?.email!!
@@ -90,14 +84,16 @@ class CreateListFragment : DialogFragment() {
         // Agregar los campos adicionales al documento existente usando update()
         docRef.update(listaDatosAdicionales)
             .addOnSuccessListener {
-                val fragmentoContenedor = requireActivity().supportFragmentManager.findFragmentByTag("LISTS_FRAGMENT") as? ListsFragment
-                fragmentoContenedor?.actualizarLista(
-                    ListItem(listaDatosAdicionales["$nombreCampoContenedor.listId"].toString(),listaDatosAdicionales["$nombreCampoContenedor.listName"].toString(),
-                        listaDatosAdicionales["$nombreCampoContenedor.listDescription"].toString(),listaDatosAdicionales["$nombreCampoContenedor.listDate"].toString())
-                )
-
-                // Cerrar el diálogo
                 dismiss()
+
+                val fragmentManager = requireActivity().supportFragmentManager
+                fragmentManager.popBackStack()
+
+                val transaction = fragmentManager.beginTransaction()
+                transaction.replace(R.id.fragmentContainerView, ListsFragment(), "LISTS_FRAGMENT")
+                transaction.addToBackStack(null)
+                transaction.commit()
+
             }
             .addOnFailureListener { e ->
                 Log.w("CrearLista", "Error al agregar campos", e)

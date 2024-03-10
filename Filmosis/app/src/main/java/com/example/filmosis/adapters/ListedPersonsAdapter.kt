@@ -48,7 +48,22 @@ class ListedPersonsAdapter(private val persons: List<Person>, private val onPers
             holder.personProfilePic.setImageResource(R.drawable.logofilmosispremium)
         }
 
-        holder.personType.text = person.known_for_department
+        when (person.gender) {
+            1 -> {
+                if (person.known_for_department == "Directing") {
+                    holder.personType.text = "Directora"
+                } else if (person.known_for_department == "Acting") {
+                    holder.personType.text = "Actriz"
+                }
+            }
+            else -> {
+                if (person.known_for_department == "Directing") {
+                    holder.personType.text = "Director"
+                } else if (person.known_for_department == "Acting") {
+                    holder.personType.text = "Actor"
+                }
+            }
+        }
 
         holder.itemView.setOnClickListener {onPersonClick.invoke(person)}
     }

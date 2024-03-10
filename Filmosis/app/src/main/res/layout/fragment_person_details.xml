@@ -96,6 +96,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
+                android:maxLines="10"
                 android:text="Biography"
                 android:textColor="?attr/colorOnBackground"
                 android:textSize="12sp" />

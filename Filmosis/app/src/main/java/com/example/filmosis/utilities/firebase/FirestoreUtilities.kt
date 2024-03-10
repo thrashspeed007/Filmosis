@@ -27,4 +27,9 @@ object FirestoreUtilities {
                 }
         }
     }
+
+    fun createUserListEntryInFirestore(firestore: FirebaseFirestore, email: String) {
+        firestore.collection("lists").document(email)
+            .set(hashMapOf<String, Any>())
+    }
 }

@@ -73,12 +73,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkProfilePic() {
+        val drawerNavigationView: NavigationView = findViewById(R.id.main_drawerNavigationView)
+
         if (FirestoreImageManager.isTemporaryImageUriEmpty()) {
             val storageReference = FirebaseInitializer.firebaseStorageInstance.reference
 
-            val username : String? = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)?.getString("username","")
-            if (!username.isNullOrBlank()) {
-                val profilePicSrc: String = "profilepic_$username.jpg"
+            val email : String? = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)?.getString("email","")
+            if (!email.isNullOrBlank()) {
+                val profilePicSrc: String = "profilepic_$email.jpg"
 
                 val imagesRef = storageReference.child("images")
 
@@ -89,7 +91,6 @@ class MainActivity : AppCompatActivity() {
                                 item.downloadUrl.addOnSuccessListener { uri ->
                                     val imageUrl = uri.toString()
                                     FirestoreImageManager.setTemporaryImageUri(imageUrl)
-                                    val drawerNavigationView: NavigationView = findViewById(R.id.main_drawerNavigationView)
                                     Glide.with(applicationContext).load(imageUrl).into(drawerNavigationView.getHeaderView(0).findViewById(R.id.drawerHeader_profilePic))
                                 }.addOnFailureListener { exception ->
                                     Log.d("Profile Pic", "Error al obtener la URL de la imagen", exception)
@@ -102,11 +103,13 @@ class MainActivity : AppCompatActivity() {
                         Log.d("Profile Pic", "Error al verificar la existencia del archivo en Firebase Storage", exception)
                     }
             }
+        } else {
+            Glide.with(applicationContext).load(FirestoreImageManager.getTemporaryImageUri()).into(drawerNavigationView.getHeaderView(0).findViewById(R.id.drawerHeader_profilePic))
         }
     }
 
     private fun initBottomNavigationViewAndFragments() {
-        val bottomNavigationView : BottomNavigationView = findViewById(R.id.bottomNavigationView)
+        val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottomNavigationView)
 
         val fragmentHome = HomeFragment()
         val fragmentExplore = ExploreFragment()
@@ -116,15 +119,27 @@ class MainActivity : AppCompatActivity() {
         replaceFragment(fragmentHome)
 
         bottomNavigationView.setOnItemSelectedListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.page_home -> replaceFragment(fragmentHome)
-                R.id.page_explore -> replaceFragment(fragmentExplore)
-                R.id.page_social -> replaceFragment(fragmentSocial)
-                R.id.page_user -> replaceFragment(fragmentUser)
+            val currentFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView)
+            val newFragment = when (menuItem.itemId) {
+                R.id.page_home -> fragmentHome
+                R.id.page_explore -> fragmentExplore
+                R.id.page_social -> fragmentSocial
+                R.id.page_user -> fragmentUser
+                else -> fragmentHome
             }
+
+            if (currentFragment != null && currentFragment != newFragment) {
+                val transaction = supportFragmentManager.beginTransaction()
+
+                transaction.replace(R.id.fragmentContainerView, newFragment)
+                transaction.addToBackStack(null)
+                transaction.commit()
+            }
+
             true
         }
     }
+
 
     private fun initDrawerLayout() {
         val drawerLayout : DrawerLayout = findViewById(R.id.main_drawerLayout)
@@ -156,7 +171,10 @@ class MainActivity : AppCompatActivity() {
         drawerNavigationView.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.drawerMenu_myLists -> {
-                    replaceFragment(ListsFragment(),"LISTS_FRAGMENT")
+                    val currentFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView)
+                    if (currentFragment?.tag != "LISTS_FRAGMENT") {
+                        replaceFragment(ListsFragment(),"LISTS_FRAGMENT")
+                    }
                     drawerLayout.close()
                     return@setNavigationItemSelectedListener true
                 }

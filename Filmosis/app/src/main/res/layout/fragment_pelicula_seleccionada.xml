@@ -101,17 +101,18 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:orientation="horizontal">
 
-<!--                            <TextView-->
+                            <!--                            <TextView-->
 
-<!--                                android:id="@+id/tvTimeFilm"-->
-<!--                                android:layout_width="wrap_content"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:layout_marginTop="10dp"-->
-<!--                                android:text="2h29m"-->
+                            <!--                                android:id="@+id/tvTimeFilm"-->
+                            <!--                                android:layout_width="wrap_content"-->
+                            <!--                                android:layout_height="wrap_content"-->
+                            <!--                                android:layout_marginTop="10dp"-->
+                            <!--                                android:text="2h29m"-->
 
-<!--                                android:textColor="?attr/colorOnPrimary" />-->
+                            <!--                                android:textColor="?attr/colorOnPrimary" />-->
 
                             <!-- TextView para la fecha de lanzamiento -->
                             <TextView
@@ -123,14 +124,23 @@
                                 android:textColor="?attr/colorOnPrimary" />
 
                             <com.google.android.material.button.MaterialButton
-                                android:layout_marginLeft="100dp"
-                                android:layout_gravity="end"
                                 android:id="@+id/anadirLista"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Añadir a lista"
+                                android:layout_gravity="end"
+                                android:layout_marginLeft="100dp"
+                                android:paddingHorizontal="10dp"
+                                android:text="AÑADIR A LISTA"
+                                android:textAlignment="center"
+                                android:textColor="?attr/colorOnSecondary"
+                                android:textSize="12sp"
+                                app:backgroundTint="?attr/colorSecondary"
                                 app:icon="@drawable/baseline_add_24"
-                                app:iconGravity="end" />
+                                app:iconGravity="end"
+                                app:iconSize="16dp"
+                                app:iconTint="?attr/colorOnSecondary"
+                                app:strokeColor="?attr/colorOnPrimary"
+                                app:strokeWidth="1dp" />
                         </LinearLayout>
 
                         <!-- TextView para la puntuación promedio -->
@@ -176,6 +186,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
+                            android:progressBackgroundTint="?attr/colorSurfaceVariant"
+
                             android:contextClickable="false"
                             android:isIndicator="true" />
                     </LinearLayout>

@@ -6,8 +6,11 @@ import com.example.filmosis.adapters.ServicioAdapter
 import com.example.filmosis.config.DatosConexion
 import com.example.filmosis.data.model.tmdb.Cast
 import com.example.filmosis.data.model.tmdb.CastResponse
+import com.example.filmosis.data.model.tmdb.CastX
+import com.example.filmosis.data.model.tmdb.CreditsCast
 import com.example.filmosis.data.model.tmdb.CreditsResponse
 import com.example.filmosis.data.model.tmdb.Crew
+import com.example.filmosis.data.model.tmdb.CrewX
 
 import com.example.filmosis.data.model.tmdb.MoviesPage
 import com.example.filmosis.data.model.tmdb.Movie
@@ -350,17 +353,17 @@ class MoviesAccess {
         })
     }
 
-    fun getActorDetails(movieId: Int, callback: (List<Cast>?) -> Unit) {
+    fun getActorDetails(movieId: Int, callback: (List<CastX>?) -> Unit) {
         val call = RetrofitService.tmdbApi.getMovieCredits2(movieId, DatosConexion.API_KEY)
-        call.enqueue(object : Callback<CastResponse> {
+        call.enqueue(object : Callback<CreditsCast> {
             override fun onResponse(
-                call: Call<CastResponse>,
-                response: Response<CastResponse>
+                call: Call<CreditsCast>,
+                response: Response<CreditsCast>
             ) {
                 if (response.isSuccessful) {
                     val creditsResponse = response.body()
                     if (creditsResponse != null) {
-                        val actorList = creditsResponse.crew.filter { it.known_for_department == "Acting" }
+                        val actorList = creditsResponse.cast.filter { it.known_for_department == "Acting" }
                         callback(actorList)
                     } else {
                         callback(null)
@@ -370,7 +373,7 @@ class MoviesAccess {
                 }
             }
 
-            override fun onFailure(call: Call<CastResponse>, t: Throwable) {
+            override fun onFailure(call: Call<CreditsCast>, t: Throwable) {
                 callback(null)
             }
         })

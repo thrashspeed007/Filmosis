@@ -74,7 +74,24 @@ class PersonDetailsFragment : Fragment() {
             }
 
             personName.text = it.name
-            personDepartment.text = it.known_for_department
+
+            when (it.gender) {
+                1 -> {
+                    if (it.known_for_department == "Directing") {
+                        personDepartment.text = "Directora"
+                    } else if (it.known_for_department == "Acting") {
+                        personDepartment.text = "Actriz"
+                    }
+                }
+                else -> {
+                    if (it.known_for_department == "Directing") {
+                        personDepartment.text = "Director"
+                    } else if (it.known_for_department == "Acting") {
+                        personDepartment.text = "Actor"
+                    }
+                }
+            }
+
             personBirthPlace.text = it.place_of_birth
             personBirthDay.text = it.birthday
             personBiography.text = it.biography
@@ -94,12 +111,12 @@ class PersonDetailsFragment : Fragment() {
                 castList.add(cast)
             }
 
-            //TODO no va el clik, he entendido que quieres navegar al fragment PeliculaSeleccionada pero el clik no funcionar
             val castsAdapter = PersonMoviesCastAdapter(castList) { castClicked ->
-                // TODO
-                // LLEVAR A PANTALLA DE DETALLES DE PELICULA...
-                navigateToMovie(castClicked)
-                Toast.makeText(requireContext(), "Funciona", Toast.LENGTH_SHORT).show()
+                val fragmentManager = requireActivity().supportFragmentManager
+                val transaction = fragmentManager.beginTransaction()
+                transaction.replace(R.id.fragmentContainerView, PeliculaSeleccionadaFragment.newInstance(castClicked.id))
+                transaction.addToBackStack(null)
+                transaction.commit()
 
             }
 
@@ -107,7 +124,7 @@ class PersonDetailsFragment : Fragment() {
         }
     }
 
-    //TODO hablar con adrianixx_sniper_you_xx, estos son los datos de mi fragmento peliculaSeleccionada, los datos del director
+    // hablar con adrianixx_sniper_you_xx, estos son los datos de mi fragmento peliculaSeleccionada, los datos del director
     fun navigateToMovie(movie:Cast){
         val bundle = Bundle().apply {
             putInt("movieId", movie.id)

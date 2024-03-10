@@ -22,6 +22,8 @@ class MoviesInListFragment : Fragment() {
 
     private val firestore = FirebaseInitializer.firestoreInstance
 
+    private var rootView: View? = null
+
     companion object {
         private const val ARG_LIST_ID = "listId"
 
@@ -42,8 +44,11 @@ class MoviesInListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_movies_in_list, container, false)
+        if (rootView == null) {
+            rootView = inflater.inflate(R.layout.fragment_movies_in_list, container, false)
+        }
+
+        return rootView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -125,12 +130,12 @@ class MoviesInListFragment : Fragment() {
     }
 
     private fun initRv(listedMovies: MutableList<ListedMovie>){
-        requireView().findViewById<ProgressBar>(R.id.moviesInList_progressCircle).visibility = View.GONE
+        rootView?.findViewById<ProgressBar>(R.id.moviesInList_progressCircle)?.visibility = View.GONE
 
-        val rv = requireView().findViewById<RecyclerView>(R.id.moviesInList_moviesRecyclerView)
-        rv.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        val rv = rootView?.findViewById<RecyclerView>(R.id.moviesInList_moviesRecyclerView)
+        rv?.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
-        rv.adapter = MoviesInListAdapter(
+        rv?.adapter = MoviesInListAdapter(
             listedMovies,
 
             onMovieClick = {
@@ -144,20 +149,35 @@ class MoviesInListFragment : Fragment() {
             isDeleteable = true,
 
             onDeleteMovie = {
-                deleteMovieFromFirestore(it.id)
+                val builder = AlertDialog.Builder(requireContext())
+                builder.setTitle("Confirmar")
+                builder.setMessage("¿Estás seguro de que quieres eliminar la lista?")
+
+                builder.setPositiveButton("Si") {_, _ ->
+                    deleteMovieFromFirestore(it.id)
+                    val adapter = rv?.adapter as? MoviesInListAdapter
+                    adapter?.deleteItemByMovieId(it.id)
+                }
+
+                builder.setNegativeButton("No") {_, _ ->
+
+                }
+
+                val alertDialog = builder.create()
+                alertDialog.show()
             }
         )
     }
 
     private fun initListInfo(listName: String, listDescription: String) {
-        requireView().findViewById<TextView>(R.id.moviesInList_listTitle).text = listName
-        requireView().findViewById<TextView>(R.id.moviesInList_listDescription).text = listDescription
+        rootView?.findViewById<TextView>(R.id.moviesInList_listTitle)?.text = listName
+        rootView?.findViewById<TextView>(R.id.moviesInList_listDescription)?.text = listDescription
     }
 
     private fun initAddMovieButton() {
-        val addMovieBtn: Button = requireView().findViewById(R.id.moviesInList_addMovieBtn)
+        val addMovieBtn: Button? = rootView?.findViewById(R.id.moviesInList_addMovieBtn)
 
-        addMovieBtn.setOnClickListener {
+        addMovieBtn?.setOnClickListener {
             val fragmentManager = requireActivity().supportFragmentManager
             val transaction = fragmentManager.beginTransaction()
             transaction.replace(R.id.fragmentContainerView, MoviesSearchedFragment.newInstance("", true, arguments?.getString(ARG_LIST_ID).toString()))

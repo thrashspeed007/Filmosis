@@ -13,7 +13,7 @@ class CurvedBackgroundView : View {
 
     private val backgroundColor = Color.parseColor("#FF9800") // Color de fondo naranja
     val typedValue = TypedValue()
-    private val curveColorAttr = context.theme.resolveAttribute(com.google.android.material.R.attr.colorSurfaceVariant, typedValue, true) // Color de las curvas blanco
+    private val curveColorAttr = context.theme.resolveAttribute(com.google.android.material.R.attr.colorSurface, typedValue, true) // Color de las curvas blanco
     private val curveColor = ContextCompat.getColor(context, typedValue.resourceId)
 
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG)

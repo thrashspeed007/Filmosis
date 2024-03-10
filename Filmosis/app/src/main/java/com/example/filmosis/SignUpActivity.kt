@@ -63,6 +63,7 @@ class SignUpActivity : AppCompatActivity() {
                                     if (task.isSuccessful) {
                                         FirestoreUtilities.saveUserInFirestore(firestore, auth, usernameEditText.text.toString(), emailEditText.text.toString(), nameEditText.text.toString() + " " + surnamesEditText.text.toString(),bornDateEditText.text.toString()) { success ->
                                             if (success) {
+                                                FirestoreUtilities.createUserListEntryInFirestore(firestore, auth.currentUser?.email.toString())
                                                 guardarDatos(emailEditText.text.toString(), ProviderType.BASIC.toString(), usernameEditText.text.toString(), nameEditText.text.toString() + " " + surnamesEditText.text.toString())
                                                 showMain()
                                             } else {

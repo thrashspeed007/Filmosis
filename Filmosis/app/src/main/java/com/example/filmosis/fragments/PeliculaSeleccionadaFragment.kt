@@ -59,7 +59,7 @@ class PeliculaSeleccionadaFragment : Fragment() {
     private lateinit var tvavg : TextView
     private lateinit var tvPupu : TextView
     private lateinit var ibBack : ImageButton
-    lateinit var idioma : String
+    private var idioma : String = ""
 
     private lateinit var textNodispSubs : TextView
     private lateinit var textNodispAlq : TextView
@@ -141,7 +141,7 @@ class PeliculaSeleccionadaFragment : Fragment() {
     private fun addDirectoresToList(context: Context, data: Movie) {
         ma.getDirectorDetails(data.id) { directors ->
             directors?.let { directorList ->
-                recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 recyclerView.adapter = PersonasAdapter(directorList) { directorClicked ->
 
                     val fragmentManager = requireActivity().supportFragmentManager
@@ -264,7 +264,7 @@ class PeliculaSeleccionadaFragment : Fragment() {
         tvAvg.rating = rating.toFloat()
 
         tvavg = view.findViewById(R.id.tvAvg)
-        tvavg.text = recuperacionInfo.vote_average?.toString() ?: ""
+        tvavg.text = recuperacionInfo.vote_average.toString()
 
         ibBack = view.findViewById(R.id.back)
         ibBack.setOnClickListener {
@@ -370,15 +370,26 @@ class PeliculaSeleccionadaFragment : Fragment() {
                     listOptions.add(listName)
                     listIds.add(listId)
                 }
+
                 val builder = AlertDialog.Builder(requireContext())
-                builder.setTitle("Elige una lista")
-                    .setItems(listOptions.toTypedArray()) { dialog, which ->
-                        val selectedListId = listIds[which]
-                        addMovieToSelectedList(movie, selectedListId)
-                    }
-                    .setNegativeButton("Cancelar") { dialog, _ ->
-                        dialog.dismiss()
-                    }
+
+                if (listIds.isEmpty()) {
+                    builder.setTitle("Aviso")
+                        .setMessage("Todavía no tienes ninguna lista creada.\n\nPara crear una lista, ve a 'Mis listas' en el menú desplegable superior de la esquina izquierda")
+                        .setNegativeButton("Aceptar") { dialog, _ ->
+                            dialog.dismiss()
+                        }
+
+                } else {
+                    builder.setTitle("Elige una lista")
+                        .setItems(listOptions.toTypedArray()) { dialog, which ->
+                            val selectedListId = listIds[which]
+                            addMovieToSelectedList(movie, selectedListId)
+                        }
+                        .setNegativeButton("Cancelar") { dialog, _ ->
+                            dialog.dismiss()
+                        }
+                }
                 builder.create().show()
 
 

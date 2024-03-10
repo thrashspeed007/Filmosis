@@ -51,11 +51,11 @@ class ExploreFragment : Fragment() {
 
     private fun setup(view: View) {
         trendingMoviesRecyclerView = view.findViewById(R.id.explore_trendingMoviesRecyclerView)
-        addMoviesTrendingMoviesRv()
-
         moviesFilteredRv = view.findViewById(R.id.explore_moviesListsRecyclerView)
         moviesFilteredRv.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+
         initMoviesFilteredRv()
+        addMoviesTrendingMoviesRv()
 
         initSearchViewAndSearchFilter(view)
         initGenreCardViews()

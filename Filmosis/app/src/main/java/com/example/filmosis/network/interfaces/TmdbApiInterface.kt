@@ -3,6 +3,7 @@ package com.example.filmosis.network.interfaces
 import com.example.filmosis.data.model.tmdb.Cast
 import com.example.filmosis.data.model.tmdb.CastResponse
 import com.example.filmosis.data.model.tmdb.CombinedCredits
+import com.example.filmosis.data.model.tmdb.CreditsCast
 import com.example.filmosis.data.model.tmdb.CreditsResponse
 import com.example.filmosis.data.model.tmdb.Movie
 import com.example.filmosis.data.model.tmdb.Moviefr
@@ -58,7 +59,7 @@ interface TmdbApiInterface {
     ): Call<MoviesPage>
 
 
-    @GET("movie/{movie_id}")
+    @GET("movie/{movie_id}?language=es-ES")
     fun getMovieDetails(
         @Path("movie_id") movieId: Int,
         @Query("api_key") apiKey: String,
@@ -108,17 +109,17 @@ interface TmdbApiInterface {
     ): Call<MoviesPage>
 
 
-    @GET("movie/{movie_id}/credits")
+    @GET("movie/{movie_id}/credits?language=es-ES")
     fun getMovieCredits(
         @Path("movie_id") movieId: Int,
         @Query("api_key") apiKey: String
     ): Call<CreditsResponse>
 
-    @GET("movie/{movie_id}/credits")
+    @GET("movie/{movie_id}/credits?language=es-ES")
     fun getMovieCredits2(
         @Path("movie_id") movieId: Int,
         @Query("api_key") apiKey: String
-    ): Call<CastResponse>
+    ): Call<CreditsCast>
 
     @GET("person/{person_id}/combined_credits?language=es-ES")
     fun getPersonCombinedCredits(
@@ -157,13 +158,13 @@ interface TmdbApiInterface {
     ): Call<NetworkDetailsResponse>
 
 
-    @GET("movie/{movie_id}")
+    @GET("movie/{movie_id}?language=es-ES")
     fun getMovieDetailsRecuperarGenres(
         @Path("movie_id") movieId: Int,
         @Query("api_key") apiKey: String
     ): Call<Moviefr>
 
-    @GET("movie/{movie_id}")
+    @GET("movie/{movie_id}?language=es-ES")
     fun getMovieDetailsRecuperar(
         @Path("movie_id") movieId: Int,
         @Query("api_key") apiKey: String

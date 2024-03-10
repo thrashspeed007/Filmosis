@@ -133,6 +133,7 @@ class AuthActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     FirestoreUtilities.saveUserInFirestore(firestore, auth, auth.currentUser?.displayName.toString(), auth.currentUser?.email.toString(), auth.currentUser?.displayName.toString(), "") { success ->
                         if (success) {
+                            FirestoreUtilities.createUserListEntryInFirestore(firestore, auth.currentUser?.email.toString())
                             guardarDatos(auth.currentUser?.email ?: "", ProviderType.GOOGLE.toString(), auth.currentUser?.displayName ?: "", auth.currentUser?.displayName ?: "")
                             showMain()
                         } else {

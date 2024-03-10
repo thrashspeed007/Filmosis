@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.filmosis.R
 import com.example.filmosis.fragments.GenreSelectedFragment
 import com.example.filmosis.utilities.app.ResourcesMapping
@@ -39,15 +40,13 @@ class GenresCardViewsAdapter(private val genres: List<Pair<Int, String>>) : Recy
         private val defaultDrawable = R.drawable.logofilmosispremium
 
         fun bind(genreId: Int, genreName: String) {
-            val newGenreDrawable = ResourcesMapping.genreImageMap[genreId]
-
             itemView.findViewById<TextView>(R.id.textViewGenre).text = genreName
 
-            if (newGenreDrawable != null) {
-                imageViewBackground.setImageResource(newGenreDrawable)
-            } else {
-                imageViewBackground.setImageResource(defaultDrawable)
-            }
+            val imageUrl = ResourcesMapping.genreImageMap[genreId]
+            Glide.with(itemView.context)
+                .load(imageUrl)
+                .placeholder(defaultDrawable)
+                .into(imageViewBackground)
         }
     }
 }

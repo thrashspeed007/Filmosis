@@ -75,7 +75,6 @@ class MoviesInListAdapter(private val movies: MutableList<ListedMovie>, private 
         // Comprobar si los items se pueden borrar, si no es asi ocultar el botón...
         if (isDeleteable) {
             holder.itemView.findViewById<ImageButton>(R.id.itemMovieSearched_deleteButton).setOnClickListener {
-                deleteItem(position)
                 onDeleteMovie.invoke(movie)
             }
         } else {
@@ -97,8 +96,9 @@ class MoviesInListAdapter(private val movies: MutableList<ListedMovie>, private 
         }
     }
 
-    fun deleteItem(position: Int) {
-        if (position in 0 until movies.size) {
+    fun deleteItemByMovieId(movieId: Int) {
+        val position = movies.indexOfFirst { it.id == movieId }
+        if (position != -1) {
             movies.removeAt(position)
             notifyItemRemoved(position)
             notifyItemRangeChanged(position, movies.size)

@@ -46,6 +46,7 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         style="@style/Widget.MaterialComponents.BottomNavigationView.Colored"
+        app:labelVisibilityMode="auto"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:itemBackground="?attr/colorSurface"

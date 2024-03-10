@@ -113,7 +113,7 @@
             android:layout_marginVertical="8dp"
             android:backgroundTint="?attr/colorPrimary"
             android:drawableLeft="@drawable/baseline_mail_lock_24"
-            android:text="Cambiar contraseña"
+            android:text="CAMBIAR CONTRASEÑA"
             android:textColor="?attr/colorSurface" />
 
         <Button
@@ -123,7 +123,7 @@
             android:layout_marginVertical="8dp"
             android:backgroundTint="?attr/colorPrimary"
             android:drawableLeft="@drawable/baseline_lock_reset_24"
-            android:text="Resetear contraseña"
+            android:text="REESTABLECER CONTRASEÑA"
             android:textColor="?attr/colorSurface" />
 
         <Button
@@ -133,7 +133,7 @@
             android:layout_marginVertical="8dp"
             android:backgroundTint="?attr/colorPrimary"
             android:drawableLeft="@drawable/baseline_logout_24"
-            android:text="Cerrar sesión"
+            android:text="CERRAR SESIÓN"
             android:textColor="?attr/colorSurface" />
 
     </LinearLayout>

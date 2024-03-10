@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/createList_editTextTitle"
         android:layout_marginTop="16dp"
-        android:hint="Descripción de la lista"
+        android:hint="Descripción de la lista (opcional)"
         android:padding="16dp" />
 
     <LinearLayout
