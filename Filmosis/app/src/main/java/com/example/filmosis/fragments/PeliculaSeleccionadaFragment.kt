@@ -526,7 +526,7 @@ class PeliculaSeleccionadaFragment : Fragment() {
 
                             listsRef.update("lista_$listId.listMovies", moviesList)
                                 .addOnSuccessListener {
-                                    requireActivity().onBackPressedDispatcher.onBackPressed()
+                                    Toast.makeText(requireContext(), "Pelicula añadida correctamente", Toast.LENGTH_SHORT).show()
                                 }
                                 .addOnFailureListener { exception ->
                                     handleAddMovieToListError(exception)

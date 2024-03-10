@@ -151,7 +151,7 @@ class MoviesInListFragment : Fragment() {
             onDeleteMovie = {
                 val builder = AlertDialog.Builder(requireContext())
                 builder.setTitle("Confirmar")
-                builder.setMessage("¿Estás seguro de que quieres eliminar la lista?")
+                builder.setMessage("¿Estás seguro de que quieres eliminar ${it.title} de la lista?")
 
                 builder.setPositiveButton("Si") {_, _ ->
                     deleteMovieFromFirestore(it.id)
