@@ -30,116 +30,93 @@ class VerTodoFragment : Fragment() {
 
 
 
-
+    /**
+     * Infla la vista del fragmento
+     * Configura todas los RecyclerView
+     * Boton para retroceder configurado (manera de eliminando de la pila)
+     *
+     * @param inflater Se emplea para inflar la vista
+     * @param container El contenedor al que se pone la vista
+     * @param savedInstanceState informacion previamente guardado del fragmento
+     * @return la vista inflada del fragmento
+     * **/
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         val view = inflater.inflate(R.layout.fragment_ver_todo, container, false)
-//        scrollView = view.findViewById(R.id.scrollViewVerTodo)
 
-        //populares
-        recyclerView = view.findViewById(R.id.recyclerViewVerTodo)
-        recyclerView.layoutManager = GridLayoutManager(requireContext(), 3)
-        moviesAccess.listPopularMovies { movies ->
-            adapter = GridRecyclerViewAdapter(movies){movie ->
-                val fragmentManager = requireActivity().supportFragmentManager
-                val transaction = fragmentManager.beginTransaction()
-                transaction.replace(R.id.fragmentContainerView, PeliculaSeleccionadaFragment.newInstance(movie.id))
-                transaction.addToBackStack(null)
-                transaction.commit()
-
-            }
-            recyclerView.adapter = adapter
-
-        }
-
-
-        //recomendadas
-        recyclerViewRecomendados = view.findViewById(R.id.recyclerViewVerTodoRecomendados)
-        recyclerViewRecomendados.layoutManager = GridLayoutManager(requireContext(), 3)
-        moviesAccess.listRecommendedMovies(movieId = 438631) { movies ->
-            adapter = GridRecyclerViewAdapter(movies){movie ->
-                val fragmentManager = requireActivity().supportFragmentManager
-                val transaction = fragmentManager.beginTransaction()
-                transaction.replace(R.id.fragmentContainerView, PeliculaSeleccionadaFragment.newInstance(movie.id))
-                transaction.addToBackStack(null)
-                transaction.commit()
-
-            }
-            recyclerViewRecomendados.adapter = adapter
-        }
-
-        //proximamente
-        recyclerViewProximamentes = view.findViewById(R.id.recyclerViewVerTodoProximamente)
-        recyclerViewProximamentes.layoutManager = GridLayoutManager(requireContext(), 3)
-        moviesAccess.listUpcomingMovies { movies ->
-            adapter = GridRecyclerViewAdapter(movies){movie ->
-                val fragmentManager = requireActivity().supportFragmentManager
-                val transaction = fragmentManager.beginTransaction()
-                transaction.replace(R.id.fragmentContainerView, PeliculaSeleccionadaFragment.newInstance(movie.id))
-                transaction.addToBackStack(null)
-                transaction.commit()
-
-            }
-            recyclerViewProximamentes.adapter = adapter
-        }
-
+        setupPopularMoviesRecyclerView(view)
+        setupRecommendedMoviesRecyclerView(view)
+        setupUpcomingMoviesRecyclerView(view)
 
         val buttonVolver: ImageButton = view.findViewById(R.id.goBack)
         buttonVolver.setOnClickListener {
             parentFragmentManager.popBackStack()
         }
 
-
-
-        // Busca la vista por su ID en el layout de HomeFragment
-//        val viewB: View? = activity?.findViewById(R.id.homeFragment)
-//        viewB?.let {
-//            // Accedemos a la vista de HomeFragment y realizamos ir a la seccion de las pelicualas
-//            //populares
-//            val buttonVerTodoPopulares: MaterialButton = viewB.findViewById(R.id.buttonShowAllPopulares)
-//            buttonVerTodoPopulares.setOnClickListener {
-//                scrollToSection(R.id.tvPopulares)
-////                Log.d("DEBUG", "Entro??????")
-//                println("Spursito xupala hermani")
-//            }
-//
-//            //proximamente
-//            val buttonVerTodoProximamente : MaterialButton = viewB.findViewById(R.id.buttonShowAllProximamente)
-//            buttonVerTodoProximamente.setOnClickListener{
-//                scrollToSection(R.id.tvProximamente)
-//            }
-//
-//            //recomendados
-//            val buttonVerTodoRecomendados : MaterialButton = viewB.findViewById(R.id.buttonShowAllRecomendaciones)
-//            buttonVerTodoRecomendados.setOnClickListener{
-//                scrollToSection(R.id.tvRecomendados)
-//            }
-
-
-
-
-        //}
-
-
         return view
     }
 
-    //Desplazamiento suave a la seccion deseada
-//    private fun scrollToSection(sectionId: Int) {
-//        val sectionView = view?.findViewById<View>(sectionId)
-//        sectionView?.let { view ->
-//            scrollView.post {
-//                Log.d("DEBUG", "Entro??????")
-//                scrollView.smoothScrollTo(0, view.top)
-//            }
-//        }
-////        scrollView.post(Runnable {scrollView.scrollTo(0,view.scrollY)  })
-////
-////        sView.post(Runnable { sView.scrollTo(sViewX, sViewY) })
-//    }
+    /**
+     * Configura el RecyclerView para mostrar las peliculas populares
+     *
+     * @param view la vista del fragmento
+     * **/
+    private fun setupPopularMoviesRecyclerView(view: View) {
+        val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerViewVerTodo)
+        recyclerView.layoutManager = GridLayoutManager(requireContext(), 3)
+
+        moviesAccess.listPopularMovies { movies ->
+            setupMoviesRecyclerView(recyclerView, movies)
+        }
+    }
+
+    /**
+     * Configura el RecyclerView para mostrar las peliculas recomendadas
+     *
+     * @param view la vista del fragmento
+     * **/
+    private fun setupRecommendedMoviesRecyclerView(view: View) {
+        val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerViewVerTodoRecomendados)
+        recyclerView.layoutManager = GridLayoutManager(requireContext(), 3)
+
+        moviesAccess.listRecommendedMovies(movieId = 438631) { movies ->
+            setupMoviesRecyclerView(recyclerView, movies)
+        }
+    }
+
+    /**
+     * Configura el RecyclerView para mostrar las peliculas que saldran proximamente
+     *
+     * @param view la vista del fragmento
+     * **/
+    private fun setupUpcomingMoviesRecyclerView(view: View) {
+        val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerViewVerTodoProximamente)
+        recyclerView.layoutManager = GridLayoutManager(requireContext(), 3)
+
+        moviesAccess.listUpcomingMovies { movies ->
+            setupMoviesRecyclerView(recyclerView, movies)
+        }
+    }
+
+    /**
+     * Configura el RecyclerView para mostrar peliculas con el adaptador proporcionado
+     *
+     * @param recyclerView RecyclerView a configurar
+     * @param movies lista de peliculas a mostrar
+     * **/
+
+    private fun setupMoviesRecyclerView(recyclerView: RecyclerView, movies: List<Movie>) {
+        val adapter = GridRecyclerViewAdapter(movies) { movie ->
+            val fragmentManager = requireActivity().supportFragmentManager
+            val transaction = fragmentManager.beginTransaction()
+            transaction.replace(R.id.fragmentContainerView, PeliculaSeleccionadaFragment.newInstance(movie.id))
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
+        recyclerView.adapter = adapter
+    }
 
 
 

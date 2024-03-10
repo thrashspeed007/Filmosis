@@ -21,6 +21,12 @@ import com.example.filmosis.dataclass.Network
 import com.example.filmosis.utilities.tmdb.TmdbSearchQueries
 import com.google.android.material.button.MaterialButton
 
+/**
+ *Fragmento para la pantalla de inicio de la aplicacio.
+ * Dara la bienvenida al usuario que haya iniciado sesion
+ * y una lista de peliculas.
+ * **/
+
 class HomeFragment : Fragment() {
     private val moviesAccess = MoviesAccess()
 
@@ -49,6 +55,14 @@ class HomeFragment : Fragment() {
 
     private lateinit var scrollView: ScrollView
 
+    /**
+     * Infla la vista del fragmento
+     *
+     * @param inflater Se emplea para inflar la vista
+     * @param container El contenedor al que se pone la vista
+     * @param savedInstanceState informacion previamente guardado del fragmento
+     * @return la vista inflada del fragmento
+     * **/
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,12 +71,24 @@ class HomeFragment : Fragment() {
 
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
+    /**
+     * Configura las vistas tras haberse creado la vista del fragmento
+     *
+     * @param view La vista creada
+     * @param savedInstanceState Informacion del estado previamente guardado
+     *
+     **/
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setup(view)
     }
+
+    /**
+     * To'do lo que queremos que se visualice sobre el fragmento. La configuracion
+     * @param view la vista del fragmento
+     * **/
 
     private fun setup(view: View) {
         val saludoUsuTextView: TextView = view.findViewById(R.id.home_tvUsuario)
@@ -156,6 +182,11 @@ class HomeFragment : Fragment() {
 
     }
 
+    /**
+     * Inicializa la barra de busqeda y el filtro de busqueda
+     * @param view la vista del fragmento
+     * **/
+
     private fun initSearchViewAndSearchFilter(view: View) {
         val searchView: SearchView = view.findViewById(R.id.home_searchView)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -178,6 +209,12 @@ class HomeFragment : Fragment() {
         }
     }
 
+    /**
+     *Realiza una bsuqeda donde emplea un texto informando al usuario sobre que tiene que ser la busqueda
+     *
+     * @param searchType El tipo de busqueda a realizar
+     * @param hint El texto que informa(pista sugerencia) al usuario
+     **/
     private fun performSearchWithQueryHint(searchType: TmdbSearchQueries, hint: String) {
         val searchView: SearchView = requireView().findViewById(R.id.home_searchView)
         searchView.queryHint = hint
@@ -196,6 +233,11 @@ class HomeFragment : Fragment() {
         })
     }
 
+    /**
+     * Muestra el menu de filtro de busqueda
+     *
+     * @param anchor La vista a la se ancla el menu
+     * **/
     private fun showSearchFilterMenu(anchor: View) {
         val popupMenu = PopupMenu(requireContext(), anchor)
         popupMenu.menuInflater.inflate(R.menu.search_filter_menu, popupMenu.menu)
@@ -217,6 +259,12 @@ class HomeFragment : Fragment() {
         popupMenu.show()
     }
 
+    /**
+     * Realiza una busqueda segun el tipo de busqueda seleccionada y la consulta proporcionada
+     *
+     * @param searchType El tipo de busqueda a realizar
+     * @param query la consulta en la barra de busqueda
+     * **/
     private fun performSearch(searchType: TmdbSearchQueries, query: String) {
         val fragmentManager = requireActivity().supportFragmentManager
         when (searchType) {
@@ -235,12 +283,16 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun scrollToSection(textView:TextView) {
-        scrollView.post {
-            scrollView.smoothScrollTo(0, textView.top)
-        }
-    }
+//    private fun scrollToSection(textView:TextView) {
+//        scrollView.post {
+//            scrollView.smoothScrollTo(0, textView.top)
+//        }
+//    }
 
+    /**
+     * Anade las peliculas populares al recycler view
+     * Si se clicka a a una de las peliculas, navegara a otro fragmento
+     **/
     private fun addMoviesToList() {
         moviesAccess.listPopularMovies { result ->
             moviesListPopulares.clear()
@@ -259,6 +311,10 @@ class HomeFragment : Fragment() {
         }
 
     }
+    /**
+     * Anade las peliculas que saldran proximamente al recycler view
+     * Si se clicka a a una de las peliculas, navegara a otro fragmento
+     **/
     private fun addMoviesUpComingToList(){
         moviesAccess.listUpcomingMovies { results ->
             moviesListSoon.clear()
@@ -276,6 +332,10 @@ class HomeFragment : Fragment() {
         }
     }
 
+    /**
+     * Anade las peliculas recomendados al recycler view
+     * Si se clicka a a una de las peliculas, navegara a otro fragmento
+     **/
     private fun addMoviesRecommendedToList() {
         //aqui le paso el id de una pelicula cualquiera(en este caso he pillado la de DUNE)
         moviesAccess.listRecommendedMovies(movieId=438631) { results ->
@@ -293,6 +353,10 @@ class HomeFragment : Fragment() {
             }
         }
     }
+
+    /**
+     * Anade los servicios al recycler view
+     **/
 
     private fun cargarServicios() {
         for (id in ids) {

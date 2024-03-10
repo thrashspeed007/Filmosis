@@ -100,5 +100,9 @@ dependencies {
     //Material Cardview
     implementation("com.google.android.material:material:1.11.0")
 
+    //Pruebas unitaruas
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("com.google.truth:truth:1.4.2")
+    testImplementation("org.mockito:mockito-core:3.12.4")
 
 }

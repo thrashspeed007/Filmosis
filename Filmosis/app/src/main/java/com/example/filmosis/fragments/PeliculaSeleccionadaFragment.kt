@@ -38,6 +38,9 @@ import com.google.firebase.Firebase
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.firestore
 
+/**
+ * Fragmento par ver la informacion detallada sobre una pelicula
+ * **/
 class PeliculaSeleccionadaFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var recyclerViewReparto: RecyclerView
@@ -110,6 +113,13 @@ class PeliculaSeleccionadaFragment : Fragment() {
     companion object {
         private const val ARG_MOVIE_ID = "movieId"
 
+        /**
+         * Crea una nueva instancia de PeliculaSeleccionadaFragment con el ID de la pelicula que proporcionado
+         *
+         * @param movieId El id de la pelicula seleccionada
+         * @return Una nueva instancia de PeliculaSeleccionadaFragment
+         **/
+
         fun newInstance(movieId: Int): PeliculaSeleccionadaFragment {
             val fragment = PeliculaSeleccionadaFragment()
             val args = Bundle()
@@ -121,6 +131,14 @@ class PeliculaSeleccionadaFragment : Fragment() {
         }
     }
 
+    /**
+     * Infla la vista del fragmento
+     *
+     * @param inflater Se emplea para inflar la vista
+     * @param container El contenedor al que se pone la vista
+     * @param savedInstanceState informacion previamente guardado del fragmento
+     * @return la vista inflada del fragmento
+     * **/
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -138,6 +156,13 @@ class PeliculaSeleccionadaFragment : Fragment() {
 
     }
 
+    /**
+     * Agrega directores a la lista y configura el recyclerview
+     * Cunado se clicke en un director, navegaremos a un fragmento con sus detalles
+     *
+     * @param context Contexto de la aplicacion
+     * @param data Datos de la pelicula
+     * **/
     private fun addDirectoresToList(context: Context, data: Movie) {
         ma.getDirectorDetails(data.id) { directors ->
             directors?.let { directorList ->
@@ -155,6 +180,13 @@ class PeliculaSeleccionadaFragment : Fragment() {
         }
     }
 
+    /**
+     * Recupera la informacion de la pelicula y realiza las operaciones necesarias para configurar
+     * to'do lo necesario para los datos que requieren informacion de la pelicula
+     *
+     * @param view La vista del fragmento
+     *
+     **/
 
     private fun recuperarDatosInfo(view: View) {
         val movieId = arguments?.getInt(ARG_MOVIE_ID)
@@ -179,7 +211,10 @@ class PeliculaSeleccionadaFragment : Fragment() {
         }
     }
 
-
+    /**
+     * Configura los Recyclerviews de distintos apartados
+     * @param view La vista del fragmento
+     * **/
 
     fun recyclerControl(view: View){
         //Recyclerview para directores
@@ -210,6 +245,13 @@ class PeliculaSeleccionadaFragment : Fragment() {
 
     }
 
+    /**
+     * Configuracion del video. Se hace a traves de javascript ya que el metodo de la api de youtube esta deprecado, solo se puede realizar de esta manera
+     * a traves de la informacion recuperado cogeremos el url del video
+     *
+     * @param view La vista del fragmento
+     * **/
+
     fun video (view: View){
         videoView = view.findViewById(R.id.webView2)
 
@@ -231,6 +273,11 @@ class PeliculaSeleccionadaFragment : Fragment() {
 
 
     }
+    /**
+     * Configura los datos de la pelicula en la vista
+     *
+     * @param view La vista del fragmento
+     **/
 
     fun datosPeliculas(view: View){
         //Datos de la pelicula
@@ -279,6 +326,13 @@ class PeliculaSeleccionadaFragment : Fragment() {
 
     }
 
+    /**
+     * Obtiene los generos de la pelicula y los devuelve como cadena
+     * para luego aplicar los generos a la vista
+     *
+     * @param genres lista de los geneneros de la peli
+     * @return los generos de la pelicula en una cadena de caracteres
+     * **/
     private fun obtenerGeneros(genres: List<Genre>): String {
         val genresString = genres.map { it.name }
         return genresString.joinToString(", ")
@@ -286,6 +340,14 @@ class PeliculaSeleccionadaFragment : Fragment() {
 
 
 
+    /**
+     * Agrega actores a la lista y configura el RecyclerView
+     * Cuando se clicka a actor, navegaremos al framento
+     * donde nos mostraran los detalles de la persona
+     *
+     * @param context Contexto de la aplicacion
+     * @param data Datos de la pelicula
+     * **/
 
     private fun addActoresToList(context: Context, data: Movie) {
         ma.getActorDetails(data.id) { actores ->
@@ -302,6 +364,14 @@ class PeliculaSeleccionadaFragment : Fragment() {
         }
     }
 
+    /**
+     * Obtien servicios a traves de un filtro de pais en este caso espana,
+     * luego los resultados en esto se filtrara en alquiler, renta y compra,
+     * anadiendo asi los servicios a cada RecyclerView correspondiente
+     *
+     * @param context Contexto de la aplicacion
+     * @param data Datos de la pelicula
+     * **/
     private fun addService(context: Context, data: Movie) {
         ma.fetchNetworkDetails2(data.id) { response ->
             response?.let { networkDetails ->
@@ -337,11 +407,26 @@ class PeliculaSeleccionadaFragment : Fragment() {
         }
     }
 
+    /**
+     * Configura los RecyclerViews
+     *
+     * @param recyclerView El RecyclerView a configurar.
+     * @param context Contexto de la aplicación.
+     * @param serviceList Lista de servicios para mostrar en el RecyclerView.
+     **/
+
     private fun setupRecyclerView(recyclerView: RecyclerView, context: Context, serviceList: List<Servicio>) {
         recyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         recyclerView.adapter = ServicioAdapter(serviceList)
     }
 
+    /**
+     * Dependiendo de la lista de servicios haremos
+     * visible o no el texto de disponibilidad
+     *
+     * @param serviceList Lista de servicios
+     * @param textView La visibilidad de este se actualizara
+     * **/
     private fun updateTextViewVisibility(serviceList: List<Servicio>, textView: TextView) {
         if (serviceList.isEmpty()) {
             textView.visibility = View.VISIBLE
@@ -350,6 +435,11 @@ class PeliculaSeleccionadaFragment : Fragment() {
         }
     }
 
+    /**
+     * Control de las listas de la pelicula a anadir
+     *
+     * @param movie Datos de la pelicula seleccionada
+     * **/
     private fun addMovieToList(movie: Movie) {
         val userEmail = FirebaseInitializer.authInstance.currentUser?.email.toString()
         val listsRef = FirebaseInitializer.firestoreInstance.collection("lists").document(userEmail)
@@ -400,6 +490,12 @@ class PeliculaSeleccionadaFragment : Fragment() {
             }
     }
 
+    /**
+     * Agrega la película seleccionada a una lista específica a la que a seleccionado el usuario
+     *
+     * @param movie Datos de la pelicula seleccionada
+     * @param desiredListId id d ela lisata a la que se agregara la pelicula
+     **/
     private fun addMovieToSelectedList(movie: Movie, desiredListId: String) {
         if (isAdded) {
             // El fragmento está adjunto a una actividad, es seguro llamar a requireContext() aquí
@@ -442,6 +538,12 @@ class PeliculaSeleccionadaFragment : Fragment() {
     }
 
 
+    /**
+     * Maneja errores al agregar una pelicual a la lista
+     *
+     * @param exception La excepcion que se produce al agragar la pelicula a la lista
+     *
+     * **/
 
     private fun handleAddMovieToListError(exception: Exception) {
         requireActivity().onBackPressedDispatcher.onBackPressed()
