@@ -8,7 +8,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageButton
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -22,7 +21,6 @@ import com.bumptech.glide.Glide
 import com.example.filmosis.fragments.ExploreFragment
 import com.example.filmosis.fragments.HomeFragment
 import com.example.filmosis.fragments.ListsFragment
-import com.example.filmosis.fragments.SocialFragment
 import com.example.filmosis.fragments.UserFragment
 import com.example.filmosis.init.FirebaseInitializer
 import com.example.filmosis.utilities.firebase.FirestoreImageManager
@@ -113,7 +111,6 @@ class MainActivity : AppCompatActivity() {
 
         val fragmentHome = HomeFragment()
         val fragmentExplore = ExploreFragment()
-        val fragmentSocial = SocialFragment()
         val fragmentUser = UserFragment()
 
         replaceFragment(fragmentHome)
@@ -123,17 +120,12 @@ class MainActivity : AppCompatActivity() {
             val newFragment = when (menuItem.itemId) {
                 R.id.page_home -> fragmentHome
                 R.id.page_explore -> fragmentExplore
-                R.id.page_social -> fragmentSocial
                 R.id.page_user -> fragmentUser
                 else -> fragmentHome
             }
 
             if (currentFragment != null && currentFragment != newFragment) {
-                val transaction = supportFragmentManager.beginTransaction()
-
-                transaction.replace(R.id.fragmentContainerView, newFragment)
-                transaction.addToBackStack(null)
-                transaction.commit()
+                replaceFragment(newFragment)
             }
 
             true
@@ -190,12 +182,15 @@ class MainActivity : AppCompatActivity() {
         val fragmentManager: FragmentManager = supportFragmentManager
         val transaction: FragmentTransaction = fragmentManager.beginTransaction()
 
+        fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+
         if (tag.isNotEmpty()) {
             transaction.replace(R.id.fragmentContainerView, fragment,tag)
             transaction.addToBackStack(null)
         } else {
             transaction.replace(R.id.fragmentContainerView, fragment)
         }
+
 
         transaction.commit()
     }

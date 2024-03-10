@@ -11,11 +11,6 @@
         android:title="@string/page_explore" />
 
     <item
-        android:id="@+id/page_social"
-        android:icon="@drawable/baseline_forum_24"
-        android:title="@string/page_social" />
-
-    <item
         android:id="@+id/page_user"
         android:icon="@drawable/baseline_person_24"
         android:title="@string/page_user" />
