@@ -40,7 +40,30 @@ import com.google.firebase.firestore.firestore
 
 /**
  * Fragmento par ver la informacion detallada sobre una pelicula
- * **/
+ *
+ * @property recyclerView RecyclerView de los directores
+ * @property recyclerViewReparto RecyclerView de los actores
+ * @property recyclerViewService RecyclerView de los servicios
+ * @property recyclerViewServiceAlquiler RecyclerView de los servicios donde la pelicula este en alquiler
+ * @property recyclerViewServiceCompra RecyclerView de los servicios donde la pelicula este en compra
+ * @property videoView WebView para mostrar el video
+ * @property tvCensura TextView para la censura de la pelicula
+ * @property tvIdioma TextView para el idioma original de la pelicula
+ * @property tvSinopsis TextView para el resumen de la pelicula
+ * @property tvTitle TextView para el titulo de la pelicula
+ * @property tvReleaseDate TextView para mostrar la fecja de saloda de la pelicula
+ * @property tvAvg RatingBar para mostrar la nota media de la pelicula visualmente a traves de estrellas
+ * @property tvavg TextView para mostrar la nota media de la pelicula
+ * @property tvPupu TextView para mostrar la cantidad de votos sobre una pelicula
+ * @property ibBack ImageButton para retroceder
+ * @property idioma String para obtener el idioma de la pelicula
+ * @property textNodispSubs TextView de no disponible por si no existen plataformas donde subsribirse para la pelicula seleccionada
+ * @property textNodispAlq TextView de no disponible por si no existen plataformas donde alquiler  la pelicula seleccionada
+ * @property textNodispComp TextView de no disponible por si no existen plataformas donde comprar la pelicula seleccionada
+ * @property ma MovieAcceess para obtener los datos de la pelicula a traves de consultas a la API
+ * @property recuperacionInfo Movie para obtener los datos de la pelicula seleccionada
+ * @property recuperacionInfoGenres MovieFr par obtener los datos de la pelicula seleccionada especificamente los generos de la pelicula
+ **/
 class PeliculaSeleccionadaFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var recyclerViewReparto: RecyclerView
@@ -50,27 +73,22 @@ class PeliculaSeleccionadaFragment : Fragment() {
     private lateinit var recyclerViewServiceAlquiler: RecyclerView
     private lateinit var recyclerViewServiceCompra: RecyclerView
     private lateinit var videoView: WebView
-    private lateinit var tvGenero : TextView
     private lateinit var tvCensura : TextView
     private lateinit var tvIdioma : TextView
     private lateinit var tvSinopsis : TextView
     private lateinit var tvTitle : TextView
-    private lateinit var tvTime : TextView
     private lateinit var tvReleaseDate : TextView
     private lateinit var tvAvg : RatingBar
-    private lateinit var image : ImageView
     private lateinit var tvavg : TextView
     private lateinit var tvPupu : TextView
     private lateinit var ibBack : ImageButton
-    private var idioma : String = ""
 
     private lateinit var textNodispSubs : TextView
     private lateinit var textNodispAlq : TextView
     private lateinit var textNodispComp : TextView
 
+    private var idioma : String = ""
 
-
-    private var services: HashSet<Servicio> = HashSet()
     private val ma = MoviesAccess()
     private var recuperacionInfo: Movie = Movie(
         adult = false,
