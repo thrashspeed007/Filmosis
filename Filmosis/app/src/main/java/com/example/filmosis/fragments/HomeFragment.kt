@@ -25,6 +25,16 @@ import com.google.android.material.button.MaterialButton
  *Fragmento para la pantalla de inicio de la aplicacio.
  * Dara la bienvenida al usuario que haya iniciado sesion
  * y una lista de peliculas.
+ *
+ * @property moviesAccess MovieAcceess para obtener los datos de la pelicula a traves de consultas a la API
+ * @property rvPopular RecyclerView para las Peliculas populares
+ * @property rvUpcoming RecyclerView para las peliculas que saldran proximamente
+ * @property rvRecommend RecuclerView para las peliculas recomendadas
+ * @property rvServicios RecyclerView para los servicios
+ * @property moviesListPopulares Arraylist<Movie> lista para guardar las peliculas populares
+ * @property moviesListSoon Arraylist<Movie> lsita para guardar las peliculas que saldran proximamente
+ * @property recommendedMovies Arraylist<Movie> lista pra guardar las peliculas recomendadas
+ *
  * **/
 
 class HomeFragment : Fragment() {
