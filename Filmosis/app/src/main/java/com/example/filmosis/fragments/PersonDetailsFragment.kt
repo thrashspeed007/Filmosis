@@ -17,12 +17,23 @@ import com.example.filmosis.config.DatosConexion
 import com.example.filmosis.data.access.tmdb.PersonsAccess
 import com.example.filmosis.data.model.tmdb.Cast
 
+/**
+ * Fragmento que muestra los detalles de una persona, incluyendo su información personal y las películas en las que ha participado.
+ *
+ * @constructor Crea una nueva instancia de PersonDetailsFragment.
+ */
 class PersonDetailsFragment : Fragment() {
     private val personsAccess = PersonsAccess()
 
     companion object {
         private const val ARG_PERSON_ID = "personId"
 
+        /**
+         * Método estático para crear una nueva instancia de PersonDetailsFragment.
+         *
+         * @param personId El ID de la persona de la que se mostrarán los detalles.
+         * @return Una nueva instancia de PersonDetailsFragment.
+         */
         fun newInstance(personId: Int): PersonDetailsFragment {
             val fragment = PersonDetailsFragment()
             val args = Bundle()
@@ -34,6 +45,14 @@ class PersonDetailsFragment : Fragment() {
         }
     }
 
+    /**
+     * Crea y devuelve la jerarquía de vistas asociada con el fragmento.
+     *
+     * @param inflater El LayoutInflater que se utiliza para inflar la vista.
+     * @param container El ViewGroup en el que se inflará la vista.
+     * @param savedInstanceState Bundle que contiene el estado previamente guardado del fragmento, si lo hay.
+     * @return La vista raíz del fragmento.
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -43,11 +62,20 @@ class PersonDetailsFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_person_details, container, false)
     }
 
+    /**
+     * Llamado inmediatamente después de que onCreateView() haya creado la jerarquía de vistas del fragmento.
+     *
+     * @param view La vista raíz del fragmento.
+     * @param savedInstanceState Bundle que contiene el estado previamente guardado del fragmento, si lo hay.
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setup()
     }
 
+    /**
+     * Configura el fragmento.
+     */
     private fun setup() {
         val personId = arguments?.getInt(ARG_PERSON_ID)
 
@@ -58,6 +86,11 @@ class PersonDetailsFragment : Fragment() {
 
     }
 
+    /**
+     * Inicializa la información personal de la persona y la muestra en la interfaz de usuario.
+     *
+     * @param personId El ID de la persona de la que se mostrarán los detalles.
+     */
     private fun initPersonInfo(personId: Int) {
         val personProfilePic: ImageView = requireView().findViewById(R.id.personDetails_personProfilePic)
         val personName: TextView = requireView().findViewById(R.id.personDetails_nameTextView)
@@ -98,6 +131,11 @@ class PersonDetailsFragment : Fragment() {
         }
     }
 
+    /**
+     * Inicializa y muestra las películas en las que ha participado la persona en un RecyclerView.
+     *
+     * @param personId El ID de la persona cuyas películas se mostrarán.
+     */
     private fun initPersonMoviesRv(personId: Int) {
         val personMoviesRv: RecyclerView = requireView().findViewById(R.id.personDetails_personMoviesRv)
         personMoviesRv.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
@@ -125,6 +163,11 @@ class PersonDetailsFragment : Fragment() {
     }
 
     // hablar con adrianixx_sniper_you_xx, estos son los datos de mi fragmento peliculaSeleccionada, los datos del director
+    /**
+     * Navega a la pantalla de detalles de una película cuando se hace clic en una película en el RecyclerView.
+     *
+     * @param movie El objeto Cast que representa la película seleccionada.
+     */
     fun navigateToMovie(movie:Cast){
         val bundle = Bundle().apply {
             putInt("movieId", movie.id)

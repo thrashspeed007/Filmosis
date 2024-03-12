@@ -20,6 +20,9 @@ import java.util.Date
 import java.util.Locale
 import java.util.UUID
 
+/**
+ * Fragmento que permite al usuario crear una nueva lista de películas.
+ */
 class CreateListFragment : DialogFragment() {
 
     private val firestore = FirebaseInitializer.firestoreInstance
@@ -50,6 +53,9 @@ class CreateListFragment : DialogFragment() {
         }
     }
 
+    /**
+     * Configura el comportamiento de los elementos de la vista.
+     */
     private fun setup() {
         val cancelarBtn : Button = requireView().findViewById(R.id.createList_buttonCancel)
 
@@ -60,7 +66,11 @@ class CreateListFragment : DialogFragment() {
 
     }
 
-
+    /**
+     * Crea una nueva lista en Firestore.
+     * @param nombreLista El nombre de la lista a crear.
+     * @param descripcionLista La descripción de la lista.
+     */
     private fun crearLista(nombreLista: String, descripcionLista: String) {
         val email: String = FirebaseInitializer.authInstance.currentUser?.email!!
 
@@ -101,7 +111,10 @@ class CreateListFragment : DialogFragment() {
             }
     }
 
-    // Función para obtener la fecha actual en el formato deseado
+    /**
+     * Obtiene la fecha actual en el formato deseado.
+     * @return La fecha actual en formato "yyyy-MM-dd".
+     */
     private fun obtenerFechaActual(): String {
         val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val fechaActual = sdf.format(Date())

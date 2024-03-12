@@ -14,6 +14,9 @@ import com.example.filmosis.adapters.ListedPersonsAdapter
 import com.example.filmosis.data.access.tmdb.PersonsAccess
 import com.example.filmosis.data.model.tmdb.Person
 
+/**
+ * Fragmento que muestra una lista de personas buscadas.
+ */
 class PersonsSearchedFragment : Fragment() {
     private val personsAccess = PersonsAccess()
     private lateinit var rv: RecyclerView
@@ -23,6 +26,12 @@ class PersonsSearchedFragment : Fragment() {
     companion object {
         private const val ARG_QUERY = "tmdbQuery"
 
+        /**
+         * Método estático para crear una nueva instancia de PersonsSearchedFragment.
+         *
+         * @param query La cadena de búsqueda de personas.
+         * @return Una nueva instancia de PersonsSearchedFragment.
+         */
         fun newInstance(query: String): PersonsSearchedFragment {
             val fragment = PersonsSearchedFragment()
             val args = Bundle()
@@ -34,6 +43,14 @@ class PersonsSearchedFragment : Fragment() {
         }
     }
 
+    /**
+     * Crea y devuelve la jerarquía de vistas asociada con el fragmento.
+     *
+     * @param inflater El LayoutInflater que se utiliza para inflar la vista.
+     * @param container El ViewGroup en el que se inflará la vista.
+     * @param savedInstanceState Bundle que contiene el estado previamente guardado del fragmento, si lo hay.
+     * @return La vista raíz del fragmento.
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -42,11 +59,22 @@ class PersonsSearchedFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_persons_searched, container, false)
     }
 
+    /**
+     * Llamado inmediatamente después de que onCreateView() haya creado la jerarquía de vistas del fragmento.
+     *
+     * @param view La vista raíz del fragmento.
+     * @param savedInstanceState Bundle que contiene el estado previamente guardado del fragmento, si lo hay.
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setup(view)
     }
 
+    /**
+     * Configura el fragmento.
+     *
+     * @param view La vista raíz del fragmento.
+     */
     private fun setup(view: View) {
         val query = arguments?.getString(ARG_QUERY)
         val searchView: SearchView = view.findViewById(R.id.personsSearched_searchView)
@@ -74,10 +102,20 @@ class PersonsSearchedFragment : Fragment() {
         }
     }
 
+    /**
+     * Realiza la búsqueda de personas y las muestra en el RecyclerView.
+     *
+     * @param query La cadena de búsqueda.
+     */
     private fun performSearch(query: String) {
         addSearchedPersonsToRv(query)
     }
 
+    /**
+     * Agrega las personas buscadas al RecyclerView.
+     *
+     * @param query La cadena de búsqueda.
+     */
     private fun addSearchedPersonsToRv(query: String) {
         personsAccess.searchPerson(query) { result ->
             personsList.clear()
