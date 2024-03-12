@@ -187,5 +187,34 @@ La arquitectura de Filmosis está diseñada para ofrecer una experiencia complet
 \section{Conclusión}
 
 En resumen, Filmosis se presenta como una aplicación integral diseñada para los amantes del cine, ofreciendo una experiencia completa que combina la riqueza informativa de IMDb con características sociales interactivas. Los usuarios pueden explorar una extensa base de datos de películas, accediendo a detalles como el elenco y las críticas. La función de valoración permite a los usuarios compartir sus opiniones, descubrir películas populares y conectarse con la comunidad. La posibilidad de crear listas personalizadas facilita la organización y compartición de preferencias cinematográficas. Además, Filmosis mantiene a los usuarios informados sobre las últimas noticias y eventos en la industria cinematográfica. Con perfiles de usuario personalizados, la aplicación busca fomentar una comunidad vibrante de cinéfilos, ofreciendo una plataforma interactiva y social para explorar y disfrutar del mundo del cine.
+\section{Análisis de requisitos y especificaciones}
+\begin{minipage}{0.4\textwidth}
+    \includegraphics[width=\textwidth]{images/version.png}
+\end{minipage}
+\hfill
+\begin{minipage}{0.55\textwidth}
+Esta aplicación solo está operativa para dispositivos móviles que tengan Android como sistema operativo. Para realizar este proyecto, hemos utilizado la versión de distribución API Pie, API LEVEL 28, con una distribución acumulativa del 86.4\%. Es decir, esta aplicación solo soporta versiones con Android 9.0 como mínimo.
+\end{minipage}
+
+\section{Base de datos}
+Hemos empleado como base de datos Firestore Database, una de las opciones que nos ofrece Firebase. Firestore Database es una base de datos NoSQL, lo que significa que permite consultar datos fuera de las estructuras tradicionales que se encuentran en las bases de datos relacionales. Para almacenar los datos, hemos creado tres colecciones: Favorites, Lists y Users.
+
+\subsection{Users}
+En esta colección guardaremos los datos del inicio de sesión. Es decir, guardaremos el correo electrónico, nombre de usuario, fecha de nacimiento y, por último, nombre y apellidos.
+
+\subsection{Lists}
+En esta colección guardaremos la información de la lista. Cuando el usuario cree una lista en la base de datos, se guardará la fecha, el ID, nombre de la lista, la descripción y una lista de películas vacía. Cuando el usuario comience a añadir películas, se guardará la información de la película en la lista de películas.
+
+\section{Tecnologías empleadas}
+La API que hemos empleado para realizar este proyecto ha sido la de TMDb. Para la gestión de datos, hemos utilizado Firebase.
+
+\section{Pruebas de uso}
+
+\section{Consideraciones de seguridad y privacidad}
+No guardamos ninguna contraseña.
+
+
+
+
 
 \end{document}
