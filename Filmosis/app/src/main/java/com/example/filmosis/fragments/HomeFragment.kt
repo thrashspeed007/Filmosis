@@ -34,8 +34,10 @@ import com.google.android.material.button.MaterialButton
  * @property moviesListPopulares Arraylist<Movie> lista para guardar las peliculas populares
  * @property moviesListSoon Arraylist<Movie> lsita para guardar las peliculas que saldran proximamente
  * @property recommendedMovies Arraylist<Movie> lista pra guardar las peliculas recomendadas
- *
- * **/
+ * @property services Arraylist<Movie> Lista para guardar los servicios
+ * @property ids Arraylist<Int> para guardar los ids de servicios a mostrar
+ **/
+
 
 class HomeFragment : Fragment() {
     private val moviesAccess = MoviesAccess()
@@ -54,16 +56,6 @@ class HomeFragment : Fragment() {
         addAll(listOf(49, 213, 2739,18,94,50,2740))
     }
 
-
-
-//    private lateinit var tvRecom: TextView
-//    private lateinit var tvProx: TextView
-//    private lateinit var tvPopu: TextView
-
-
-    private lateinit var moviesAdapter: CarouselMoviesAdapter
-
-    private lateinit var scrollView: ScrollView
 
     /**
      * Infla la vista del fragmento
@@ -381,8 +373,5 @@ class HomeFragment : Fragment() {
                 }
             }
         }
-
     }
-
-
 }
