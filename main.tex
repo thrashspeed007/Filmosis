@@ -195,6 +195,48 @@ En resumen, Filmosis se presenta como una aplicación integral diseñada para lo
 \begin{minipage}{0.55\textwidth}
 Esta aplicación solo está operativa para dispositivos móviles que tengan Android como sistema operativo. Para realizar este proyecto, hemos utilizado la versión de distribución API Pie, API LEVEL 28, con una distribución acumulativa del 86.4\%. Es decir, esta aplicación solo soporta versiones con Android 9.0 como mínimo.
 \end{minipage}
+\section{Publicacion y distribucion}
+\subsection{Instrucciones para compilar y generar versiones de la aplicación}
+
+Para compilar y generar versiones de la aplicación, sigue estos pasos:
+
+\begin{enumerate}
+    \item Dirígete al repositorio de GitHub de Filmosis: \url{https://github.com/agarciagale/Filmosis.git}.
+    
+    \item Haz clic en el botón "Code" y copia el enlace proporcionado.
+    
+    \item Abre tu terminal y ejecuta el siguiente comando para clonar el repositorio:
+    \begin{verbatim}
+        git clone <enlace_del_repositorio>
+    \end{verbatim}
+    
+    \item Asegúrate de tener instalado un IDE compatible con Kotlin, como Android Studio.
+    
+    \item Navega hasta el directorio raíz del proyecto clonado en tu terminal.
+    
+    \item Ejecuta el siguiente comando para compilar la aplicación:
+    \begin{verbatim}
+        ./gradlew build
+    \end{verbatim}
+    Esto generará un archivo .jar en el directorio de salida del proyecto.
+    
+    \item Para generar una versión lista para distribuir, utiliza Gradle con el siguiente comando:
+    \begin{verbatim}
+        ./gradlew assembleRelease
+    \end{verbatim}
+    Esto generará una versión de la aplicación lista para ser distribuida.
+\end{enumerate}
+
+\subsection{Proceso de publicación en tiendas de aplicaciones o distribución interna}
+
+Para publicar la aplicación en tiendas de aplicaciones como Play Store, sigue estos pasos:
+
+\begin{enumerate}
+    \item Sigue los pasos específicos de cada tienda de aplicaciones. Normalmente, necesitarás crear una cuenta de desarrollador y seguir las pautas de publicación proporcionadas por la tienda.
+    
+    \item Si deseas distribuir la aplicación internamente, puedes utilizar servicios como Firebase App Distribution o Google Play Console (para distribución cerrada). Configura los ajustes necesarios y sigue las instrucciones proporcionadas por el servicio elegido.
+\end{enumerate}
+
 
 \section{Base de datos}
 Hemos empleado como base de datos Firestore Database, una de las opciones que nos ofrece Firebase. Firestore Database es una base de datos NoSQL, lo que significa que permite consultar datos fuera de las estructuras tradicionales que se encuentran en las bases de datos relacionales. Para almacenar los datos, hemos creado tres colecciones: Favorites, Lists y Users.
@@ -289,7 +331,8 @@ En resumen, nuestra prioridad es garantizar la seguridad y la privacidad de nues
 \section{Contacto}
 
 Nos podéis contactar de la siguiente manera:
-
+\\
+\\
 Adrián García Galera: \texttt{agarciagal6@educacion.navarra.es} \\
 Aritz Arrondo Villaplana: \texttt{aarrondvil@educacion.navarra.es} \\
 Kaiet Jiménez Aldasoro: \texttt{kjimeneald@educacion.navarra.es}
