@@ -71,7 +71,7 @@ class PeliculaSeleccionadaFragment : Fragment() {
     private lateinit var tvSinopsis : TextView
     private lateinit var tvTitle : TextView
     private lateinit var tvReleaseDate : TextView
-    private lateinit var tvAvg : RatingBar
+    lateinit var tvAvg : RatingBar
     private lateinit var tvavg : TextView
     private lateinit var tvPupu : TextView
     private lateinit var ibBack : ImageButton
@@ -83,7 +83,7 @@ class PeliculaSeleccionadaFragment : Fragment() {
     private var idioma : String = ""
 
     private val ma = MoviesAccess()
-    private var recuperacionInfo: Movie = Movie(
+    var recuperacionInfo: Movie = Movie(
         adult = false,
         backdrop_path = "",
         genre_ids = emptyList(),
