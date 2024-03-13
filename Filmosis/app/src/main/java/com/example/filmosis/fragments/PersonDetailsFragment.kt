@@ -20,7 +20,8 @@ import com.example.filmosis.data.model.tmdb.Cast
 /**
  * Fragmento que muestra los detalles de una persona, incluyendo su información personal y las películas en las que ha participado.
  *
- * @constructor Crea una nueva instancia de PersonDetailsFragment.
+ * @property personsAccess PersonsAccess para realizar consultas a la API de TMDB sobre datos de personas
+ * @see PersonsAccess
  */
 class PersonDetailsFragment : Fragment() {
     private val personsAccess = PersonsAccess()

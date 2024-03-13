@@ -21,6 +21,9 @@ import com.example.filmosis.init.FirebaseInitializer
 
 /**
  * Fragmento que muestra una lista de películas buscadas o populares.
+ *
+ * @property moviesAccess MoviesAccess para realizar consultas a la API de TMDB sobre datos de películas
+ * @see MoviesAccess
  */
 class MoviesSearchedFragment : Fragment() {
 

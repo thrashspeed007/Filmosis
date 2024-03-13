@@ -1,6 +1,5 @@
 package com.example.filmosis.adapters
 
-import com.example.filmosis.data.model.tmdb.Cast
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,6 @@ import com.bumptech.glide.Glide
 import com.example.filmosis.R
 import com.example.filmosis.config.DatosConexion
 import com.example.filmosis.data.model.tmdb.CastX
-import com.example.filmosis.data.model.tmdb.Crew
 
 
 class ActoresAdapter(private val castMembers: List<CastX>, private val onPersonClick: (CastX) -> Unit): RecyclerView.Adapter<ActoresAdapter.ActoresRowViewHolder>() {

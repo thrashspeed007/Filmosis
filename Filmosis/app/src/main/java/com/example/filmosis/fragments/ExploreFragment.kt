@@ -28,6 +28,15 @@ import com.example.filmosis.utilities.tmdb.TmdbSearchQueries
 /**
  * Un fragmento que representa la sección de Explorar de la aplicación, permitiendo a los usuarios descubrir películas populares, buscar películas o personas, y filtrar películas según diferentes criterios.
  * Este fragmento utiliza RecyclerViews para mostrar películas populares y listas de películas filtradas.
+ *
+ * @property rootView La vista raíz del fragmento.
+ * @property moviesAccess MoviesAccess para realizar consultas a la API de TMDB sobre datos películas
+ * @see MoviesAccess
+ *
+ * @property trendingMovies ArrayList de Películas para almacenar las películas en tendencia / populares
+ * @property filteredMoviesList ArrayList de Peliculas para guardar las películas filtradas cada vez que se aplica un nuevo filtro
+ * @property trendingMoviesRecyclerView RecyclerView para mostrar las películas en tendencia / populares
+ * @property moviesFilteredRv RecyclerView para mostrar las películas filtradas
  */
 class ExploreFragment : Fragment() {
     private lateinit var rootView: View

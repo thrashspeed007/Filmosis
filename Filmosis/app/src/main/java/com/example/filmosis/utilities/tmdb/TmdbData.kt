@@ -1,7 +1,10 @@
 package com.example.filmosis.utilities.tmdb
 
+
+/**
+ * Objeto singleton que almacena datos recogidos de la API de TMDB para su uso sin tener que realizar la consulta.
+ */
 object TmdbData {
-    // Datos recogidos de la API de TMDB para usarlos sin tener que realizar la query
 
     // Actualizado: 25 Febrero 2024
     // genre/movie/list?language=es'

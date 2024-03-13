@@ -16,6 +16,13 @@ import com.example.filmosis.data.model.tmdb.Person
 
 /**
  * Fragmento que muestra una lista de personas buscadas.
+ *
+ * @property personsAccess PersonsAccess para realizar consultas a la API de TMDB sobre datos de personas
+ * @see PersonsAccess
+ *
+ * @property rv RecyclerView donde se muestran las personas buscadas
+ * @property personsList ArrayList de Personas para guardar las personas buscadas
+ *
  */
 class PersonsSearchedFragment : Fragment() {
     private val personsAccess = PersonsAccess()
@@ -103,7 +110,8 @@ class PersonsSearchedFragment : Fragment() {
     }
 
     /**
-     * Realiza la búsqueda de personas y las muestra en el RecyclerView.
+     * Ejecuta la búsqueda de personas mediante la función addSearchedPersonsToRv
+     * @see addSearchedPersonsToRv
      *
      * @param query La cadena de búsqueda.
      */
@@ -112,7 +120,7 @@ class PersonsSearchedFragment : Fragment() {
     }
 
     /**
-     * Agrega las personas buscadas al RecyclerView.
+     * Realiza la búsqueda de personas y las agrega en el RecyclerView.
      *
      * @param query La cadena de búsqueda.
      */

@@ -1,7 +1,6 @@
 package com.example.filmosis.fragments
 
 import android.app.AlertDialog
-import android.content.ContentValues.TAG
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -12,7 +11,6 @@ import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.widget.Button
 import android.widget.ImageButton
-import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import android.widget.Toast
@@ -32,11 +30,6 @@ import com.example.filmosis.data.model.tmdb.Moviefr
 
 import com.example.filmosis.dataclass.Servicio
 import com.example.filmosis.init.FirebaseInitializer
-import com.example.filmosis.utilities.app.ResourcesMapping
-import com.example.filmosis.utilities.tmdb.TmdbData
-import com.google.firebase.Firebase
-import com.google.firebase.firestore.FieldValue
-import com.google.firebase.firestore.firestore
 
 /**
  * Fragmento par ver la informacion detallada sobre una pelicula
@@ -182,7 +175,7 @@ class PeliculaSeleccionadaFragment : Fragment() {
      * @param data Datos de la pelicula
      * **/
     private fun addDirectoresToList(context: Context, data: Movie) {
-        ma.getDirectorDetails(data.id) { directors ->
+        ma.getMovieDirectors(data.id) { directors ->
             directors?.let { directorList ->
                 recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 recyclerView.adapter = PersonasAdapter(directorList) { directorClicked ->
@@ -273,7 +266,7 @@ class PeliculaSeleccionadaFragment : Fragment() {
     fun video (view: View){
         videoView = view.findViewById(R.id.webView2)
 
-        ma.getMovieDetails(recuperacionInfo.id) { videoUrl ->
+        ma.getMovieVideo(recuperacionInfo.id) { videoUrl ->
             if (videoUrl != null) {
                 val videoIframe = "<iframe width=\"100%\" height=\"100%\" src=\"$videoUrl\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>"
                 videoView.settings.javaScriptEnabled = true
@@ -368,7 +361,7 @@ class PeliculaSeleccionadaFragment : Fragment() {
      * **/
 
     private fun addActoresToList(context: Context, data: Movie) {
-        ma.getActorDetails(data.id) { actores ->
+        ma.getMovieActors(data.id) { actores ->
             actores?.let { actorList ->
                 recyclerViewReparto.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 recyclerViewReparto.adapter = ActoresAdapter(actorList) { actorClicked ->

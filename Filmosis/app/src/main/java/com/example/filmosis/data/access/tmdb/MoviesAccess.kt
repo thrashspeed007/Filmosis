@@ -1,37 +1,38 @@
 package com.example.filmosis.data.access.tmdb
 
 import android.util.Log
-import androidx.recyclerview.widget.RecyclerView
-import com.example.filmosis.adapters.ServicioAdapter
 import com.example.filmosis.config.DatosConexion
-import com.example.filmosis.data.model.tmdb.Cast
-import com.example.filmosis.data.model.tmdb.CastResponse
 import com.example.filmosis.data.model.tmdb.CastX
 import com.example.filmosis.data.model.tmdb.CreditsCast
 import com.example.filmosis.data.model.tmdb.CreditsResponse
 import com.example.filmosis.data.model.tmdb.Crew
-import com.example.filmosis.data.model.tmdb.CrewX
 
 import com.example.filmosis.data.model.tmdb.MoviesPage
 import com.example.filmosis.data.model.tmdb.Movie
 import com.example.filmosis.data.model.tmdb.Moviefr
-import com.example.filmosis.data.model.tmdb.Person
 import com.example.filmosis.dataclass.MovieDetailsResponse
 import com.example.filmosis.dataclass.Network
 import com.example.filmosis.dataclass.NetworkDetailsResponse
-import com.example.filmosis.dataclass.Servicio
 import com.example.filmosis.network.RetrofitService
-import com.example.filmosis.network.interfaces.TmdbApiInterface
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
+/**
+ * Clase que proporciona métodos para acceder a datos relacionados con películas desde la API de TMDb.
+ * Se utiliza la interfaz TmdbApiInterface donde se declaran las consultas con los parámetros necesarios
+ *
+ * @constructor Crea un objeto MoviesAccess.
+ */
 class MoviesAccess {
 
+    /**
+     * Obtiene una lista de películas populares.
+     *
+     * @param callback Función de devolución de llamada que se invocará cuando se obtengan los datos.
+     */
     fun listPopularMovies(callback: (List<Movie>) -> Unit) {
         val call =
             RetrofitService.tmdbApi.listPopularMovies(DatosConexion.API_KEY, DatosConexion.REGION)
@@ -51,6 +52,12 @@ class MoviesAccess {
         })
     }
 
+    /**
+     * Obtiene una lista de películas populares con los géneros especificados.
+     *
+     * @param genres Lista de identificadores de géneros.
+     * @param callback Función de devolución de llamada que se invocará cuando se obtengan los datos.
+     */
     fun listPopularMoviesWithGenres(genres: List<Int>, callback: (List<Movie>) -> Unit) {
         val call = RetrofitService.tmdbApi.listPopularMoviesWithGenres(
             DatosConexion.API_KEY,
@@ -73,6 +80,11 @@ class MoviesAccess {
         })
     }
 
+    /**
+     * Obtiene una lista de películas próximas.
+     *
+     * @param callback Función de devolución de llamada que se invocará cuando se obtengan los datos.
+     */
     fun listUpcomingMovies(callback: (List<Movie>) -> Unit) {
         val currentDate = getCurrentDate()
         val call = RetrofitService.tmdbApi.listUpcomingMovies(
@@ -95,6 +107,12 @@ class MoviesAccess {
         })
     }
 
+    /**
+     * Obtiene una lista de películas recomendadas para una película específica.
+     *
+     * @param movieId Identificador de la película.
+     * @param callback Función de devolución de llamada que se invocará cuando se obtengan los datos.
+     */
     fun listRecommendedMovies(movieId: Int, callback: (List<Movie>) -> Unit) {
         val call = RetrofitService.tmdbApi.getRecommendedMovies(movieId, DatosConexion.API_KEY)
 
@@ -113,6 +131,12 @@ class MoviesAccess {
         })
     }
 
+    /**
+     * Busca películas basadas en una consulta proporcionada.
+     *
+     * @param query Consulta de búsqueda.
+     * @param callback Función de devolución de llamada que se invocará cuando se obtengan los datos.
+     */
     fun searchMovie(query: String, callback: (List<Movie>) -> Unit) {
         val call =
             RetrofitService.tmdbApi.searchMovie(DatosConexion.API_KEY, DatosConexion.REGION, query)
@@ -132,9 +156,14 @@ class MoviesAccess {
         })
     }
 
-    //Para conseguir el link del video
-    fun getMovieDetails(movieId: Int, callback: (String?) -> Unit) {
-        val call = RetrofitService.tmdbApi.getMovieDetails(movieId, DatosConexion.API_KEY, "videos")
+    /**
+     * Obtiene el enlace al video de YouTube de una película si está disponible.
+     *
+     * @param movieId Identificador de la película.
+     * @param callback Función de devolución de llamada que se invocará cuando se obtengan los datos.
+     */
+    fun getMovieVideo(movieId: Int, callback: (String?) -> Unit) {
+        val call = RetrofitService.tmdbApi.getMovieVideo(movieId, DatosConexion.API_KEY, "videos")
 
         call.enqueue(object : Callback<MovieDetailsResponse> {
             override fun onFailure(call: Call<MovieDetailsResponse>, t: Throwable) {
@@ -157,7 +186,11 @@ class MoviesAccess {
         })
     }
 
-
+    /**
+     * Obtiene una lista de películas en tendencia.
+     *
+     * @param callback Función de devolución de llamada que se invocará cuando se obtengan los datos.
+     */
     fun listTrendingMovies(callback: (List<Movie>) -> Unit) {
         val call =
             RetrofitService.tmdbApi.listTrendingMovies(DatosConexion.API_KEY, DatosConexion.REGION)
@@ -177,6 +210,12 @@ class MoviesAccess {
         })
     }
 
+    /**
+     * Obtiene una lista de películas mejor valoradas con los géneros especificados.
+     *
+     * @param genres Lista de identificadores de géneros.
+     * @param callback Función de devolución de llamada que se invocará cuando se obtengan los datos.
+     */
     fun listBestRatedMoviesWithGenres(genres: List<Int>, callback: (List<Movie>) -> Unit) {
         val call = RetrofitService.tmdbApi.listBestRatedMoviesWithGenres(
             DatosConexion.API_KEY,
@@ -199,6 +238,11 @@ class MoviesAccess {
         })
     }
 
+    /**
+     * Obtiene una lista de películas mejor valoradas.
+     *
+     * @param callback Función de devolución de llamada que se invocará cuando se obtengan los datos.
+     */
     fun listBestRatedMovies(callback: (List<Movie>) -> Unit) {
         val call = RetrofitService.tmdbApi.listBestRatedMoves(
             DatosConexion.API_KEY,
@@ -220,6 +264,12 @@ class MoviesAccess {
         })
     }
 
+    /**
+     * Obtiene una lista de películas más recientes con los géneros especificados.
+     *
+     * @param genres Lista de identificadores de géneros.
+     * @param callback Función de devolución de llamada que se invocará cuando se obtengan los datos.
+     */
     fun listLatestMoviesWithGenres(genres: List<Int>, callback: (List<Movie>) -> Unit) {
         val call = RetrofitService.tmdbApi.listLatestMoviesWithGenres(
             DatosConexion.API_KEY,
@@ -243,6 +293,11 @@ class MoviesAccess {
         })
     }
 
+    /**
+     * Obtiene una lista de películas más recientes.
+     *
+     * @param callback Función de devolución de llamada que se invocará cuando se obtengan los datos.
+     */
     fun listLatestMovies(callback: (List<Movie>) -> Unit) {
         val call = RetrofitService.tmdbApi.listLatestMovies(
             DatosConexion.API_KEY,
@@ -265,7 +320,12 @@ class MoviesAccess {
         })
     }
 
-
+    /**
+     * Obtiene una lista de próximas películas con los géneros especificados.
+     *
+     * @param genres Lista de identificadores de géneros.
+     * @param callback Función de devolución de llamada que se invocará cuando se obtengan los datos.
+     */
     fun listUpcomingMoviesWithGenres(genres: List<Int>, callback: (List<Movie>) -> Unit) {
         val call = RetrofitService.tmdbApi.listUpcomingMoviesWithGenres(
             DatosConexion.API_KEY,
@@ -289,7 +349,12 @@ class MoviesAccess {
         })
     }
 
-    //TODO aqui esta el problema
+    /**
+     * Obtiene los detalles de una película incluyendo información de géneros.
+     *
+     * @param movieId Identificador de la película.
+     * @param callback Función de devolución de llamada que se invocará cuando se obtengan los datos.
+     */
     fun getMovieDataGenres(movieId: Int, callback: (Moviefr?) -> Unit) {
         val call = RetrofitService.tmdbApi.getMovieDetailsRecuperarGenres(movieId, DatosConexion.API_KEY)
 
@@ -306,6 +371,12 @@ class MoviesAccess {
         })
     }
 
+    /**
+     * Obtiene los detalles de una película.
+     *
+     * @param movieId Identificador de la película.
+     * @param callback Función de devolución de llamada que se invocará cuando se obtengan los datos.
+     */
     fun getMovieData(movieId: Int, callback: (Movie?) -> Unit) {
         val call = RetrofitService.tmdbApi.getMovieDetailsRecuperar(movieId, DatosConexion.API_KEY)
 
@@ -322,11 +393,13 @@ class MoviesAccess {
         })
     }
 
-
-
-
-
-    fun getDirectorDetails(movieId: Int, callback: (List<Crew>?) -> Unit) {
+    /**
+     * Obtiene los directores de una película.
+     *
+     * @param movieId Identificador de la película.
+     * @param callback Función de devolución de llamada que se invocará cuando se obtengan los datos.
+     */
+    fun getMovieDirectors(movieId: Int, callback: (List<Crew>?) -> Unit) {
         val call = RetrofitService.tmdbApi.getMovieCredits(movieId, DatosConexion.API_KEY)
 
         call.enqueue(object : Callback<CreditsResponse> {
@@ -353,7 +426,13 @@ class MoviesAccess {
         })
     }
 
-    fun getActorDetails(movieId: Int, callback: (List<CastX>?) -> Unit) {
+    /**
+     * Obtiene los actores de una película.
+     *
+     * @param movieId Identificador de la película.
+     * @param callback Función de devolución de llamada que se invocará cuando se obtengan los datos.
+     */
+    fun getMovieActors(movieId: Int, callback: (List<CastX>?) -> Unit) {
         val call = RetrofitService.tmdbApi.getMovieCredits2(movieId, DatosConexion.API_KEY)
         call.enqueue(object : Callback<CreditsCast> {
             override fun onResponse(
@@ -379,6 +458,12 @@ class MoviesAccess {
         })
     }
 
+    /**
+     * Obtiene los detalles de una red de transmisión.
+     *
+     * @param networkId Identificador de la red de transmisión.
+     * @param callback Función de devolución de llamada que se invocará cuando se obtengan los datos.
+     */
     fun fetchNetworkDetails(networkId: Int, callback: (Network?) -> Unit) {
         val call = RetrofitService.tmdbApi.getNetworkDetails(networkId, DatosConexion.API_KEY)
 
@@ -400,8 +485,12 @@ class MoviesAccess {
         })
     }
 
-
-
+    /**
+     * Obtiene proovedores de streaming de una película
+     *
+     * @param networkId Identificador de la red de transmisión.
+     * @param callback Función de devolución de llamada que se invocará cuando se obtengan los datos.
+     */
     fun fetchNetworkDetails2(movieId: Int, callback: (NetworkDetailsResponse?) -> Unit) {
         val call = RetrofitService.tmdbApi.getStreamingProviders(movieId, DatosConexion.API_KEY)
 
@@ -424,9 +513,11 @@ class MoviesAccess {
         })
     }
 
-
-
-    //Lo necesito para hacer la consulta a la bd
+    /**
+     * Obtiene la fecha actual en el formato "yyyy-MM-dd".
+     *
+     * @return La fecha actual en el formato especificado.
+     */
     private fun getCurrentDate(): String {
         val currentDate = LocalDate.now()
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")

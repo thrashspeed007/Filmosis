@@ -22,6 +22,8 @@ import java.util.UUID
 
 /**
  * Fragmento que permite al usuario crear una nueva lista de películas.
+ *
+ * @property firestore Referencia a la instancia de Firestore para acceder a la base de datos de Firebase
  */
 class CreateListFragment : DialogFragment() {
 

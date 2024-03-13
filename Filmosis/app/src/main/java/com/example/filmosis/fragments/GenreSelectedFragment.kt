@@ -20,6 +20,13 @@ import com.example.filmosis.data.model.tmdb.Movie
 
 /**
  * Fragmento que muestra una lista de películas filtradas por género.
+ *
+ * @property moviesAccess MovieAcceess para obtener los datos de la pelicula a traves de consultas a la API
+ * @property moviesListTrending ArrayList de Peliculas para guardar las películas en tendencia
+ * @property filteredMoviesList ArrayList de Peliculas para guardar las películas filtradas cada vez que se aplica un nuevo filtro
+ * @property genres Lista de Int para almacenar los ids de los géneros recibidos por los argumentos del fragmento
+ * @property popularMoviesRv RecyclerView donde se muestran las peliculas en tendencia / populares en este momento
+ * @property moviesFilteredRv RecyclerView donde se muestran las películas filtradas
  */
 class GenreSelectedFragment : Fragment() {
 
