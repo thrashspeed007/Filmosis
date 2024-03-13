@@ -11,23 +11,51 @@ import com.example.filmosis.R
 import com.example.filmosis.config.DatosConexion
 import com.example.filmosis.data.model.tmdb.CastX
 
-
+/**
+ * Adaptador para mostrar la lista de actores en un RecyclerView
+ *
+ * @param castMembers Lista de los miembros del reparto
+ * @param onPersonClick funcion lambda para manejar el click en un actor
+ * **/
 class ActoresAdapter(private val castMembers: List<CastX>, private val onPersonClick: (CastX) -> Unit): RecyclerView.Adapter<ActoresAdapter.ActoresRowViewHolder>() {
 
+    /**
+     * ViewHolder para una fila del RecyclerView que representa a un actor
+     * @param itemView Vista de la fila
+     * **/
     class ActoresRowViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val personProfilePic: ImageView = itemView.findViewById(R.id.personSearched_profilePic)
         val personName: TextView = itemView.findViewById(R.id.personSearched_personTitle)
         val personType: TextView = itemView.findViewById(R.id.personSearched_personType)
     }
 
+
+    /**
+     * Crea y devuelve el ViewHolder
+     *
+     * @param parent El ViewGroup al que se adjuntara el nuevo View
+     * @param viewType El tipo de vista del nuevo View
+     * @return Nuevo ViewHolder que contiene la vista de un elemento de la lista
+     * **/
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActoresRowViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_person_searched, parent, false)
         return ActoresRowViewHolder(view)
     }
 
+    /**
+     * Obtiene el numero total de elemtnos de la lista del reparto
+     * @return El numero total de elementos
+     * **/
     override fun getItemCount(): Int {
         return castMembers.size
     }
+
+    /**
+     * Actualiza el contenido del ViewHolder para mostrar el elemento en la posicion dada
+     *
+     * @param holder El ViewHolder que debe actualizarse
+     * @param position La posicion del elemento dentro del conjunto de datos
+     * **/
 
     override fun onBindViewHolder(holder: ActoresRowViewHolder, position: Int) {
         val castMember = castMembers[position]
