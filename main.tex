@@ -116,154 +116,10 @@
 
 \section{Configuración del entorno de desarrollo}
 
-\section{Guía de Uso}
-    \subsection{Instrucciones para Configurar y Ejecutar el Proyecto}
-
-    \subsubsection{Mediante el Código Fuente (src)}
-
-    \begin{enumerate}
-        \item \textbf{Configuración inicial:}
-            \begin{itemize}
-                \item Abre Android Studio.
-                \item Selecciona "Abrir un proyecto existente" y navega hasta el directorio donde se encuentra el código fuente del proyecto.
-                \item Selecciona el archivo \texttt{build.gradle} en el directorio raíz del proyecto y haz clic en "Abrir".
-            \end{itemize}
-            
-            \begin{figure}[h]
-                \centering
-                \includegraphics[width=0.8\textwidth]{Images/codigo_fuente_abrir_proyecto.png}
-                \caption{Interfaz de Android Studio mostrando el proceso de apertura del proyecto existente.}
-                \label{fig:codigo_fuente}
-            \end{figure}
-        
-        \item \textbf{Espera a que Android Studio sincronice el proyecto:}
-            \begin{itemize}
-                \item Android Studio puede necesitar tiempo para descargar e instalar las dependencias del proyecto, así que espera a que la sincronización se complete.
-            \end{itemize}
-            
-        \item \textbf{Configuración del dispositivo virtual o dispositivo físico:}
-            \begin{itemize}
-                \item Puedes ejecutar tu aplicación en un dispositivo virtual o en un dispositivo físico conectado.
-                \item Para crear un dispositivo virtual, ve a \texttt{Tools > AVD Manager}, y crea un nuevo dispositivo virtual según tus preferencias.
-                \item Para ejecutar en un dispositivo físico, asegúrate de tener habilitado el modo de desarrollador y la depuración USB en el dispositivo, y conéctalo a tu computadora.
-            \end{itemize}
-        
-        \item \textbf{Ejecución del proyecto:}
-            \begin{itemize}
-                \item Selecciona el dispositivo en el que deseas ejecutar la aplicación (dispositivo virtual o físico) en la barra de herramientas.
-                \item Haz clic en el botón "Run" (el ícono de reproducción) o presiona \texttt{Shift + F10}.
-                \item Espera a que Android Studio compile el proyecto y lo ejecute en el dispositivo seleccionado.
-            \end{itemize}
-    \end{enumerate}
-
-    \subsubsection{Mediante la APK Instalándola}
-
-    \begin{enumerate}
-        \item \textbf{Generación de la APK:}
-            \begin{itemize}
-                \item En Android Studio, ve a \texttt{Build > Build Bundle(s) / APK(s) > Build APK(s)}.
-                \item Espera a que Android Studio termine de compilar el proyecto. La APK generada estará disponible en el directorio \texttt{app/build/outputs/apk/debug/}.
-            \end{itemize}
-            
-            \begin{figure}[h]
-                \centering
-                \includegraphics[width=0.8\textwidth]{Images/generacion_apk_android_studio.png}
-                \caption{Captura de pantalla de Android Studio durante el proceso de generación de la APK.}
-                \label{fig:generacion_apk}
-            \end{figure}
-        
-        \item \textbf{Transferencia de la APK a un Dispositivo:}
-            \begin{itemize}
-                \item Conecta tu dispositivo Android a tu computadora mediante un cable USB.
-                \item Transfiere la APK generada al almacenamiento del dispositivo.
-            \end{itemize}
-        
-        \item \textbf{Instalación de la APK:}
-            \begin{itemize}
-                \item En tu dispositivo Android, abre un explorador de archivos.
-                \item Navega hasta donde hayas transferido la APK.
-                \item Toca la APK para comenzar el proceso de instalación.
-                \item Sigue las instrucciones en pantalla para completar la instalación.
-            \end{itemize}
-
-        \begin{figure}[h]
-                \centering
-                \includegraphics[width=0.3\textwidth]{Images/instalacion_apk_dispositivo.png}
-                \caption{Captura de pantalla del proceso de instalación de la APK en un dispositivo Android.}
-                \label{fig:instalacion_apk}
-            \end{figure}
-            
-        \item \textbf{Ejecución de la Aplicación:}
-            \begin{itemize}
-                \item Una vez instalada, puedes encontrar y ejecutar la aplicación como cualquier otra aplicación en tu dispositivo Android.
-            \end{itemize}
-    \end{enumerate}
-
-    \subsection{Funcionalidades principales y cómo utilizarlas}
-
-    \subsubsection{Página de Inicio}
-    % Adjuntar captura de pantalla
-    La página de inicio cuenta con tres botones principales:
-    \begin{itemize}
-        \item \textbf{Iniciar sesión con Google:} Permite a los usuarios iniciar sesión utilizando sus cuentas de Google.
-        \item \textbf{Crear una cuenta:} Permite a los nuevos usuarios crear una cuenta en la aplicación.
-        \item \textbf{Iniciar sesión con usuario y contraseña:} Permite a los usuarios iniciar sesión utilizando sus credenciales de usuario.
-    \end{itemize}
-    Además, en la página de inicio se muestran recomendaciones de películas y películas en tendencia, junto con un buscador para encontrar películas, actores y directores.
-
-    \subsubsection{Página de Explorar}
-    % Adjuntar captura de pantalla
-    En la página de explorar, los usuarios pueden:
-    \begin{itemize}
-        \item \textbf{Filtrar por géneros:} Se puede filtrar la lista de películas por género.
-        \item \textbf{Ver películas recientes, populares, mejor valoradas y próximos estrenos:} Se muestran listas de películas organizadas por diferentes criterios.
-    \end{itemize}
-
-    \subsubsection{Perfil de Usuario}
-    % Adjuntar captura de pantalla
-    En el perfil de usuario, los usuarios pueden gestionar su cuenta, cambiar su foto de perfil y contraseña.
-
-    \subsubsection{Mis Listas}
-    % Adjuntar captura de pantalla
-    En la sección de "Mis Listas", los usuarios pueden ver y gestionar las listas de películas que han creado.
+\section{Guía de uso}
 
 \section{Arquitectura}
 
-    El proyecto de Android Studio sigue una arquitectura basada en el patrón Modelo-Vista-ViewModel (MVVM) junto con elementos de la arquitectura limpia (Clean Architecture).
-
-    \subsection{Componentes de la Arquitectura}
-
-    \begin{itemize}
-        \item \textbf{Modelo:} Las \emph{data classes} representan el Modelo en la arquitectura MVVM. Estas clases contienen los datos utilizados en la aplicación, así como la lógica relacionada con los datos.
-        
-        \item \textbf{Vista:} Los layouts XML definidos en el proyecto representan la Vista en la arquitectura MVVM. Estos layouts definen la estructura visual de la interfaz de usuario de la aplicación.
-        
-        \item \textbf{ViewModel:} Los conectores mencionados probablemente actúan como el ViewModel en la arquitectura MVVM. Estos conectores actúan como intermediarios entre la Vista y el Modelo, proporcionando los datos necesarios para la interfaz de usuario.
-        
-        \item \textbf{Firebase:} Se utiliza Firebase para la conexión externa, lo que implica que el proyecto también integra una capa de datos remotos. Firebase puede encajar en la arquitectura limpia como un Adaptador de Interfaces o una capa de Infraestructura, proporcionando acceso a los datos externos.
-    \end{itemize}
-
-\section{Componentes del Proyecto}
-
-    \subsection{Layouts}
-
-    Los layouts definidos en el proyecto definen la estructura visual de la interfaz de usuario de la aplicación. Están escritos en XML y pueden incluirse tanto en actividades como en fragmentos.
-
-    \subsection{Activities y Fragments}
-
-    Las actividades y fragmentos representan las diferentes pantallas y componentes de la interfaz de usuario de la aplicación.
-
-    \subsection{Adapters}
-
-    Los adapters se utilizan para vincular conjuntos de datos a los componentes de la interfaz de usuario, como los RecyclerViews. Estos adapters pueden proporcionar los datos necesarios desde las data classes.
-
-    \subsection{Data Classes}
-
-    Las data classes representan los modelos de datos utilizados en la aplicación. Contienen la información necesaria para representar los objetos en la interfaz de usuario.
-
-    \subsection{Conectores}
-
-    Los conectores se utilizan para interactuar con fuentes de datos externas, como Firebase. Actúan como intermediarios entre los datos externos y la lógica de la aplicación.
 
 \section{Base de datos}
 
@@ -316,6 +172,44 @@ Estas pruebas aseguran que el cálculo del rating en el fragmento `PeliculaSelec
 En el fragmento `ExploreFragment`, se llevaron a cabo pruebas para validar el funcionamiento de la vista de búsqueda y los botones de filtro. En la prueba `testSearchView`, se simula el ingreso de una consulta de búsqueda y se verifica que el resultado de la búsqueda sea visible en el RecyclerView correspondiente. En la prueba `testFilterButtons`, se realiza una acción de clic en un botón de filtro y se asegura que el RecyclerView de películas filtradas se actualice correctamente.
 
 Estas pruebas unitarias en los fragmentos son fundamentales para garantizar un comportamiento consistente y sin errores en la aplicación Filmosis.
+
+\subsection{Pruebas de Interfaz de Usuario (UI)}
+
+Para asegurar el correcto funcionamiento de la interfaz de usuario de la aplicación, se realizaron pruebas de UI utilizando Espresso, un framework de pruebas de interfaz de usuario para aplicaciones Android. A continuación, se detallan las pruebas realizadas en la clase \texttt{CrearCuentaGUI}, que se encargan de verificar el proceso de creación de cuenta en la aplicación:
+
+\subsubsection{CrearCuentaGUI}
+
+La clase \texttt{CrearCuentaGUI} contiene pruebas de interfaz de usuario para el proceso de creación de cuenta en la aplicación. Estas pruebas cubren diversos aspectos de la interfaz de usuario, incluyendo la interacción con diferentes elementos de la pantalla y la validación de los datos ingresados. A continuación, se describen las acciones realizadas y las verificaciones realizadas en estas pruebas:
+
+\begin{itemize}
+    \item \textbf{Crear cuenta con datos válidos:} Se simula el proceso de creación de cuenta ingresando datos válidos en los campos requeridos, como nombre de usuario, correo electrónico y contraseña. Se verifica que al hacer clic en el botón "CREAR CUENTA", se complete el proceso de registro correctamente sin errores.
+    
+    \item \textbf{Intento de crear cuenta con una cuenta existente:} Se simula un escenario en el que se intenta crear una cuenta con datos que ya están asociados a una cuenta existente en la base de datos. Se espera que al hacer clic en el botón "CREAR CUENTA", se muestre un mensaje de error indicando que la cuenta ya existe y que el proceso de registro no se complete.
+    
+    \item \textbf{Validación de campos requeridos:} Se realizan pruebas para verificar que los campos obligatorios, como nombre de usuario, correo electrónico y contraseña, deben ser completados antes de poder crear una cuenta. Se verifica que al intentar crear una cuenta con campos vacíos, se muestren mensajes de error indicando que los campos son obligatorios.
+    
+    \item \textbf{Selección de fecha de nacimiento:} Se simula la interacción del usuario con el campo de fecha de nacimiento, seleccionando una fecha específica. Se verifica que la fecha seleccionada se muestre correctamente y que el usuario pueda confirmar la selección.
+\end{itemize}
+
+\subsubsection{AccederCuentaGUIespresso}
+
+La clase \texttt{AccederCuentaGUIespresso} contiene pruebas de interfaz de usuario utilizando Espresso para verificar el proceso de inicio de sesión en la aplicación. A continuación, se detallan las acciones realizadas y las verificaciones realizadas en estas pruebas:
+
+\begin{itemize}
+    \item \textbf{Acceso a la pantalla de inicio de sesión:} La prueba comienza simulando el clic en el botón "CREAR CUENTA" en la pantalla de inicio. Luego, se hace clic en el botón "VOLVER" en la pantalla de registro para regresar a la pantalla de inicio, y finalmente se hace clic en el botón "ACCEDER" para acceder a la pantalla de inicio de sesión.
+    
+    \item \textbf{Intento de inicio de sesión con datos de cuenta incorrectos:} Se simula el ingreso de datos de cuenta incorrectos, como una dirección de correo electrónico incompleta y una contraseña incorrecta. Se espera que al hacer clic en el botón "INICIAR SESIÓN", no se complete el inicio de sesión y se muestren mensajes de error indicando los campos incorrectos.
+    
+    \item \textbf{Intento de inicio de sesión con datos de cuenta válidos:} Se ingresan datos de cuenta válidos, incluida una dirección de correo electrónico válida y la contraseña correspondiente. Luego, se hace clic en el botón "INICIAR SESIÓN" y se verifica que el proceso de inicio de sesión se complete correctamente, permitiendo al usuario acceder al contenido protegido de la aplicación.
+\end{itemize}
+
+Estas pruebas de interfaz de usuario garantizan que el proceso de inicio de sesión en la aplicación funcione correctamente y proporcione una experiencia fluida para el usuario.
+
+
+
+Estas pruebas de interfaz de usuario garantizan que el proceso de creación de cuenta en la aplicación funcione correctamente y proporcione una experiencia fluida para el usuario.
+
+
 
 
 
