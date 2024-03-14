@@ -135,6 +135,49 @@
 
 \section{Pruebas}
 
+Durante el desarrollo de Filmosis, se llevaron a cabo diversas pruebas para garantizar la calidad y el funcionamiento adecuado de la aplicación. A continuación, se describen las principales pruebas realizadas:
+
+\subsection{Pruebas Unitarias}
+
+Las pruebas unitarias se centran en probar unidades individuales de código, como métodos o funciones, de manera aislada del resto del sistema. Estas pruebas se utilizan para verificar que cada unidad de código funcione correctamente según lo esperado. En Filmosis, se escribieron pruebas unitarias para verificar el comportamiento de funciones específicas dentro de los componentes de la aplicación, como la lógica de negocios, el manejo de datos y las interacciones con las API externas.
+
+\subsection{Pruebas de Integración}
+
+Las pruebas de integración evalúan la interacción entre diferentes componentes o módulos de la aplicación para asegurar que funcionen correctamente juntos. Estas pruebas son útiles para identificar problemas de comunicación o interoperabilidad entre los distintos elementos de la aplicación. En el caso de Filmosis, se realizaron pruebas de integración para verificar la comunicación adecuada entre las diferentes capas de la aplicación, como la interfaz de usuario, la lógica de negocios y el acceso a datos.
+
+\subsection{Pruebas de Aceptación del Usuario (UAT)}
+
+Las pruebas de aceptación del usuario implican validar la funcionalidad de la aplicación desde la perspectiva del usuario final. Estas pruebas se centran en asegurar que la aplicación cumpla con los requisitos y expectativas del usuario, así como en identificar posibles áreas de mejora desde una perspectiva de experiencia de usuario. En el caso de Filmosis, se realizaron pruebas de UAT para evaluar la usabilidad, la accesibilidad y la satisfacción general del usuario con la aplicación.
+
+\subsection{Pruebas Unitarias en Fragmentos}
+
+Se llevaron a cabo pruebas unitarias en los fragmentos de la aplicación para garantizar su correcto funcionamiento y comportamiento esperado. A continuación, se describen las pruebas realizadas en los fragmentos `PeliculaSeleccionadaFragment` y `ExploreFragment`:
+
+\subsubsection{PeliculaSeleccionadaFragment}
+
+En el fragmento `PeliculaSeleccionadaFragment`, se realizaron varias pruebas para verificar el correcto funcionamiento del cálculo del rating de la película.
+
+\begin{itemize}
+    \item \textbf{testCalculoEstrellas\_devuelve\_la\_calificación\_esperada}: Esta prueba se encarga de verificar si el cálculo del rating se realiza correctamente y devuelve la calificación esperada. Para esto, se simulan diferentes escenarios, incluyendo una calificación de cero y la calificación máxima, y se verifica si el rating calculado coincide con el rating esperado.
+    
+    \item \textbf{testCalculoEstrellas\_puntaje\_cero}: En esta prueba se verifica el comportamiento del cálculo del rating cuando la calificación de la película es cero. Se asegura de que el rating calculado sea igual a cero, como se espera.
+    
+    \item \textbf{testCalculoEstrellas\_puntaje\_maximo}: Esta prueba evalúa el cálculo del rating cuando la calificación de la película alcanza el valor máximo posible. Se verifica si el rating calculado coincide con el número máximo de estrellas, asegurando que el rating se muestre correctamente en la interfaz de usuario.
+\end{itemize}
+
+Estas pruebas aseguran que el cálculo del rating en el fragmento `PeliculaSeleccionadaFragment` funcione correctamente en una variedad de situaciones, garantizando una experiencia consistente para el usuario.
+
+\subsubsection{ExploreFragment}
+
+En el fragmento `ExploreFragment`, se llevaron a cabo pruebas para validar el funcionamiento de la vista de búsqueda y los botones de filtro. En la prueba `testSearchView`, se simula el ingreso de una consulta de búsqueda y se verifica que el resultado de la búsqueda sea visible en el RecyclerView correspondiente. En la prueba `testFilterButtons`, se realiza una acción de clic en un botón de filtro y se asegura que el RecyclerView de películas filtradas se actualice correctamente.
+
+Estas pruebas unitarias en los fragmentos son fundamentales para garantizar un comportamiento consistente y sin errores en la aplicación Filmosis.
+
+
+
+
+
+
 \section{Análisis de requisitos y especificaciones}
 
     \begin{minipage}{0.4\textwidth}
