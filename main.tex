@@ -2,6 +2,7 @@
 \usepackage{graphicx} % Required for inserting images
 \usepackage{graphicx}
 \usepackage{fancyhdr}
+\usepackage{url} % Required for inserting URLs
 
 \pagestyle{fancy}
 \fancyhf{}
@@ -47,294 +48,233 @@
 
 \newpage
 
-\section{Descripción}
+\section{Introducción}
 
-Filmosis es una aplicación dedicada a los amantes del cine que buscan una experiencia completa para descubrir, explorar y valorar películas. Esta plataforma combina la riqueza de información de IMDb con una función de valoración integrada, permitiendo a los usuarios sumergirse en el vasto mundo del cine de una manera interactiva y social.
-
-Características destacadas:
-
-\begin{itemize}
-    \item Exploración de Películas: Filmosis ofrece una amplia base de datos de películas donde los usuarios pueden explorar información detallada sobre películas, desde el elenco hasta las críticas.
+    \subsection{Breve descripción}
     
-    \item Sistema de Valoración: Los usuarios pueden calificar y revisar películas, compartiendo sus opiniones con la comunidad de Filmosis. La función de valoración permite a los usuarios descubrir películas populares y apreciadas por otros miembros de la plataforma.
+    Filmosis es una aplicación dedicada a los amantes del cine que buscan una experiencia completa para descubrir, explorar y valorar películas. Esta plataforma combina la riqueza de información de IMDb con una función de valoración integrada, permitiendo a los usuarios sumergirse en el vasto mundo del cine de una manera interactiva y social.
     
-    \item Listas Personalizadas: Los usuarios pueden crear listas personalizadas de películas, como "Mis Favoritas", "Por Ver", o cualquier categoría que deseen. Esta función ayuda a organizar y compartir preferencias cinematográficas.
+    \subsection{Objetivos}
     
-    \item Noticias y Actualizaciones: Filmosis mantiene a los usuarios actualizados sobre las últimas noticias y eventos en la industria cinematográfica, asegurándose de que estén informados sobre estrenos, premios y más.
+        \begin{itemize}
+            \item Exploración de Películas: Filmosis ofrece una amplia base de datos de películas donde los usuarios pueden explorar información detallada sobre películas, desde el elenco hasta las críticas.
+            
+            \item Listas Personalizadas: Los usuarios pueden crear listas personalizadas de películas, como "Mis Favoritas", "Por Ver", o cualquier categoría que deseen. Esta función ayuda a organizar y compartir preferencias cinematográficas.
+            
+            \item Noticias y Actualizaciones: Filmosis mantiene a los usuarios actualizados sobre las últimas noticias y eventos en la industria cinematográfica, asegurándose de que estén informados sobre estrenos, premios y más.
+            
+            \item Perfil de Usuario: Cada usuario tiene su propio perfil personalizado, donde pueden ver sus valoraciones, listas y contribuciones. También pueden conectarse con amigos y descubrir lo que están viendo y valorando.
+        \end{itemize}
+        
+        Filmosis se esfuerza por crear una comunidad vibrante de cinéfilos, proporcionando una plataforma interactiva y social para explorar y disfrutar del mundo del cine.
+        
+        \vspace{1cm}
+        
+        \begin{minipage}{1\textwidth}
+            \centering
+            \includegraphics[width=0.6\textwidth]{images/logoFilmosis.png}
+        \end{minipage}
+
+\section{Tecnologías empleadas}
+
+\subsection{Kotlin}
+
+    \begin{itemize}
+        \item Retrofit: Retrofit es una biblioteca popular para Android que simplifica el consumo de servicios web RESTful. Ofrece una forma declarativa y eficiente de definir y realizar solicitudes HTTP, así como de procesar las respuestas.
     
-    \item Perfil de Usuario: Cada usuario tiene su propio perfil personalizado, donde pueden ver sus valoraciones, listas y contribuciones. También pueden conectarse con amigos y descubrir lo que están viendo y valorando.
-\end{itemize}
+        \item Gson: Biblioteca de Java / Kotlin desarrollada por Google que facilita el análisis y la serialización de objetos Java en formato JSON y viceversa. Es ampliamente utilizada en aplicaciones Android para el intercambio de datos entre el cliente y el servidor, así como para el almacenamiento de datos en archivos JSON.
+    
+        \item CarouselRecyclerView: Libearía de Android que permite crear y mostrar carruseles de elementos dentro de un RecyclerView. Esta biblioteca simplifica la implementación de carousels horizontales o verticales en aplicaciones Android, lo que proporciona una experiencia de usuario más atractiva y dinámica.
+    
+        \item CircleImageView: CircleImageView es una biblioteca de Android que proporciona una vista personalizada para mostrar imágenes redondeadas en aplicaciones Android. Esta biblioteca simplifica la implementación de imágenes circulares en las interfaces de usuario de las aplicaciones, lo que mejora la estética y la coherencia visual.
+    
+        \item Dokka: Herramienta de generación de documentación para proyectos Kotlin y Java. Esta herramienta, desarrollada por JetBrains, permite generar documentación de manera automática a partir del código fuente, facilitando la creación y mantenimiento de documentación técnica para proyectos de software.
+    
+        \item Glide: Glide es una biblioteca de gestión de imágenes para Android que facilita la carga, la visualización y el almacenamiento en caché de imágenes de forma eficiente en aplicaciones Android. Desarrollado por Bumptech, Glide se ha convertido en una de las bibliotecas más populares para el manejo de imágenes en el ecosistema Android.
+    
+    \end{itemize}
 
-Filmosis se esfuerza por crear una comunidad vibrante de cinéfilos, proporcionando una plataforma interactiva y social para explorar y disfrutar del mundo del cine.
+\subsection{Bibliotecas adicionales}
 
-\vspace{1cm}
+    \begin{itemize}
+        \item Firebase: Firebase es una plataforma de desarrollo de aplicaciones móviles y web desarrollada por Google. Proporciona una variedad de servicios en la nube que ayudan a los desarrolladores a crear, mejorar y hacer crecer sus aplicaciones de manera rápida y efectiva. Estos servicios incluyen desde herramientas para el desarrollo de aplicaciones hasta análisis de usuarios y monetización. Las herramientas de Firebase que hemos utilizado son las siguientes:
+    
+        \begin{itemize}
+            \item Firebase Analytics: Servicio de análisis de usuarios que permite a los desarrolladores comprender el comportamiento de los usuarios en sus aplicaciones, lo que les ayuda a tomar decisiones informadas para mejorar la experiencia del usuario y el rendimiento de la aplicación.
+    
+            \item Firebase Authentication: Servicio de autenticación de usuarios que permite a los desarrolladores autenticar usuarios de forma segura en sus aplicaciones mediante diversos métodos de autenticación, lo que garantiza la seguridad y la privacidad de los datos del usuario.
+    
+            \item Firebase Firestore: Firestore es un servicio de base de datos en la nube de documentos en tiempo real y escalable que permite a los desarrolladores almacenar, sincronizar y consultar datos de manera flexible y eficiente.
+    
+            \item Firebase Storage: Servicio de almacenamiento en la nube capaz de almacenar y servir archivos de usuario, como imágenes, videos, archivos de audio y otros archivos multimedia, de forma segura y eficiente.
+        \end{itemize}
+    
+        \item TMDB (The Movie Database): Plataforma en línea que proporciona una amplia base de datos de información relacionada con películas, programas de televisión y personas asociadas con la industria del entretenimiento. TMDb ofrece una variedad de datos útiles para cinéfilos, desarrolladores de aplicaciones y profesionales de la industria del entretenimiento.
+    \end{itemize}
 
-\begin{minipage}{1\textwidth}
-    \centering
-    \includegraphics[width=0.6\textwidth]{images/logoFilmosis.png}
-\end{minipage}
+\section{Estructura del proyecto}
+
+\section{Configuración del entorno de desarrollo}
+
+\section{Guía de uso}
 
 \section{Arquitectura}
 
-La arquitectura de Filmosis está diseñada para ofrecer una experiencia completa a los usuarios amantes del cine, utilizando diversas tecnologías y servicios. A continuación, se presenta una descripción de la arquitectura:
-
-\begin{itemize}
-    \item Main Activity y Fragmentos: La aplicación Filmosis utiliza un diseño de interfaz basado en una MainActivity que contiene varios fragmentos. Estos fragmentos representan las distintas secciones de la aplicación, como la pantalla de inicio, la pantalla de búsqueda, la pantalla de listas personalizadas y la pantalla de perfil de usuario. Este enfoque modular facilita la gestión y la navegación en la aplicación.
-    
-    \item Retrofit para Peticiones a APIs: Filmosis utiliza la biblioteca Retrofit para realizar peticiones a la API de The Movie Database (TMDb). Retrofit simplifica la interacción con servicios web al convertir las solicitudes HTTP en llamadas a métodos de Java, facilitando la integración y la gestión de datos externos.
-    
-    \item The Movie Database (TMDb): Filmosis se integra con The Movie Database (TMDb) para obtener información detallada sobre películas, desde detalles de la trama hasta elenco, críticas y más. TMDb proporciona una amplia base de datos cinematográfica que enriquece la experiencia de los usuarios al ofrecer información precisa y actualizada.
-    
-    \item Firebase para la Base de Datos y Usuarios: Filmosis utiliza Firebase como plataforma integral para gestionar la base de datos y la autenticación de usuarios. Firebase Realtime Database almacena datos en tiempo real y permite sincronizar la información entre diferentes dispositivos de forma eficiente. Además, Firebase Authentication proporciona un sistema seguro para la gestión de usuarios, permitiendo a los usuarios crear perfiles personalizados, calificar películas y gestionar sus listas personalizadas.
-
-\end{itemize}
-
-\vspace{1cm}
-
-\begin{minipage}{1\textwidth}
-    \centering
-    \includegraphics[width=0.4\textwidth]{images/arquitecturaSoftware.png}
-\end{minipage}
-
-\section{Diseño}
-
-\subsection{Pantalla Inicial}
-
-    \begin{minipage}{0.4\textwidth}
-        \includegraphics[width=\textwidth]{images/pantallaInicio.png}
-    \end{minipage}
-    \hfill
-    \begin{minipage}{0.55\textwidth}
-    La pantalla de inicio contendrá el logo de la aplicación, junto con un mensaje de bienvenida.
-    
-    Además, tendrás la opción de iniciar sesión o de registrarse, aceptando los términos de servicio y política de privacidad.
-    
-    También dispone de un botón en la parte superior para cambiar el idioma.
-    
-    \end{minipage}
-
-\subsection{Pantalla de Registro}
-
-    \begin{minipage}{0.4\textwidth}
-        \includegraphics[width=\textwidth]{images/pantallaRegistro.png}
-    \end{minipage}
-    \hfill
-    \begin{minipage}{0.55\textwidth}
-    La pantalla de registro contiene 6 campos con diferentes requisitos.
-    
-    La primera parte consiste en los datos acerca de la cuenta, como son el nombre de usuario, correo electrónico y contraseña.
-    
-    Después, hay que rellenar datos personales, los cuáles son el nombre, apellidos y fecha de nacimiento.
-
-    
-    \end{minipage}
-
-\subsection{Pantallas de Listas Personalizadas}
-
-    \begin{minipage}{0.4\textwidth}
-        \includegraphics[width=\textwidth]{images/pantallaListas.png}
-    \end{minipage}
-    \begin{minipage}{0.55\textwidth}
-    Esta pantalla contendrá listas creadas por los usuarios, las cuales se podrán consultar y guardar si se desea.
-    
-    \end{minipage}
-    \hfill
-
-\subsection{Pantalla de Home}
-
-    \begin{minipage}{0.4\textwidth}
-        \includegraphics[width=\textwidth]{images/pantallaHome.png}
-    \end{minipage}
-    \hfill
-    \begin{minipage}{0.55\textwidth}
-    La pantalla de inicio consiste en cinco secciones:
-        \begin{itemize}
-            \item Actualmente: En donde se listarán las películas en cartelera actuales
-            \item Próximamente: Las futuras películas 
-            \item Populares: Las películas más populares del momento
-            \item Servicios: Para buscar el contenido mas popular por cada plataforma
-            \item Noticias: Últimas noticias de películas.
-        \end{itemize}
-    
-    \end{minipage}
-
-\subsection{Pantalla de Foros}
-
-    \begin{minipage}{0.4\textwidth}
-        \includegraphics[width=\textwidth]{images/pantallaForos.png}
-    \end{minipage}
-    \hfill
-    \begin{minipage}{0.55\textwidth}
-    La pantalla de foros contendrá foros para conversar con diferentes usuarios y discutir acerca de distintos temas.
-    
-    La estructura es parecida a la pantalla de listas personalizadas.
-
-    \end{minipage}
-
-\subsection{Pantalla de Película Seleccionada}
-
-    \begin{minipage}{0.4\textwidth}
-        \includegraphics[width=\textwidth]{images/pantallaPeliSeleccionada.png}
-    \end{minipage}
-    \hfill
-    \begin{minipage}{0.55\textwidth}
-    Las pantalla de película seleccionada contiene información variada acerca de la película, como su puntuación y el resumen, los directores y actores, o los servicios en donde está disponible
-    
-    \end{minipage}
-
-\newpage
-
-\section{Conclusión}
-
-En resumen, Filmosis se presenta como una aplicación integral diseñada para los amantes del cine, ofreciendo una experiencia completa que combina la riqueza informativa de IMDb con características sociales interactivas. Los usuarios pueden explorar una extensa base de datos de películas, accediendo a detalles como el elenco y las críticas. La función de valoración permite a los usuarios compartir sus opiniones, descubrir películas populares y conectarse con la comunidad. La posibilidad de crear listas personalizadas facilita la organización y compartición de preferencias cinematográficas. Además, Filmosis mantiene a los usuarios informados sobre las últimas noticias y eventos en la industria cinematográfica. Con perfiles de usuario personalizados, la aplicación busca fomentar una comunidad vibrante de cinéfilos, ofreciendo una plataforma interactiva y social para explorar y disfrutar del mundo del cine.
-\section{Análisis de requisitos y especificaciones}
-\begin{minipage}{0.4\textwidth}
-    \includegraphics[width=\textwidth]{images/version.png}
-\end{minipage}
-\hfill
-\begin{minipage}{0.55\textwidth}
-Esta aplicación solo está operativa para dispositivos móviles que tengan Android como sistema operativo. Para realizar este proyecto, hemos utilizado la versión de distribución API Pie, API LEVEL 28, con una distribución acumulativa del 86.4\%. Es decir, esta aplicación solo soporta versiones con Android 9.0 como mínimo.
-\end{minipage}
-\section{Publicacion y distribucion}
-\subsection{Instrucciones para compilar y generar versiones de la aplicación}
-
-Para compilar y generar versiones de la aplicación, sigue estos pasos:
-
-\begin{enumerate}
-    \item Dirígete al repositorio de GitHub de Filmosis: \url{https://github.com/agarciagale/Filmosis.git}.
-    
-    \item Haz clic en el botón "Code" y copia el enlace proporcionado.
-    
-    \item Abre tu terminal y ejecuta el siguiente comando para clonar el repositorio:
-    \begin{verbatim}
-        git clone <enlace_del_repositorio>
-    \end{verbatim}
-    
-    \item Asegúrate de tener instalado un IDE compatible con Kotlin, como Android Studio.
-    
-    \item Navega hasta el directorio raíz del proyecto clonado en tu terminal.
-    
-    \item Ejecuta el siguiente comando para compilar la aplicación:
-    \begin{verbatim}
-        ./gradlew build
-    \end{verbatim}
-    Esto generará un archivo .jar en el directorio de salida del proyecto.
-    
-    \item Para generar una versión lista para distribuir, utiliza Gradle con el siguiente comando:
-    \begin{verbatim}
-        ./gradlew assembleRelease
-    \end{verbatim}
-    Esto generará una versión de la aplicación lista para ser distribuida.
-\end{enumerate}
-
-\subsection{Proceso de publicación en tiendas de aplicaciones o distribución interna}
-
-Para publicar la aplicación en tiendas de aplicaciones como Play Store, sigue estos pasos:
-
-\begin{enumerate}
-    \item Sigue los pasos específicos de cada tienda de aplicaciones. Normalmente, necesitarás crear una cuenta de desarrollador y seguir las pautas de publicación proporcionadas por la tienda.
-    
-    \item Si deseas distribuir la aplicación internamente, puedes utilizar servicios como Firebase App Distribution o Google Play Console (para distribución cerrada). Configura los ajustes necesarios y sigue las instrucciones proporcionadas por el servicio elegido.
-\end{enumerate}
-
 
 \section{Base de datos}
-Hemos empleado como base de datos Firestore Database, una de las opciones que nos ofrece Firebase. Firestore Database es una base de datos NoSQL, lo que significa que permite consultar datos fuera de las estructuras tradicionales que se encuentran en las bases de datos relacionales. Para almacenar los datos, hemos creado tres colecciones: Favorites, Lists y Users.
 
-\subsection{Users}
-En esta colección guardaremos los datos del inicio de sesión. Es decir, guardaremos el correo electrónico, nombre de usuario, fecha de nacimiento y, por último, nombre y apellidos.
-
-\subsection{Lists}
-En esta colección guardaremos la información de la lista. Cuando el usuario cree una lista en la base de datos, se guardará la fecha, el ID, nombre de la lista, la descripción y una lista de películas vacía. Cuando el usuario comience a añadir películas, se guardará la información de la película en la lista de películas.
-
-\section{Tecnologías empleadas}
-La API que hemos empleado para realizar este proyecto ha sido la de TMDb. Para la gestión de datos, hemos utilizado Firebase.
-
-\section{Pruebas de uso}
-
-
-\section{Mantenimiento y Contribuciones}
-
-\subsection{Políticas de Ramificación}
-
-En nuestro proyecto, hemos adoptado un enfoque de control de versiones utilizando un modelo de ramificación simple. Hemos mantenido dos ramas principales:
-
-\begin{itemize}
-    \item \textbf{main}: En esta rama principal, se desarrolla el proyecto de manera activa. Aquí se encuentran las últimas características implementadas y correcciones de errores.
+    Hemos empleado como base de datos Firestore Database, una de las opciones que nos ofrece Firebase. Firestore Database es una base de datos NoSQL, lo que significa que permite consultar datos fuera de las estructuras tradicionales que se encuentran en las bases de datos relacionales. Para almacenar los datos, hemos creado tres colecciones: Favorites, Lists y Users.
     
-    \item \textbf{Release}: Una vez que el proyecto está listo para ser lanzado como producto, lo subimos a la rama Release. Esta rama contiene versiones estables del software que han pasado por pruebas exhaustivas y están listas para su implementación.
-\end{itemize}
-
-\subsection{Proceso de Reporte de Fallos y Gestión de Problemas}
-
-\textbf{Reporte de Fallos:}
-
-Si los usuarios encuentran algún fallo o bug, pueden reportarlo de las siguientes maneras:
-
-\begin{enumerate}
-    \item \textbf{Portal de Problemas en GitHub}: Los usuarios pueden navegar al apartado de "Issues" en nuestro repositorio de GitHub. Allí, podrán ver los problemas reportados por otros usuarios y contribuir a solucionarlos si lo desean.
+    \subsection{Users}
+    En esta colección guardaremos los datos del inicio de sesión. Es decir, guardaremos el correo electrónico, nombre de usuario, fecha de nacimiento y, por último, nombre y apellidos.
     
-    \item \textbf{Contacto con el Equipo de Desarrollo}: Los usuarios también pueden ponerse en contacto directamente con cualquiera de los desarrolladores para informar sobre un error que hayan encontrado.
-    
-    \item \textbf{Pull Requests}: Si un usuario identifica un error y puede proporcionar una solución, puede enviar un "pull request" con los cambios propuestos. Esto permite una colaboración directa en la resolución de problemas.
-\end{enumerate}
+    \subsection{Lists}
+    En esta colección guardaremos la información de la lista. Cuando el usuario cree una lista en la base de datos, se guardará la fecha, el ID, nombre de la lista, la descripción y una lista de películas vacía. Cuando el usuario comience a añadir películas, se guardará la información de la película en la lista de películas.
 
-\textbf{Mejoras al Proceso:}
+\section{Documentación de código}
 
-Para mejorar nuestro proceso de gestión de problemas y contribuciones, estamos considerando implementar las siguientes mejoras:
+\section{Pruebas}
 
-\begin{itemize}
-    \item \textbf{Portal de Soporte Centralizado}: Estamos trabajando en la creación de un portal de soporte centralizado donde los usuarios puedan registrar sus problemas de manera estructurada, proporcionando información detallada sobre el error encontrado.
-    
-    \item \textbf{Formulario de Reporte de Errores}: Estamos desarrollando un formulario de reporte de errores que estandarizará la información recopilada y facilitará el seguimiento y la resolución de problemas.
-    
-    \item \textbf{Automatización de Gestión de Problemas}: Estamos explorando opciones para automatizar la gestión de problemas utilizando herramientas de seguimiento de problemas, lo que nos permitirá asignar responsabilidades y realizar un seguimiento más eficiente del progreso de cada problema reportado.
-\end{itemize}
+\section{Análisis de requisitos y especificaciones}
 
-Estas mejoras están destinadas a hacer que nuestro proceso de reporte de fallos y gestión de problemas sea más eficiente y transparente, garantizando una mejor experiencia para nuestros usuarios y una colaboración más efectiva dentro de nuestro equipo de desarrollo.
-
-
+    \begin{minipage}{0.4\textwidth}
+        \includegraphics[width=\textwidth]{images/version.png}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.55\textwidth}
+    Esta aplicación solo está operativa para dispositivos móviles que tengan Android como sistema operativo. Para realizar este proyecto, hemos utilizado la versión de distribución API Pie, API LEVEL 28, con una distribución acumulativa del 86.4\%. Es decir, esta aplicación solo soporta versiones con Android 9.0 como mínimo.
+    \end{minipage}
 
 \section{Consideraciones de Seguridad y Privacidad}
 
-En nuestro proyecto, nos tomamos muy en serio la seguridad y la privacidad de nuestros usuarios. Implementamos diversas medidas para garantizar la protección de la información confidencial y mantener la integridad de los datos. A continuación, destacamos algunas de estas consideraciones:
+    En nuestro proyecto, nos tomamos muy en serio la seguridad y la privacidad de nuestros usuarios. Implementamos diversas medidas para garantizar la protección de la información confidencial y mantener la integridad de los datos. A continuación, destacamos algunas de estas consideraciones:
+    
+    \begin{itemize}
+        \item Almacenamiento Seguro: Todos los datos sensibles se almacenan de forma segura utilizando protocolos de encriptación. Esto garantiza que la información confidencial, como contraseñas o datos personales, esté protegida contra accesos no autorizados.
+    
+        \item Política de Contraseñas: Aunque mencionamos que no almacenamos contraseñas, es importante destacar que fomentamos prácticas seguras de contraseñas entre nuestros usuarios. Recomendamos el uso de contraseñas únicas y complejas, así como la habilitación de la autenticación de dos factores cuando sea posible.
+    
+        \item Protección de Datos Personales: Cumplimos con las regulaciones de protección de datos, como el Reglamento General de Protección de Datos (GDPR), para garantizar que los datos personales de nuestros usuarios estén protegidos y se utilicen de manera ética y legal.
+    
+        \item Auditorías de Seguridad: Realizamos auditorías regulares de seguridad para identificar posibles vulnerabilidades en nuestro sistema y tomar medidas correctivas de manera proactiva. Esto nos ayuda a garantizar la integridad y la confidencialidad de los datos de nuestros usuarios.
+    
+        \item Transparencia y Comunicación: Mantenemos una comunicación abierta y transparente con nuestros usuarios sobre las medidas de seguridad y privacidad implementadas en nuestro proyecto. Esto les permite estar informados y tomar decisiones fundamentadas sobre su participación en nuestra plataforma.
+        
+    \end{itemize}
+    
+    En resumen, nuestra prioridad es garantizar la seguridad y la privacidad de nuestros usuarios en todo momento. Estamos comprometidos a seguir mejorando nuestras prácticas de seguridad y privacidad para mantener la confianza de nuestra comunidad de usuarios.
 
-    Almacenamiento Seguro: Todos los datos sensibles se almacenan de forma segura utilizando protocolos de encriptación. Esto garantiza que la información confidencial, como contraseñas o datos personales, esté protegida contra accesos no autorizados.
+\section{Publicación y distribución}
 
-    Política de Contraseñas: Aunque mencionamos que no almacenamos contraseñas, es importante destacar que fomentamos prácticas seguras de contraseñas entre nuestros usuarios. Recomendamos el uso de contraseñas únicas y complejas, así como la habilitación de la autenticación de dos factores cuando sea posible.
+    \subsection{Instrucciones para compilar y generar versiones de la aplicación}
 
-    Protección de Datos Personales: Cumplimos con las regulaciones de protección de datos, como el Reglamento General de Protección de Datos (GDPR), para garantizar que los datos personales de nuestros usuarios estén protegidos y se utilicen de manera ética y legal.
+    Para compilar y generar versiones de la aplicación, sigue estos pasos:
+    
+    \begin{enumerate}
+        \item Dirígete al repositorio de GitHub de Filmosis: \url{https://github.com/agarciagale/Filmosis.git}.
+        
+        \item Haz clic en el botón "Code" y copia el enlace proporcionado.
+        
+        \item Abre tu terminal y ejecuta el siguiente comando para clonar el repositorio:
+        \begin{verbatim}
+            git clone <enlace_del_repositorio>
+        \end{verbatim}
+        
+        \item Asegúrate de tener instalado un IDE compatible con Kotlin, como Android Studio.
+        
+        \item Navega hasta el directorio raíz del proyecto clonado en tu terminal.
+        
+        \item Ejecuta el siguiente comando para compilar la aplicación:
+        \begin{verbatim}
+            ./gradlew build
+        \end{verbatim}
+        Esto generará un archivo .jar en el directorio de salida del proyecto.
+        
+        \item Para generar una versión lista para distribuir, utiliza Gradle con el siguiente comando:
+        \begin{verbatim}
+            ./gradlew assembleRelease
+        \end{verbatim}
+        Esto generará una versión de la aplicación lista para ser distribuida.
+    \end{enumerate}
+    
+    \subsection{Proceso de publicación en tiendas de aplicaciones o distribución interna}
+    
+    Para publicar la aplicación en tiendas de aplicaciones como Play Store, sigue estos pasos:
+    
+    \begin{enumerate}
+        \item Sigue los pasos específicos de cada tienda de aplicaciones. Normalmente, necesitarás crear una cuenta de desarrollador y seguir las pautas de publicación proporcionadas por la tienda.
+        
+        \item Si deseas distribuir la aplicación internamente, puedes utilizar servicios como Firebase App Distribution o Google Play Console (para distribución cerrada). Configura los ajustes necesarios y sigue las instrucciones proporcionadas por el servicio elegido.
+    \end{enumerate}
 
-    Auditorías de Seguridad: Realizamos auditorías regulares de seguridad para identificar posibles vulnerabilidades en nuestro sistema y tomar medidas correctivas de manera proactiva. Esto nos ayuda a garantizar la integridad y la confidencialidad de los datos de nuestros usuarios.
+\section{Mantenimiento y contribuciones}
 
-    Transparencia y Comunicación: Mantenemos una comunicación abierta y transparente con nuestros usuarios sobre las medidas de seguridad y privacidad implementadas en nuestro proyecto. Esto les permite estar informados y tomar decisiones fundamentadas sobre su participación en nuestra plataforma.
+    \subsection{Políticas de Ramificación}
+    
+    En nuestro proyecto, hemos adoptado un enfoque de control de versiones utilizando un modelo de ramificación simple. Hemos mantenido dos ramas principales:
+    
+    \begin{itemize}
+        \item \textbf{main}: En esta rama principal, se desarrolla el proyecto de manera activa. Aquí se encuentran las últimas características implementadas y correcciones de errores.
+        
+        \item \textbf{Release}: Una vez que el proyecto está listo para ser lanzado como producto, lo subimos a la rama Release. Esta rama contiene versiones estables del software que han pasado por pruebas exhaustivas y están listas para su implementación.
+    \end{itemize}
+    
+    \subsection{Proceso de Reporte de Fallos y Gestión de Problemas}
+    
+    \textbf{Reporte de Fallos:}
+    
+    Si los usuarios encuentran algún fallo o bug, pueden reportarlo de las siguientes maneras:
+    
+    \begin{enumerate}
+        \item \textbf{Portal de Problemas en GitHub}: Los usuarios pueden navegar al apartado de "Issues" en nuestro repositorio de GitHub. Allí, podrán ver los problemas reportados por otros usuarios y contribuir a solucionarlos si lo desean.
+        
+        \item \textbf{Contacto con el Equipo de Desarrollo}: Los usuarios también pueden ponerse en contacto directamente con cualquiera de los desarrolladores para informar sobre un error que hayan encontrado.
+        
+        \item \textbf{Pull Requests}: Si un usuario identifica un error y puede proporcionar una solución, puede enviar un "pull request" con los cambios propuestos. Esto permite una colaboración directa en la resolución de problemas.
+    \end{enumerate}
+    
+    \textbf{Mejoras al Proceso:}
+    
+    Para mejorar nuestro proceso de gestión de problemas y contribuciones, estamos considerando implementar las siguientes mejoras:
+    
+    \begin{itemize}
+        \item \textbf{Portal de Soporte Centralizado}: Estamos trabajando en la creación de un portal de soporte centralizado donde los usuarios puedan registrar sus problemas de manera estructurada, proporcionando información detallada sobre el error encontrado.
+        
+        \item \textbf{Formulario de Reporte de Errores}: Estamos desarrollando un formulario de reporte de errores que estandarizará la información recopilada y facilitará el seguimiento y la resolución de problemas.
+        
+        \item \textbf{Automatización de Gestión de Problemas}: Estamos explorando opciones para automatizar la gestión de problemas utilizando herramientas de seguimiento de problemas, lo que nos permitirá asignar responsabilidades y realizar un seguimiento más eficiente del progreso de cada problema reportado.
+    \end{itemize}
+    
+    Estas mejoras están destinadas a hacer que nuestro proceso de reporte de fallos y gestión de problemas sea más eficiente y transparente, garantizando una mejor experiencia para nuestros usuarios y una colaboración más efectiva dentro de nuestro equipo de desarrollo.
 
-En resumen, nuestra prioridad es garantizar la seguridad y la privacidad de nuestros usuarios en todo momento. Estamos comprometidos a seguir mejorando nuestras prácticas de seguridad y privacidad para mantener la confianza de nuestra comunidad de usuarios.
+\section{Recursos adicionales}
 
-\section{Recursos Adicionales}
-
-\textbf{Documentación oficial de Kotlin}: \\
-\url{https://kotlinlang.org/docs/home.html} \\
-\\
-\textbf{Tutoriales en YouTube}: \\
-\url{https://youtu.be/dpURgJ4HkMk?si=k95-dp7pOh9wQ-0w} \\
-\url{https://youtu.be/jjzQvNRVhx8?si=NMKF_urWQw9Lp668} \\
-\url{https://youtu.be/vJapzH_46a8?si=2y6kzU5f11wO4W0g} \\
-\url{https://youtube.com/playlist?list=PL_QrnahGtqYAtYIoGod00kutYTvhq4HMU&si=bJn_PD4a1aPIUULR} \\
-\\
-\textbf{Comunidades y foros}: \\
-\url{https://es.stackoverflow.com/} \\
-\\
-\textbf{ChatGPT}: \\
-\url{https://chat.openai.com/}
+    \textbf{Documentación oficial de Kotlin}: \\
+    \url{https://kotlinlang.org/docs/home.html} \\
+    \\
+    \textbf{Tutoriales en YouTube}: \\
+    \url{https://youtu.be/dpURgJ4HkMk?si=k95-dp7pOh9wQ-0w} \\
+    \url{https://youtu.be/jjzQvNRVhx8?si=NMKF_urWQw9Lp668} \\
+    \url{https://youtu.be/vJapzH_46a8?si=2y6kzU5f11wO4W0g} \\
+    \url{https://youtube.com/playlist?list=PL_QrnahGtqYAtYIoGod00kutYTvhq4HMU&si=bJn_PD4a1aPIUULR} \\
+    \\
+    \textbf{Comunidades y foros}: \\
+    \url{https://es.stackoverflow.com/} \\
+    \\
+    \textbf{ChatGPT}: \\
+    \url{https://chat.openai.com/}
 
 \section{Contacto}
 
-Nos podéis contactar de la siguiente manera:
-\\
-\\
-Adrián García Galera: \texttt{agarciagal6@educacion.navarra.es} \\
-Aritz Arrondo Villaplana: \texttt{aarrondvil@educacion.navarra.es} \\
-Kaiet Jiménez Aldasoro: \texttt{kjimeneald@educacion.navarra.es}
+    Nos podéis contactar de la siguiente manera:
+    \\
+    \\
+    Adrián García Galera: \texttt{agarciagal6@educacion.navarra.es} \\
+    Aritz Arrondo Villaplana: \texttt{aarrondvil@educacion.navarra.es} \\
+    Kaiet Jiménez Aldasoro: \texttt{kjimeneald@educacion.navarra.es}
+
+\section{Conclusión}
+
+    En resumen, Filmosis se presenta como una aplicación integral diseñada para los amantes del cine, ofreciendo una experiencia completa que combina la riqueza informativa de IMDb con características sociales interactivas. Los usuarios pueden explorar una extensa base de datos de películas, accediendo a detalles como el elenco y las críticas. La función de valoración permite a los usuarios compartir sus opiniones, descubrir películas populares y conectarse con la comunidad. La posibilidad de crear listas personalizadas facilita la organización y compartición de preferencias cinematográficas. Además, Filmosis mantiene a los usuarios informados sobre las últimas noticias y eventos en la industria cinematográfica. Con perfiles de usuario personalizados, la aplicación busca fomentar una comunidad vibrante de cinéfilos, ofreciendo una plataforma interactiva y social para explorar y disfrutar del mundo del cine.
 
 \end{document}
