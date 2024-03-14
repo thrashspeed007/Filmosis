@@ -14,9 +14,10 @@ import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.`is`
-import org.hamcrest.TypeSafeMatcher
+
 import org.junit.Rule
 import org.junit.Test
+import org.junit.internal.matchers.TypeSafeMatcher
 import org.junit.runner.RunWith
 
 //Accediendo con la cuent de ka  kaiet123

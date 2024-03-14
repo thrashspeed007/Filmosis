@@ -16,9 +16,10 @@ import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.anything
 import org.hamcrest.Matchers.`is`
-import org.hamcrest.TypeSafeMatcher
+
 import org.junit.Rule
 import org.junit.Test
+import org.junit.internal.matchers.TypeSafeMatcher
 import org.junit.runner.RunWith
 
 //crear cuenta y accedemos da error por que la cuenta ya existe
