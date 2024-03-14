@@ -65,7 +65,7 @@ class AuthActivity : AppCompatActivity() {
     /**
      * Verifica si ya hay una sesión iniciada, y si es así, redirige a la pantalla principal con los datos de sesión guardados
      */
-    private fun session() {
+    fun session() {
         val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)
         val email = prefs.getString("email", null)
         val provider = prefs.getString("provider", null)
