@@ -115,14 +115,14 @@
 \section{Estructura del proyecto}
 
     \subsection{Organización de directorios y archivos}
-    
+
     La estructura de los diferentes paquetes en la aplicación es la siguiente:
-    
+
     \begin{minipage}{1\textwidth}
         \centering
         \includegraphics[width=0.5\textwidth]{images/estructuraDirectorios.png}
     \end{minipage}
-    
+
     \begin{itemize}
         \item \textbf{Adapters:} En este paquete se encuentran principalmente los adaptadores para todos los RecyclerView, necesarios para mostrar la información y enlazar los datos en sus respectivos elementos.
         \item \textbf{Config}: Aquí se encuentra solo una clase, \textit{DatosConexion.kt}, con campos estáticos que guardan constantes como las URLs base de la API de TMDB, para poder acceder desde fuera, o la misma API key, para poder usarla en todas las consultas de manera consistente.
@@ -133,27 +133,27 @@
         \item \textbf{Network:} En este paquete se almacenan archivos relacionados con la conexión o internet. En el caso de Filmosis, se encuentra el servicio de Retrofit, que permite realizar peticiones HTTP, en nuestro caso a TMDB. También dentro existe el paquete de \textit{interfaces}, que contiene interfaces para declarar los endpoints de las APIs.
         \item \textbf{Utilities:} En utilites se guardan distintos archivos, mas generales, de ayuda o simplemente utilidades para la aplicación. Por ejemplo, clases con métodos auxiliares para Firebase, o Mappings de recursos como imágenes con sus correspondientes IDs.
     \end{itemize}
-    
+
 Por último, en la raíz del paquete principal, se encuentran las Activities del proyecto, para poder visualizarlas de mejor manera y acceder de manera rápida porque son los componentes mas importantes de la aplicación, junto con los fragmentos.
 
 \section{Configuración del entorno de desarrollo}
 
     \subsection{Herramientas necesarias}
-    
+
     Lo primero obviamente es instalar el IDE de Android Studio desde su página oficial. Este proceso se cubre de manera más extensa en el siguiente apartado \textit{Instrucciones de Instalación}.
-    
+
     No hace falta ningun tipo de herramienta / configuración compleja para ejecutar el proyecto, basta con cumplir los siguientes requerimientos:
-    
+
     \begin{itemize}
         \item SDK de Android: El Android Software Development Kit (SDK) contiene las bibliotecas y herramientas necesarias para desarrollar aplicaciones Android. La versión necesaria para ejecutar el proyecto es la 34, por lo que se recomienda descargarla  y configurarla en las preferencias.
         \item Instalación de Emulador: Con la instalación de Android Studio, viene por defecto un dispositivo instalado, pero si se quiere personalizar o instalar un dispositivo mas potente, debe ser con la versión 9.0 de Android como mínimo. También es posible conectar un dispositivo real via USB o Wi-Fi.
     \end{itemize}
-    
+
     \subsection{Instrucciones de instalación}
-    
+
     \begin{itemize}
         \item \textbf{Instalación de Android Studio}
-        
+
             \begin{enumerate}
                 \item Descarga el instalador de Android Studio desde el sitio web oficial: \texttt{https://developer.android.com/studio}.
                 \item Ejecuta el archivo de instalación descargado.
@@ -163,7 +163,7 @@ Por último, en la raíz del paquete principal, se encuentran las Activities del
                 \item Sigue las instrucciones en pantalla para completar la configuración inicial. Puedes elegir las preferencias de usuario y las ubicaciones de instalación según tus necesidades.
                 \item Una vez finalizada la configuración inicial, Android Studio estará listo para ser utilizado para desarrollar aplicaciones Android.
             \end{enumerate}
-    
+
         \item \textbf{Cambiar la versión del SDK a la API 34}
             \begin{enumerate}
                 \item En la barra de menú, selecciona \texttt{Tools} (Herramientas) y luego \texttt{SDK Manager} (Administrador de SDK).
@@ -174,9 +174,9 @@ Por último, en la raíz del paquete principal, se encuentran las Activities del
                 \item Asegúrate de que tu proyecto esté configurado para utilizar la API 34. Puedes hacerlo abriendo el archivo \texttt{build.gradle} en la carpeta \texttt{app} de tu proyecto y configurando \texttt{compileSdkVersion} y \texttt{targetSdkVersion} para que coincidan con la API 34.
                 \item Vuelve a sincronizar tu proyecto con los archivos de compilación haciendo clic en \texttt{Sync Now} (Sincronizar Ahora) si es necesario.
             \end{enumerate}
-    
+
         \item \textbf{Instalación de emulador en Android Studio}
-            
+
             \begin{enumerate}
                 \item En la barra de menú, selecciona \texttt{Tools} (Herramientas) y luego \texttt{AVD Manager} (Administrador de AVD).
                 \item En la ventana del Administrador de AVD, haz clic en el botón \texttt{Create Virtual Device} (Crear Dispositivo Virtual).
@@ -187,7 +187,7 @@ Por último, en la raíz del paquete principal, se encuentran las Activities del
                 \item El dispositivo virtual se agregará a la lista en el Administrador de AVD. Para iniciarlo, haz clic en el botón de reproducción al lado del nombre del dispositivo.
                 \item Espera a que el emulador se inicie y se cargue completamente. Una vez listo, podrás usarlo para probar y depurar tus aplicaciones.
             \end{enumerate}
-    
+
     \end{itemize}
 
 \section{Guía de Uso}
@@ -356,7 +356,7 @@ Este proyecto ha sido documentado utilizando Dokka, una herramienta de generaci�
 \subsection{Convenciones de nomenclatura:}
 
     Las convenciones de nomenclatura son reglas y estándares utilizados para nombrar variables, funciones, clases y otros elementos dentro del código. Estas convenciones son importantes para mantener la consistencia y la legibilidad en el código base.
-    
+
     En este proyecto, se siguen las siguientes convenciones de nomenclatura:
 
     \begin{itemize}
@@ -365,7 +365,7 @@ Este proyecto ha sido documentado utilizando Dokka, una herramienta de generaci�
         \item snake\textunderscore case para constantes y variables.
         \item UPPERCASE para constantes inmutables.
     \end{itemize}
-    
+
     Se recomienda seguir estas convenciones de nomenclatura en todo el código para mantener la coherencia y facilitar la comprensión del mismo.
 
 \subsection{Comentarios de código}
@@ -380,7 +380,7 @@ Este proyecto ha sido documentado utilizando Dokka, una herramienta de generaci�
             \caption{Ejemplo de función documentada con dokka}
             \label{fig:instalacion_apk}
     \end{figure}
-    
+
     \item Además de los comentarios KDoc, Dokka también admite anotaciones especiales dentro del código fuente, como @Deprecated para marcar elementos obsoletos y proporcionar una razón para su deprecación.
 
 \end{itemize}
@@ -442,15 +442,17 @@ La clase \texttt{MoviesAccessTest} contiene pruebas unitarias para verificar el 
 
 \begin{itemize}
     \item \textbf{listPopularMovies\_success}: Esta prueba verifica el comportamiento de la función \texttt{listPopularMovies()} cuando la solicitud de películas populares tiene éxito. Se simula la respuesta exitosa del servicio de API de TMDb, lo que debería proporcionar una lista de películas. Se espera que la lista de películas devuelta no esté vacía, lo que indica que se recuperaron películas populares correctamente.
-    
+
     \item \textbf{listPopularMovies\_failure}: Esta prueba verifica el comportamiento de la función \texttt{listPopularMovies()} cuando la solicitud de películas populares falla. Se simula una respuesta de error del servicio de API de TMDb con un código de estado 404. Se espera que la lista de películas devuelta sea nula, indicando que no se pudieron recuperar películas populares debido a un error en la solicitud.
 \end{itemize}
 
 Estas pruebas unitarias garantizan que el acceso a películas en la aplicación Filmosis se maneje correctamente tanto en casos de éxito como de fallo, proporcionando una experiencia de usuario consistente y confiable.
 
+
 \subsection{Pruebas de Interfaz de Usuario (UI)}
 
 Para asegurar el correcto funcionamiento de la interfaz de usuario de la aplicación, se realizaron pruebas de UI utilizando Espresso, un framework de pruebas de interfaz de usuario para aplicaciones Android. A continuación, se detallan las pruebas realizadas en la clase \texttt{CrearCuentaGUI}, que se encargan de verificar el proceso de creación de cuenta en la aplicación:
+
 
 \subsubsection{CrearCuentaGUI}
 
@@ -480,9 +482,6 @@ La clase \texttt{AccederCuentaGUIespresso} contiene pruebas de interfaz de usuar
 
 Estas pruebas de interfaz de usuario garantizan que el proceso de inicio de sesión en la aplicación funcione correctamente y proporcione una experiencia fluida para el usuario.
 
-
-
-Estas pruebas de interfaz de usuario garantizan que el proceso de creación de cuenta en la aplicación funcione correctamente y proporcione una experiencia fluida para el usuario.
 
 
 
