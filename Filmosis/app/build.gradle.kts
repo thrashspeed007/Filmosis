@@ -1,3 +1,5 @@
+import org.jetbrains.dokka.DokkaConfiguration
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -33,6 +35,22 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
+    }
+    tasks.dokkaHtml.configure {
+        suppressInheritedMembers.set(true)
+    }
+}
+
+tasks.dokkaHtml.configure {
+    dokkaSourceSets {
+        configureEach {
+            // A set of visibility modifiers that should be documented
+            // If set by user, overrides includeNonPublic. Default is PUBLIC
+            documentedVisibilities.set(listOf(DokkaConfiguration.Visibility.PRIVATE) + documentedVisibilities.get())
+
+
+            includeNonPublic.set(true)
+        }
     }
 }
 
@@ -71,6 +89,7 @@ dependencies {
     // Dokka
     // https://github.com/Kotlin/dokka
     dokkaPlugin("org.jetbrains.dokka:android-documentation-plugin:1.9.10")
+
 
     // Glide
     // https://github.com/bumptech/glide

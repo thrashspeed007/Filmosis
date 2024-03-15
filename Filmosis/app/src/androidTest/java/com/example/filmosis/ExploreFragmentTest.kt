@@ -18,7 +18,6 @@ class ExploreFragmentTest {
     @Before
     fun setup() {
         val context: Context = ApplicationProvider.getApplicationContext()
-        // Puedes realizar configuraciones adicionales aquí, si es necesario
         scenario = launchFragmentInContainer(themeResId = R.style.Theme_Filmosis)
     }
 
@@ -28,21 +27,19 @@ class ExploreFragmentTest {
             .perform(ViewActions.typeText("Avengers"))
             .perform(ViewActions.pressImeActionButton()) // Simula la acción de enviar la consulta de búsqueda
 
-        // Asegúrate de que el resultado de la búsqueda sea visible en el RecyclerView correspondiente
+        // Nos aseguramos que el resultado de la búsqueda sea visible en el RecyclerView correspondiente
         Espresso.onView(ViewMatchers.withId(R.id.explore_moviesListsRecyclerView))
             .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
     }
 
     @Test
     fun testFilterButtons() {
-        // Puedes agregar más pruebas para los botones de filtro aquí
         Espresso.onView(ViewMatchers.withId(R.id.explore_bestRatedBtn))
             .perform(ViewActions.click())
 
-        // Asegúrate de que el RecyclerView de películas filtradas se actualice correctamente
+        // Nos aseguramos que RecyclerView de películas filtradas se actualice correctamente
         Espresso.onView(ViewMatchers.withId(R.id.explore_moviesListsRecyclerView))
             .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
     }
 
-    // Puedes agregar más pruebas según sea necesario para otras funcionalidades del fragmento
 }

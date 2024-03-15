@@ -114,12 +114,230 @@
 
 \section{Estructura del proyecto}
 
+    \subsection{Organización de directorios y archivos}
+    
+    La estructura de los diferentes paquetes en la aplicación es la siguiente:
+    
+    \begin{minipage}{1\textwidth}
+        \centering
+        \includegraphics[width=0.5\textwidth]{images/estructuraDirectorios.png}
+    \end{minipage}
+    
+    \begin{itemize}
+        \item \textbf{Adapters:} En este paquete se encuentran principalmente los adaptadores para todos los RecyclerView, necesarios para mostrar la información y enlazar los datos en sus respectivos elementos.
+        \item \textbf{Config}: Aquí se encuentra solo una clase, \textit{DatosConexion.kt}, con campos estáticos que guardan constantes como las URLs base de la API de TMDB, para poder acceder desde fuera, o la misma API key, para poder usarla en todas las consultas de manera consistente.
+        \item  \textbf{Data:} En data se almacenan otros dos paquetes, \textit{access} y \textit{model}. El primero hace de repositorio de consultas para interactuar con una base de datos o con APIs, en nuestro caso, existen dos clases, \textit{MoviesAccess.kt} y \textit{PersonsAccess.kt}, donde se guardan las distintas funciones para las peticiones a TMDB. En cambio, en \textit{model} se encuentran las clases para mapear las respuestas de las consultas a objetos / estructuras de Kotlin, lo que viene siendo un \textit{Dataclass}. La idea entre los dos paquetes es similar a la arquitectura de DAO (\textit{Data Access Object}) y DTO (\textit{Data Transfer Object}).
+        \item \textbf{Dataclass}: En este paquete, se almacenan dataclasses similares a las que hay en data.model, pero para uso interno de la aplicación y no para mapear directamente las respuestas de TMDB.
+        \item \textbf{Fragments}: Aquí simplemente se guardan todos los fragmentos de la aplicación.
+        \item \textbf{Init}: En init se encuentran clases para inicializar instancias de distintas fuentes. En este caso solo está \textit{FirebaseInitializer.kt}, la cual inicializa todas las intancias necesarias de cada librería de Firebase, como la propia base de datos \textit{Firestore} o el servicio de autenticación de usuarios \textit{FirebaseAuth}. De esta manera, se puede acceder a éstas instancias desde cualquier punto del proyecto sin tener que crear una cada vez que se quiera acceder.
+        \item \textbf{Network:} En este paquete se almacenan archivos relacionados con la conexión o internet. En el caso de Filmosis, se encuentra el servicio de Retrofit, que permite realizar peticiones HTTP, en nuestro caso a TMDB. También dentro existe el paquete de \textit{interfaces}, que contiene interfaces para declarar los endpoints de las APIs.
+        \item \textbf{Utilities:} En utilites se guardan distintos archivos, mas generales, de ayuda o simplemente utilidades para la aplicación. Por ejemplo, clases con métodos auxiliares para Firebase, o Mappings de recursos como imágenes con sus correspondientes IDs.
+    \end{itemize}
+    
+Por último, en la raíz del paquete principal, se encuentran las Activities del proyecto, para poder visualizarlas de mejor manera y acceder de manera rápida porque son los componentes mas importantes de la aplicación, junto con los fragmentos.
+
 \section{Configuración del entorno de desarrollo}
 
-\section{Guía de uso}
+    \subsection{Herramientas necesarias}
+    
+    Lo primero obviamente es instalar el IDE de Android Studio desde su página oficial. Este proceso se cubre de manera más extensa en el siguiente apartado \textit{Instrucciones de Instalación}.
+    
+    No hace falta ningun tipo de herramienta / configuración compleja para ejecutar el proyecto, basta con cumplir los siguientes requerimientos:
+    
+    \begin{itemize}
+        \item SDK de Android: El Android Software Development Kit (SDK) contiene las bibliotecas y herramientas necesarias para desarrollar aplicaciones Android. La versión necesaria para ejecutar el proyecto es la 34, por lo que se recomienda descargarla  y configurarla en las preferencias.
+        \item Instalación de Emulador: Con la instalación de Android Studio, viene por defecto un dispositivo instalado, pero si se quiere personalizar o instalar un dispositivo mas potente, debe ser con la versión 9.0 de Android como mínimo. También es posible conectar un dispositivo real via USB o Wi-Fi.
+    \end{itemize}
+    
+    \subsection{Instrucciones de instalación}
+    
+    \begin{itemize}
+        \item \textbf{Instalación de Android Studio}
+        
+            \begin{enumerate}
+                \item Descarga el instalador de Android Studio desde el sitio web oficial: \texttt{https://developer.android.com/studio}.
+                \item Ejecuta el archivo de instalación descargado.
+                \item Sigue las instrucciones del instalador para completar la instalación. Asegúrate de seleccionar las opciones de configuración que desees durante el proceso de instalación.
+                \item Una vez finalizada la instalación, abre Android Studio en tu computadora.
+                \item Durante la primera ejecución, Android Studio te guiará a través del proceso de configuración inicial, que incluye la instalación de componentes adicionales como el SDK de Android, el emulador y herramientas de desarrollo.
+                \item Sigue las instrucciones en pantalla para completar la configuración inicial. Puedes elegir las preferencias de usuario y las ubicaciones de instalación según tus necesidades.
+                \item Una vez finalizada la configuración inicial, Android Studio estará listo para ser utilizado para desarrollar aplicaciones Android.
+            \end{enumerate}
+    
+        \item \textbf{Cambiar la versión del SDK a la API 34}
+            \begin{enumerate}
+                \item En la barra de menú, selecciona \texttt{Tools} (Herramientas) y luego \texttt{SDK Manager} (Administrador de SDK).
+                \item En la ventana del Administrador de SDK, selecciona la pestaña \texttt{SDK Platforms} (Plataformas SDK).
+                \item En la lista de versiones de Android, busca y marca la casilla correspondiente a la API 34 (Android 12). Puedes desmarcar otras versiones si solo deseas trabajar con la versión 34.
+                \item Haz clic en \texttt{Apply} (Aplicar) para confirmar los cambios y comenzar la descarga e instalación de la API 34.
+                \item Una vez completada la instalación, cierra la ventana del Administrador de SDK.
+                \item Asegúrate de que tu proyecto esté configurado para utilizar la API 34. Puedes hacerlo abriendo el archivo \texttt{build.gradle} en la carpeta \texttt{app} de tu proyecto y configurando \texttt{compileSdkVersion} y \texttt{targetSdkVersion} para que coincidan con la API 34.
+                \item Vuelve a sincronizar tu proyecto con los archivos de compilación haciendo clic en \texttt{Sync Now} (Sincronizar Ahora) si es necesario.
+            \end{enumerate}
+    
+        \item \textbf{Instalación de emulador en Android Studio}
+            
+            \begin{enumerate}
+                \item En la barra de menú, selecciona \texttt{Tools} (Herramientas) y luego \texttt{AVD Manager} (Administrador de AVD).
+                \item En la ventana del Administrador de AVD, haz clic en el botón \texttt{Create Virtual Device} (Crear Dispositivo Virtual).
+                \item Selecciona un dispositivo de la lista (por ejemplo, Pixel 4) y haz clic en \texttt{Next} (Siguiente).
+                \item Selecciona una imagen del sistema para el dispositivo virtual. Puedes descargar diferentes versiones de Android haciendo clic en \texttt{Download} (Descargar) junto a la versión que desees.
+                \item Una vez descargada la imagen del sistema, selecciónala y haz clic en \texttt{Next}.
+                \item Configura las opciones de hardware según tus preferencias y haz clic en \texttt{Finish} (Finalizar) para crear el dispositivo virtual.
+                \item El dispositivo virtual se agregará a la lista en el Administrador de AVD. Para iniciarlo, haz clic en el botón de reproducción al lado del nombre del dispositivo.
+                \item Espera a que el emulador se inicie y se cargue completamente. Una vez listo, podrás usarlo para probar y depurar tus aplicaciones.
+            \end{enumerate}
+    
+    \end{itemize}
+
+\section{Guía de Uso}
+    \subsection{Instrucciones para Configurar y Ejecutar el Proyecto}
+
+    \subsubsection{Mediante el Código Fuente (src)}
+
+    \begin{enumerate}
+        \item \textbf{Configuración inicial:}
+            \begin{itemize}
+                \item Abre Android Studio.
+                \item Selecciona "Abrir un proyecto existente" y navega hasta el directorio donde se encuentra el código fuente del proyecto.
+                \item Selecciona el archivo \texttt{build.gradle} en el directorio raíz del proyecto y haz clic en "Abrir".
+            \end{itemize}
+
+            \begin{figure}[h]
+                \centering
+                \includegraphics[width=0.8\textwidth]{images/codigo_fuente.jpg}
+                \caption{Interfaz de Android Studio mostrando el proceso de apertura del proyecto existente.}
+                \label{fig:codigo_fuente}
+            \end{figure}
+
+        \item \textbf{Espera a que Android Studio sincronice el proyecto:}
+            \begin{itemize}
+                \item Android Studio puede necesitar tiempo para descargar e instalar las dependencias del proyecto, así que espera a que la sincronización se complete.
+            \end{itemize}
+
+        \item \textbf{Configuración del dispositivo virtual o dispositivo físico:}
+            \begin{itemize}
+                \item Puedes ejecutar tu aplicación en un dispositivo virtual o en un dispositivo físico conectado.
+                \item Para crear un dispositivo virtual, ve a \texttt{Tools > AVD Manager}, y crea un nuevo dispositivo virtual según tus preferencias.
+                \item Para ejecutar en un dispositivo físico, asegúrate de tener habilitado el modo de desarrollador y la depuración USB en el dispositivo, y conéctalo a tu computadora.
+            \end{itemize}
+
+        \item \textbf{Ejecución del proyecto:}
+            \begin{itemize}
+                \item Selecciona el dispositivo en el que deseas ejecutar la aplicación (dispositivo virtual o físico) en la barra de herramientas.
+                \item Haz clic en el botón "Run" (el ícono de reproducción) o presiona \texttt{Shift + F10}.
+                \item Espera a que Android Studio compile el proyecto y lo ejecute en el dispositivo seleccionado.
+            \end{itemize}
+    \end{enumerate}
+
+    \subsubsection{Mediante la APK Instalándola}
+
+    \begin{enumerate}
+        \item \textbf{Generación de la APK:}
+            \begin{itemize}
+                \item En Android Studio, ve a \texttt{Build > Build Bundle(s) / APK(s) > Build APK(s)}.
+                \item Espera a que Android Studio termine de compilar el proyecto. La APK generada estará disponible en el directorio \texttt{app/build/outputs/apk/debug/}.
+            \end{itemize}
+
+            \begin{figure}[h]
+                \centering
+                \includegraphics[width=0.8\textwidth]{images/generacion_xxxxxxxx.jpg}
+                \caption{Captura de pantalla de Android Studio durante el proceso de generación de la APK.}
+                \label{fig:generacion_apk}
+            \end{figure}
+
+        \item \textbf{Transferencia de la APK a un Dispositivo:}
+            \begin{itemize}
+                \item Conecta tu dispositivo Android a tu computadora mediante un cable USB.
+                \item Transfiere la APK generada al almacenamiento del dispositivo.
+            \end{itemize}
+
+        \item \textbf{Instalación de la APK:}
+            \begin{itemize}
+                \item En tu dispositivo Android, abre un explorador de archivos.
+                \item Navega hasta donde hayas transferido la APK.
+                \item Toca la APK para comenzar el proceso de instalación.
+                \item Sigue las instrucciones en pantalla para completar la instalación.
+            \end{itemize}
+
+        \begin{figure}[h]
+                \centering
+                \includegraphics[width=0.3\textwidth]{images/instalacion_xxxxxxxxx.jpg}
+                \caption{Captura de pantalla del proceso de instalación de la APK en un dispositivo Android.}
+                \label{fig:instalacion_apk}
+            \end{figure}
+
+        \item \textbf{Ejecución de la Aplicación:}
+            \begin{itemize}
+                \item Una vez instalada, puedes encontrar y ejecutar la aplicación como cualquier otra aplicación en tu dispositivo Android.
+            \end{itemize}
+    \end{enumerate}
+
+    \subsection{Funcionalidades principales y cómo utilizarlas}
+
+    \subsubsection{Página de Inicio}
+    % Adjuntar captura de pantalla
+    La página de inicio cuenta con tres botones principales:
+    \begin{itemize}
+        \item \textbf{Iniciar sesión con Google:} Permite a los usuarios iniciar sesión utilizando sus cuentas de Google.
+        \item \textbf{Crear una cuenta:} Permite a los nuevos usuarios crear una cuenta en la aplicación.
+        \item \textbf{Iniciar sesión con usuario y contraseña:} Permite a los usuarios iniciar sesión utilizando sus credenciales de usuario.
+    \end{itemize}
+    Además, en la página de inicio se muestran recomendaciones de películas y películas en tendencia, junto con un buscador para encontrar películas, actores y directores.
+
+    \subsubsection{Página de Explorar}
+    % Adjuntar captura de pantalla
+    En la página de explorar, los usuarios pueden:
+    \begin{itemize}
+        \item \textbf{Filtrar por géneros:} Se puede filtrar la lista de películas por género.
+        \item \textbf{Ver películas recientes, populares, mejor valoradas y próximos estrenos:} Se muestran listas de películas organizadas por diferentes criterios.
+    \end{itemize}
+
+    \subsubsection{Perfil de Usuario}
+    % Adjuntar captura de pantalla
+    En el perfil de usuario, los usuarios pueden gestionar su cuenta, cambiar su foto de perfil y contraseña.
+
+    \subsubsection{Mis Listas}
+    % Adjuntar captura de pantalla
+    En la sección de "Mis Listas", los usuarios pueden ver y gestionar las listas de películas que han creado.
 
 \section{Arquitectura}
 
+    El proyecto de Android Studio sigue una arquitectura basada en el patrón Modelo-Vista-ViewModel (MVVM) junto con elementos de la arquitectura limpia (Clean Architecture).
+
+    \subsection{Componentes de la Arquitectura}
+
+    \begin{itemize}
+        \item \textbf{Modelo:} Las \emph{data classes} representan el Modelo en la arquitectura MVVM. Estas clases contienen los datos utilizados en la aplicación, así como la lógica relacionada con los datos.
+
+        \item \textbf{Vista:} Los layouts XML definidos en el proyecto representan la Vista en la arquitectura MVVM. Estos layouts definen la estructura visual de la interfaz de usuario de la aplicación.
+
+        \item \textbf{ViewModel:} Los conectores mencionados probablemente actúan como el ViewModel en la arquitectura MVVM. Estos conectores actúan como intermediarios entre la Vista y el Modelo, proporcionando los datos necesarios para la interfaz de usuario.
+
+        \item \textbf{Firebase:} Se utiliza Firebase para la conexión externa, lo que implica que el proyecto también integra una capa de datos remotos. Firebase puede encajar en la arquitectura limpia como un Adaptador de Interfaces o una capa de Infraestructura, proporcionando acceso a los datos externos.
+    \end{itemize}
+
+\section{Componentes del Proyecto}
+
+    \subsection{Layouts}
+
+    Los layouts definidos en el proyecto definen la estructura visual de la interfaz de usuario de la aplicación. Están escritos en XML y pueden incluirse tanto en actividades como en fragmentos.
+
+    \subsection{Activities y Fragments}
+
+    Las actividades y fragmentos representan las diferentes pantallas y componentes de la interfaz de usuario de la aplicación.
+
+    \subsection{Adapters}
+
+    Los adapters se utilizan para vincular conjuntos de datos a los componentes de la interfaz de usuario, como los RecyclerViews. Estos adapters pueden proporcionar los datos necesarios desde las data classes.
+
+    \subsection{Data Classes}
+
+    Las data classes representan los modelos de datos utilizados en la aplicación. Contienen la información necesaria para representar los objetos en la interfaz de usuario.
+
+    \subsection{Conectores}
+
+    Los conectores se utilizan para interactuar con fuentes de datos externas, como Firebase. Actúan como intermediarios entre los datos externos y la lógica de la aplicación.
 
 \section{Base de datos}
 
@@ -132,6 +350,41 @@
     En esta colección guardaremos la información de la lista. Cuando el usuario cree una lista en la base de datos, se guardará la fecha, el ID, nombre de la lista, la descripción y una lista de películas vacía. Cuando el usuario comience a añadir películas, se guardará la información de la película en la lista de películas.
 
 \section{Documentación de código}
+
+Este proyecto ha sido documentado utilizando Dokka, una herramienta de generación de documentación para proyectos Kotlin. Dokka analiza el código fuente y genera documentación en formato HTML, Markdown o Javadoc a partir de los comentarios del código y las anotaciones especiales.
+
+\subsection{Convenciones de nomenclatura:}
+
+    Las convenciones de nomenclatura son reglas y estándares utilizados para nombrar variables, funciones, clases y otros elementos dentro del código. Estas convenciones son importantes para mantener la consistencia y la legibilidad en el código base.
+    
+    En este proyecto, se siguen las siguientes convenciones de nomenclatura:
+
+    \begin{itemize}
+        \item CamelCase para variables y funciones.
+        \item PascalCase para clases y tipos.
+        \item snake\textunderscore case para constantes y variables.
+        \item UPPERCASE para constantes inmutables.
+    \end{itemize}
+    
+    Se recomienda seguir estas convenciones de nomenclatura en todo el código para mantener la coherencia y facilitar la comprensión del mismo.
+
+\subsection{Comentarios de código}
+
+\begin{itemize}
+    \item Para documentar clases, funciones y propiedades, se utilizan comentarios de bloque en formato KDoc, comenzando con /** y terminando con */.
+    \item Los comentarios KDoc pueden incluir etiquetas especiales como @param para describir los parámetros de una función, @return para describir el valor de retorno, y otras etiquetas como @throws, @see, entre otras.
+
+    \begin{figure}[h]
+            \centering
+            \includegraphics[width=1\textwidth]{images/ejemploDokka.png}
+            \caption{Ejemplo de función documentada con dokka}
+            \label{fig:instalacion_apk}
+    \end{figure}
+    
+    \item Además de los comentarios KDoc, Dokka también admite anotaciones especiales dentro del código fuente, como @Deprecated para marcar elementos obsoletos y proporcionar una razón para su deprecación.
+
+\end{itemize}
+
 \section{Pruebas}
 
 Durante el desarrollo de Filmosis, se llevaron a cabo diversas pruebas para garantizar la calidad y el funcionamiento adecuado de la aplicación. A continuación, se describen las principales pruebas realizadas:
@@ -204,6 +457,9 @@ La clase \texttt{AccederCuentaGUIespresso} contiene pruebas de interfaz de usuar
 
 Estas pruebas de interfaz de usuario garantizan que el proceso de inicio de sesión en la aplicación funcione correctamente y proporcione una experiencia fluida para el usuario.
 
+
+
+Estas pruebas de interfaz de usuario garantizan que el proceso de creación de cuenta en la aplicación funcione correctamente y proporcione una experiencia fluida para el usuario.
 
 
 
@@ -331,12 +587,16 @@ Estas pruebas de interfaz de usuario garantizan que el proceso de inicio de sesi
     \\
     \textbf{Tutoriales en YouTube}: \\
     \url{https://youtu.be/dpURgJ4HkMk?si=k95-dp7pOh9wQ-0w} \\
+    \url{https://www.youtube.com/watch?v=KYPc7CAYJOw} \\
     \url{https://youtu.be/jjzQvNRVhx8?si=NMKF_urWQw9Lp668} \\
     \url{https://youtu.be/vJapzH_46a8?si=2y6kzU5f11wO4W0g} \\
     \url{https://youtube.com/playlist?list=PL_QrnahGtqYAtYIoGod00kutYTvhq4HMU&si=bJn_PD4a1aPIUULR} \\
     \\
     \textbf{Comunidades y foros}: \\
     \url{https://es.stackoverflow.com/} \\
+    \\
+    \textbf{Documentación TMDB}: \\
+    \url{https://developer.themoviedb.org/reference/intro/getting-started} \\
     \\
     \textbf{ChatGPT}: \\
     \url{https://chat.openai.com/}
@@ -349,9 +609,5 @@ Estas pruebas de interfaz de usuario garantizan que el proceso de inicio de sesi
     Adrián García Galera: \texttt{agarciagal6@educacion.navarra.es} \\
     Aritz Arrondo Villaplana: \texttt{aarrondvil@educacion.navarra.es} \\
     Kaiet Jiménez Aldasoro: \texttt{kjimeneald@educacion.navarra.es}
-
-\section{Conclusión}
-
-    En resumen, Filmosis se presenta como una aplicación integral diseñada para los amantes del cine, ofreciendo una experiencia completa que combina la riqueza informativa de IMDb con características sociales interactivas. Los usuarios pueden explorar una extensa base de datos de películas, accediendo a detalles como el elenco y las críticas. La función de valoración permite a los usuarios compartir sus opiniones, descubrir películas populares y conectarse con la comunidad. La posibilidad de crear listas personalizadas facilita la organización y compartición de preferencias cinematográficas. Además, Filmosis mantiene a los usuarios informados sobre las últimas noticias y eventos en la industria cinematográfica. Con perfiles de usuario personalizados, la aplicación busca fomentar una comunidad vibrante de cinéfilos, ofreciendo una plataforma interactiva y social para explorar y disfrutar del mundo del cine.
 
 \end{document}
