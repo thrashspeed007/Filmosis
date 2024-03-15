@@ -172,9 +172,34 @@ En el fragmento `ExploreFragment`, se llevaron a cabo pruebas para validar el fu
 
 Estas pruebas unitarias en los fragmentos son fundamentales para garantizar un comportamiento consistente y sin errores en la aplicación Filmosis.
 
+\subsubsection{AuthActivityUnitTest}
+
+La clase \texttt{AuthActivityUnitTest} contiene pruebas unitarias para verificar el comportamiento de la sesión de usuario al iniciar la aplicación. A continuación, se describe la prueba realizada en esta clase:
+
+\begin{itemize}
+    \item \textbf{test session with existing session}: Esta prueba verifica el comportamiento de la sesión cuando ya existe una sesión iniciada al iniciar la aplicación. Se simula una sesión previamente iniciada almacenando un correo electrónico y un proveedor en las preferencias compartidas. Luego, se llama al método \texttt{session()} de la actividad de autenticación para verificar su comportamiento. Finalmente, se verifica que, como resultado de tener una sesión iniciada, la visibilidad del diseño principal (\texttt{mainLayout}) de la actividad sea invisible, indicando que la actividad debería redirigir al usuario automáticamente a la pantalla principal de la aplicación, omitiendo la pantalla de inicio de sesión.
+\end{itemize}
+
+Esta prueba unitaria asegura que el comportamiento de la sesión de usuario en la aplicación sea coherente y que se maneje correctamente la existencia de una sesión previamente iniciada al iniciar la aplicación.
+
+
+\subsubsection{MoviesAccessTest}
+
+La clase \texttt{MoviesAccessTest} contiene pruebas unitarias para verificar el funcionamiento del acceso a películas en la aplicación Filmosis. A continuación, se describen las pruebas realizadas en esta clase:
+
+\begin{itemize}
+    \item \textbf{listPopularMovies\_success}: Esta prueba verifica el comportamiento de la función \texttt{listPopularMovies()} cuando la solicitud de películas populares tiene éxito. Se simula la respuesta exitosa del servicio de API de TMDb, lo que debería proporcionar una lista de películas. Se espera que la lista de películas devuelta no esté vacía, lo que indica que se recuperaron películas populares correctamente.
+    
+    \item \textbf{listPopularMovies\_failure}: Esta prueba verifica el comportamiento de la función \texttt{listPopularMovies()} cuando la solicitud de películas populares falla. Se simula una respuesta de error del servicio de API de TMDb con un código de estado 404. Se espera que la lista de películas devuelta sea nula, indicando que no se pudieron recuperar películas populares debido a un error en la solicitud.
+\end{itemize}
+
+Estas pruebas unitarias garantizan que el acceso a películas en la aplicación Filmosis se maneje correctamente tanto en casos de éxito como de fallo, proporcionando una experiencia de usuario consistente y confiable.
+
+
 \subsection{Pruebas de Interfaz de Usuario (UI)}
 
 Para asegurar el correcto funcionamiento de la interfaz de usuario de la aplicación, se realizaron pruebas de UI utilizando Espresso, un framework de pruebas de interfaz de usuario para aplicaciones Android. A continuación, se detallan las pruebas realizadas en la clase \texttt{CrearCuentaGUI}, que se encargan de verificar el proceso de creación de cuenta en la aplicación:
+
 
 \subsubsection{CrearCuentaGUI}
 
