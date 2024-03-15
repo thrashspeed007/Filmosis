@@ -1,0 +1,35 @@
+$dokka.format:javadoc-v1
+$dokka.linkExtension:html
+$dokka.location:com.example.filmosis.adapters/ActoresAdapter.ActoresRowViewHolder///PointingToDeclaration/com/example/filmosis/adapters/ActoresAdapter.ActoresRowViewHolder.html
+$dokka.location:com.example.filmosis.adapters/CarouselMoviesAdapter.CarouselMoviesViewHolder///PointingToDeclaration/com/example/filmosis/adapters/CarouselMoviesAdapter.CarouselMoviesViewHolder.html
+$dokka.location:com.example.filmosis.adapters/GenresCardViewsAdapter.ViewHolder///PointingToDeclaration/com/example/filmosis/adapters/GenresCardViewsAdapter.ViewHolder.html
+$dokka.location:com.example.filmosis.adapters/GridRecyclerServiceAdapter.MyViewHolder///PointingToDeclaration/com/example/filmosis/adapters/GridRecyclerServiceAdapter.MyViewHolder.html
+$dokka.location:com.example.filmosis.adapters/GridRecyclerViewAdapter.MyViewHolder///PointingToDeclaration/com/example/filmosis/adapters/GridRecyclerViewAdapter.MyViewHolder.html
+$dokka.location:com.example.filmosis.adapters/ListedMoviesAdapter.MovieRowViewHolder///PointingToDeclaration/com/example/filmosis/adapters/ListedMoviesAdapter.MovieRowViewHolder.html
+$dokka.location:com.example.filmosis.adapters/ListedPersonsAdapter.PersonRowViewHolder///PointingToDeclaration/com/example/filmosis/adapters/ListedPersonsAdapter.PersonRowViewHolder.html
+$dokka.location:com.example.filmosis.adapters/ListsAdapter.ListViewHolder///PointingToDeclaration/com/example/filmosis/adapters/ListsAdapter.ListViewHolder.html
+$dokka.location:com.example.filmosis.adapters/MoviesInListAdapter.MovieRowViewHolder///PointingToDeclaration/com/example/filmosis/adapters/MoviesInListAdapter.MovieRowViewHolder.html
+$dokka.location:com.example.filmosis.adapters/PersonMoviesCastAdapter.PersonMoviesCastViewHolder///PointingToDeclaration/com/example/filmosis/adapters/PersonMoviesCastAdapter.PersonMoviesCastViewHolder.html
+$dokka.location:com.example.filmosis.adapters/PersonasAdapter.PersonRowViewHolder///PointingToDeclaration/com/example/filmosis/adapters/PersonasAdapter.PersonRowViewHolder.html
+$dokka.location:com.example.filmosis.adapters/ServicioAdapter.NetworkDetailsViewHolder///PointingToDeclaration/com/example/filmosis/adapters/ServicioAdapter.NetworkDetailsViewHolder.html
+$dokka.location:com.example.filmosis.adapters/ServicioAdapter.ServicioViewHolder///PointingToDeclaration/com/example/filmosis/adapters/ServicioAdapter.ServicioViewHolder.html
+$dokka.location:com.example.filmosis.fragments/GenreSelectedFragment.Companion///PointingToDeclaration/com/example/filmosis/fragments/GenreSelectedFragment.Companion.html
+$dokka.location:com.example.filmosis.fragments/MoviesInListFragment.Companion///PointingToDeclaration/com/example/filmosis/fragments/MoviesInListFragment.Companion.html
+$dokka.location:com.example.filmosis.fragments/MoviesSearchedFragment.Companion///PointingToDeclaration/com/example/filmosis/fragments/MoviesSearchedFragment.Companion.html
+$dokka.location:com.example.filmosis.fragments/PeliculaSeleccionadaFragment.Companion///PointingToDeclaration/com/example/filmosis/fragments/PeliculaSeleccionadaFragment.Companion.html
+$dokka.location:com.example.filmosis.fragments/PersonDetailsFragment.Companion///PointingToDeclaration/com/example/filmosis/fragments/PersonDetailsFragment.Companion.html
+$dokka.location:com.example.filmosis.fragments/PersonsSearchedFragment.Companion///PointingToDeclaration/com/example/filmosis/fragments/PersonsSearchedFragment.Companion.html
+com.example.filmosis
+com.example.filmosis.adapters
+com.example.filmosis.config
+com.example.filmosis.data.access.tmdb
+com.example.filmosis.data.model.tmdb
+com.example.filmosis.dataclass
+com.example.filmosis.fragments
+com.example.filmosis.init
+com.example.filmosis.network
+com.example.filmosis.network.interfaces
+com.example.filmosis.utilities.app
+com.example.filmosis.utilities.firebase
+com.example.filmosis.utilities.tmdb
+
