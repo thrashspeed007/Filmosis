@@ -1,8 +1,7 @@
 package com.example.filmosis
 
-import com.example.filmosis.config.DatosConexion
-import com.example.filmosis.data.model.tmdb.Movie
 import com.example.filmosis.data.access.tmdb.MoviesAccess
+import com.example.filmosis.data.model.tmdb.Movie
 import com.example.filmosis.network.RetrofitService
 import com.example.filmosis.network.interfaces.TmdbApiInterface
 import org.junit.Assert
@@ -35,6 +34,7 @@ class MoviesAccessTest{
         moviesAccess = MoviesAccess()
     }
 
+    // Comprueba si la llamada a la api funciona correctamente
     @Test
     fun listPopularMovies_success() {
         var actualMovies: List<Movie>? = null
@@ -45,6 +45,7 @@ class MoviesAccessTest{
         Assert.assertFalse(actualMovies.isNullOrEmpty())
     }
 
+    // Comprueba si la llamada a la api pasando datos incorrectos devuelve null
     @Test
     fun listPopularMovies_failure() {
         val failureResponse = Response.error<List<Movie>>(404, null)
